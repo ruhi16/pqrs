@@ -28,4 +28,9 @@ Route::get('exmtypclssub', 'BaseController@exmtypclssub');
 Route::post('exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
 Route::get('exmtypclssub-view', 'BaseController@exmtypclssubView');
 
+
+
+
+
+
 Route::get('/test', 'BaseController@test');

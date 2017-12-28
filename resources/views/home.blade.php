@@ -15,6 +15,15 @@
                     @endif
 
                     You are logged in!
+                    <br>
+                    <a href="{{url('/clssub')}}">Class - Subject Entry</a>
+                    <br>
+                    <a href="{{url('/clssub-view')}}">Class - Subject View</a>
+                    
+                    <br>
+                    <a href="{{url('/exmtypclssub')}}">Exam - Type - Class - Subject Entry</a>
+                    <br>
+                    <a href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View</a>
                 </div>
             </div>
         </div>
