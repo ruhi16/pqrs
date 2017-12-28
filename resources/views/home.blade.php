@@ -24,6 +24,9 @@
                     <a href="{{url('/exmtypclssub')}}">Exam - Type - Class - Subject Entry</a>
                     <br>
                     <a href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View</a>
+
+                    <br>
+                    <a href="{{url('/studentdb')}}">Student's Detail View</a>
                 </div>
             </div>
         </div>
