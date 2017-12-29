@@ -10,8 +10,11 @@ use App\Exam;
 use App\Extype;
 use App\Clss;
 use App\Subject;
+use App\Section;
 
 use App\Clssub;
+use App\Clssec;
+
 
 use App\Exmtypclssub;
 
@@ -80,6 +83,26 @@ class BaseController extends Controller
         ->with('subjects', $subjects) 
         ;
     }
+
+
+    public function clssec(){
+
+        return view ('clssec');
+    }
+
+    public function clssecSubmit(Request $request){
+        
+
+    }
+
+    public function clssecView(){
+        $clssecs = Clssec::all();
+        
+        return view('clssecView')
+        ->with('clssecs', $clssecs)
+        ;
+    }
+
 
 
     public function exmtypclssub(){

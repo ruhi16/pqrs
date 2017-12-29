@@ -14,6 +14,9 @@
         <th>id</th>
         <th>Name</th>
         <th>Father's Name</th>
+        <th>Class</th>
+        <th>Sec</th>
+        <th>Roll</th>
     </tr>
 </thead>
 @foreach($stds as $std)
@@ -21,6 +24,9 @@
     <td>{{$std->id}}</td>
     <td>{{$std->name}}</td>
     <td>{{$std->fname}}</td>
+    <td>{{$std->stclss_id}}</td>
+    <td>{{$std->stsec_id}}</td>
+    <td>{{$std->name}}</td>
 </tr>
 @endforeach
 </table>
@@ -55,21 +61,50 @@
       <div class="modal-body">
 
         
-        <table class="table table-bordered">
+        {{--  <table class="table table-bordered">
             <thead>
                 <tr>
-                
+                  
                 
                 </tr>    
             </thead>
 
             <tbody>
             <tr>    
-            
+              
             
             </tr>
             </tbody>
-        </table>
+        </table>  --}}
+
+        <div class="form-group">
+          <label class="control-label col-sm-1" for="name">Name:</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Students Name">
+          </div>
+
+          <label class="control-label col-sm-1" for="clss">Class:</label>
+          <div class="col-sm-2">
+            <select class="form-control" name="clss" id="cl">
+                <option value="0"></option>
+              @foreach($allClss as $cls)              
+                <option value="{{$cls->id}}">{{$cls->name}}</option>              
+              @endforeach
+            </select>
+          </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+          <label class="control-label col-sm-3 text-left" for="fname">Father's Name:</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Father's Name">
+          </div>
+
+         
+        </div>
 
 {{--  
         <button type="submit" class="btn btn-primary">Submit</button>
