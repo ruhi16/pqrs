@@ -20,6 +20,27 @@ use App\Exmtypclssub;
 
 class BaseController extends Controller
 {
+    public function clssec(){
+        $clssecs = Clssec::all();
+
+        return view ('clssec')
+            ->with('clssecs', $clssecs)
+        ;
+    }
+
+    public function clssecSubmit(Request $request){
+        
+
+    }
+
+    public function clssecView(){
+        $clssecs = Clssec::all();
+        
+        return view('clssecView')
+        ->with('clssecs', $clssecs)
+        ;
+    }
+
     public function clssub(){
         $sessions = Session::all();               
         $clss  = Clss::all();
@@ -83,26 +104,6 @@ class BaseController extends Controller
         ->with('subjects', $subjects) 
         ;
     }
-
-
-    public function clssec(){
-
-        return view ('clssec');
-    }
-
-    public function clssecSubmit(Request $request){
-        
-
-    }
-
-    public function clssecView(){
-        $clssecs = Clssec::all();
-        
-        return view('clssecView')
-        ->with('clssecs', $clssecs)
-        ;
-    }
-
 
 
     public function exmtypclssub(){

@@ -33,6 +33,11 @@
                     <a href="{{url('/clssec')}}">Class Section Entry</a>
                     <br>
                     <a href="{{url('/clssec-view')}}">Class Section View</a>
+
+                    <br>
+                    <a href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
+
+                    
                 </div>
             </div>
         </div>

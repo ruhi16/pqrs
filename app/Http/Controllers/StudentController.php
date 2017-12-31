@@ -11,6 +11,7 @@ use App\Extype;
 use App\Clss;
 use App\Subject;
 use App\Section;
+use App\Studentdb;
 
 use App\Clssub;
 use App\Clssec;

@@ -8,8 +8,25 @@
 @section('content')
 <h1>Class Section Entry Page</h1>
 
+<table class="table table-bordered">
+<thead>
+    <tr>
+        <th>id</th>
+        <th>Class</th>
+        <th>Sections</th>        
+        <th>Roll</th>
+    </tr>
+</thead>
+<tbody>
+@foreach($clssecs as $clssec)
+<tr>
+  <td>{{$clssec->id}}</td>
+  <td></td>
+</tr>
+@endforeach
 
-
+</tbody>
+</table>
 
 
 <script type="text/javascript">

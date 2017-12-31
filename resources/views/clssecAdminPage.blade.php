@@ -8,10 +8,30 @@
 @section('content')
 <h1>Class Section Admin Page</h1>
 
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Class</td>
+            <td>Sections</td>
+            <td>Status</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+      
+      @foreach($stdb as $std)
+      <tr>
+        <td>{{$std->id}}</td>
+        <td>{{$std->name}}</td>
+        <td>{{$std->stclss_id}}</td>
+        <td>{{$std->id}}</td>
+        <td>{{$std->id}}</td>
+      </tr>
+      @endforeach
 
-
-
-
+      </tbody
+</table>
 <script type="text/javascript">
   $(document).ready(function(e){
     
