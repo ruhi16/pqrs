@@ -1,4 +1,5 @@
 @extends('layouts.baselayout')
+
 @section('title','Home')
 
 @section('header')
@@ -16,7 +17,8 @@
         <th>Father's Name</th>
         <th>Class</th>
         <th>Sec</th>
-        <th>Roll</th>
+        <th>Sec Action</th>
+        <th>Adm Sl & Adm Date</th>
     </tr>
 </thead>
 @foreach($stds as $std)
@@ -25,8 +27,21 @@
     <td>{{$std->name}}</td>
     <td>{{$std->fname}}</td>
     <td>{{$std->stclss_id}}</td>
-    <td>{{$std->stsec_id}}</td>
-    <td>{{$std->name}}</td>
+    <td></td>
+    <td>
+      <!-- Select Option -->
+      <div class="form-group">      
+      <select class="form-control std_sec" id="sel1">
+        @foreach($allClsSec as $allCS)
+            @if($std->stclss_id == $allCS->clss_id)
+              <option value="{{$std->id}}-{{$allCS->section->id}}">{{ $allCS->section->name }}</option>
+            @endif
+        @endforeach  
+
+      </select>
+    </div>
+    </td>
+    <td>{{$std->roll_no or 'NA'}}</td>
 </tr>
 @endforeach
 </table>
@@ -87,7 +102,7 @@
           <div class="col-sm-2">
             <select class="form-control" name="clss" id="cl">
                 <option value="0"></option>
-              @foreach($allClss as $cls)              
+              @foreach($allClsSec as $cls)              
                 <option value="{{$cls->id}}">{{$cls->name}}</option>              
               @endforeach
             </select>
@@ -133,6 +148,31 @@
 <script type="text/javascript">
   $(document).ready(function(e){
     
+    $('.std_sec').change(function(){
+      
+
+
+      var sec = $(this).val();
+      //alert(sec);
+      var u = '{{url("/updateSection")}}';//'{{url("/updateRoll")}}';
+      var t = '{{csrf_token()}}}';
+      $.ajax({
+        method: 'post',
+        url: u,
+        data:{sec:sec,  _token:t},
+        success: function(mst){
+          console.log(msg['m']);
+        },
+        error: function(data){
+          console.log(data);
+        }
+      });
+
+
+
+    });
+
+
   });  
 </script>
 

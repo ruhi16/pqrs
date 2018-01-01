@@ -38,6 +38,7 @@ Route::get('exmtypclssub-view', 'BaseController@exmtypclssubView');
 Route::get('/studentdb', 'StudentController@studentdb');
 Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
 
+Route::post('/updateSection', 'StudentController@updateSection');
 
 Route::get('/clssec', 'BaseController@clssec');
 Route::post('/clssec-submit', 'BaseController@clssecSubmit');

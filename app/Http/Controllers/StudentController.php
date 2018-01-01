@@ -24,11 +24,11 @@ class StudentController extends Controller
 {
     public function studentdb(){
         $stds = Studentdb::all();
-        $allClss = Clss::all();
+        $allClsSec = Clssec::all();
 
         return view ('studentdb')
         ->with('stds', $stds)
-        ->with('allClss', $allClss)
+        ->with('allClsSec', $allClsSec)
         ;
     }
 
@@ -46,5 +46,12 @@ class StudentController extends Controller
 
 
         return back();
+    }
+
+
+    public function updateSection(){
+        // console.log("hello");
+        
+        return response()->json(['m'=>'Hello']);
     }
 }
