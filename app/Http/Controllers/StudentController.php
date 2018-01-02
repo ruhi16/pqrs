@@ -48,7 +48,7 @@ class StudentController extends Controller
         return back();
     }
 
-
+    //Ajax Update Section
     public function updateSection(Request $request){
         // console.log("hello");
         $str = $request['sec'];
@@ -61,4 +61,11 @@ class StudentController extends Controller
         $sec = Section::find($ar[1]);
         return response()->json( ['sid'=> $stdb->id, 'ssec'=>$sec->name]);
     }
+
+    public function issueRoll(Request $request){
+
+
+        return back();
+    }
+
 }

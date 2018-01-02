@@ -41,6 +41,8 @@ Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
 //Ajax Update
 Route::post('/updateSection', 'StudentController@updateSection');
 
+Route::get('/issueRoll', 'StudentCongroller@issueRoll');
+
 Route::get('/clssec', 'BaseController@clssec');
 Route::post('/clssec-submit', 'BaseController@clssecSubmit');
 Route::get('/clssec-view', 'BaseController@clssecView');

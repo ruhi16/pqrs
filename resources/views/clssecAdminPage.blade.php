@@ -12,9 +12,10 @@
     <thead>
         <tr>
             <td>#</td>
+            <td>Name</td>
             <td>Class</td>
             <td>Sections</td>
-            <td>Status</td>
+            <td>Roll No</td>
             <td>Action</td>
         </tr>
     </thead>
@@ -26,12 +27,18 @@
         <td>{{$std->name}}</td>
         <td>{{$std->stclss_id}}</td>
         <td>{{$std->id}}</td>
-        <td>{{$std->id}}</td>
+        <td></td>
+        <td><a href="{{url('/issueRoll')}}" class="btn btn-info">Issue Roll</a></td>
       </tr>
       @endforeach
 
-      </tbody
+    </tbody>
 </table>
+
+
+
+
+
 <script type="text/javascript">
   $(document).ready(function(e){
     

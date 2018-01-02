@@ -42,9 +42,11 @@ class ClsSecController extends Controller
         $stdb = Studentdb::where('stclss_id', $clss_id)
         ->where('stsec_id', $section_id)->get();
 
+        $stcr = Studentcr::all();
         // print_r($stdb);
         return view('clssecAdminPage')
         ->with('stdb', $stdb)
+        ->with('stcr', $stcr)
         ;
     }
 }
