@@ -57,6 +57,8 @@ class StudentController extends Controller
         $stdb = Studentdb::find($ar[0]);
         $stdb->stsec_id = $ar[1];
         $stdb->save();
-        return response()->json( ['sid'=> $stdb->id, 'ssecid'=>$stdb->stsec_id]);
+
+        $sec = Section::find($ar[1]);
+        return response()->json( ['sid'=> $stdb->id, 'ssec'=>$sec->name]);
     }
 }

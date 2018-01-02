@@ -22,16 +22,17 @@
     </tr>
 </thead>
 @foreach($stds as $std)
-<tr>
+<tr id="tr{{$std->id}}">
     <td>{{$std->id}}</td>
     <td>{{$std->name}}</td>
     <td>{{$std->fname}}</td>
     <td>{{$std->stclss_id}}</td>
-    <td></td>
+    <td id="tdsec{{$std->id}}"></td>
     <td>
       <!-- Select Option -->
       <div class="form-group">      
       <select class="form-control std_sec" id="sel1">
+        <option></option>
         @foreach($allClsSec as $allCS)
             @if($std->stclss_id == $allCS->clss_id)
               <option value="{{$std->id}}-{{$allCS->section->id}}">{{ $allCS->section->name }}</option>
@@ -162,7 +163,8 @@
         url: u,
         data:{sec:sec,  _token:t},
         success: function(msg){
-          console.log('StdDB Id:'+msg['sid']+", Section Id:"+msg['ssecid']);
+          console.log('StdDB Id:'+msg['sid']+", Section Id:"+msg['ssec']);
+          $('#tr'+msg['sid']+' #tdsec'+msg['sid']).html(msg['ssec']);
         },
         error: function(data){
           console.log(data);
