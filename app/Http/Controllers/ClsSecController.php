@@ -39,7 +39,8 @@ class ClsSecController extends Controller
         $sec = Section::find($section_id);
         // echo $cls->name; echo $sec->name;
 
-        $stdb = Studentdb::where('stclss_id', $clss_id)->get();
+        $stdb = Studentdb::where('stclss_id', $clss_id)
+        ->where('stsec_id', $section_id)->get();
 
         // print_r($stdb);
         return view('clssecAdminPage')

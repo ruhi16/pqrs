@@ -27,7 +27,7 @@
     <td>{{$std->name}}</td>
     <td>{{$std->fname}}</td>
     <td>{{$std->stclss_id}}</td>
-    <td id="tdsec{{$std->id}}"></td>
+    <td id="tdsec{{$std->id}}">{{$std->stsec_id or " "}}</td>
     <td>
       <!-- Select Option -->
       <div class="form-group">      
