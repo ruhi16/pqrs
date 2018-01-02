@@ -49,9 +49,14 @@ class StudentController extends Controller
     }
 
 
-    public function updateSection(){
+    public function updateSection(Request $request){
         // console.log("hello");
-        
-        return response()->json(['m'=>'Hello']);
+        $str = $request['sec'];
+        $ar = explode('-', $str);
+        $data = $ar[0];
+        $stdb = Studentdb::find($ar[0]);
+        $stdb->stsec_id = $ar[1];
+        $stdb->save();
+        return response()->json( ['sid'=> $stdb->id, 'ssecid'=>$stdb->stsec_id]);
     }
 }

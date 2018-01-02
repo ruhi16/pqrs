@@ -153,15 +153,16 @@
 
 
       var sec = $(this).val();
-      //alert(sec);
+      // alert(sec);
+       
       var u = '{{url("/updateSection")}}';//'{{url("/updateRoll")}}';
-      var t = '{{csrf_token()}}}';
+      var t = '{{ csrf_token() }}';
       $.ajax({
         method: 'post',
         url: u,
         data:{sec:sec,  _token:t},
-        success: function(mst){
-          console.log(msg['m']);
+        success: function(msg){
+          console.log('StdDB Id:'+msg['sid']+", Section Id:"+msg['ssecid']);
         },
         error: function(data){
           console.log(data);
