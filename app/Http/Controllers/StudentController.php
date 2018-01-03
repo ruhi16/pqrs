@@ -62,10 +62,6 @@ class StudentController extends Controller
         return response()->json( ['sid'=> $stdb->id, 'ssec'=>$sec->name]);
     }
 
-    public function issueRoll(Request $request){
-
-
-        return back();
-    }
+    
 
 }

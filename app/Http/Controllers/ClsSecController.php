@@ -34,19 +34,49 @@ class ClsSecController extends Controller
         ;
     }
 
-    public function clssecAdminPage($clss_id,$section_id){
-        $cls = Clss::find($clss_id);
+    public function clssecAdminPage($clss_id, $section_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        // echo $ses->id;
+        $cls = Clss::find($clss_id);        
         $sec = Section::find($section_id);
         // echo $cls->name; echo $sec->name;
 
-        $stdb = Studentdb::where('stclss_id', $clss_id)
+        $stdb = Studentdb::whereStsession_id($ses->id)
+        ->where('stclss_id', $clss_id)
         ->where('stsec_id', $section_id)->get();
 
-        $stcr = Studentcr::all();
-        // print_r($stdb);
+        $stcr = Studentcr::whereSession_id($ses->id)
+        ->where('clss_id', $clss_id)
+        ->where('section_id', $section_id)
+        ->orderBy('roll_no', 'desc')->get();
+        print_r($stcr);
+
+        echo "Next Roll NO:". ($stcr->first()->roll_no + 1);
+
+
         return view('clssecAdminPage')
         ->with('stdb', $stdb)
         ->with('stcr', $stcr)
         ;
+    }
+
+    public function issueRoll(Request $request, $id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $stddb = Studentdb::find($id);
+
+        $stcr = Studentcr::whereSession_id($ses->id)
+        ->where('clss_id', $stddb->stclss_id)
+        ->where('section_id', $stddb->stsec_id)
+        ->orderBy('roll_no', 'desc')->get();
+        // print_r($stcr);
+
+        $stdcr = new Studentcr;
+        $stdcr->studentdb_id = $stddb->id;
+        $stdcr->session_id = $ses->id;
+        $stdcr->clss_id = $stddb->stclss_id;
+        $stdcr->section_id = $stddb->stsec_id;
+        $stdcr->roll_no = ($stcr->first()->roll_no + 1);
+        $stdcr->save();
+        return "hello";
     }
 }

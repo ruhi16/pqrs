@@ -41,7 +41,7 @@ Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
 //Ajax Update
 Route::post('/updateSection', 'StudentController@updateSection');
 
-Route::get('/issueRoll', 'StudentCongroller@issueRoll');
+
 
 Route::get('/clssec', 'BaseController@clssec');
 Route::post('/clssec-submit', 'BaseController@clssecSubmit');
@@ -52,6 +52,6 @@ Route::get('/clssec-view', 'BaseController@clssecView');
 
 Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
 Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');
-
+Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 Route::get('/test', 'BaseController@test');

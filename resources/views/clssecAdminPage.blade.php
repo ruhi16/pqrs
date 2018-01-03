@@ -28,17 +28,39 @@
         <td>{{$std->stclss_id}}</td>
         <td>{{$std->id}}</td>
         <td></td>
-        <td><a href="{{url('/issueRoll')}}" class="btn btn-info">Issue Roll</a></td>
+        <td>
+          <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>
+        </td>
       </tr>
       @endforeach
 
     </tbody>
 </table>
 
-
-
-
-
+<table class="table table-bordered">
+<thead>
+  <tr>
+    <th>Session</th>
+    <th>Name</th>
+    <th>Class</th>
+    <th>Section</th>
+    <th>Roll No</th>
+    <th>Action</th>
+  </tr>
+</thead>
+  <tbody>
+    @foreach($stcr as $stc)
+    <tr>
+      <td>{{ $stc->session_id }}</td>
+      <td>{{ $stc->studentdb->name }}</td>
+      <td>{{ $stc->clss_id }}</td>
+      <td>{{ $stc->section_id }}</td>
+      <td>{{ $stc->roll_no }}</td>
+      <td>{{ $stc->id }}</td>
+    </tr>
+    @endforeach
+  </tbody>
+</table>
 <script type="text/javascript">
   $(document).ready(function(e){
     
