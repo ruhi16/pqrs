@@ -45,11 +45,24 @@ class ClsSecController extends Controller
         ->where('stclss_id', $clss_id)
         ->where('stsec_id', $section_id)->get();
 
+
+
+        $stdbIds = Studentdb::whereStsession_id($ses->id)
+        ->where('stclss_id', $clss_id)
+        ->where('stsec_id', $section_id)->get();
+        $stdbtest = Studentcr::whereNotIn('id',$stdbIds->pluck('id'))->get();
+        foreach($stdbtest as $abc){
+            echo $abc;echo "<br>";
+        }
+        // print_r($stdbtest);
+
+
+
         $stcr = Studentcr::whereSession_id($ses->id)
         ->where('clss_id', $clss_id)
         ->where('section_id', $section_id)
         ->orderBy('roll_no', 'desc')->get();
-        print_r($stcr);
+        // print_r($stcr);
 
         echo "Next Roll NO:". ($stcr->first()->roll_no + 1);
 
@@ -76,7 +89,7 @@ class ClsSecController extends Controller
         $stdcr->clss_id = $stddb->stclss_id;
         $stdcr->section_id = $stddb->stsec_id;
         $stdcr->roll_no = ($stcr->first()->roll_no + 1);
-        $stdcr->save();
-        return "hello";
+        // $stdcr->save();
+        return redirect()->to(url('/clssec-AdminPage',[$stddb->stclss_id, $stddb->stsec_id]));
     }
 }
