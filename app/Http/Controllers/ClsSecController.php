@@ -50,6 +50,7 @@ class ClsSecController extends Controller
         $stdbIds = Studentdb::whereStsession_id($ses->id)
         ->where('stclss_id', $clss_id)
         ->where('stsec_id', $section_id)->get();
+       
         $stdbtest = Studentcr::whereNotIn('id',$stdbIds->pluck('id'))->get();
         foreach($stdbtest as $abc){
             echo $abc;echo "<br>";
@@ -64,7 +65,7 @@ class ClsSecController extends Controller
         ->orderBy('roll_no', 'desc')->get();
         // print_r($stcr);
 
-        echo "Next Roll NO:". ($stcr->first()->roll_no + 1);
+        // echo "Next Roll NO:". ($stcr->first()->roll_no + 1);
 
 
         return view('clssecAdminPage')
@@ -82,15 +83,22 @@ class ClsSecController extends Controller
         ->where('section_id', $stddb->stsec_id)
         ->orderBy('roll_no', 'desc')->get();//max('roll_no');
         // print_r($stcr);
-        // echo $stcr;
+        // dd($stcr);
+        if($stcr->count() > 0){
+            echo $stcr->count();
+            print_r($stcr);
+        }else{
+            echo $stcr->count();
+        }
 
         $stdcr = new Studentcr;
         $stdcr->studentdb_id = $stddb->id;
         $stdcr->session_id = $ses->id;
         $stdcr->clss_id = $stddb->stclss_id;
         $stdcr->section_id = $stddb->stsec_id;
-        $stdcr->roll_no = ($stcr->first()->roll_no + 1);
-        // $stdcr->save();
+        $stdcr->roll_no = ($stcr->count() > 0 ? ($stcr->first()->roll_no+1): 1);//((empty($stcr) ? 0 : $stcr->first()->roll_no ) + 1);
+        echo "roll".$stdcr->roll_no;
+        $stdcr->save();
         return redirect()->to(url('/clssec-AdminPage',[$stddb->stclss_id, $stddb->stsec_id]));
     }
 }

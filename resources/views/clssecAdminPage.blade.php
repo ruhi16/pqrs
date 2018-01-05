@@ -29,7 +29,11 @@
         <td>{{$std->id}}</td>
         <td></td>
         <td>
+          @if(!$stcr->contains('session_id',1) AND !$stcr->contains('studentdb_id',$std->id))
           <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>
+          @else
+            Not Application
+          @endif          
         </td>
       </tr>
       @endforeach
@@ -38,16 +42,16 @@
 </table>
 
 <table class="table table-bordered">
-<thead>
-  <tr>
-    <th>Session</th>
-    <th>Name</th>
-    <th>Class</th>
-    <th>Section</th>
-    <th>Roll No</th>
-    <th>Action</th>
-  </tr>
-</thead>
+  <thead>
+    <tr>
+      <th>Session</th>
+      <th>Name</th>
+      <th>Class</th>
+      <th>Section</th>
+      <th>Roll No</th>
+      <th>Action</th>
+    </tr>
+  </thead>
   <tbody>
     @foreach($stcr as $stc)
     <tr>
