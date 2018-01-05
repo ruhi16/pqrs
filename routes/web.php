@@ -54,4 +54,6 @@ Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
 Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');
 Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
+
+Route::get('/clssec-MrkenPage/{clss_id}/{section_id}', 'ClsSecController@clssecMrkenPage');
 Route::get('/test', 'BaseController@test');

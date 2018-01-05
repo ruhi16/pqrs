@@ -15,7 +15,8 @@
             <td>Class</td>
             <td>Sections</td>
             <td>Status</td>
-            <td>Action</td>
+            <td>Admission</td>
+            <td>Marks Entry</td>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +27,7 @@
     <td>{{$clssec->section()->first()->name}}</td>
     <td>{{$clssec->status}}</td>
     <td><a href="{{url('/clssec-AdminPage',[$clssec->clss_id,$clssec->section_id])}}">Clss-Sec</a></td>
+    <td><a href="{{url('/clssec-MrkenPage',[$clssec->clss_id,$clssec->section_id])}}">Clss-Sec</a></td>
     </tr>
 @endforeach
         

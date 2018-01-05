@@ -101,4 +101,27 @@ class ClsSecController extends Controller
         $stdcr->save();
         return redirect()->to(url('/clssec-AdminPage',[$stddb->stclss_id, $stddb->stsec_id]));
     }
+
+
+
+    public function clssecMrkenPage($clss_id, $section_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        
+        $extpcls = Exmtypclssub::whereSession_id($ses->id)
+            ->whereClss_id($clss_id)->get();
+
+        $cls = Clss::find($clss_id);
+        $exm = Exam::all();
+        $ext = Extype::all();
+        $clsb = Clssub::whereClss_id($clss_id)->get();
+
+
+        return view('clssecMrkenPage')
+        ->withExtpcls($extpcls)
+        ->withCls($cls)
+        ->withExm($exm)
+        ->withExt($ext)
+        ->withClsb($clsb)
+        ;
+    }
 }
