@@ -80,8 +80,9 @@ class ClsSecController extends Controller
         $stcr = Studentcr::whereSession_id($ses->id)
         ->where('clss_id', $stddb->stclss_id)
         ->where('section_id', $stddb->stsec_id)
-        ->orderBy('roll_no', 'desc')->get();
+        ->orderBy('roll_no', 'desc')->get();//max('roll_no');
         // print_r($stcr);
+        // echo $stcr;
 
         $stdcr = new Studentcr;
         $stdcr->studentdb_id = $stddb->id;
