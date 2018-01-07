@@ -21,6 +21,7 @@ class CreateMarksentriesTable extends Migration
             $table->integer('studentcr_id');
             $table->integer('marks');
             $table->string('status');
+            $table->integer('session_id');
             $table->timestamps();
         });
     }

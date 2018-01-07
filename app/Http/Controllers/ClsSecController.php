@@ -21,6 +21,8 @@ use App\Clssec;
 
 use App\Exmtypclssub;
 
+use App\Marksentry;
+
 class ClsSecController extends Controller
 {
     public function clssecTaskPage(){
@@ -163,11 +165,38 @@ class ClsSecController extends Controller
         ->withClsb($clsb)
         ->withStdcrs($stdcrs)
         ;
+
     }
 
     public function updateMarks(Request $request){
         //console.log("hello");
-        
+        $ses = Session::whereStatus('CURRENT')->first();
+        $sid = $request['sid'];
+        $etc = $request['etc'];
+        $csc = $request['csc'];
+        $csb = $request['csb'];
+        $mrk = $request['mrk'];
+
+        // $stdmrks = Marksentry::whereSession_id($ses->id)
+        //     ->whereExmtypclssub_id($etc)
+        //     ->whereClssec_id($csc)
+        //     ->whereClssub_id($csb)
+        //     ->whereStudentcr_id($sid)
+        //     ->get();
+        // if($stdmrks === null){
+        //     $stdmrks = new Marksentry;
+        // }
+        $stdmrks = new Marksentry;
+        $stdmrks->exmtypclssub_id = $etc;
+        $stdmrks->clssec_id = $csc;
+        $stdmrks->clssub_id = $csb;
+        $stdmrks->studentcr_id = $sid;
+        $stdmrks->session_id = $ses->id;
+        $stdmrks->marks = $mrk;
+        $stdmrks->status = "Correct";
+
+        $stdmrks->save();
+
         return response()->json(['sid'=>$request['sid'],'etc'=>$request['etc'],'csc'=>$request['csc'],'csb'=>$request['csb'],'mrk'=>$request['mrk']]);
     }
 }
