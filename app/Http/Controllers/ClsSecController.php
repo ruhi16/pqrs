@@ -11,6 +11,7 @@ use App\Extype;
 use App\Clss;
 use App\Subject;
 use App\Section;
+
 use App\Studentdb;
 use App\Studentcr;
 
@@ -104,24 +105,69 @@ class ClsSecController extends Controller
 
 
 
-    public function clssecMrkenPage($clss_id, $section_id){
+    public function clssecMrkenPage($clssec_id){
         $ses = Session::whereStatus('CURRENT')->first();
+        $clssec = Clssec::find($clssec_id);
         
         $extpcls = Exmtypclssub::whereSession_id($ses->id)
-            ->whereClss_id($clss_id)->get();
+             ->whereClss_id($clssec->clss_id)->get();
 
-        $cls = Clss::find($clss_id);
+        // $cls = Clss::find($clss_id);
         $exm = Exam::all();
-        $ext = Extype::all();
-        $clsb = Clssub::whereClss_id($clss_id)->get();
+        // $ext = Extype::all();
+        $clsb = Clssub::whereClss_id($clssec->clss_id)->get();
 
+        // $stdcrs = Studentcr::whereSession_id($ses->id)
+        // ->whereClss_id($clss_id)
+        // ->whereSection_id($section_id)->get();
 
         return view('clssecMrkenPage')
         ->withExtpcls($extpcls)
-        ->withCls($cls)
-        ->withExm($exm)
-        ->withExt($ext)
         ->withClsb($clsb)
+        ->withClsc($clssec)
+        // ->withCls($cls)
+        ->withExm($exm)
+        // ->withExt($ext)
+        
+        // ->withStdcrs($stdcrs)
         ;
+    }
+
+
+    public function ClssecstdMarksEntry($extpcl_id, $clsb_id, $clsc_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $extpcls = Exmtypclssub::find($extpcl_id);
+        $clsc = Clssec::find($clsc_id);
+        $clsb = Clssub::find($clsb_id);
+
+
+        // echo "Exam:". Exmtypclssub::find($extpcl_id)->exam->name;
+        // echo "<br>Exam Type:". Exmtypclssub::find($extpcl_id)->extype->name;
+        // echo "<br>Class:". Exmtypclssub::find($extpcl_id)->clss->name;
+        
+        // echo "<br>Subject:". Clssec::find($clsc_id)->section->name;
+
+        // echo "<br>Subject:". Clssub::find($clsb_id)->subject->name;
+
+        // echo "<br><br>Student List";
+        $stdcrs = Studentcr::whereSession_id($ses->id)
+        ->whereClss_id(Clssec::find($clsc_id)->clss->id)
+        ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
+        // foreach($stdcrs as $stdcr){
+        //     echo "<br>". $stdcr->id ."=>". $stdcr->studentdb->name;
+        // }
+
+        return view ('clssecMrkentryPage')
+        ->withExtpcls($extpcls)
+        ->withClsc($clsc)
+        ->withClsb($clsb)
+        ->withStdcrs($stdcrs)
+        ;
+    }
+
+    public function updateMarks(Request $request){
+        //console.log("hello");
+        
+        return response()->json(['sid'=>$request['sid'],'etc'=>$request['etc'],'csc'=>$request['csc'],'csb'=>$request['csb'],'mrk'=>$request['mrk']]);
     }
 }

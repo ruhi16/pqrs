@@ -10,7 +10,6 @@
 
 @foreach($extpcls as $extpcl)
   {{$extpcl}}
-
 @endforeach
 
 
@@ -27,10 +26,17 @@
   <tbody>
     @foreach($clsb as $cl)
     <tr>
-      <td>Exam Type</td>
-      <td>{{ $cl->subject_id }}</td>
+      <td>{{ $cl->subject->extype->name }}</td>
+      <td>{{ $cl->subject->name }}</td>
       @foreach($exm as $ex)
-        <td>{{ $ex->name }}</td>
+        <td>
+          @foreach($extpcls as $extpcl)
+            @if( $extpcl->exam_id == $ex->id && $extpcl->extype_id == $cl->subject->extype->id )
+               {{--  extpcl:{{$extpcl->id}}-clsb:{{$cl->id}}-clsc:{{$clsc->id}}  --}}
+               <a href="{{url('/Clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}">Marks Entry</a>
+            @endif
+          @endforeach
+        </td>
       @endforeach
     </tr>
     @endforeach
@@ -38,9 +44,25 @@
 </table>
 
 
-
-
-
+{{--  <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+@foreach($stdcrs as $stdcr)
+    <tr>
+      <td>{{ $stdcr->studentdb_id }}</td>
+      <td>{{ $stdcr->studentdb->name }}</td>
+      <td>{{ $stdcr->roll_no }}</td>
+    </tr>
+@endforeach
+  </tbody>
+</table>  --}}
 
 
 

@@ -55,5 +55,10 @@ Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecA
 Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 
-Route::get('/clssec-MrkenPage/{clss_id}/{section_id}', 'ClsSecController@clssecMrkenPage');
+Route::get('/clssec-MrkenPage/{clssec_id}', 'ClsSecController@clssecMrkenPage');
+Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'ClsSecController@ClssecstdMarksEntry');
+
+//Ajax Update
+Route::post('/updateMarks', 'ClsSecController@updateMarks');
+
 Route::get('/test', 'BaseController@test');

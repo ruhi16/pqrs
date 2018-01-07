@@ -15,4 +15,8 @@ class Clss extends Model
     public function clssubs(){
         return $this->hasMany('App\Clssub');
     }
+
+    public function exmtypclssub(){
+        return $this->hasMany('App\Exmtypclssub');
+    }
 }
