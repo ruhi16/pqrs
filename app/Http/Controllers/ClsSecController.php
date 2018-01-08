@@ -159,11 +159,21 @@ class ClsSecController extends Controller
         //     echo "<br>". $stdcr->id ."=>". $stdcr->studentdb->name;
         // }
 
+        $stdmrks = Marksentry::whereSession_id($ses->id)
+            ->whereExmtypclssub_id($extpcl_id)
+            ->whereClssec_id($clsc_id)
+            ->whereClssub_id($clsb_id)//->whereStudentcr_id($sid)
+            ->get();
+
+        // foreach($stdmrks )
+
+
         return view ('clssecMrkentryPage')
         ->withExtpcls($extpcls)
         ->withClsc($clsc)
         ->withClsb($clsb)
         ->withStdcrs($stdcrs)
+        ->withStdmrks($stdmrks)
         ;
 
     }

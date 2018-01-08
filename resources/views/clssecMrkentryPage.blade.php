@@ -30,11 +30,14 @@
         <td>{{ $stdcr->id }}</td>
         <td>{{ $stdcr->studentdb->name }}</td>
         <td>{{ $stdcr->roll_no }}</td>
-        <td><input type="text" class="form-control marks" value=""></td>
-        <td><button class="btn btn-primary" data-sid="{{$stdcr->id}}"
-                                            data-etc="{{$extpcls->id}}"
-                                            data-csc="{{$clsc->id}}"
-                                            data-csb="{{$clsb->id}}">Save</button></td>
+        <td><input  type="text" class="form-control marks" 
+                    value="{{ $stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() }}"></td>
+        <td><button class="btn btn-primary" 
+                data-sid="{{$stdcr->id}}"
+                data-etc="{{$extpcls->id}}"
+                data-csc="{{$clsc->id}}"
+                data-csb="{{$clsb->id}}">Save</button>
+        </td>
     </tr>
     @endforeach
 
