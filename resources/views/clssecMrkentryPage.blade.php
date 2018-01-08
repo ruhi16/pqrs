@@ -30,7 +30,7 @@
         <td>{{ $stdcr->id }}</td>
         <td>{{ $stdcr->studentdb->name }}</td>
         <td>{{ $stdcr->roll_no }}</td>
-        <td><input type="text" class="form-control marks" value="{{$clsb->id}}"></td>
+        <td><input type="text" class="form-control marks" value=""></td>
         <td><button class="btn btn-primary" data-sid="{{$stdcr->id}}"
                                             data-etc="{{$extpcls->id}}"
                                             data-csc="{{$clsc->id}}"

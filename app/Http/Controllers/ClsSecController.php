@@ -183,20 +183,41 @@ class ClsSecController extends Controller
         //     ->whereClssub_id($csb)
         //     ->whereStudentcr_id($sid)
         //     ->get();
-        // if($stdmrks === null){
+        
+        // if($stdmrks->count() > 0){
+        //     $stdmrks->first()->id;
+        //     $stdmrks = Marksentry::find($stdmrks->first()->id);
+        // }else{
         //     $stdmrks = new Marksentry;
         // }
-        $stdmrks = new Marksentry;
-        $stdmrks->exmtypclssub_id = $etc;
-        $stdmrks->clssec_id = $csc;
-        $stdmrks->clssub_id = $csb;
-        $stdmrks->studentcr_id = $sid;
-        $stdmrks->session_id = $ses->id;
-        $stdmrks->marks = $mrk;
-        $stdmrks->status = "Correct";
+        // $stdmrks = new Marksentry;
+        // $stdmrks->exmtypclssub_id = $etc;
+        // $stdmrks->clssec_id = $csc;
+        // $stdmrks->clssub_id = $csb;
+        // $stdmrks->studentcr_id = $sid;
+        // $stdmrks->session_id = $ses->id;
+        // $stdmrks->marks = $mrk;
+        // $stdmrks->status = "Correct";
+        // $stdmrks->save();
 
-        $stdmrks->save();
 
-        return response()->json(['sid'=>$request['sid'],'etc'=>$request['etc'],'csc'=>$request['csc'],'csb'=>$request['csb'],'mrk'=>$request['mrk']]);
+        $stdmarks = Marksentry::firstOrNew([
+            'session_id' => $ses->id,
+            'exmtypclssub_id' => $etc,
+            'clssec_id' => $csc,
+            'clssub_id' => $csb,
+            'studentcr_id' => $sid
+        ]);
+
+        $stdmarks->clssec_id = $csc;
+        $stdmarks->exmtypclssub_id = $etc;
+        $stdmarks->clssub_id = $csb;
+        $stdmarks->studentcr_id = $sid;
+        $stdmarks->session_id = $ses->id;
+        $stdmarks->marks = $mrk;
+        $stdmarks->status = "Correct";
+        $stdmarks->save();
+        
+        return response()->json(['sid'=>$stdmarks->count(),'etc'=>$request['etc'],'csc'=>$request['csc'],'csb'=>$request['csb'],'mrk'=>$request['mrk']]);
     }
 }
