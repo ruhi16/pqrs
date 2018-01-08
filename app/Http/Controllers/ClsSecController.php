@@ -27,7 +27,7 @@ class ClsSecController extends Controller
 {
     public function clssecTaskPage(){
         $ses = Session::whereStatus('CURRENT')->first();
-        $clssecs = Clssec::whereStsession_id($ses->id)->get();
+        $clssecs = Clssec::whereSession_id($ses->id)->get();
         
 
         // foreach($clssecs as $cs){
@@ -39,43 +39,41 @@ class ClsSecController extends Controller
     }
 
     public function clssecAdminPage($clss_id, $section_id){
-        $ses = Session::whereStatus('CURRENT')->first();
-        // echo $ses->id;
+        $ses = Session::whereStatus('CURRENT')->first();        
         $cls = Clss::find($clss_id);        
         $sec = Section::find($section_id);
-        // echo $cls->name; echo $sec->name;
+        
 
         $stdb = Studentdb::whereStsession_id($ses->id)
         ->where('stclss_id', $clss_id)
-        ->where('stsec_id', $section_id)->get();
-
-
-
-        $stdbIds = Studentdb::whereStsession_id($ses->id)
-        ->where('stclss_id', $clss_id)
-        ->where('stsec_id', $section_id)->get();
-       
-        $stdbtest = Studentcr::whereNotIn('id',$stdbIds->pluck('id'))->get();
-        // foreach($stdbtest as $abc){
-        //     echo $abc;echo "<br>";
+        ->where('stsec_id', $section_id)->get();                
+        // echo "Students Details from  studentDB:<BR>";
+        // foreach($stdb as $abc){
+        //     echo "Name-DB: ".$abc->name."-".$abc->id;echo "<br>";
         // }
-        // print_r($stdbtest);
+        
 
+        $stcr = Studentcr::whereSession_id($ses->id)            
+            ->where('clss_id', $clss_id)
+            ->where('section_id', $section_id)            
+            ->get();            
+        // echo "Students Details from  studentCR:<BR>";
+        // foreach($stcr as $abc){
+        //     echo "Name-CR: ".$abc->studentdb_id;echo "<br>";
+        // }
 
-
-        $stcr = Studentcr::whereSession_id($ses->id)
-        ->where('clss_id', $clss_id)
-        ->where('section_id', $section_id)
-        ->orderBy('roll_no', 'desc')->get();
-        // print_r($stcr);
-
-        // echo "Next Roll NO:". ($stcr->first()->roll_no + 1);
+        $remRec = $stdb->whereNotIn('id', $stcr->pluck('studentdb_id'));        
+        // echo "Remaining Students Details from  studentDB:<BR>";
+        // foreach($remRec as $abc){
+        //     echo "Rem Name-CR: ".$abc->id;echo "<br>";
+        // }
+        // dd($remRec);
 
 
         return view('clssecAdminPage')
-        ->with('ses', $ses)
-        ->with('stdb', $stdb)
+        ->with('ses', $ses)        
         ->with('stcr', $stcr)
+        ->with('remRec', $remRec)
         ;
     }
 
@@ -231,5 +229,13 @@ class ClsSecController extends Controller
         $stdmarks->save();
         
         return response()->json(['sid'=>$stdmarks->count(),'etc'=>$request['etc'],'csc'=>$request['csc'],'csb'=>$request['csb'],'mrk'=>$request['mrk']]);
+    }
+
+
+    public function clssecMarksRegister($clssec_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+
+
+        return view('clssecMarksRegister');
     }
 }

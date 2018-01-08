@@ -17,6 +17,7 @@
             <td>Status</td>
             <td>Admission</td>
             <td>Marks Entry</td>
+            <td>Marks Register</td>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
     <td>{{$clssec->status}}</td>
     <td><a href="{{url('/clssec-AdminPage',[$clssec->clss_id,$clssec->section_id])}}">Clss-Sec Admission</a></td>
     <td><a href="{{url('/clssec-MrkenPage',[$clssec->id])}}">Clss-Sec Mark Entry Status</a></td>
+    <td><a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Clss-Sec Mark Register</a></td>
     </tr>
 @endforeach
         

@@ -21,7 +21,7 @@
     </thead>
     <tbody>
       
-      @foreach($stdb as $std)
+      @foreach($remRec as $std)
       <tr>
         <td>{{$std->id}}</td>
         <td>{{$std->name}}</td>
@@ -29,11 +29,11 @@
         <td>{{$std->id}}</td>
         <td></td>
         <td>
-          @if(!$stcr->contains('session_id',$ses->id) && !$stcr->contains('studentdb_id',$std->id))
+          {{--  @if(!$stcr->contains('session_id',$ses->id) && !$stcr->contains('studentdb_id',$std->id))  --}}
             <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>
-          @else
+          {{--  @else
             Not Application
-          @endif          
+          @endif            --}}
         </td>
       </tr>
       @endforeach
