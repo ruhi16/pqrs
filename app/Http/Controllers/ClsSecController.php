@@ -72,6 +72,7 @@ class ClsSecController extends Controller
 
 
         return view('clssecAdminPage')
+        ->with('ses', $ses)
         ->with('stdb', $stdb)
         ->with('stcr', $stcr)
         ;
