@@ -56,6 +56,7 @@ class StudentController extends Controller
 
     //Ajax Update Section
     public function updateSection(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
         // console.log("hello");
         $str = $request['sec'];
         $ar = explode('-', $str);

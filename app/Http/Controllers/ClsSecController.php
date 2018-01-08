@@ -26,7 +26,8 @@ use App\Marksentry;
 class ClsSecController extends Controller
 {
     public function clssecTaskPage(){
-        $clssecs = Clssec::all();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clssecs = Clssec::whereStsession_id($ses->id)->get();
         
 
         // foreach($clssecs as $cs){
