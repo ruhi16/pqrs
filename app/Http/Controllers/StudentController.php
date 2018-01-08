@@ -23,24 +23,30 @@ use App\Exmtypclssub;
 class StudentController extends Controller
 {
     public function studentdb(){
-        $stds = Studentdb::all();
-        $allClsSec = Clssec::all();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $stds = Studentdb::whereStsession_id($ses->id)->get();
+        $allClsSec = Clssec::whereSession_id($ses->id)->get();
+        $clss = Clss::all();
 
         return view ('studentdb')
         ->with('stds', $stds)
         ->with('allClsSec', $allClsSec)
+        ->withClss($clss)
         ;
     }
 
     public function studentdbSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        // echo $ses->id . "x";
         $name = $request->name;
         $clss = $request->clss;
-        echo $name . $clss ;
+        // echo $name . $clss ;
 
         $stddb = new Studentdb;
         $stddb->name  = $request->name;
         $stddb->fname = $request->fname;
         $stddb->stclss_id = $request->clss;
+        $stddb->stsession_id = $ses->id;
 
         $stddb->save();
 

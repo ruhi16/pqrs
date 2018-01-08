@@ -29,8 +29,8 @@
         <td>{{$std->id}}</td>
         <td></td>
         <td>
-          @if(!$stcr->contains('session_id',1) AND !$stcr->contains('studentdb_id',$std->id))
-          <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>
+          @if(!$stcr->contains('session_id',1) && !$stcr->contains('studentdb_id',$std->id))
+            <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>
           @else
             Not Application
           @endif          

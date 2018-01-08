@@ -76,23 +76,7 @@
       </div>
       <div class="modal-body">
 
-        
-        {{--  <table class="table table-bordered">
-            <thead>
-                <tr>
-                  
-                
-                </tr>    
-            </thead>
-
-            <tbody>
-            <tr>    
-              
-            
-            </tr>
-            </tbody>
-        </table>  --}}
-
+       
         <div class="form-group">
           <label class="control-label col-sm-1" for="name">Name:</label>
           <div class="col-sm-7">
@@ -103,7 +87,7 @@
           <div class="col-sm-2">
             <select class="form-control" name="clss" id="cl">
                 <option value="0"></option>
-              @foreach($allClsSec as $cls)              
+              @foreach($clss as $cls)              
                 <option value="{{$cls->id}}">{{$cls->name}}</option>              
               @endforeach
             </select>
@@ -122,9 +106,9 @@
          
         </div>
 
-{{--  
-        <button type="submit" class="btn btn-primary">Submit</button>
-        </form>  --}}
+
+        <!-- <button type="submit" class="btn btn-primary">Submit</button>
+        </form>  -->
 
 
       </div>

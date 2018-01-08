@@ -55,9 +55,9 @@ class ClsSecController extends Controller
         ->where('stsec_id', $section_id)->get();
        
         $stdbtest = Studentcr::whereNotIn('id',$stdbIds->pluck('id'))->get();
-        foreach($stdbtest as $abc){
-            echo $abc;echo "<br>";
-        }
+        // foreach($stdbtest as $abc){
+        //     echo $abc;echo "<br>";
+        // }
         // print_r($stdbtest);
 
 
