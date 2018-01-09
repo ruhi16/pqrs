@@ -9,24 +9,26 @@
 <h1>Class Section View Page</h1>
 
 <table class="table table-bordered">
-    <thead>
-        <tr>
-            <td>#</td>
-            <td>Class</td>
-            <td>Sections</td>
-            <td>Status</td>
-        </tr>
-    </thead>
-    <tbody>
-@foreach($clssecs as $clssec)
+<thead>
     <tr>
-    <td>{{$clssec->id}}</td>
-    <td>{{$clssec->clss_id}}</td>
-    <td>{{$clssec->section_id}}</td>
-    <td>{{$clssec->status}}</td>
+        <th>id</th>
+        <th>Class</th>
+        <th>Sections</th>                
     </tr>
+</thead>
+<tbody>
+@foreach($clssecs as $clssec)
+<tr>
+  <td>{{ $clssec->id }}</td>
+  <td>{{ $clssec->clss->name }}</td>
+  <td>{{ $clssec->section->name }}</td>
+</tr>
 @endforeach
-        
+
+</tbody>
+</table>
+
+       
     </tbody>
 </table>
 <script type="text/javascript">

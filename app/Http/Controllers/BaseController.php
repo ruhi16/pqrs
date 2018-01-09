@@ -12,16 +12,21 @@ use App\Clss;
 use App\Subject;
 use App\Section;
 
+use App\Studentdb;
+use App\Studentcr;
+
 use App\Clssub;
 use App\Clssec;
 
 
 use App\Exmtypclssub;
+use App\Marksentry;
 
 class BaseController extends Controller
 {
     public function clssec(){
-        $clssecs = Clssec::all();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clssecs = Clssec::whereSession_id($ses->id)->get();
 
         return view ('clssec')
             ->with('clssecs', $clssecs)

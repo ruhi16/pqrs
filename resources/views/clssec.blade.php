@@ -13,15 +13,15 @@
     <tr>
         <th>id</th>
         <th>Class</th>
-        <th>Sections</th>        
-        <th>Roll</th>
+        <th>Sections</th>                
     </tr>
 </thead>
 <tbody>
 @foreach($clssecs as $clssec)
 <tr>
-  <td>{{$clssec->id}}</td>
-  <td></td>
+  <td>{{ $clssec->id }}</td>
+  <td>{{ $clssec->clss->name }}</td>
+  <td>{{ $clssec->section->name }}</td>
 </tr>
 @endforeach
 

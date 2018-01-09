@@ -11,14 +11,16 @@ use App\Extype;
 use App\Clss;
 use App\Subject;
 use App\Section;
+
 use App\Studentdb;
+use App\Studentcr;
 
 use App\Clssub;
 use App\Clssec;
 
 
 use App\Exmtypclssub;
-
+use App\Marksentry;
 
 class StudentController extends Controller
 {

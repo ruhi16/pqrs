@@ -20,7 +20,6 @@ use App\Clssec;
 
 
 use App\Exmtypclssub;
-
 use App\Marksentry;
 
 class ClsSecController extends Controller
