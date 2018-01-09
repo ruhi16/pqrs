@@ -235,6 +235,13 @@ class ClsSecController extends Controller
     public function clssecMarksRegister($clssec_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $clsc = Clssec::find($clssec_id);
+
+        $clsbs = Clssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)->get();
+        
+        foreach($clsbs as $clsb){
+            echo $clsb. "<br>";
+        }
         // echo $clsc->clss_id;
         
         $stdcrs = Studentcr::whereSession_id($ses->id)
@@ -243,17 +250,20 @@ class ClsSecController extends Controller
             ->get();
         
         // print_r($stdcrs);
-        foreach($stdcrs as $stdcr){
-            echo $stdcr->studentdb->name ."<br>";
-            // print_r($stdcr->studentcr);
-            foreach($stdcr->marksentries as $abc){
-                echo $abc . "<br>";
-            }
-        }
+        // foreach($stdcrs as $stdcr){
+        //     echo $stdcr->studentdb->name ."<br>";
+        //     // print_r($stdcr->studentcr);
+        //     foreach($stdcr->marksentries as $abc){
+        //         echo $abc . "<br>";
+        //     }
+        // }
         
 
         
 
-        // return view('clssecMarksRegister');
+        return view('clssecMarksRegister')
+        ->withStdcrs($stdcrs)
+        ->withClsbs($clsbs)
+        ;
     }
 }
