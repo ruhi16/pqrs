@@ -32,6 +32,9 @@
         <tr>
             <th>Name</th>
             <th>Subjects</th>
+            @foreach($exms as $ex)
+            <th>{{$ex->name}}</th>
+            @endforeach
         </tr>
     </thead>
     <tbody>
@@ -48,6 +51,19 @@
                     </table>
                 @endforeach
             </td>
+            @foreach($exms as $ex)
+                <td>
+                @foreach($clsbs as $clsb)
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            xx
+                        </td>
+                    </tr>
+                </table>
+                @endforeach
+                </td>
+            @endforeach
         </tr>
         @endforeach
         

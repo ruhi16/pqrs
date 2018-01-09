@@ -248,6 +248,8 @@ class ClsSecController extends Controller
             ->whereClss_id($clsc->clss_id)
             ->whereSection_id($clsc->section_id)
             ->get();
+        $exms = Exam::all();
+
         
         // print_r($stdcrs);
         // foreach($stdcrs as $stdcr){
@@ -264,6 +266,7 @@ class ClsSecController extends Controller
         return view('clssecMarksRegister')
         ->withStdcrs($stdcrs)
         ->withClsbs($clsbs)
+        ->withExms($exms)
         ;
     }
 }
