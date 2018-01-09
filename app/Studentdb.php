@@ -11,4 +11,5 @@ class Studentdb extends Model
     public function studentcr(){
         return $this->hasMany('App\Studentcr');
     }
+    
 }

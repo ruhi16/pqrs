@@ -239,16 +239,20 @@ class ClsSecController extends Controller
         $clsbs = Clssub::whereSession_id($ses->id)
             ->whereClss_id($clsc->clss_id)->get();
         
-        foreach($clsbs as $clsb){
-            echo $clsb. "<br>";
-        }
+
+
+        // foreach($clsbs as $clsb){
+        //     echo $clsb->subject->extype->name ;
+        //     echo $clsb->subject->name. "<br>";
+        // }
         // echo $clsc->clss_id;
         
         $stdcrs = Studentcr::whereSession_id($ses->id)
             ->whereClss_id($clsc->clss_id)
             ->whereSection_id($clsc->section_id)
             ->get();
-        $exms = Exam::all();
+        $exms = Exam::whereSession_id($ses->id)->get();
+        $extp = Extype::whereSession_id($ses->id)->get();
 
         
         // print_r($stdcrs);
@@ -267,6 +271,9 @@ class ClsSecController extends Controller
         ->withStdcrs($stdcrs)
         ->withClsbs($clsbs)
         ->withExms($exms)
+        ->withExtp($extp)
+        ->withCls($clsc->clss->name)
+        ->withSec($clsc->section->name)
         ;
     }
 }
