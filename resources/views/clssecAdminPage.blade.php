@@ -28,12 +28,8 @@
         <td>{{$std->stclss_id}}</td>
         <td>{{$std->id}}</td>
         <td></td>
-        <td>
-          {{--  @if(!$stcr->contains('session_id',$ses->id) && !$stcr->contains('studentdb_id',$std->id))  --}}
-            <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>
-          {{--  @else
-            Not Application
-          @endif            --}}
+        <td>          
+            <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>          
         </td>
       </tr>
       @endforeach
