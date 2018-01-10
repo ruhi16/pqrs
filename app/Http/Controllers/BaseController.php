@@ -96,16 +96,18 @@ class BaseController extends Controller
         return view('clssubView');
     }
     public function clssubView(){
-        $sessions = Session::all();
+        $sessions = Session::all();//$ses = Session::whereStatus('CURRENT')->first();
         $clssubs = Clssub::all();
         $clss  = Clss::all();
         $subjects = Subject::all();
+        $extps = Extype::all();
 
 
         return view('clssubView')
         ->with('sessions', $sessions) 
         ->with('clssubs', $clssubs) 
         ->with('clss', $clss) 
+        ->with('extps', $extps)
         ->with('subjects', $subjects) 
         ;
     }
@@ -207,11 +209,15 @@ class BaseController extends Controller
 
     public function exmtypclssubView(){
         $exams = Exam::all();
+        $extps = Extype::all();
+        $clss  = Clss::all();
         $etcss = Exmtypclssub::all(); 
 
         return view('exmtypclssubView')
         ->with('etcss', $etcss)
         ->with('exams', $exams)
+        ->with('extps', $extps)
+        ->with('clss', $clss)
         ;
     }
 
