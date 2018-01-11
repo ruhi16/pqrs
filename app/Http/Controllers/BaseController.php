@@ -24,6 +24,34 @@ use App\Marksentry;
 
 class BaseController extends Controller
 {
+    public function session(){
+        $sessions = Session::all();
+
+        return view ('session')
+        ->withSessions($sessions)
+        ;
+    }
+    public function setSession($session_id){
+
+        echo "SET SESSION";
+        DB::table('sessions')->update(['Status'=>'CLOSED']);
+        
+        $session = Session::find($session_id);
+        $session->status = 'CURRENT';
+        $session->save();
+        return back();
+    } 
+    public function editSession($session_id){
+
+
+        return back();
+    } 
+    public function addSession(){
+
+
+        // return back();
+    }
+
     public function clssec(){
         $ses = Session::whereStatus('CURRENT')->first();
         $clssecs = Clssec::whereSession_id($ses->id)->get();
@@ -115,6 +143,10 @@ class BaseController extends Controller
         ->with('subjects', $subjects) 
         ;
     }
+
+
+
+
 
 
     public function exmtypclssub(){

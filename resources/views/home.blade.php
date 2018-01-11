@@ -16,6 +16,9 @@
 
                     You are logged in!
                     <br>
+                    <a href="{{url('/session')}}">Session Details</a>
+
+                    <br>
                     <a href="{{url('/clssub')}}">Class - Subject Entry</a>
                     <br>
                     <a href="{{url('/clssub-view')}}">Class - Subject View</a>
