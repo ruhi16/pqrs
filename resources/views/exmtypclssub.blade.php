@@ -31,7 +31,18 @@
             <td>{{$cls->name}}</td>
             @foreach($exams as $exam)
             <td>
+                @php $flag = FALSE; @endphp
+                @foreach($etcss as $etcs)
+                    @if($cls->id == $etcs->clss_id 
+                        && $extp->id == $etcs->extype_id 
+                        && $exam->id == $etcs->exam_id )
+                        <input type="text" value="{{ $etcs->fm }}" name="ab{{$exam->id}}{{$extp->id}}{{$cls->id}}[]"></td>
+                        @php $flag = TRUE; @endphp
+                    @endif
+                @endforeach
+                @if($flag == False)
                 <input type="text" value="" name="ab{{$exam->id}}{{$extp->id}}{{$cls->id}}[]">
+                @endif
             </td>
             @endforeach
         </tr>

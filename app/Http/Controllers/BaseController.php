@@ -50,11 +50,15 @@ class BaseController extends Controller
         $sessions = Session::all();               
         $clss  = Clss::all();
         $subjs = Subject::all();
+        $clssubs = Clssub::all();
+        $extps = Extype::all();
 
         return view('clssub')
         ->with('sessions', $sessions)        
         ->with('clss', $clss)
         ->with('subjs', $subjs)
+        ->with('clssubs', $clssubs)
+        ->with('extps', $extps)
         ;
 
     }
@@ -117,11 +121,13 @@ class BaseController extends Controller
         $exams = Exam::all();
         $extps = Extype::all();
         $clss  = Clss::all();
+        $etcss = Exmtypclssub::all();
 
         return view('exmtypclssub')
         ->with('exams', $exams)
         ->with('extps', $extps)
         ->with('clss', $clss)
+        ->with('etcss', $etcss)
         ;
     }
 

@@ -14,25 +14,42 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-        
+        <th>Exam Type</th>
         @foreach($clss as $cls)
-            <th>{{$cls->name}}</th>
+            <th class="text-center">{{$cls->name}}</th>
         @endforeach
+        
         </tr>    
     </thead>
 
     <tbody>
+    @foreach($extps as $extp)        
     <tr>    
+        <th class="align-bottom">{{ $extp->name }}</th>
     @foreach($clss as $cls)
-    <td>
-    @foreach($subjs as $subj)            
-        <div class="checkbox">
-            <label><input type="checkbox" value="{{$cls->id}}-{{$subj->id}}" name="clssub[]">{{$subj->name}}-{{$subj->extype_id}}</label>                    
-        </div>                        
-    @endforeach
-    </td>
+        <td>
+        @foreach($subjs as $subj)
+        @if($extp->id == $subj->extype_id)
+            @php $flag = FALSE; @endphp            
+            @foreach($clssubs as $clssub)
+                @if($cls->id == $clssub->clss_id && $subj->id == $clssub->subject_id )
+                <div class="checkbox">
+                    <label><input type="checkbox" value="{{$cls->id}}-{{$subj->id}}" name="clssub[]" checked>{{$subj->name}}-{{$subj->extype_id}}</label>
+                    @php $flag = True; @endphp
+                </div>
+                @endif
+            @endforeach  
+            @if($flag == FALSE)
+                <div class="checkbox">
+                    <label><input type="checkbox" value="{{$cls->id}}-{{$subj->id}}" name="clssub[]">{{$subj->name}}-{{$subj->extype_id}}</label>                    
+                </div>
+            @endif
+        @endif
+        @endforeach
+        </td>
     @endforeach
     </tr>
+    @endforeach
     </tbody>
 </table>
 
