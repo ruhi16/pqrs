@@ -42,28 +42,53 @@ class BaseController extends Controller
         return back();
     } 
     public function editSession($session_id){
-
-
-        return back();
-    } 
-    public function addSession(){
-
+       
 
         // return back();
+    } 
+
+    public function addSession(Request $request){
+        
+        $max_id = Session::max('id');
+        $session = new Session;
+
+        $session->name = $request->currses;
+        $session->stdate = $request->fromdt;
+        $session->entdate = $request->todt;
+        $session->status = "CLOSED";
+        $session->prsession_id = $max_id;        
+        $session->save();
+
+
+        
+        $ses = Session::find($max_id);
+        $ses->nxsession_id = $session->id;
+        $ses->save();
+        
+        return back();
     }
 
+
+    
     public function clssec(){
         $ses = Session::whereStatus('CURRENT')->first();
         $clssecs = Clssec::whereSession_id($ses->id)->get();
-
+        $clss = Clss::all();
+        // $cls = $clssecs->select('clss_id')->distinct()->get();
+        // dd($cls);
+        // $cls = Clssec::distinct('name')->count();
+        // echo $cls;
         return view ('clssec')
             ->with('clssecs', $clssecs)
+            ->with('clss', $clss)
         ;
     }
 
     public function clssecSubmit(Request $request){
         
 
+
+        return redicret()->to('/clssec-view');
     }
 
     public function clssecView(){
@@ -73,6 +98,54 @@ class BaseController extends Controller
         ->with('clssecs', $clssecs)
         ;
     }
+
+    public function addSec($clss_id){
+        $ses = Session::where('Status', '=', 'CURRENT')->first();
+        $cls = Clss::find($clss_id);
+    
+        $m = DB::table('clssecs')
+            ->where('clss_id','=', $clss_id)
+            ->max('section_id');
+    
+        $n = DB::table('sections')        
+            ->max('id');
+        // echo $ses->id;
+        
+        if($m < $n){
+            $clsc = new Clssec;
+            $clsc->clss_id = $clss_id;
+            $clsc->section_id = ++$m;
+            $clsc->session_id = $ses->id;
+            $clsc->save();
+            // $cls->sections()->attach(++$m,['session_id'=>$ses->id]);
+        }
+        // foreach($cls->sections as $c){
+        //     echo $c."<br>";
+        // }
+        return redirect()->to('/clssec');
+    }
+    public function delSec($clss_id){
+        $ses = Session::where('Status', '=', 'CURRENT')->first();
+        $cls = Clss::find($clss_id);
+    
+        $m = DB::table('clssecs')
+            ->where('clss_id','=', $clss_id)
+            ->max('section_id');
+        echo $m;
+        
+        // echo $ses->id;
+        if($m > 0){
+            $delrow = Clssec::whereClss_id($clss_id)
+                ->whereSection_id($m)->delete();
+                // print_r($delrow);
+
+            // $cls->sections()->detach($m,['session_id'=>$ses->id]);
+        }
+        return redirect()->to('/clssec');
+    }
+
+
+
 
     public function clssub(){
         $sessions = Session::all();               
@@ -125,7 +198,7 @@ class BaseController extends Controller
         }// end of if
         
 
-        return view('clssubView');
+        return redirect()->to('clssubView');
     }
     public function clssubView(){
         $sessions = Session::all();//$ses = Session::whereStatus('CURRENT')->first();
@@ -228,7 +301,7 @@ class BaseController extends Controller
             }
 
         }// end of for
-        print_r($final);
+        // print_r($final);
         Exmtypclssub::truncate();
         for($i=0; $i<count($final['exam']); $i++){
             $etcs = new Exmtypclssub;
@@ -242,7 +315,7 @@ class BaseController extends Controller
 
 
 
-        return view('exmtypclssubView');
+        return redirect()->to('exmtypclssub-view');
     }
 
     public function exmtypclssubView(){

@@ -8,3 +8,4 @@
     <link rel="stylesheet" type="text/css" href="{{url('bs337/css/bootstrap.min.css')}}" >
     <script src="{{url('jQ/jquery.min.js')}}"></script>
     <script src="{{url('bs337/js/bootstrap.min.js')}}" integrity=""></script>
+ 

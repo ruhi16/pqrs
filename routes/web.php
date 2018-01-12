@@ -21,13 +21,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/session', 'BaseController@session');
 Route::get('/setSession/{session_id}', 'BaseController@setSession');
-Route::get('/addSession', 'BaseController@addSession');
+Route::post('/addSession', 'BaseController@addSession');
 Route::get('/editSession/{session_id}', 'BaseController@editSession');
 
 
 Route::get('/clssec', 'BaseController@clssec');
 Route::post('/clssec-submit', 'BaseController@clssecSubmit');
 Route::get('/clssec-view', 'BaseController@clssecView');
+Route::get('/addSec/{n}', 'BaseController@addSec');
+Route::get('/delSec/{n}', 'BaseController@delSec');
+
 
 
 Route::get('/clssub', 'BaseController@clssub');

@@ -93,12 +93,12 @@
 				<div class="form-group">
         	<label class="control-label col-sm-3" for="fromdt">From:</label>
 					<div class="col-sm-4">						
-						<input type="text" class="date form-control" id="fromdt" name="fromdt" placeholder="dd-mm-yyyy">
+						<input type="date" class="date form-control" id="fromdt" name="fromdt" placeholder="dd-mm-yyyy">
 					</div>
 
 					<label class="control-label col-sm-1" for="todt">To:</label>
 					<div class="col-sm-4">
-						<input type="text" class="date form-control" id="todt" name="todt" placeholder="dd-mm-yyyy">
+						<input type="date" class="date form-control" id="todt" name="todt" placeholder="dd-mm-yyyy">
 					</div>
       	</div>
 
