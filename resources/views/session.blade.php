@@ -48,8 +48,8 @@
           <td>{{$session->stdate}}</td>
           <td>{{$session->entdate}}</td>
           <td>{{$session->status}}</td>
-          <td><a href="{!! url('/setSession', [$session->id]) !!}" class="btn btn-danger" >Set As Current</a>
-              <a href="{!! url('/editSession',[$session->id]) !!}" class="btn btn-primary">Edit</a>
+          <td><a href="{!! url('/setSession', [$session->id]) !!}" class="btn btn-success" >Set As Current</a>
+              {{--  <a href="{!! url('/editSession',[$session->id]) !!}" class="btn btn-primary">Edit</a>  --}}
           </td>
         </tr>
       @endforeach

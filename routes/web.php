@@ -17,7 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index']);
+
+Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
+Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
 
 Route::get('/session', 'BaseController@session');
 Route::get('/setSession/{session_id}', 'BaseController@setSession');

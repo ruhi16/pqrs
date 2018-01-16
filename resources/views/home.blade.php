@@ -15,25 +15,32 @@
                     @endif
 
                     You are logged in!
+
+                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('xyz')}}'">Test</button>
+                    <br>
+                    <a href="{{url('/schoolInfo')}}">School Details</a>
+                    
                     <br>
                     <a href="{{url('/session')}}">Session Details</a>
 
                     <br>
                     <a href="{{url('/clssub')}}">Class - Subject Entry</a>
+                    
                     <br>
                     <a href="{{url('/clssub-view')}}">Class - Subject View</a>
                     
                     <br>
                     <a href="{{url('/exmtypclssub')}}">Exam - Type - Class - Subject Entry</a>
+                    
                     <br>
                     <a href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View</a>
 
                     <br>
-                    <a href="{{url('/studentdb')}}">Student's Detail View</a>
-                    
+                    <a href="{{url('/studentdb')}}">Student's Detail View</a>                    
                     
                     <br>                    
                     <a href="{{url('/clssec')}}">Class Section Entry</a>
+                    
                     <br>
                     <a href="{{url('/clssec-view')}}">Class Section View</a>
 
