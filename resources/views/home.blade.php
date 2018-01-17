@@ -21,6 +21,9 @@
                     <a href="{{url('/schoolInfo')}}">School Details</a>
                     
                     <br>
+                    <a href="{{url('/schoolInfoView')}}">School Details View</a>
+
+                    <br>
                     <a href="{{url('/session')}}">Session Details</a>
 
                     <br>
