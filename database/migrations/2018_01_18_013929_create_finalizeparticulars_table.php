@@ -15,6 +15,8 @@ class CreateFinalizeparticularsTable extends Migration
     {
         Schema::create('finalizeparticulars', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('particular');
+            $table->string('status');
             $table->timestamps();
         });
     }

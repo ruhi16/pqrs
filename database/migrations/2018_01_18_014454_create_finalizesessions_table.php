@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFinalizeparsessionsTable extends Migration
+class CreateFinalizesessionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateFinalizeparsessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('finalizeparsessions', function (Blueprint $table) {
+        Schema::create('finalizesessions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('finalizeparticular_id');
+            $table->integer('session_id');
+            $table->string('remarks');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateFinalizeparsessionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('finalizeparsessions');
+        Schema::dropIfExists('finalizesessions');
     }
 }

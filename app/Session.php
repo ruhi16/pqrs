@@ -14,4 +14,14 @@ class Session extends Model
     public function marksentries(){
         return $this->hasMany('App\Marksentry');
     }
+
+
+
+    public function finalizeparticular(){
+        return $this->hasMany('App\Finalizeparticular');
+    }
+
+    public function finalizesession(){
+        return $this->hasMany('App\Finalizesession');
+    }
 }
