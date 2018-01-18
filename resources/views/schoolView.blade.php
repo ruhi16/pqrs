@@ -14,7 +14,9 @@
         <label class="control-label col-sm-10" for="schname">{{$sch->name}}</label>
     </div>					
 </div>
-
+<div class="form-group">
+    <button class="btn btn-primary" onclick="location.href='{{route('finalizeSchool')}}'">Finalize</button>
+</div>
 
 
 <script type="text/javascript">

@@ -75,3 +75,7 @@ Route::get('/clssec-MarksRegister/{clssec_id}',  'ClsSecController@clssecMarksRe
 Route::post('/updateMarks', 'ClsSecController@updateMarks');
 
 Route::get('/test', 'BaseController@test');
+
+
+
+Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
