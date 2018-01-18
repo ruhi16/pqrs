@@ -118,6 +118,7 @@ class ClsSecController extends Controller
         // $ext = Extype::all();
         $clsb = Clssub::whereClss_id($clssec->clss_id)->get();
 
+        $stdmrk = Marksentry::whereSession_id($ses->id)->get();
         // $stdcrs = Studentcr::whereSession_id($ses->id)
         // ->whereClss_id($clss_id)
         // ->whereSection_id($section_id)->get();
@@ -125,12 +126,9 @@ class ClsSecController extends Controller
         return view('clssecMrkenPage')
         ->withExtpcls($extpcls)
         ->withClsb($clsb)
-        ->withClsc($clssec)
-        // ->withCls($cls)
-        ->withExm($exm)
-        // ->withExt($ext)
-        
-        // ->withStdcrs($stdcrs)
+        ->withClsc($clssec)        
+        ->withExm($exm) 
+        ->withStdmrk($stdmrk)       
         ;
     }
 

@@ -8,9 +8,9 @@
 @section('content')
 <h1>Class Section Marks Entry Page</h1>
 
-@foreach($extpcls as $extpcl)
+{{--  @foreach($extpcls as $extpcl)
   {{$extpcl}}
-@endforeach
+@endforeach  --}}
 
 
 <table class="table table-bordered">
@@ -34,6 +34,14 @@
             @if( $extpcl->exam_id == $ex->id && $extpcl->extype_id == $cl->subject->extype->id )
                {{--  extpcl:{{$extpcl->id}}-clsb:{{$cl->id}}-clsc:{{$clsc->id}}  --}}
                <a href="{{url('/Clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}">Marks Entry</a>
+               @if($stdmrk
+                  ->where('exmtypclssub_id', $extpcl->id)
+                  ->where('clssec_id', $clsc->id)
+                  ->where('clssub_id',$cl->id)->sum('marks')>0)
+                  <b>Done</b>
+                @else
+                <b>Pending</b>
+                @endif
             @endif
           @endforeach
         </td>
