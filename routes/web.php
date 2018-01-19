@@ -20,9 +20,9 @@ Auth::routes();
 Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index'])->middleware('FinMidware:abc-hgn');
 Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
 Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
-Route::get('/schoolInfoView', 'SchoolController@schoolInfoView');
+Route::get('/schoolInfoView', 'SchoolController@schoolInfoView')->middleware('FinMidware:school');
 
-Route::get('/session', 'BaseController@session');
+Route::get('/session', 'BaseController@session')->middleware('FinMidware:session');
 Route::get('/setSession/{session_id}', 'BaseController@setSession');
 Route::post('/addSession', 'BaseController@addSession');
 Route::get('/editSession/{session_id}', 'BaseController@editSession');
@@ -30,7 +30,7 @@ Route::get('/editSession/{session_id}', 'BaseController@editSession');
 
 Route::get('/clssec', 'BaseController@clssec');
 Route::post('/clssec-submit', 'BaseController@clssecSubmit');
-Route::get('/clssec-view', 'BaseController@clssecView');
+Route::get('/clssec-view', 'BaseController@clssecView')->middleware('FinMidware:clssec-view');
 Route::get('/addSec/{n}', 'BaseController@addSec');
 Route::get('/delSec/{n}', 'BaseController@delSec');
 
@@ -38,7 +38,7 @@ Route::get('/delSec/{n}', 'BaseController@delSec');
 
 Route::get('/clssub', 'BaseController@clssub');
 Route::post('/clssub-submit', 'BaseController@clssubSubmit');
-Route::get('/clssub-view', 'BaseController@clssubView');
+Route::get('/clssub-view', 'BaseController@clssubView')->middleware('FinMidware:school');
 
 
 Route::get('exmtypclssub', 'BaseController@exmtypclssub');

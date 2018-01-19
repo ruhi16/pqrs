@@ -44,12 +44,12 @@ class HomeController extends Controller
     public function index()
     {
 
-        $tables = DB::select("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;");
-        // dd($tables);
-        foreach($tables as $table)
-        {
-            echo $table->name ."<br>";
-        }
+        // $tables = DB::select("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;");
+        // // dd($tables);
+        // foreach($tables as $table)
+        // {
+        //     echo $table->name ."<br>";
+        // }
         return view('home');
     }
 }

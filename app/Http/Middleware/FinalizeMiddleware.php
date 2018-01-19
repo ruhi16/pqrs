@@ -15,7 +15,7 @@ class FinalizeMiddleware
      */
     public function handle($request, Closure $next, $data)
     {
-        echo "Oke... from FinalizeMiddleware". $data;
+        echo "Oke... from FinalizeMiddleware: ". $data;
         return $next($request);
     }
 }
