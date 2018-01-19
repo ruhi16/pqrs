@@ -18,6 +18,9 @@
 
                     <button type="button" class="btn btn-primary" onclick="location.href='{{route('xyz')}}'">Test</button>
                     <br>
+                    <a href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>
+                    
+                    <br>
                     <a href="{{url('/schoolInfo')}}">School Details</a>
                     
                     <br>

@@ -17,8 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index']);
-
+Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index'])->middleware('FinMidware:abc-hgn');
 Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
 Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
 Route::get('/schoolInfoView', 'SchoolController@schoolInfoView');
@@ -77,5 +76,8 @@ Route::post('/updateMarks', 'ClsSecController@updateMarks');
 Route::get('/test', 'BaseController@test');
 
 
+
+Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
+Route::get('/finalizeParticulars-Refresh', 'FinalizeController@finalizeParticularsRefresh')->name('finalizeParticulars-Refresh');
 
 Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');

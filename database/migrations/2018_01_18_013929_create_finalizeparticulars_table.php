@@ -17,6 +17,7 @@ class CreateFinalizeparticularsTable extends Migration
             $table->increments('id');
             $table->string('particular');
             $table->string('status');
+            $table->integer('session_id');
             $table->timestamps();
         });
     }
