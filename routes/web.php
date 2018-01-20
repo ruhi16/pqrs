@@ -22,17 +22,32 @@ Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
 Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
 Route::get('/schoolInfoView', 'SchoolController@schoolInfoView')->middleware('FinMidware:school');
 
-Route::get('/session', 'BaseController@session')->middleware('FinMidware:session');
-Route::get('/setSession/{session_id}', 'BaseController@setSession');
-Route::post('/addSession', 'BaseController@addSession');
-Route::get('/editSession/{session_id}', 'BaseController@editSession');
+Route::get('/session', 'SessionController@session')->middleware('FinMidware:session');
+Route::get('/setSession/{session_id}', 'SessionController@setSession');
+Route::post('/addSession', 'SessionController@addSession');
+Route::get('/editSession/{session_id}', 'SessionController@editSession');
 
 
-Route::get('/clssec', 'BaseController@clssec');
-Route::post('/clssec-submit', 'BaseController@clssecSubmit');
-Route::get('/clssec-view', 'BaseController@clssecView')->middleware('FinMidware:clssec-view');
-Route::get('/addSec/{n}', 'BaseController@addSec');
-Route::get('/delSec/{n}', 'BaseController@delSec');
+Route::get('/clssec', 'ClsSecController@clssec');
+Route::post('/clssec-submit', 'ClsSecController@clssecSubmit');
+Route::get('/clssec-view', 'ClsSecController@clssecView')->middleware('FinMidware:clssec-view');
+Route::get('/addSec/{n}', 'ClsSecController@addSec');
+Route::get('/delSec/{n}', 'ClsSecController@delSec');
+
+Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
+Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');
+Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
+
+
+Route::get('/clssec-MrkenPage/{clssec_id}', 'ClsSecController@clssecMrkenPage');
+Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'ClsSecController@ClssecstdMarksEntry');
+Route::get('/clssec-MarksRegister/{clssec_id}',  'ClsSecController@clssecMarksRegister');
+
+//Ajax Update
+Route::post('/updateMarks', 'ClsSecController@updateMarks');
+
+
+
 
 
 
@@ -53,25 +68,6 @@ Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
 Route::post('/updateSection', 'StudentController@updateSection');
 
 
-
-Route::get('/clssec', 'BaseController@clssec');
-Route::post('/clssec-submit', 'BaseController@clssecSubmit');
-Route::get('/clssec-view', 'BaseController@clssecView');
-
-
-
-
-Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
-Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');
-Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
-
-
-Route::get('/clssec-MrkenPage/{clssec_id}', 'ClsSecController@clssecMrkenPage');
-Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'ClsSecController@ClssecstdMarksEntry');
-Route::get('/clssec-MarksRegister/{clssec_id}',  'ClsSecController@clssecMarksRegister');
-
-//Ajax Update
-Route::post('/updateMarks', 'ClsSecController@updateMarks');
 
 Route::get('/test', 'BaseController@test');
 
