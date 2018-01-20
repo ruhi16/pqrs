@@ -41,6 +41,12 @@ Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 
 
+Route::get('/clssub', 'ClsSubController@clssub');
+Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
+Route::get('/clssub-view', 'ClsSubController@clssubView')->middleware('FinMidware:school');
+
+
+
 Route::get('/clssec-MrkenPage/{clssec_id}', 'MarksEntryController@clssecMrkenPage');
 Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'MarksEntryController@ClssecstdMarksEntry');
 Route::get('/clssec-MarksRegister/{clssec_id}',  'MarksEntryController@clssecMarksRegister');
@@ -49,10 +55,6 @@ Route::post('/updateMarks', 'MarksEntryController@updateMarks');
 
 
 
-Route::get('/clssub', 'ClsSubController@clssub');
-Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
-Route::get('/clssub-view', 'ClsSubController@clssubView')->middleware('FinMidware:school');
-
 Route::get('exmtypclssub', 'BaseController@exmtypclssub');
 Route::post('exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
 Route::get('exmtypclssub-view', 'BaseController@exmtypclssubView');
@@ -60,7 +62,6 @@ Route::get('exmtypclssub-view', 'BaseController@exmtypclssubView');
 
 Route::get('/studentdb', 'StudentController@studentdb');
 Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
-
 //Ajax Update
 Route::post('/updateSection', 'StudentController@updateSection');
 
