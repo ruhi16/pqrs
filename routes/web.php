@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index'])->middleware('FinMidware:abc-hgn');
+
 Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
 Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
 Route::get('/schoolInfoView', 'SchoolController@schoolInfoView')->middleware('FinMidware:school');
@@ -40,13 +41,13 @@ Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 
 
-
-Route::get('/clssec-MrkenPage/{clssec_id}', 'ClsSecController@clssecMrkenPage');
-Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'ClsSecController@ClssecstdMarksEntry');
-Route::get('/clssec-MarksRegister/{clssec_id}',  'ClsSecController@clssecMarksRegister');
-
+Route::get('/clssec-MrkenPage/{clssec_id}', 'MarksEntryController@clssecMrkenPage');
+Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'MarksEntryController@ClssecstdMarksEntry');
+Route::get('/clssec-MarksRegister/{clssec_id}',  'MarksEntryController@clssecMarksRegister');
 //Ajax Update
-Route::post('/updateMarks', 'ClsSecController@updateMarks');
+Route::post('/updateMarks', 'MarksEntryController@updateMarks');
+
+
 
 Route::get('/clssub', 'ClsSubController@clssub');
 Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
