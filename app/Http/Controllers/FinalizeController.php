@@ -21,7 +21,7 @@ use App\Clssec;
 use App\Exmtypclssub;
 use App\Marksentry;
 use App\Finalizeparticular;
-
+use App\Finalizesession;
 
 class FinalizeController extends Controller
 {
@@ -54,6 +54,15 @@ class FinalizeController extends Controller
 
         return redirect()->to('/finalizeParticulars');
     }
+
+    public function finalizeSessions(){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $fsesns = Finalizesession::whereSession_id($ses->id)->get();
+
+        return view ('finalizeSessions')
+        ->with('fsesns', $fsesns);
+    }
+
 
     public function finalizeSchool(Request $request){
 

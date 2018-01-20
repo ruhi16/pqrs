@@ -21,6 +21,9 @@
                     <a href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>
                     
                     <br>
+                    <a href="{{url('/finalizeSessions')}}">Finalize Sessions</a>
+
+                    <br>
                     <a href="{{url('/schoolInfo')}}">School Details</a>
                     
                     <br>
