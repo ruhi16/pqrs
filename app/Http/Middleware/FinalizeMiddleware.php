@@ -20,18 +20,37 @@ class FinalizeMiddleware
     {
         echo "Oke... from FinalizeMiddleware: ". $data;
         $ar = explode('-', $data);
-        
-        foreach($ar as $a){
-            // echo $a;
-            $finpart = FinalizeParticular::whereParticular($a)->first();
+        $flag = FALSE;
+        // foreach($ar as $a){  
+        for($i=0; $i< count($ar); $i++){
+            $finpart = FinalizeParticular::whereParticular($ar[$i])->first();
             $finsesn = FinalizeSession::whereFinalizeparticular_id($finpart->id)->first();
-            if($finsesn){
-                echo "<br>$a : exists in finalizeSession";
-            }else{
-                echo "<br>$a : not exists in finalizeSession";
+            if($i == 0 && $finsesn){
+
             }
-            // echo "<br>";echo "XXXX:".$finparts->particular;
+            if($finsesn){
+                if($i == 0){
+                    echo "<br> The Parent table is finalized.";
+                    $str = $ar[$i]."-view";
+                    return redirect()->to($str);
+                    // return back();
+                }
+                echo "<br>$ar[$i] : exists in finalizeSession";
+
+            }else{
+                echo "<br>$ar[$i] : not exists in finalizeSession";
+                $flag = TRUE;
+            }            
         }
-        return $next($request);
+
+        if($flag == TRUE){
+            // $str = $data."-view";
+            return redirect()->to('/finalizeParticulars');
+        }else{
+
+            // echo $reqeust;
+            return $next($request);
+        }
+        
     }
 }

@@ -48,10 +48,10 @@
                     <a href="{{url('/studentdb')}}">Student's Detail View</a>                    
                     
                     <br>                    
-                    <a href="{{url('/clssec')}}">Class Section Entry</a>
+                    <a href="{{url('/clssecs')}}">Class Section Entry</a>
                     
                     <br>
-                    <a href="{{url('/clssec-view')}}">Class Section View</a>
+                    <a href="{{url('/clssecs-view')}}">Class Section View</a>
 
                     <br>
                     <a href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>

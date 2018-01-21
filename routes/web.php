@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index']);
 
-Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz')->middleware('FinMidware:schools');
+Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
 Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
 Route::get('/schoolInfoView', 'SchoolController@schoolInfoView');
 
@@ -29,9 +29,9 @@ Route::post('/addSession', 'SessionController@addSession');
 Route::get('/editSession/{session_id}', 'SessionController@editSession');
 
 
-Route::get('/clssec', 'ClsSecController@clssec')->middleware('FinMidware:clsses-sections');
+Route::get('/clssecs', 'ClsSecController@clssec')->middleware('FinMidware:clssecs-clsses-sections');
 Route::post('/clssec-submit', 'ClsSecController@clssecSubmit');
-Route::get('/clssec-view', 'ClsSecController@clssecView')->middleware('FinMidware:clsses-sections');
+Route::get('/clssecs-view', 'ClsSecController@clssecView');//->middleware('FinMidware:clsses-sections');
 
 Route::get('/addSec/{n}', 'ClsSecController@addSec');
 Route::get('/delSec/{n}', 'ClsSecController@delSec');
@@ -77,3 +77,4 @@ Route::get('/finalizeParticulars-Refresh', 'FinalizeController@finalizeParticula
 Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
 
 Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
+Route::get('/btn-finalize/{n}','FinalizeController@btnFinalize');

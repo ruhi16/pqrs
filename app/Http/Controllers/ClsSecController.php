@@ -42,7 +42,7 @@ class ClsSecController extends Controller
         
 
 
-        return redicret()->to('/clssec-view');
+        return redicret()->to('/clssecs-view');
     }
 
     public function clssecView(){
@@ -76,7 +76,7 @@ class ClsSecController extends Controller
         // foreach($cls->sections as $c){
         //     echo $c."<br>";
         // }
-        return redirect()->to('/clssec');
+        return redirect()->to('/clssecs');
     }
     public function delSec($clss_id){
         $ses = Session::where('Status', '=', 'CURRENT')->first();
@@ -95,7 +95,7 @@ class ClsSecController extends Controller
 
             // $cls->sections()->detach($m,['session_id'=>$ses->id]);
         }
-        return redirect()->to('/clssec');
+        return redirect()->to('/clssecs');
     }
 
 

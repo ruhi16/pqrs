@@ -28,9 +28,12 @@ class FinalizeController extends Controller
     public function finalizeParticulars(){
         $ses = Session::whereStatus('CURRENT')->first();
         $fparts = Finalizeparticular::whereSession_id($ses->id)->get();
+        $fsesns = Finalizesession::whereSession_id($ses->id)->get();
+
 
         return view ('finalizeParticulars')
-        ->with('fparts', $fparts);
+        ->with('fparts', $fparts)
+        ->with('fsesns', $fsesns);
     }
 
     public function finalizeParticularsRefresh(){
@@ -67,5 +70,15 @@ class FinalizeController extends Controller
     public function finalizeSchool(Request $request){
 
         return "School Details Finalized";
+    }
+
+    public function btnFinalize($n){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $fsesns = Finalizesession::firstOrNew(['finalizeparticular_id'=>$n,'session_id'=>$ses->id]);
+        $fsesns->finalizeparticular_id = $n;        
+        $fsesns->session_id = $ses->id;
+        $fsesns->remarks    = 'oke';
+        $fsesns->save();
+        return back();
     }
 }
