@@ -19,6 +19,13 @@ Auth::routes();
 
 Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index']);
 
+Route::get('/clsses', 'ClssesController@clsses');
+Route::post('/clsses-submit', 'ClssesController@clssesSubmit');
+Route::get('/clsses-view', 'ClssesController@clssesView');
+Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
+Route::post('/clsses-deltsubmit', 'ClssesController@clssesDeltSubmit');
+
+
 Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
 Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
 Route::get('/schoolInfoView', 'SchoolController@schoolInfoView');
@@ -35,6 +42,7 @@ Route::get('/clssecs-view', 'ClsSecController@clssecView');//->middleware('FinMi
 
 Route::get('/addSec/{n}', 'ClsSecController@addSec');
 Route::get('/delSec/{n}', 'ClsSecController@delSec');
+
 
 Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
 Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');

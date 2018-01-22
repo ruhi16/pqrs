@@ -8,7 +8,9 @@ class Session extends Model
 {
     protected $guarded = ['id'];
     
-    
+    public function clsses(){
+        return $this->hasMany('App\Clss');
+    }
     
     
     public function marksentries(){

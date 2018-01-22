@@ -18,6 +18,12 @@
 
                     <button type="button" class="btn btn-primary" onclick="location.href='{{route('xyz')}}'">Test</button>
                     <br>
+                    <a href="{{url('/clsses')}}">Class Details Entry</a>
+                    
+                    <br>
+                    <a href="{{url('/clsses-view')}}">Class Details Display</a>
+
+                    <br>
                     <a href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>
                     
                     <br>
