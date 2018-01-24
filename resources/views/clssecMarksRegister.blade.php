@@ -47,6 +47,7 @@
                   
                 </td>
                 @foreach($extp as $et)  {{-- for each exam category summative/formative --}}
+                @php $grtotal = 0; @endphp
                 <td> 
                   <table class="table table-condensed table-bordered">
                     <thead>
@@ -67,6 +68,7 @@
                       <tr>
                       <td>{{$clsb->subject->id}}</td>
                       <td>{{$clsb->subject->name}}</td>
+                      @php $total = 0; @endphp
                       @foreach($exms as $ex)
                       <td class="text-right">
                         @foreach($stdcr->marksentries as $record)
@@ -74,21 +76,29 @@
                                   && $clsb->subject->id == $record->clssub->subject->id
                                   && $ex->id == $record->exmtypclssub->exam->id )
                             {{$record->marks}}
+                            @php $total = $total + $record->marks; @endphp
                           @endif
                         @endforeach
                       </td>
                       @endforeach
-                      <td></td>
+                      <th class="text-right">{{$total}}</th>
+                      @php $grtotal = $grtotal + $total; @endphp
                       <td></td>
                       </tr>
                       @endif
                       @endforeach
                       
                     </tbody>
-                  </table>                    
-                </td>
+                  </table>  
+                <b>Total Marks: {{$grtotal}}</b>
+                </td>                
                 @endforeach                
             </tr>
+            {{--  <tr>
+                
+                <td>{{$grtotal}}</td>
+                <td>xxx</td>
+            </tr>  --}}
         @endforeach
     </tbody>
 </table>
