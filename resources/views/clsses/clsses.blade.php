@@ -169,8 +169,8 @@
       //alert(name);
 
 
-      $('input[name="deltclssName"]').val(name);
-      $('input[name="deltclssId"]').val(v);
+      $('input[name="editclssName"]').val(name);
+      $('input[name="editclssId"]').val(v);
       //$('#editModal').modal('show');
     });
 

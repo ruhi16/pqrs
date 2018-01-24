@@ -20,7 +20,7 @@ Auth::routes();
 
 Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index']);
 
-Route::get('/clsses', 'ClssesController@clsses')->middleware('FinMidware:clsses');
+Route::get('/clsses', 'ClssesController@clsses');//->middleware('FinMidware:clsses');
 Route::post('/clsses-submit', 'ClssesController@clssesSubmit');
 Route::get('/clsses-view', 'ClssesController@clssesView');
 Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
