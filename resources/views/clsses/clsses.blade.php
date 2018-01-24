@@ -96,7 +96,7 @@
       {!! Form::open(['url'=>'/clsses-editsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
 			<div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Enter New Class...</h4>
+        <h4 class="modal-title">Edit or Update Class...</h4>
       </div>
       <div class="modal-body">        
 
@@ -131,7 +131,7 @@
       {!! Form::open(['url'=>'/clsses-deltsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
 			<div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Enter New Class...</h4>
+        <h4 class="modal-title">Do You Want to Delete Class...</h4>
       </div>
       <div class="modal-body">        
 
