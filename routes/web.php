@@ -20,7 +20,7 @@ Auth::routes();
 
 Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index']);
 
-Route::get('/clsses', 'ClssesController@clsses');//->middleware('FinMidware:clsses');
+Route::get('/clsses', 'ClssesController@clsses')->middleware('FinMidware:clsses');
 Route::post('/clsses-submit', 'ClssesController@clssesSubmit');
 Route::get('/clsses-view', 'ClssesController@clssesView');
 Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
@@ -38,9 +38,9 @@ Route::post('/addSession', 'SessionController@addSession');
 Route::get('/editSession/{session_id}', 'SessionController@editSession');
 
 
-// Route::get('/clssecs', 'ClsSecController@clssec')->middleware('FinMidware:clssecs-clsses-sections');
-// Route::post('/clssec-submit', 'ClsSecController@clssecSubmit');
-// Route::get('/clssecs-view', 'ClsSecController@clssecView');//->middleware('FinMidware:clsses-sections');
+Route::get('/clssecs', 'ClsSecController@clssec');//->middleware('FinMidware:clssecs');
+Route::post('/clssec-submit', 'ClsSecController@clssecSubmit');
+Route::get('/clssecs-view', 'ClsSecController@clssecView');//->middleware('FinMidware:clsses-sections');
 
 Route::get('/addSec/{n}', 'ClsSecController@addSec');
 Route::get('/delSec/{n}', 'ClsSecController@delSec');

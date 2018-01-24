@@ -6,6 +6,9 @@
 @endsection
 
 @section('content')
+
+<h1>Class Section Entry Page</h1>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title pull-left">
@@ -19,34 +22,38 @@
               <th class="text-center">SL No</th>
               <th class="text-center">Class</th>
               <th class="text-center">Sections</th>
-              <th class="text-center">Subjects</th>
-              <th class="text-center">Exam</th>
+              <th class="text-center">Action</th>
+              {{--  <th class="text-center">Subjects</th>
+              <th class="text-center">Exam</th>  --}}
             </tr>
           </thead>
           <tbody>
             
             @foreach($clss as $cl)
               <tr>
-                <td>{{ $cl->id }}</td>
-                <td>{{ $cl->name }}</td>
+                <td class="text-center">{{ $cl->id }}</td>
+                <td class="text-center">{{ $cl->name }}</td>
                 {{--  <td>{{ $cl->clss->distinct('name')->count() }}</td>  --}}
 
-                <td>
+                <td class="text-left">
                   @foreach($clssecs as $clsc)
-                    @if($clsc->clss->id == $cl->id)
+                    @if($clsc->clss_id == $cl->id)
                     {{$clsc->section->name}}
                     @endif
                   @endforeach
-                  <a href="{!! url('/addSec',[$cl->id]) !!}" class="btn btn-primary btn-sm pull-right">
+                </td>
+                <td class="text-center">
+                  <a href="{!! url('/addSec',[$cl->id]) !!}" class="btn btn-primary btn-sm">
                                       <span class="glyphicon glyphicon-plus"></span></a>
-                  <a href="{!! url('/delSec',[$cl->id]) !!}" class="btn btn-danger btn-sm pull-right">
+                  <a href="{!! url('/delSec',[$cl->id]) !!}" class="btn btn-danger btn-sm">
                                       <span class="glyphicon glyphicon-minus"></span></a>
                 </td>
-                <td>
+                {{--  <td>
                     <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal">Edit</button>
-                    {{--  <a href="{!! url('/#',[$cl->id]) !!}" class="btn btn-primary btn-sm pull-right">Edit</a>  --}}
-                </td>  
+                    <a href="{!! url('/#',[$cl->id]) !!}" class="btn btn-primary btn-sm pull-right">Edit</a>
+                </td>    --}}
                 {{--  <td>{{ $cl->section->name }}</td>  --}}
+                {{--  <td></td>  --}}
               </tr>
             @endforeach
           </tbody>
@@ -54,13 +61,9 @@
       </div><!-- end of panel-default -->
 
 
-      <h1>Class Section Entry Page</h1>
 
 
-
-
-
-<table class="table table-bordered">
+{{--  <table class="table table-bordered">
 <thead>
     <tr>
         <th>id</th>
@@ -72,13 +75,13 @@
 @foreach($clssecs as $clssec)
 <tr>
   <td>{{ $clssec->id }}</td>
-  <td>{{ $clssec->clss->name }}</td>
-  <td>{{ $clssec->section->name }}</td>
+  <td>{{ $clssec->clss_id }}</td>
+  <td>{{ $clssec->section_id }}</td>
 </tr>
 @endforeach
 
 </tbody>
-</table>
+</table>  --}}
 
 
 <script type="text/javascript">
