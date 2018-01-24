@@ -8,6 +8,9 @@ class Clss extends Model
 {
     protected $guarded = ['id'];
 
+    public function session(){
+        return $this->belongsTo('App\Session');
+    }
     public function clssecs(){
         return $this->hasMany('App\Clssec');
     }

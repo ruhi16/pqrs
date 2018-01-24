@@ -18,6 +18,7 @@
         <th>Particular</th>
         <th>Status</th>
         <th>Session</th>
+        <th>Action</th>
     </tr>
 </thead>
 <tbody>
@@ -27,6 +28,14 @@
     <td>{{ $fpart->particular }}</td>
     <td>{{ $fpart->status }}</td>
     <td>{{ $fpart->session_id }}</td>
+    <td>
+    @if($fsesns->where('finalizeparticular_id',$fpart->id)->count() > 0)
+        Finalized!!!
+    @else
+        <a href="{{url('/btn-finalize',[$fpart->id])}}" class="btn btn-primary">Finalize</a>
+    @endif
+    
+    </td>
     
 </tr>
 @endforeach

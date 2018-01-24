@@ -11,4 +11,8 @@ class Finalizeparticular extends Model
     public function session(){
         return $this->belongsTo('App\Session');
     }
+
+    public function finalizesession(){
+        return $this->hasOne('App\Finalizesession');
+    }
 }

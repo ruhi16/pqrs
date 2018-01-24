@@ -6,31 +6,28 @@
 @endsection
 
 @section('content')
-<h1>Class Section View Page</h1>
 
 <table class="table table-bordered">
 <thead>
     <tr>
-        <th>id</th>
-        <th>Class</th>
-        <th>Sections</th>                
+        <th>#</th>
+        <th>Particular / Table</th>
+        <th>Session</th>
+        <th>Remarks(if any)</th>
     </tr>
 </thead>
 <tbody>
-@foreach($clssecs as $clssec)
+@foreach($fsesns as $fsesn)
 <tr>
-  <td>{{ $clssec->id }}</td>
-  <td>{{ $clssec->clss_id }}</td>
-  <td>{{ $clssec->section_id }}</td>
+    <td>{{ $fsesn->id }}</td>
+    <td>{{ $fsesn->finalizeparticular->particular }}</td>    
+    <td>{{ $fsesn->session->name }}</td>
+    <td>{{ $fsesn->remarks }}</td>
 </tr>
 @endforeach
-
 </tbody>
 </table>
 
-       
-    </tbody>
-</table>
 <script type="text/javascript">
   $(document).ready(function(e){
     
