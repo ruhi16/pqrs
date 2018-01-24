@@ -9,6 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+| Middleware: FinMidware => 1st:combined Table Name, 2nd: Content Table Names, 3rd: so on
 */
 
 Route::get('/', function () {
@@ -19,11 +20,12 @@ Auth::routes();
 
 Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index']);
 
-Route::get('/clsses', 'ClssesController@clsses');
+Route::get('/clsses', 'ClssesController@clsses')->middleware('FinMidware:clsses');
 Route::post('/clsses-submit', 'ClssesController@clssesSubmit');
 Route::get('/clsses-view', 'ClssesController@clssesView');
 Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
 Route::post('/clsses-deltsubmit', 'ClssesController@clssesDeltSubmit');
+
 
 
 Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');

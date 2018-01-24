@@ -20,8 +20,8 @@
 @foreach($clssecs as $clssec)
 <tr>
   <td>{{ $clssec->id }}</td>
-  <td>{{ $clssec->clss->name }}</td>
-  <td>{{ $clssec->section->name }}</td>
+  <td>{{ $clssec->clss_id }}</td>
+  <td>{{ $clssec->section_id }}</td>
 </tr>
 @endforeach
 

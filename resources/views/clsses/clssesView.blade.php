@@ -36,7 +36,7 @@
         <tr id="tr{{$clss->id}}">
           <th id="id">{{$clss->id}}</th>
           <th id="name">{{ $clss->name }}</th>
-          <td>{{ $clss->session->name }}</td>
+          <td>{{ $clss->session_id }}</td>
           <td>{{ $clss->session_id }}</td>
           <td>              
           </td>

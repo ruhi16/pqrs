@@ -25,18 +25,17 @@ class FinalizeMiddleware
         for($i=0; $i< count($ar); $i++){
             $finpart = FinalizeParticular::whereParticular($ar[$i])->first();
             $finsesn = FinalizeSession::whereFinalizeparticular_id($finpart->id)->first();
-            if($i == 0 && $finsesn){
+            // if($i == 0 && $finsesn){
 
-            }
+            // }
             if($finsesn){
                 if($i == 0){
-                    echo "<br> The Parent table is finalized.";
+                    echo "<br> The Current/Parent table is finalized.";
                     $str = $ar[$i]."-view";
-                    return redirect()->to($str);
-                    // return back();
+                    return redirect()->to($str);                    
                 }
                 echo "<br>$ar[$i] : exists in finalizeSession";
-
+                
             }else{
                 echo "<br>$ar[$i] : not exists in finalizeSession";
                 $flag = TRUE;
