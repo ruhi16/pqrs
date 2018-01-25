@@ -15,9 +15,9 @@
                     @endif
                     <button type="button" class="btn btn-primary" onclick="location.href='{{route('xyz')}}'">Test</button>
 
-                    You are logged in!
+                    You are logged in!!!!!!!
                     <br>
-                    <a href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>
+                    <a href="{{url('/finalizeParticulars')}}">xxxFinalize Particulars</a>
                     
                     <br>
                     <a href="{{url('/finalizeSessions')}}">Finalize Sessions</a>
@@ -33,7 +33,7 @@
                     <a href="{{url('/exams')}}">Exam Details Entry</a>
                     
                     <br>
-                    <a href="{{url('/exam-view')}}">Exam Details Display</a>
+                    <a href="{{url('/exams-view')}}">xxxxExam Details Display</a>
 
                     
                     <br>

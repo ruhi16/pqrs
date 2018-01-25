@@ -6,14 +6,13 @@
 @endsection
 
 @section('content')
-<h1>Classes Display Page...</h1>
+<h1>Exams Display Page...</h1>
 
 <div class="row">
   <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">
-      <h3 class="panel-title pull-left">Session Details</h3>
-      
+      <h3 class="panel-title pull-left">Exam Details ...
         <div class="clearfix"></div>
     
     </div>
@@ -25,14 +24,14 @@
 			<thead>
 				<tr>
           <th>#</th>
-          <th>Class</th>
+          <th>Exams</th>
           <th>Session</th>          
           <th>Status</th> 
           <th>Action</th>         
 				</tr>
 			</thead>
 			<tbody>
-      @foreach($clsses as $clss)
+      @foreach($exams as $exam)
         <tr id="tr{{$clss->id}}">
           <th id="id">{{$clss->id}}</th>
           <th id="name">{{ $clss->name }}</th>
