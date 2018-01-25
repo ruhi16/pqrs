@@ -18,8 +18,6 @@
 
                     You are logged in!!!!!!!
 
-
-
                     
                     <br>
                     <a href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>
@@ -40,7 +38,13 @@
                     <br>
                     <a href="{{url('/exams-view')}}">Exam Details Display</a>
 
+                    <br>
+                    <a href="{{url('/extypes')}}">Exam Type Details Entry</a>
                     
+                    <br>
+                    <a href="{{url('/extypes-view')}}">Exam Type Details Display</a>
+
+
                     <br>
                     <a href="{{url('/schoolInfo')}}">School Details</a>
                     

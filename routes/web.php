@@ -26,13 +26,20 @@ Route::get('/clsses-view', 'ClssesController@clssesView');
 Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
 Route::post('/clsses-deltsubmit', 'ClssesController@clssesDeltSubmit');
 
-
-Route::get('/exams', 'ExamController@exams');//->middleware('FinMidware:clsses');
+Route::get('/exams', 'ExamController@exams')->middleware('FinMidware:exams');
 Route::post('/exams-submit', 'ExamController@examsSubmit');
 Route::get('/exams-view', 'ExamController@examsView');
 Route::post('/exams-editsubmit', 'ExamController@examsEditSubmit');
 Route::post('/exams-deltsubmit', 'ExamController@examsDeltSubmit');
 
+
+Route::get('/extypes', 'ExtypeController@extypes')->middleware('FinMidware:extypes');
+Route::post('/extypes-submit', 'ExtypeController@extypesSubmit');
+Route::get('/extypes-view', 'ExtypeController@extypesView');
+Route::post('/extypes-editsubmit', 'ExtypeController@extypesEditSubmit');
+Route::post('/extypes-deltsubmit', 'ExtypeController@extypesDeltSubmit');
+
+// till above entry was tested Oke with middleware too
 
 
 
