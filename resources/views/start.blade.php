@@ -44,6 +44,14 @@
                     <br>
                     <a href="{{url('/extypes-view')}}">Exam Type Details Display</a>
 
+                    <br>
+                    <a href="{{url('/sections')}}">Section Details Entry</a>
+                    
+                    <br>
+                    <a href="{{url('/sections-view')}}">Section Details Display</a>
+
+
+
 
                     <br>
                     <a href="{{url('/schoolInfo')}}">School Details</a>
