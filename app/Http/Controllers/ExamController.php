@@ -49,4 +49,24 @@ class ExamController extends Controller
         ->withExams($exams)
         ;
     }
+
+    public function examsEditSubmit(Request $request){
+        // echo $request->editclssName;
+        // echo $request->editclssId;
+        $ses = Session::whereStatus('CURRENT')->first();
+        $exam = Exam::find($request->editclssId);
+        $exam->name = $request->editclssName;
+        $exam->save();
+        return back();
+    }
+
+    public function examsDeltSubmit(Request $request){
+        // echo $request->deltclssName;
+        // echo $request->deltclssId;
+        $ses = Session::whereStatus('CURRENT')->first();
+        $exam = Exam::find($request->deltclssId);
+        
+        $exam->delete();
+        return back();
+    }
 }

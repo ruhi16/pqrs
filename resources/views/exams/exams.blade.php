@@ -57,7 +57,7 @@
 
 
 
-<!-- Modal Starts to Add New Class -->
+<!-- Modal Starts to Add New Exams -->
 <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
@@ -104,10 +104,10 @@
 				<div class="form-group">
         	<label class="control-label col-sm-4" for="editclssName">Enter New Class Name:</label>
 					<div class="col-sm-6">
-						<input type="text" class="form-control" id="editclssId" name="editclssName" placeholder="enter new class name">
+						<input type="text" class="form-control" id="editclssId" name="editclssName" placeholder="enter new exam term name">
 					</div>         
           <div class="col-sm-6">
-						<input type="hidden" class="form-control" id="editclssId" name="editclssId" placeholder="enter new class name">
+						<input type="hidden" class="form-control" id="editclssId" name="editclssId" placeholder="enter new exam term name">
 					</div>         
       	</div>
 
@@ -139,10 +139,10 @@
 				<div class="form-group">
         	<label class="control-label col-sm-4" for="deltclssName">Class Name:</label>
 					<div class="col-sm-6">
-						<input type="text" class="form-control" id="deltclssId" name="deltclssName" placeholder="enter new class name" disabled>
+						<input type="text" class="form-control" id="deltclssId" name="deltclssName" placeholder="existing exam term name" disabled>
 					</div>         
           <div class="col-sm-6">
-						<input type="hidden" class="form-control" id="deltclssId" name="deltclssId" placeholder="enter new class name">
+						<input type="hidden" class="form-control" id="deltclssId" name="deltclssId" placeholder="existing exam term name">
 					</div>         
       	</div>
 
