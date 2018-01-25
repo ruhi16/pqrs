@@ -13,11 +13,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('xyz')}}'">Test</button>
+
+                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('xyz')}}'">Test123</button>
 
                     You are logged in!!!!!!!
+
+
+
+                    
                     <br>
-                    <a href="{{url('/finalizeParticulars')}}">xxxFinalize Particulars</a>
+                    <a href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>
                     
                     <br>
                     <a href="{{url('/finalizeSessions')}}">Finalize Sessions</a>
@@ -33,7 +38,7 @@
                     <a href="{{url('/exams')}}">Exam Details Entry</a>
                     
                     <br>
-                    <a href="{{url('/exams-view')}}">xxxxExam Details Display</a>
+                    <a href="{{url('/exams-view')}}">Exam Details Display</a>
 
                     
                     <br>

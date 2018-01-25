@@ -45,8 +45,8 @@ class ExamController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $exams = Exam::whereSession_id($ses->id)->get();
         echo "hello";
-        // return view('exams.examsView')
-        // ->withClsses($exams)
+        return view('exams.examsView')
+        ->withExams($exams)
         ;
     }
 }

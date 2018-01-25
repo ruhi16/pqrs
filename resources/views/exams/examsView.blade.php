@@ -12,7 +12,8 @@
   <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">
-      <h3 class="panel-title pull-left">Exam Details ...
+      <h3 class="panel-title pull-left">Exam Details</h3>
+      
         <div class="clearfix"></div>
     
     </div>
@@ -32,11 +33,11 @@
 			</thead>
 			<tbody>
       @foreach($exams as $exam)
-        <tr id="tr{{$clss->id}}">
-          <th id="id">{{$clss->id}}</th>
-          <th id="name">{{ $clss->name }}</th>
-          <td>{{ $clss->session_id }}</td>
-          <td>{{ $clss->session_id }}</td>
+        <tr id="tr{{$exam->id}}">
+          <th id="id">  {{ $exam->id}}</th>
+          <th id="name">{{ $exam->name }}</th>
+          <td>{{ $exam->session_id }}</td>
+          <td>{{ $exam->session_id }}</td>
           <td>              
           </td>
         </tr>

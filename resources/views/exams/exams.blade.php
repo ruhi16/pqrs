@@ -93,7 +93,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
-      {!! Form::open(['url'=>'/clsses-editsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
+      {!! Form::open(['url'=>'/exams-editsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
 			<div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Edit or Update Class...</h4>
@@ -128,7 +128,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
-      {!! Form::open(['url'=>'/clsses-deltsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
+      {!! Form::open(['url'=>'/exams-deltsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
 			<div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Do You Want to Delete Class...</h4>

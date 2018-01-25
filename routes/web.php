@@ -13,7 +13,7 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('start');
 });
 
 Auth::routes();
@@ -49,10 +49,9 @@ Route::get('/editSession/{session_id}', 'SessionController@editSession');
 Route::get('/clssecs', 'ClsSecController@clssec')->middleware('FinMidware:clssecs-clsses-sections');
 Route::post('/clssec-submit', 'ClsSecController@clssecSubmit');
 Route::get('/clssecs-view', 'ClsSecController@clssecView');
-
-
 Route::get('/addSec/{n}', 'ClsSecController@addSec');
 Route::get('/delSec/{n}', 'ClsSecController@delSec');
+
 
 
 Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
