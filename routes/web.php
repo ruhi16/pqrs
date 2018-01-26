@@ -46,14 +46,14 @@ Route::get('/sections-view', 'SectionController@sectionsView');
 Route::post('/sections-editsubmit', 'SectionController@sectionsEditSubmit');
 Route::post('/sections-deltsubmit', 'SectionController@sectionsDeltSubmit');
 
-// till above entry was tested Oke with middleware too
-Route::get('/subjects', 'SubjectController@subjects');//->middleware('FinMidware:extypes');
+
+Route::get('/subjects', 'SubjectController@subjects')->middleware('FinMidware:subjects');
 Route::post('/subjects-submit', 'SubjectController@subjectsSubmit');
 Route::get('/subjects-view', 'SubjectController@subjectsView');
 Route::post('/subjects-editsubmit', 'SubjectController@subjectsEditSubmit');
 Route::post('/subjects-deltsubmit', 'SubjectController@subjectsDeltSubmit');
 
-
+// till the above entry was tested Oke with middleware too
 
 
 

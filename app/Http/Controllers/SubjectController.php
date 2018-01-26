@@ -55,7 +55,7 @@ class SubjectController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $subjects = Subject::whereSession_id($ses->id)->get();
         // echo "hello";
-        return view('subjects.subjecstsView')
+        return view('subjects.subjectsView')
         ->withSubjects($subjects)
         ;
     }

@@ -24,21 +24,26 @@
 		<table class="table table-bordered" id="tabclss">
 			<thead>
 				<tr>
-          <th>#</th>
-          <th>Exams</th>
-          <th>Session</th>          
-          <th>Status</th> 
+          <th>#</th>          
+          <th class="text-center">Subject Name</th>   
+          <th>Subject Code</th>   
+          <th>Subject Type</th>
+          <th>Session</th> 
           <th>Action</th>         
 				</tr>
 			</thead>
 			<tbody>
-      @foreach($exams as $exam)
-        <tr id="tr{{$exam->id}}">
-          <th id="id">  {{ $exam->id}}</th>
-          <th id="name">{{ $exam->name }}</th>
-          <td>{{ $exam->session_id }}</td>
-          <td>{{ $exam->session_id }}</td>
-          <td>              
+      @foreach($subjects as $subject)
+        <tr id="tr{{$subject->id}}">
+          <th id="id">{{$subject->id}}</th>
+          <th id="name">{{ $subject->name }}</th>
+          <th id="code">{{ $subject->code }}</th>
+          <td id="type">{{ $subject->extype->name }}</td>
+          <td>{{ $subject->session_id }}</td>
+          <td>
+              {{--  <button class="btn btn-success btn-sm btnEdit" data-id="{{$subject->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
+              <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$subject->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>  --}}
+              {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}
           </td>
         </tr>
       @endforeach
