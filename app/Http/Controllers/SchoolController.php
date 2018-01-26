@@ -14,7 +14,6 @@ use App\School;
 
 use App\Studentdb;
 use App\Studentcr;
-
 use App\Clssub;
 use App\Clssec;
 
@@ -25,29 +24,29 @@ use App\Marksentry;
 
 class SchoolController extends Controller
 {
-    public function schoolInfo(){
+    public function school(){
         $ses = Session::whereStatus('CURRENT')->first();
         $sch = School::whereSession_id($ses->id)->first();
 
-        return view('school')->withSch($sch);
+        return view('schools.school')->withSch($sch);
     }
 
-    public function schoolInfoSubmit(Request $request){
+    public function schoolSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
-        echo $request->schname;
+        // echo $request->schname;
         $sch = new School;
         $sch->name = $request->schname;
         $sch->session_id = $ses->id;
         $sch->save();
 
-        // return "Hello";
+        // return back();
     }
 
-    public function schoolInfoView(){
+    public function schoolView(){
         $ses = Session::whereStatus('CURRENT')->first();
-        $sch = School::whereSession_id($ses->id)->first();
+        $schools = School::whereSession_id($ses->id)->get();
         
-        return view('schoolView')
-        ->withSch($sch);
+        return view('schools.schoolView')
+        ->withSchools($schools);
     }
 }

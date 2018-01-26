@@ -59,10 +59,10 @@
 
 
                     <br>
-                    <a href="{{url('/schoolInfo')}}">School Details</a>
+                    <a href="{{url('/school')}}">School Details</a>
                     
                     <br>
-                    <a href="{{url('/schoolInfoView')}}">School Details View</a>
+                    <a href="{{url('/schoolView')}}">School Details View</a>
 
                     <br>
                     <a href="{{url('/session')}}">Session Details</a>

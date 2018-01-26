@@ -11,13 +11,14 @@ class Session extends Model
     public function clsses(){
         return $this->hasMany('App\Clss');
     }
-    
+
+    public function sections(){
+        return $this->hasMany('App\Sections');
+    }    
     
     public function marksentries(){
         return $this->hasMany('App\Marksentry');
     }
-
-
 
     public function finalizeparticular(){
         return $this->hasMany('App\Finalizeparticular');

@@ -8,7 +8,7 @@
 @section('content')
 <h1>School Information...</h1>
 
-{!! Form::open(['url'=>'/schoolInfo-submit','method'=>'post', 'class'=>'form-horizontal']) !!}
+{!! Form::open(['url'=>'/school-submit','method'=>'post', 'class'=>'form-horizontal']) !!}
 
     <div class="form-group">
         <label class="control-label col-sm-2" for="schname">School Name:</label>

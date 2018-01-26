@@ -53,14 +53,12 @@ Route::get('/subjects-view', 'SubjectController@subjectsView');
 Route::post('/subjects-editsubmit', 'SubjectController@subjectsEditSubmit');
 Route::post('/subjects-deltsubmit', 'SubjectController@subjectsDeltSubmit');
 
+Route::get('/school', 'SchoolController@school')->middleware('FinMidware:schools');//->name('xyz');
+Route::post('/school-submit', 'SchoolController@schoolSubmit');
+Route::get('/schoolView', 'SchoolController@schoolView');
+
 // till the above entry was tested Oke with middleware too
 
-
-
-
-Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
-Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
-Route::get('/schoolInfoView', 'SchoolController@schoolInfoView');
 
 Route::get('/session', 'SessionController@session');
 Route::get('/setSession/{session_id}', 'SessionController@setSession');
@@ -114,7 +112,8 @@ Route::get('/test', 'BaseController@test');
 
 Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
 Route::get('/finalizeParticulars-Refresh', 'FinalizeController@finalizeParticularsRefresh')->name('finalizeParticulars-Refresh');
-Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
-
-Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
 Route::get('/btn-finalize/{n}','FinalizeController@btnFinalize');
+Route::get('/btn-unfinalize/{n}','FinalizeController@btnUnFinalize');
+
+Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
+Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');

@@ -30,7 +30,8 @@
     <td>{{ $fpart->session_id }}</td>
     <td>
     @if($fsesns->where('finalizeparticular_id',$fpart->id)->count() > 0)
-        Finalized!!!
+        {{--  Finalized!!!  --}}
+        <a href="{{url('/btn-unfinalize',[$fpart->id])}}" class="btn btn-danger">Un-Finalize</a>
     @else
         <a href="{{url('/btn-finalize',[$fpart->id])}}" class="btn btn-primary">Finalize</a>
     @endif

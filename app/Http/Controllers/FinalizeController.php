@@ -81,4 +81,14 @@ class FinalizeController extends Controller
         $fsesns->save();
         return back();
     }
+
+    public function btnUnFinalize($n){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $fsesns = Finalizesession::firstOrNew(['finalizeparticular_id'=>$n,'session_id'=>$ses->id]);
+        // $fsesns->finalizeparticular_id = $n;        
+        // $fsesns->session_id = $ses->id;
+        // $fsesns->remarks    = 'oke';
+        $fsesns->delete();
+        return back();
+    }
 }
