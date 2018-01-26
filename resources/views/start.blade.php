@@ -50,6 +50,11 @@
                     <br>
                     <a href="{{url('/sections-view')}}">Section Details Display</a>
 
+                    <br>
+                    <a href="{{url('/subjects')}}">Subject Details Entry</a>
+                    
+                    <br>
+                    <a href="{{url('/subjects-view')}}">Subject Details Display</a>
 
 
 
