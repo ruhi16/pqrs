@@ -9,6 +9,15 @@
 @section('content')
 <h1>Student's Detail Records...</h1>
 
+<button 
+   type="button" 
+   class="btn btn-primary btn-lg" 
+   data-toggle="modal" 
+   data-target="#favoritesModal">
+  Add Students
+</button>
+<br>
+
 <table class="table table-bordered">
 <thead>
     <tr>
@@ -17,7 +26,7 @@
         <th>Father's Name</th>
         <th>Class</th>
         <th>Sec</th>
-        <th>Sec Action</th>
+        <th>Select Section</th>
         <th>Adm Sl & Adm Date</th>
     </tr>
 </thead>
@@ -29,6 +38,7 @@
     <td>{{$std->stclss_id}}</td>
     <td id="tdsec{{$std->id}}">{{$std->stsec_id or " "}}</td>
     <td>
+    @if($std->stsec_id == NULL)
       <!-- Select Option -->
       <div class="form-group">      
       <select class="form-control std_sec" id="sel1">
@@ -38,31 +48,25 @@
               <option value="{{$std->id}}-{{$allCS->section->id}}">{{ $allCS->section->name }}</option>
             @endif
         @endforeach  
-
       </select>
     </div>
+    @else
+      Section Alloted
+    @endif
     </td>
+
     <td>{{$std->roll_no or 'NA'}}</td>
 </tr>
 @endforeach
 </table>
 
 
-<button 
-   type="button" 
-   class="btn btn-primary btn-lg" 
-   data-toggle="modal" 
-   data-target="#favoritesModal">
-  Add to Favorites
-</button>
 
-
-
-
+<!-- Modal Starts for Student Information Entry -->
 <div class="modal fade" id="favoritesModal" 
      tabindex="-1" role="dialog" 
      aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <form method="post" class="form-horizontal" action="{!! url('studentdb-submit') !!}" value="{{ csrf_token() }}">  
       {{ csrf_field() }}

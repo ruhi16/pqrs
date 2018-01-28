@@ -15,8 +15,8 @@ class CreateDescriptionsTable extends Migration
     {
         Schema::create('descriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('grade_id');
             $table->integer('subject_id');
+            $table->integer('grade_id');            
             $table->string('desc');
             $table->timestamps();
         });
