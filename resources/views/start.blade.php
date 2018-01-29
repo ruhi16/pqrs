@@ -78,6 +78,12 @@
                     
                     <br>
                     <a href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View</a>
+                    
+                    <br>
+                    <a href="{{url('/gradeparticulars')}}">Grade particular Entry</a>
+                    
+                    <br>
+                    <a href="{{url('/gradeparticulars-view')}}">Grade particular View</a>
 
                     <br>
                     <a href="{{url('/studentdb')}}">Student's Detail View</a>                    

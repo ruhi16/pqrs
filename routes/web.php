@@ -60,6 +60,14 @@ Route::get('/schoolView', 'SchoolController@schoolView');
 // till the above entry was tested Oke with middleware too
 
 
+Route::get('/gradeparticulars', 'GradeparticularController@gradeparticulars');//->middleware('FinMidware:sections');
+Route::post('/gradeparticulars-submit', 'GradeparticularController@gradeparticularsSubmit');
+Route::get('/gradeparticulars-view', 'GradeparticularController@gradeparticularsView');
+Route::post('/gradeparticulars-editsubmit', 'GradeparticularController@gradeparticularsEditSubmit');
+Route::post('/gradeparticulars-deltsubmit', 'GradeparticularController@gradeparticularsDeltSubmit');
+
+
+
 Route::get('/session', 'SessionController@session');
 Route::get('/setSession/{session_id}', 'SessionController@setSession');
 Route::post('/addSession', 'SessionController@addSession');

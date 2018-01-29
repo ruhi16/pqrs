@@ -16,7 +16,7 @@ class CreateGradesTable extends Migration
         Schema::create('grades', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('extype_id');
-            $table->integer('gradeparticular_id');
+            $table->integer('gradeparticular_id');                             
             $table->float('stpercentage');
             $table->float('enpercentage');
             $table->string('descrp')->nullable();;

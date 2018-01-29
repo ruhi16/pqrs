@@ -11,6 +11,9 @@ use App\Clss;
 use App\Subject;
 use App\Section;
 use App\School;
+use App\Gradeparticular;
+use App\Grade;
+use App\Description;
 
 use App\Studentdb;
 use App\Studentcr;
