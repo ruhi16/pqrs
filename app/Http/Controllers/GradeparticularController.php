@@ -33,22 +33,42 @@ class GradeparticularController extends Controller
         ->withGrparts($grparts);
     }
 
-    public function gradeparticularsSubmit(){
-
-        
+    public function gradeparticularsSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        if($request->grPart != NULL){
+            $grpart = new Gradeparticular;
+            $grpart->name = $request->grPart;
+            $grpart->status = "Oke";
+            $grpart->session_id = $ses->id;
+            $grpart->save();
+        }
+        return back();
     }
 
     public function gradeparticularsView(){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $grpartedit = Gradeparticular::whereSession_id($ses->id)->get();
 
-        return view('gradeparticulars.gradeparticularView');
+        return view('gradeparticulars.gradeparticularView')
+        ->withGrpartedit($grpartedit)
+        ;
     }
 
-    public function gradeparticularsEditSubmit(){
-
+    public function gradeparticularsEditSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $grpartedit = Gradeparticular::find($request->editGrPartId);
+        $grpartedit->name = $request->editGrPartName;
+        $grpartedit->save();
+        // echo $request->editGrPartName;
+        // echo $request->editGrPartId;
+        return back();
+    }
+    public function gradeparticularsDeltSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $exam = Gradeparticular::find($request->deltGrPartId);
         
-    }
-    public function gradeparticularsDeltSubmit(){
-
+        $exam->delete();
+        return back();
         
     }
 }
