@@ -18,6 +18,7 @@ class CreateDescriptionsTable extends Migration
             $table->integer('subject_id');
             $table->integer('grade_id');            
             $table->string('desc');
+            $table->integer('session_id');
             $table->timestamps();
         });
     }

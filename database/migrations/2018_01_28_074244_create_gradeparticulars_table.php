@@ -16,7 +16,8 @@ class CreateGradeparticularsTable extends Migration
         Schema::create('gradeparticulars', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('sataus')->nullable();;
+            $table->string('sataus')->nullable();
+            $table->integer('session_id');
             $table->timestamps();
         });
     }
