@@ -47,10 +47,10 @@ class GradeparticularController extends Controller
 
     public function gradeparticularsView(){
         $ses = Session::whereStatus('CURRENT')->first();
-        $grpartedit = Gradeparticular::whereSession_id($ses->id)->get();
+        $grparts = Gradeparticular::whereSession_id($ses->id)->get();
 
         return view('gradeparticulars.gradeparticularView')
-        ->withGrpartedit($grpartedit)
+        ->withGrparts($grparts)
         ;
     }
 
