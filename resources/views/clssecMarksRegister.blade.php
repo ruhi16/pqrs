@@ -66,12 +66,12 @@
                           
                           @foreach($extpclsbs as $extpclsb)
                             @if($extpclsb->exam_id == $ex->id && $extpclsb->extype_id == $et->id)
-                                <th>{{$ex->name}}}}
+                                <th>{{$ex->name}}/{{ $extpclsb->fm}}</th>
                                 @php $grdTotal += $extpclsb->fm; @endphp
                             @endif
                           @endforeach
                           
-                          </th>
+                          
                         @endforeach
                         <th>Total/{{$grdTotal}}</th>
                         <th>Grade</th>
@@ -102,6 +102,7 @@
                       <td>{{($grtotal/$grdTotal)*100}}</td>
                       </tr>
                       @endif
+                      {{--  @php $grtotal = $grdTotal = 0; @endphp  --}}
                       @endforeach
                       
                     </tbody>
