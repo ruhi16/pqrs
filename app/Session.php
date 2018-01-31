@@ -20,11 +20,15 @@ class Session extends Model
         return $this->hasMany('App\Marksentry');
     }
 
-    public function finalizeparticular(){
+    public function finalizeparticulars(){
         return $this->hasMany('App\Finalizeparticular');
     }
 
-    public function finalizesession(){
+    public function finalizesessions(){
         return $this->hasMany('App\Finalizesession');
+    }
+
+    public function grades(){
+        return $this->hasMany('App\Grade');
     }
 }

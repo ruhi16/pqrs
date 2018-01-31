@@ -65,6 +65,15 @@ Route::post('/gradeparticulars-deltsubmit', 'GradeparticularController@gradepart
 
 // till the above entry was tested Oke with middleware too
 
+Route::get('/grades', 'GradeController@grades');//->middleware('FinMidware:gradeparticulars');
+Route::post('/grades-submit', 'GradeController@gradesSubmit');
+Route::get('/grades-view', 'GradeController@gradesView');
+Route::post('/grades-editsubmit', 'GradeController@gradesEditSubmit');
+Route::post('/grades-deltsubmit', 'GradeController@gradesDeltSubmit');
+
+
+
+
 
 
 Route::get('/session', 'SessionController@session');

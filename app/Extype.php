@@ -15,4 +15,8 @@ class Extype extends Model
     public function exmtypclssub(){
         return $this->hasMany('App\Exmtypclssub');
     }
+
+    public function grades(){
+        return $this->hasMany('App\Grade');
+    }
 }

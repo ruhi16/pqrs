@@ -55,6 +55,13 @@
                     
                     <br>
                     <a href="{{url('/subjects-view')}}">Subject Details Display</a>
+                    
+
+                    <br>
+                    <a href="{{url('/grades')}}">Grade Details Entry</a>
+                    
+                    <br>
+                    <a href="{{url('/gradesView')}}">Grade Details View</a>
 
 
 
