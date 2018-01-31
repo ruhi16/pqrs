@@ -77,4 +77,13 @@ class GradeController extends Controller
         // echo "<br>". $request->editDescr;
         return back();
     }
+    public function gradesDeltSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $grade = Grade::find($request->deltGradeId);
+        echo "<br>Hello:". $request->deltGradeId;
+        
+        $grade->delete();
+        return back();
+        
+    }
 }

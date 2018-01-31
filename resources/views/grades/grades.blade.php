@@ -197,11 +197,11 @@
       <!-- Modal Ends -->
       
       
-      <!-- Modal Starts to Delete grade particulars -->
+      <!-- Modal Starts to Delete Grade -->
       <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
-        <div class="modal-dialog " role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
-            {!! Form::open(['url'=>'/grade-deltsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
+            {!! Form::open(['url'=>'/grades-deltsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
                   <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">Do You Want to Delete Class...</h4>
@@ -209,15 +209,47 @@
             <div class="modal-body">        
       
       
-                <div class="form-group">
-                  <label class="control-label col-sm-5" for="deltGrPartName">Grade Particular Name:</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="deltGrPartName" name="deltGrPartName" placeholder="existing exam term name" disabled>
-                    </div>         
-                <div class="col-sm-6">
-                    <input type="hidden" class="form-control" id="deltGrPartId" name="deltGrPartId" placeholder="existing exam term name">
-                </div>         
+            <div class="form-group">            
+              <input type="hidden" class="form-control" id="deltGradeId" name="deltGradeId" placeholder="Grade Particular Name">
+            
+              <label class="control-label col-sm-2" for="deltExType">Exam Type:</label>
+                <div class="col-sm-4">
+                  <select class="form-control" name="deltExType" id="deltExType" disabled>
+                      <option value="0"></option>
+                    @foreach($extypes as $extype)              
+                      <option value="{{$extype->id}}">{{$extype->name}}</option>              
+                    @endforeach
+                  </select>
+
                 </div>
+                <label class="control-label col-sm-1" for="deltGrade">Grade:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" name="deltGrade" id="deltGrade" disabled>
+                      <option value="0"></option>
+                    @foreach($grparts as $grpart)              
+                      <option value="{{$grpart->id}}">{{ $grpart->name }}</option>              
+                    @endforeach
+                  </select>
+                </div>         
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="deltStperc">Start Perc:</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="deltStperc" name="deltStperc" placeholder="start percentage" disabled>
+              </div> 
+              <label class="control-label col-sm-2" for="deltEnperc">End Perc:</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="deltEnperc" name="deltEnperc" placeholder="end percentage" disabled>
+              </div> 
+            </div>  
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="deltDescr">Description:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="deltDescr" name="deltDescr" placeholder="enter description, if any" disabled>
+              </div> 
+            </div>
       
       
             </div>
@@ -237,7 +269,7 @@
         $(document).ready(function(e){    
           $('.btnEdit').on('click', function(){
             var v = $(this).data('id');
-            var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
+            //var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
             var extyp = $("#tabclss #tr"+v+" #extyp").text();
             var grade = $("#tabclss #tr"+v+" #grade").text();
             var stper = $("#tabclss #tr"+v+" #stper").text();
@@ -252,7 +284,7 @@
             $('input[name="editEnperc"]').val(enper);
             $('input[name="editDescr"]').val(descr);
 
-            $('input[name="editGradeId"]').val(v);
+            $('input[name="deltGradeId"]').val(v);
             //$('#editModal').modal('show');
           });
       
@@ -260,12 +292,25 @@
 
           $('.btnDelt').on('click', function(){
             var v = $(this).data('id');
-            var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
-            var name = $("#tabclss #tr"+v+" #name").text();
-            //alert(name);
+            //var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
+            var extyp = $("#tabclss #tr"+v+" #extyp").text();
+            var grade = $("#tabclss #tr"+v+" #grade").text();
+            var stper = $("#tabclss #tr"+v+" #stper").text();
+            var enper = $("#tabclss #tr"+v+" #enper").text();
+            var descr = $("#tabclss #tr"+v+" #descr").text();
+            //alert(v);
       
-            $('input[name="deltGrPartName"]').val(name);
-            $('input[name="deltGrPartId"]').val(v);  
+            $('select[name="deltExType"]').find('option:contains('+extyp+')').prop("selected",true);
+            $('select[name="deltGrade"]').find('option:contains('+grade+')').prop("selected",true);
+            
+            $('input[name="deltStperc"]').val(stper);
+            $('input[name="deltEnperc"]').val(enper);
+            $('input[name="deltDescr"]').val(descr);
+
+            $('input[name="deltGradeId"]').val(v);
+
+            //$('select[name="deltExType"]').find('option:contains('+extyp+')').prop('disabled', true);
+            //$('#editModal').modal('show');  
           });
         });  
       </script>
