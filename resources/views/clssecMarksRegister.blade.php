@@ -47,17 +47,33 @@
                   
                 </td>
                 @foreach($extp as $et)  {{-- for each exam category summative/formative --}}
-                @php $grtotal = 0; @endphp
+                
                 <td> 
                   <table class="table table-condensed table-bordered">
                     <thead>
                       <tr>
                         <th>#</th>
                         <th>Subject</th>
+                        @php 
+                            $grtotal = 0; 
+                            $grdTotal = 0;
+                          @endphp
                         @foreach($exms as $ex)
-                          <th>{{$ex->name}}</th>
+                          {{--  @php 
+                            $ee = $extpclsbs->where('exam_id', $ex->id)->where('extype_id', $et->id)->first();
+                          
+                          @endphp  --}}
+                          
+                          @foreach($extpclsbs as $extpclsb)
+                            @if($extpclsb->exam_id == $ex->id && $extpclsb->extype_id == $et->id)
+                                <th>{{$ex->name}}}}
+                                @php $grdTotal += $extpclsb->fm; @endphp
+                            @endif
+                          @endforeach
+                          
+                          </th>
                         @endforeach
-                        <th>Total</th>
+                        <th>Total/{{$grdTotal}}</th>
                         <th>Grade</th>
                       </tr>
                     </thead>
@@ -81,9 +97,9 @@
                         @endforeach
                       </td>
                       @endforeach
-                      <th class="text-right">{{$total}}</th>
+                      <th class="text-right">{{ $total }}</th>
                       @php $grtotal = $grtotal + $total; @endphp
-                      <td></td>
+                      <td>{{($grtotal/$grdTotal)*100}}</td>
                       </tr>
                       @endif
                       @endforeach

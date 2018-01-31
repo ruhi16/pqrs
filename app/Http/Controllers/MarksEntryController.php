@@ -178,7 +178,9 @@ class MarksEntryController extends Controller
         //         echo $abc . "<br>";
         //     }
         // }
-        
+        $extpclsbs = Exmtypclssub::whereSession_id($ses->id)
+        ->whereClss_id($clsc->clss_id)        
+        ->get();
 
         
 
@@ -187,6 +189,7 @@ class MarksEntryController extends Controller
         ->withClsbs($clsbs)
         ->withExms($exms)
         ->withExtp($extp)
+        ->withExtpclsbs($extpclsbs)
         ->withCls($clsc->clss->name)
         ->withSec($clsc->section->name)
         ;
