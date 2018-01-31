@@ -42,12 +42,12 @@
               @foreach($grades as $grade)
                 <tr id="tr{{$grade->id}}">
                   <th id="id">{{$grade->id}}</th>
-                  <th id="name"> {{ $grade->extype->name }}</th>
+                  <th id="extyp">{{ $grade->extype->name }}</th>
                   <td id="grade">{{ $grade->gradeparticular->name }}</td>
-                  <td>{{ $grade->stpercentage }}</td>
-                  <td>{{ $grade->enpercentage }}</td>
-                  <td>{{ $grade->session->name }}</td>
-                  <td>{{ $grade->descrp }}</td>
+                  <td id="stper">{{ $grade->stpercentage }}</td>
+                  <td id="enper">{{ $grade->enpercentage }}</td>
+                  <td>           {{ $grade->session->name }}</td>
+                  <td id="descr">{{ $grade->descrp }}</td>
                   <td>
                       <button class="btn btn-success btn-sm btnEdit" data-id="{{$grade->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
                       <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$grade->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>
@@ -143,7 +143,7 @@
 
   
             <div class="form-group">            
-              <input type="hidden" class="form-control" id="editGradeId" name="editGrPartId" placeholder="Grade Particular Name">
+              <input type="hidden" class="form-control" id="editGradeId" name="editGradeId" placeholder="Grade Particular Name">
             
               <label class="control-label col-sm-2" for="editExType">Exam Type:</label>
                 <div class="col-sm-4">
@@ -238,13 +238,20 @@
           $('.btnEdit').on('click', function(){
             var v = $(this).data('id');
             var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
-            var extype = $("#tabclss #tr"+v+" #name").text();
-            //var grade  = $("#tabclss #tr"+v+" #grade").text();
+            var extyp = $("#tabclss #tr"+v+" #extyp").text();
+            var grade = $("#tabclss #tr"+v+" #grade").text();
+            var stper = $("#tabclss #tr"+v+" #stper").text();
+            var enper = $("#tabclss #tr"+v+" #enper").text();
+            var descr = $("#tabclss #tr"+v+" #descr").text();
             //alert(extype);
       
-            $('select[name="editExType"]').find('option:contains('+ extype +')').prop("selected",true);
-            //$('select[name="editGrade"]').find('option:contains('+ grade +')').prop("selected",true);
-            $('input[name="editGrPartName"]').val(name);
+            $('select[name="editExType"]').find('option:contains('+extyp+')').prop("selected",true);
+            $('select[name="editGrade"]').find('option:contains('+grade+')').prop("selected",true);
+            
+            $('input[name="editStperc"]').val(stper);
+            $('input[name="editEnperc"]').val(enper);
+            $('input[name="editDescr"]').val(descr);
+
             $('input[name="editGradeId"]').val(v);
             //$('#editModal').modal('show');
           });

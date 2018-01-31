@@ -54,8 +54,27 @@ class GradeController extends Controller
         $grade->session_id = $ses->id;
         $grade->save();
 
-
         return back();
+    }
 
+    public function gradesEditSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+
+        $grade = Grade::find($request->editGradeId);
+
+        $grade->extype_id = $request->editExType;
+        $grade->gradeparticular_id = $request->editGrade;
+        $grade->stpercentage = $request->editStperc;
+        $grade->enpercentage = $request->editEnperc;
+        $grade->descrp = $request->editDescr;
+        $grade->save();
+
+        // echo "<br>". $request->editGradeId;
+        // echo "<br>". $request->editExType;
+        // echo "<br>". $request->editGrade;
+        // echo "<br>". $request->editStperc;
+        // echo "<br>". $request->editEnperc;
+        // echo "<br>". $request->editDescr;
+        return back();
     }
 }
