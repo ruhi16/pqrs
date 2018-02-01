@@ -17,14 +17,15 @@
         "mockery/mockery": "~1.0",
         "phpunit/phpunit": "~6.0"
     },
-    "autoload": {
+    "autoload": {	   
         "classmap": [
             "database/seeds",
             "database/factories"
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": ["app/Http/helpers.php"]
     },
     "autoload-dev": {
         "psr-4": {

@@ -91,6 +91,14 @@
                     
                     <br>
                     <a href="{{url('/gradeparticulars-view')}}">Grade particular View</a>
+                    
+                    <br>
+                    <a href="{{url('/gradedescription')}}">Grade Description Entry</a>
+                    
+                    <br>
+                    <a href="{{url('/gradedescription-view')}}">Grade Description View</a>
+
+
 
                     <br>
                     <a href="{{url('/studentdb')}}">Student's Detail View</a>                    
