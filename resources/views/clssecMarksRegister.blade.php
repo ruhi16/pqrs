@@ -54,16 +54,14 @@
                       <tr>
                         <th>#</th>
                         <th>Subject</th>
-                        @php 
-                            $grtotal = 0; 
+                        @php                             
                             $grdTotal = 0;
                           @endphp
                         @foreach($exms as $ex)
                           {{--  @php 
-                            $ee = $extpclsbs->where('exam_id', $ex->id)->where('extype_id', $et->id)->first();
-                          
-                          @endphp  --}}
-                          
+                            $ee = $extpclsbs->where('exam_id', $ex->id)->where('extype_id', $et->id)->first();                            
+                          @endphp
+                          <th>{{$ee->fm}}</th>  --}}
                           @foreach($extpclsbs as $extpclsb)
                             @if($extpclsb->exam_id == $ex->id && $extpclsb->extype_id == $et->id)
                                 <th>{{$ex->name}}/{{ $extpclsb->fm}}</th>
@@ -78,7 +76,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                    
+                    @php $allSubTotal = 0; @endphp
                     @foreach($clsbs as $clsb)   {{-- for each subject --}}
                     @if($et->id == $clsb->subject->extype->id)
                       <tr>
@@ -98,7 +96,9 @@
                       </td>
                       @endforeach
                       <th class="text-right">{{ $total }}</th>
-                      @php $grtotal = $grtotal + $total; @endphp
+                      @php 
+                        $allSubTotal += $total;
+                        $grtotal = $grtotal + $total; @endphp
                       <td>{{($grtotal/$grdTotal)*100}}</td>
                       </tr>
                       @endif
@@ -107,7 +107,7 @@
                       
                     </tbody>
                   </table>  
-                <b>Total Marks: {{$grtotal}}</b>
+                <b>Total Marks: {{$allSubTotal}}</b>
                 </td>                
                 @endforeach                
             </tr>
