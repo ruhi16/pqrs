@@ -63,14 +63,13 @@ Route::get('/gradeparticulars-view', 'GradeparticularController@gradeparticulars
 Route::post('/gradeparticulars-editsubmit', 'GradeparticularController@gradeparticularsEditSubmit');
 Route::post('/gradeparticulars-deltsubmit', 'GradeparticularController@gradeparticularsDeltSubmit');
 
-// till the above entry was tested Oke with middleware too
-
 Route::get('/grades', 'GradeController@grades');//->middleware('FinMidware:gradeparticulars');
 Route::post('/grades-submit', 'GradeController@gradesSubmit');
 Route::get('/grades-view', 'GradeController@gradesView');
 Route::post('/grades-editsubmit', 'GradeController@gradesEditSubmit');
 Route::post('/grades-deltsubmit', 'GradeController@gradesDeltSubmit');
 
+// till the above entry was tested Oke with middleware too
 
 
 
