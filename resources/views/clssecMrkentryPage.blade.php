@@ -31,25 +31,14 @@
         <td>{{ $stdcr->studentdb->name }}</td>
         <td>{{ $stdcr->roll_no }}</td>
 
-        {{--  <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input">
-                </div>
-            </div>
-            <input type="text" class="form-control" aria-label="Text input with checkbox">
-        </div>  --}}
-
-        <td>        
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input">
-                </div>
+        <td>         
+        <div class="input-group">
+            <div class="input-group-addon">
+                <input type="checkbox" aria-label="Checkbox for following text input" class="chkbox" name="{{$stdcr->id}}">                
             </div>
             <input  type="text" class="form-control marks{{$stdcr->id}}"  aria-label="Text input with checkbox"               
-                value="{{ ($stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() < 0 ? 'AB' : $stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() ) }}">
-        
+                value="{{ ($stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() < 0 ? 'AB' : 
+                                            $stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() ) }}">        
         </div>
         </td>
 
@@ -94,11 +83,30 @@
         error: function(data){
           console.log(data);
         }
+    });   
+
     });
 
 
 
 
+
+
+    $('.chkbox').click(function() {
+        //var ssid = $(this).attr('name');
+        //alert(ssid);
+        if($(this).is(":checked")){
+            //alert("hello");
+            var ssid = $(this).attr('name');
+            $(".marks"+ssid).val('AB');
+            $(".marks"+ssid).attr("disabled", true);
+        }else{
+            //alert("gello");
+            var ssid = $(this).attr('name');
+            $(".marks"+ssid).val('');
+            $(".marks"+ssid).attr("disabled", false);
+        }
+         
     });
   });  
 </script>
