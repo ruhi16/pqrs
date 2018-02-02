@@ -36,6 +36,6 @@ function Message($extype, $data){
     // foreach($grds as $grd){
     //     echo $grd->gradeparticular->name;
     // }
-    
-    return $grds->gradeparticular->name;
+    return "Hello";
+    // return $grds->gradeparticular->name;
 }
