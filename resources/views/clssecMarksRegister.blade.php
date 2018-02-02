@@ -88,8 +88,12 @@
                           @if($stdcr->id == $record->studentcr_id 
                                   && $clsb->subject->id == $record->clssub->subject->id
                                   && $ex->id == $record->exmtypclssub->exam->id )
-                            {{$record->marks}}
-                            @php $total = $total + $record->marks; @endphp
+                            @if($record->marks >= 0)
+                                {{ $record->marks }}
+                                @php $total = $total + $record->marks; @endphp
+                            @else
+                                AB
+                            @endif
                           @endif
                         @endforeach
                       </td>
@@ -101,7 +105,7 @@
                       @endphp
                       <td>
                         @php $grd = ($total/$typeTotal)*100; @endphp
-                        {{--  {{ Message($et->name,$grd) }}  --}}
+                        {{ Message($et->name,$grd) }}
                       </td>
                       </tr>
                       @endif
