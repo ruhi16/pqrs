@@ -101,7 +101,7 @@ class MarksEntryController extends Controller
         $etc = $request['etc']; //ExamType Id
         $csc = $request['csc']; //ClssSec Id
         $csb = $request['csb']; //ClssSubject Id
-        if($request['mrk'] == 'AB'){
+        if(strtoupper($request['mrk']) == 'AB'){
             $mrk = -99;
         }else{
             $mrk = $request['mrk']; //Marks
