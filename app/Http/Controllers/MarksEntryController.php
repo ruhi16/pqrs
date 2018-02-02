@@ -97,11 +97,15 @@ class MarksEntryController extends Controller
     public function updateMarks(Request $request){
         //console.log("hello");
         $ses = Session::whereStatus('CURRENT')->first();
-        $sid = $request['sid'];
-        $etc = $request['etc'];
-        $csc = $request['csc'];
-        $csb = $request['csb'];
-        $mrk = $request['mrk'];
+        $sid = $request['sid']; //Student Id
+        $etc = $request['etc']; //ExamType Id
+        $csc = $request['csc']; //ClssSec Id
+        $csb = $request['csb']; //ClssSubject Id
+        if($request['mrk'] == 'AB'){
+            $mrk = -99;
+        }else{
+            $mrk = $request['mrk']; //Marks
+        }
 
         // $stdmrks = Marksentry::whereSession_id($ses->id)
         //     ->whereExmtypclssub_id($etc)

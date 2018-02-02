@@ -31,7 +31,8 @@
         <td>{{ $stdcr->studentdb->name }}</td>
         <td>{{ $stdcr->roll_no }}</td>
         <td><input  type="text" class="form-control marks{{$stdcr->id}}" 
-                    value="{{ $stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() }}"></td>
+                
+                    value="{{ ($stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() < 0 ? 'AB' : $stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() ) }}"></td>
         <td><button class="btn btn-primary" 
                 data-sid="{{$stdcr->id}}"
                 data-etc="{{$extpcls->id}}"
@@ -43,6 +44,7 @@
 
 </tbody>
 </table>
+<script type="text/javascript" src="{{url('bs337/js/jquery.bootstrap-grow.min.js')}}" integrity=""></script>
 <script type="text/javascript">
   $(document).ready(function(e){
     $('.btn').click(function(){
@@ -63,6 +65,10 @@
         data:{etc:etc, csc:csc, csb:csb, sid:sid, mrk:mrk,  _token:t},
         success: function(msg){
           console.log("Successful: sid="+msg['sid']+", etc="+msg['etc']+", cl-sc="+msg['csc']+", cl-sb="+msg['csb']+", mrk="+msg['mrk']);
+          $.bootstrapGrowl(msg['sid']+"'s Record Updated Successfully!",{
+            type: 'info', // success, error, info, warning
+            delay: 1000,
+          });
         },
         error: function(data){
           console.log(data);
