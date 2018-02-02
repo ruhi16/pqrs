@@ -101,7 +101,7 @@
                       @endphp
                       <td>
                         @php $grd = ($total/$typeTotal)*100; @endphp
-                        {{ Message($et->name,$grd) }}
+                        {{--  {{ Message($et->name,$grd) }}  --}}
                       </td>
                       </tr>
                       @endif
