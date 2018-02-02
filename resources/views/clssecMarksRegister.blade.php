@@ -3,6 +3,7 @@
 
 @section('header')
 	@include('layouts.navbar')
+    
 @endsection
 
 @section('content')
@@ -55,7 +56,7 @@
                         <th>#</th>
                         <th>Subject</th>
                         @php                             
-                            $grdTotal = 0;
+                            $typeTotal = 0;
                           @endphp
                         @foreach($exms as $ex)
                           {{--  @php 
@@ -65,13 +66,11 @@
                           @foreach($extpclsbs as $extpclsb)
                             @if($extpclsb->exam_id == $ex->id && $extpclsb->extype_id == $et->id)
                                 <th>{{$ex->name}}/{{ $extpclsb->fm}}</th>
-                                @php $grdTotal += $extpclsb->fm; @endphp
+                                @php $typeTotal += $extpclsb->fm; @endphp
                             @endif
                           @endforeach
-                          
-                          
                         @endforeach
-                        <th>Total/{{$grdTotal}}</th>
+                        <th>Total/{{$typeTotal}}</th>
                         <th>Grade</th>
                       </tr>
                     </thead>
@@ -98,8 +97,11 @@
                       <th class="text-right">{{ $total }}</th>
                       @php 
                         $allSubTotal += $total;
-                        $grtotal = $grtotal + $total; @endphp
-                      <td>{{($grtotal/$grdTotal)*100}}</td>
+                        
+                      @endphp
+                      <td>
+                        {{($total/$typeTotal)*100}}
+                      </td>
                       </tr>
                       @endif
                       {{--  @php $grtotal = $grdTotal = 0; @endphp  --}}

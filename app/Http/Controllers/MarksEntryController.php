@@ -16,6 +16,7 @@ use App\Studentcr;
 
 use App\Clssub;
 use App\Clssec;
+use App\Grade;
 
 
 use App\Exmtypclssub;
@@ -181,7 +182,8 @@ class MarksEntryController extends Controller
         $extpclsbs = Exmtypclssub::whereSession_id($ses->id)
         ->whereClss_id($clsc->clss_id)        
         ->get();
-
+        
+        $grades = Grade::whereSession_id($ses->id)->get();
         
 
         return view('clssecMarksRegister')
