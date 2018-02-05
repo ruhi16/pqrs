@@ -37,7 +37,7 @@
                @if($stdmrk
                   ->where('exmtypclssub_id', $extpcl->id)
                   ->where('clssec_id', $clsc->id)
-                  ->where('clssub_id',$cl->id)->sum('marks')>0)
+                  ->where('clssub_id',$cl->id)->sum('marks')  != 0)
                   <b>Done</b>
                 @else
                 <b>Pending</b>
