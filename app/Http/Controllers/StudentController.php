@@ -72,5 +72,10 @@ class StudentController extends Controller
     }
 
     
+    public function studentdbmultipage(Request $request){
+
+
+        return view ('studentdbmultipage');
+    }
 
 }
