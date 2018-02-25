@@ -8,6 +8,128 @@
 @section('content')
 <h1>Test...</h1>
 
+
+<form class="form-horizontal">
+  
+
+    
+      <div class="panel panel-default">
+      {{--  <div class="panel-heading">Official Details</div>  --}}
+      <div class="panel-body">
+      
+      
+    <div class="page-header">
+      <h1>Office Details <small>Must Enter...</small></h1>
+    </div>
+    <div class="form-group">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="">Adm. Book No:</label>
+        <div class="col-sm-2">
+          <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+
+        <label class="control-label col-sm-2" for="email">Adm. Sl No</label>
+        <div class="col-sm-2">
+          <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+
+        <label class="control-label col-sm-2" for="email">Adm. Date</label>
+        <div class="col-sm-2">
+          <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+      </div> {{-- end of form-group --}}
+
+
+      <div class="page-header">
+        <h1>Student Details <small>Must Enter...</small></h1>
+      </div>      
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="">Name:</label>
+        <div class="col-sm-4">
+          <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+        <label class="control-label col-sm-1" for="">DoB:</label>
+        <div class="col-sm-2">
+          <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+        <label class="control-label col-sm-1" for="">Gender:</label>
+        <div class="col-sm-2">
+          <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+
+      </div> {{-- end of form-group --}}
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="">Father Name:</label>
+        <div class="col-sm-4">
+          <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+
+        <label class="control-label col-sm-2" for="">Mother Name:</label>
+        <div class="col-sm-4">
+          <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+      </div> {{-- end of form-group --}}
+
+
+      <div class="form-group"> 
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label><input type="checkbox"> Remember me</label>
+          </div>
+        </div>
+      </div> {{-- end of form-group --}}
+
+
+      <div class="form-group"> 
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div> {{-- end of form-group --}}
+  
+
+
+
+    </div> {{-- end of form-body --}}
+    </div>
+    
+    </div>
+  
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{--  
   <h2>Accordion Example</h2>
   <p><strong>Note:</strong> The <strong>data-parent</strong> attribute makes sure that all collapsible elements under the specified parent will be closed when one of the collapsible item is shown.</p>
   
@@ -53,104 +175,7 @@
 
     
   </div> 
-
-
-
-
-
-<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-  Link with href
-</a>
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-  Button with data-target
-</button>
-<br>
-
-
-<div class="collapse" id="collapseExample">
-  <div class="well">
-    ...123456
-  </div>
-</div>
-
-
-
-<form class="form-horizontal" action='' method="POST">
-  <fieldset>
-    <div id="legend">
-      <legend class="">Register</legend>
-    </div>
-    <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="username">Username</label>
-      <div class="controls">
-        <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- E-mail -->
-      <label class="control-label" for="email">E-mail</label>
-      <div class="controls">
-        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Password-->
-      <label class="control-label" for="password">Password</label>
-      <div class="controls">
-        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-        <p class="help-block">Password should be at least 4 characters</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Password -->
-      <label class="control-label"  for="password_confirm">Password (Confirm)</label>
-      <div class="controls">
-        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
-        <p class="help-block">Please confirm password</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Button -->
-      <div class="controls">
-        <button class="btn btn-success">Register</button>
-      </div>
-    </div>
-  </fieldset>
-</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  --}}
 
 
 <script type="text/javascript">
