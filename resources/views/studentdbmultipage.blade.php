@@ -48,6 +48,20 @@
         </div> 
       </div> {{-- end of form-group --}}
       
+      {{--  Image Details Section  --}}
+      <div class="alert alert-info" role="alert">Student Image Details</div>
+      <div class="form-group">
+        <div class="col-sm-3">
+            <div class="thumbnail">
+              <img src="https://picsum.photos/200/200" alt="...">
+              <div class="caption">                
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+              </div>
+            </div>
+          </div>
+
+      </div> {{-- end of form-group --}}
+
       {{--  Personal Details Section  --}}
       <div class="alert alert-warning" role="alert">Personal Details</div>
       <div class="form-group">      
@@ -107,7 +121,7 @@
           <input type="email" class="form-control" id="email" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="">Cast:</label>
+        <label class="control-label col-sm-1" for="">Caste:</label>
         <div class="col-sm-2">
           <input type="email" class="form-control" id="email" placeholder="">
         </div>
@@ -117,7 +131,7 @@
         </div>
       </div> {{-- end of form-group --}}
 
-      <div class="alert alert-warning" role="alert">Address Details</div>      
+      <div class="alert alert-info" role="alert">Address Details</div>      
       <div class="form-group">
         <label class="control-label col-sm-2" for="">Vill:</label>
         <div class="col-sm-3">
