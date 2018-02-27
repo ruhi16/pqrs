@@ -9,177 +9,178 @@
 <h1>New Student Details Entry Form</h1>
 
 
-<form class="form-horizontal">
+<form class="form-horizontal" method="post" action="{!! url('studentdbmultipage-submit') !!}" >
+  {{ csrf_field() }}
       <div class="panel panel-default">
       {{--  <div class="panel-heading">Official Details</div>  --}}
       <div class="panel-body">
-    
-    <div class="alert alert-success" role="alert">Admission Details (Office )</div>
+
+      <div class="alert alert-info" role="alert">Admission Details (Office )</div>
       <div class="form-group">      
-        <label class="control-label col-sm-2" for="">Book No:</label>
+        <label class="control-label col-sm-2" for="admBookNo">Book No:</label>
         <div class="col-sm-1">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="admBookNo" id="admBookNo" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="email">Sl No</label>
+        <label class="control-label col-sm-1" for="admSlNo">Sl No</label>
         <div class="col-sm-1">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="admSlNo" id="admSlNo" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="email">Adm. Date</label>
+        <label class="control-label col-sm-2" for="admDate">Adm. Date</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="admDate" id="admDate" placeholder="">
         </div>      
       </div> {{-- end of form-group --}}
       <div class="form-group">      
-        <label class="control-label col-sm-2" for="email">Current Class:</label>
+        <label class="control-label col-sm-2" for="admCrCls">Current Class:</label>
         <div class="col-sm-1">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="admCrCls" id="admCrCls" placeholder="">
         </div> 
 
-        <label class="control-label col-sm-1" for="email">Pr. Class:</label>
+        <label class="control-label col-sm-1" for="admPrCls">Pr. Class:</label>
         <div class="col-sm-1">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="admPrCls" id="admPrCls" placeholder="">
         </div> 
         
-        <label class="control-label col-sm-2" for="email">Previous School:</label>
+        <label class="control-label col-sm-2" for="admPrSch">Previous School:</label>
         <div class="col-sm-5">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="admPrSch" id="admPrSch" placeholder="">
         </div> 
       </div> {{-- end of form-group --}}
       
       {{--  Personal Details Section  --}}
       <div class="alert alert-warning" role="alert">Personal Details</div>
       <div class="form-group">      
-        <label class="control-label col-sm-2" for="">Student Name:</label>
+        <label class="control-label col-sm-2" for="stName">Student Name:</label>
         <div class="col-sm-4">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stName" id="stName" placeholder="">
         </div>
-        <label class="control-label col-sm-3" for="">Adhaar No:</label>
+        <label class="control-label col-sm-3" for="stAdhaar">Adhaar No:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stAdhaar" id="stAdhaar" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Father Name:</label>
+        <label class="control-label col-sm-2" for="stFName">Father Name:</label>
         <div class="col-sm-5">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stFName" id="stFName" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="">Adhaar No:</label>
+        <label class="control-label col-sm-2" for="stFAdhaar">Adhaar No:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stFAdhaar" id="stFAdhaar" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
       
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Mother Name:</label>
+        <label class="control-label col-sm-2" for="stMName">Mother Name:</label>
         <div class="col-sm-5">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stMName" id="stMName" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="">Adhaar No:</label>
+        <label class="control-label col-sm-2" for="stMAdhaar">Adhaar No:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stMAdhaar" id="stMAdhaar" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
 
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Date of Birth:</label>
+        <label class="control-label col-sm-2" for="stDob">Date of Birth:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stDob" id="stDob" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="">Gender:</label>
+        <label class="control-label col-sm-1" for="stSex">Gender:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stSex" id="stSex" placeholder="">
         </div>
-        <label class="control-label col-sm-2" for="">Physical Challenged:</label>
+        <label class="control-label col-sm-2" for="stPhCh">Physical Challenged:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stPhCh" id="stPhCh" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
 
 
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Religion:</label>
+        <label class="control-label col-sm-2" for="stRelg">Religion:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stRelg" id="stRelg" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="">Cast:</label>
+        <label class="control-label col-sm-1" for="stCaste">Cast:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stCaste" id="stCaste" placeholder="">
         </div>
-        <label class="control-label col-sm-2" for="">Nationality:</label>
+        <label class="control-label col-sm-2" for="stNatn">Nationality:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stNatn" id="stNatn" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
 
       <div class="alert alert-warning" role="alert">Address Details</div>      
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Vill:</label>
+        <label class="control-label col-sm-2" for="stVill">Vill:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stVill" id="stVill" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="">PO:</label>
+        <label class="control-label col-sm-1" for="stPO">PO:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stPO" id="stPO" placeholder="">
         </div>
-        <label class="control-label col-sm-1" for="">PS:</label>
+        <label class="control-label col-sm-1" for="stPS">PS:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stPS" id="stPS" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
 
 
 
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">District:</label>
+        <label class="control-label col-sm-2" for="stDist">District:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stDist" id="stDist" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="">PIN:</label>
+        <label class="control-label col-sm-1" for="stPin">PIN:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stPin" id="stPin" placeholder="">
         </div>
-        <label class="control-label col-sm-1" for="">Mobile:</label>
+        <label class="control-label col-sm-1" for="stMob">Mobile:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stMob" id="stMob" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
       
 
       <div class="alert alert-danger" role="alert">Bank Details (Office )</div>
       <div class="form-group">      
-        <label class="control-label col-sm-2" for="">Account No:</label>
+        <label class="control-label col-sm-2" for="stAccNo">Account No:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stAccNo" id="stAccNo" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="email">IFSC CODE</label>
+        <label class="control-label col-sm-2" for="stIFSC">IFSC CODE</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stIFSC" id="stIFSC" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="email">MICR Code</label>
+        <label class="control-label col-sm-2" for="stMICR">MICR Code</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stMICR" id="stMICR" placeholder="">
         </div>      
       </div> {{-- end of form-group --}}
       
       <div class="form-group">      
-        <label class="control-label col-sm-2" for="">Bank Name:</label>
+        <label class="control-label col-sm-2" for="stBankName">Bank Name:</label>
         <div class="col-sm-4">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stBankName" id="stBankName" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="email">Branch Name/Code:</label>
+        <label class="control-label col-sm-2" for="stBrName">Branch Name/Code:</label>
         <div class="col-sm-4">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stBrName" id="stBrName" placeholder="">
         </div>
 
       </div> {{-- end of form-group --}}

@@ -78,4 +78,10 @@ class StudentController extends Controller
         return view ('studentdbmultipage');
     }
 
+    public function studentdbmultipageSubmit(Request $request){
+
+
+        echo $request->admBookNo;
+    }
+
 }
