@@ -29,7 +29,7 @@
 
         <label class="control-label col-sm-2" for="admDate">Adm. Date</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="admDate" id="datepicker" placeholder="">
+          <input type="text" class="form-control" name="admDate" id="datepicker1" placeholder="">
         </div>      
       </div> {{-- end of form-group --}}
       <div class="form-group">      
@@ -87,8 +87,8 @@
 
       <div class="form-group">
         <label class="control-label col-sm-2" for="stDob">Date of Birth:</label>
-        <div class="col-sm-3">
-          <input type="text" class="form-control" name="stDob" id="stDob" placeholder="">
+        <div class="col-sm-3">          
+          <input type="text" class="form-control" name="stDob" id="datepicker2" placeholder="">
         </div>
 
         <label class="control-label col-sm-1" for="stSex">Gender:</label>
@@ -173,9 +173,9 @@
       </div> {{-- end of form-group --}}
       
       <div class="form-group">      
-        <label class="control-label col-sm-2" for="stBankName">Bank Name:</label>
+        <label class="control-label col-sm-2" for="stBnName">Bank Name:</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" name="stBankName" id="stBankName" placeholder="">
+          <input type="text" class="form-control" name="stBnName" id="stBnName" placeholder="">
         </div>
 
         <label class="control-label col-sm-2" for="stBrName">Branch Name/Code:</label>
@@ -297,26 +297,52 @@
     
   </div> 
   --}}
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  {{--  <link rel="stylesheet" href="/resources/demos/style.css">  --}}
-  {{--    --}}
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
+  <!-- Datepicker -->  
+  <link rel="stylesheet" href="{{url('datepicker/jquery-ui.css')}}">
+  <script src="{{url('datepicker/jquery-ui.js')}}"></script>
+ 
+
 
 <script type="text/javascript">
   $(document).ready(function(e){
-  $(function() {
-    
-  });
-
-  });  
-</script>
-<script type="text/javascript">
-$( "#datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat: 'dd-mm-yy'
+    $('#datepicker1').each(function(){
+      $(this).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd-mm-yy'
+        });
     });
+
+    $('#datepicker2').each(function(){
+      $(this).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd-mm-yy'
+        });
+    });
+  });
+</script>
+
+
+<script src="{{url('validator/jquery.validate.js')}}">
+
+
+
+</script>
+
+
+
+<script type="text/javascript">
+    {{--  $(function(){
+      $( "#datepicker" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd-mm-yy'
+      });
+    });  --}}
+    {{--  $('#datepicker').datepicker();   --}}
+
+    
 </script>
 
 
