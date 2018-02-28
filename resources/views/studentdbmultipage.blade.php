@@ -29,7 +29,7 @@
 
         <label class="control-label col-sm-2" for="admDate">Adm. Date</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="admDate" id="admDate" placeholder="">
+          <input type="text" class="form-control" name="admDate" id="datepicker" placeholder="">
         </div>      
       </div> {{-- end of form-group --}}
       <div class="form-group">      
@@ -297,14 +297,28 @@
     
   </div> 
   --}}
-
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  {{--  <link rel="stylesheet" href="/resources/demos/style.css">  --}}
+  {{--    --}}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
 
 <script type="text/javascript">
   $(document).ready(function(e){
- 
+  $(function() {
+    
+  });
 
   });  
 </script>
+<script type="text/javascript">
+$( "#datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'dd-mm-yy'
+    });
+</script>
+
 
 @endsection
 

@@ -82,6 +82,11 @@ class StudentController extends Controller
 
 
         echo $request->admBookNo;
+        echo "<br>".$request->admSlNo;
+        echo "<br>".$request->admDate;
+        echo "<br>".$request->admCrCls;
+        echo "<br>".$request->admPrCls;
+        echo "<br>".$request->admPrSch;
     }
 
 }
