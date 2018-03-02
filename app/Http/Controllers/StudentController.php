@@ -11,6 +11,7 @@ use App\Extype;
 use App\Clss;
 use App\Subject;
 use App\Section;
+use App\Miscoption;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -74,8 +75,10 @@ class StudentController extends Controller
     
     public function studentdbmultipage(Request $request){
         $allClss = Clss::all();
+        $allOptn = Miscoption::all();
 
-        return view ('studentdbmultipage')->with( 'allClss', $allClss);
+        return view ('studentdbmultipage')
+            ->with( 'allClss', $allClss)->with('allOptn', $allOptn);
     }
 
     public function studentdbmultipageSubmit(Request $request){

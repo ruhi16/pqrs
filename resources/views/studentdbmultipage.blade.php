@@ -107,28 +107,68 @@
 
         <label class="control-label col-sm-1" for="stSex">Gender:</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="stSex" id="stSex" placeholder="">
+        <select class="form-control" name="stSex" id="stSex">
+            <option value=""></option>            
+          @foreach($allOptn as $aO)
+            @if($aO->tabName == 'studentdbs' && $aO->fieldName == 'ssex')
+              <option value="{{ $aO->options }}">{{ $aO->options }}</option>
+            @endif
+          @endforeach
+        </select>
+          {{--  <input type="text" class="form-control" name="stSex" id="stSex" placeholder="">  --}}
         </div>
         <label class="control-label col-sm-2" for="stPhCh">Physical Challenged:</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="stPhCh" id="stPhCh" placeholder="">
+        <select class="form-control" name="stPhCh" id="stPhCh">
+            <option value=""></option>            
+          @foreach($allOptn as $aO)
+            @if($aO->tabName == 'studentdbs' && $aO->fieldName == 'phch')
+              <option value="{{ $aO->options }}">{{ $aO->options }}</option>
+            @endif
+          @endforeach
+        </select>
+          {{--  <input type="text" class="form-control" name="stPhCh" id="stPhCh" placeholder="">  --}}
         </div>
       </div> {{-- end of form-group --}}
-
+  
 
       <div class="form-group">
         <label class="control-label col-sm-2" for="stRelg">Religion:</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control" name="stRelg" id="stRelg" placeholder="">
+        <select class="form-control" name="stRelg" id="stRelg">
+            <option value=""></option>            
+          @foreach($allOptn as $aO)
+            @if($aO->tabName == 'studentdbs' && $aO->fieldName == 'relg')
+              <option value="{{ $aO->options }}">{{ $aO->options }}</option>
+            @endif
+          @endforeach
+        </select>
+          {{--  <input type="text" class="form-control" name="stRelg" id="stRelg" placeholder="">  --}}
         </div>
 
         <label class="control-label col-sm-1" for="stCaste">Cast:</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="stCaste" id="stCaste" placeholder="">
+        <select class="form-control" name="stCaste" id="stCaste">
+            <option value=""></option>            
+          @foreach($allOptn as $aO)
+            @if($aO->tabName == 'studentdbs' && $aO->fieldName == 'cste')
+              <option value="{{ $aO->options }}">{{ $aO->options }}</option>
+            @endif
+          @endforeach
+        </select>
+          {{--  <input type="text" class="form-control" name="stCaste" id="stCaste" placeholder="">  --}}
         </div>
         <label class="control-label col-sm-2" for="stNatn">Nationality:</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="stNatn" id="stNatn" placeholder="">
+        <select class="form-control" name="stNatn" id="stNatn">
+            <option value=""></option>            
+          @foreach($allOptn as $aO)
+            @if($aO->tabName == 'studentdbs' && $aO->fieldName == 'natn')
+              <option value="{{ $aO->options }}">{{ $aO->options }}</option>
+            @endif
+          @endforeach
+        </select>
+          {{--  <input type="text" class="form-control" name="stNatn" id="stNatn" placeholder="">  --}}
         </div>
       </div> {{-- end of form-group --}}
 
@@ -492,9 +532,54 @@ $(document).ready(function() {
                     message: 'The adhaar must contain 12 integer'
                 }
               }
+            },
+            stDob: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },
+                date: {
+                        format: 'DD-MM-YYYY',
+                        message: 'The value is not a valid date'
+                    }
+              }
+            },
+            stSex: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stPhCh: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stRelg: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stCaste: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stNatn: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
             }
 
-            
             
         }
   });
