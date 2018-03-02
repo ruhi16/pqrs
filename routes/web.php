@@ -27,6 +27,14 @@ Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
 Route::post('/clsses-deltsubmit', 'ClssesController@clssesDeltSubmit');
 
 
+Route::get('/exams', 'ExamController@exams');//->middleware('FinMidware:clsses');
+Route::post('/exams-submit', 'ExamController@examsSubmit');
+Route::get('/exams-view', 'ExamController@examsView');
+Route::post('/exams-editsubmit', 'ExamController@examsEditSubmit');
+Route::post('/exams-deltsubmit', 'ExamController@examsDeltSubmit');
+
+
+
 
 Route::get('/schoolInfo', 'SchoolController@schoolInfo')->name('xyz');
 Route::post('/schoolInfo-submit', 'SchoolController@schoolInfoSubmit');
@@ -41,6 +49,7 @@ Route::get('/editSession/{session_id}', 'SessionController@editSession');
 Route::get('/clssecs', 'ClsSecController@clssec')->middleware('FinMidware:clssecs-clsses-sections');
 Route::post('/clssec-submit', 'ClsSecController@clssecSubmit');
 Route::get('/clssecs-view', 'ClsSecController@clssecView');
+
 
 Route::get('/addSec/{n}', 'ClsSecController@addSec');
 Route::get('/delSec/{n}', 'ClsSecController@delSec');

@@ -17,7 +17,6 @@ use App\Studentcr;
 use App\Clssub;
 use App\Clssec;
 
-
 use App\Exmtypclssub;
 use App\Marksentry;
 
@@ -35,7 +34,7 @@ class ClssesController extends Controller
 
     public function clssesSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
-        echo $request->clssName;
+        // echo $request->clssName;
         $clss = new Clss;
         $clss->name = $request->clssName;
         $clss->session_id = $ses->id;
