@@ -9,7 +9,7 @@
 <h1>New Student Details Entry Form</h1>
 
 
-<form class="form-horizontal" method="post" action="{!! url('studentdbmultipage-submit') !!}" >
+<form class="form-horizontal" method="post" action="{!! url('studentdbmultipage-submit') !!}" id="sform" role="form" data-toggle="validator">
   {{ csrf_field() }}
       <div class="panel panel-default">
       {{--  <div class="panel-heading">Official Details</div>  --}}
@@ -18,33 +18,47 @@
       <div class="alert alert-info" role="alert">Admission Details (Office )</div>
       <div class="form-group">      
         <label class="control-label col-sm-2" for="admBookNo">Book No:</label>
-        <div class="col-sm-1">
+        <div class="col-sm-2">
           <input type="text" class="form-control" name="admBookNo" id="admBookNo" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="admSlNo">Sl No</label>
-        <div class="col-sm-1">
+        <label class="control-label col-sm-1" for="admSlNo">Sl No:</label>
+        <div class="col-sm-2">
           <input type="text" class="form-control" name="admSlNo" id="admSlNo" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="admDate">Adm. Date</label>
+        <label class="control-label col-sm-2" for="admDate">Adm. Date:</label>
         <div class="col-sm-2">
           <input type="text" class="form-control" name="admDate" id="datepicker1" placeholder="">
         </div>      
       </div> {{-- end of form-group --}}
       <div class="form-group">      
         <label class="control-label col-sm-2" for="admCrCls">Current Class:</label>
-        <div class="col-sm-1">
-          <input type="text" class="form-control" name="admCrCls" id="admCrCls" placeholder="">
+        <div class="col-sm-2">          
+          {{--  {{//$allClss->dump() }}  --}}
+          <select class="form-control" name="admCrCls" id="admCrCls">
+          <option value=""></option>
+          @foreach($allClss as $aClss)
+            <option value="{{ $aClss->name }}">{{ $aClss->name }}</option>
+          @endforeach
+          </select>
+          {{--  <input type="text" class="form-control" name="admCrCls" id="admCrCls" placeholder="">  --}}
         </div> 
 
         <label class="control-label col-sm-1" for="admPrCls">Pr. Class:</label>
-        <div class="col-sm-1">
-          <input type="text" class="form-control" name="admPrCls" id="admPrCls" placeholder="">
+        <div class="col-sm-2">
+          <select class="form-control" name="admPrCls" id="admPrCls">
+            <option value=""></option>
+            <option value="IV">IV</option>
+          @foreach($allClss as $aClss)
+            <option value="{{ $aClss->name }}">{{ $aClss->name }}</option>
+          @endforeach
+          </select>
+          {{--  <input type="text" class="form-control" name="admPrCls" id="admPrCls" placeholder="">  --}}
         </div> 
         
         <label class="control-label col-sm-2" for="admPrSch">Previous School:</label>
-        <div class="col-sm-5">
+        <div class="col-sm-3">
           <input type="text" class="form-control" name="admPrSch" id="admPrSch" placeholder="">
         </div> 
       </div> {{-- end of form-group --}}
@@ -54,7 +68,7 @@
       <div class="form-group">      
         <label class="control-label col-sm-2" for="stName">Student Name:</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" name="stName" id="stName" placeholder="">
+          <input type="text-uppercase" class="form-control" name="stName" id="stName" placeholder="">
         </div>
         <label class="control-label col-sm-3" for="stAdhaar">Adhaar No:</label>
         <div class="col-sm-3">
@@ -297,7 +311,7 @@
     
   </div> 
   --}}
-  <!-- Datepicker -->  
+  <!-- Datepicker CDN-->  
   <link rel="stylesheet" href="{{url('datepicker/jquery-ui.css')}}">
   <script src="{{url('datepicker/jquery-ui.js')}}"></script>
  
@@ -322,10 +336,170 @@
     });
   });
 </script>
+{{--  Validator CDN  --}}
+<link rel="stylesheet" href="{{url('validator/bootstrapValidator.min.js')}}"/>
+<script type="text/javascript" src="{{url('validator/bootstrapValidator.min.js')}}"> </script>
 
 
-<script src="{{url('validator/jquery.validate.js')}}">
 
+<script  type="text/javascript" >
+$(document).ready(function() {
+  //alert("hhh");
+  $('#sform').bootstrapValidator({
+        message: 'This value is not valid',
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            admBookNo: {
+                validators: {
+                    notEmpty: {
+                        message: 'The full name is required and cannot be empty'
+                    }
+                }
+            },
+            admSlNo: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },
+                integer: {
+                        message: 'The value is not an integer'
+                    }
+              }
+            },
+            admDate: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },
+                date: {
+                        format: 'DD-MM-YYYY',
+                        message: 'The value is not a valid date'
+                    }
+              }
+            },
+            admCrCls: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },                            
+                regexp: {
+                    regexp: /^[a-z\s]+$/i,
+                    message: 'The full name can consist of alphabetical characters and spaces only'
+                }
+              }
+            },
+            admPrCls: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },                            
+                regexp: {
+                    regexp: /^[a-z\s]+$/i,
+                    message: 'The full name can consist of alphabetical characters and spaces only'
+                }
+              }
+            },
+            admPrSch: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },                            
+                regexp: {
+                    regexp: /^[a-z\s]+$/i,
+                    message: 'The full name can consist of alphabetical characters and spaces only'
+                }
+              }
+            },
+            stName: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },                            
+                regexp: {
+                    regexp: /^[a-z\s]+$/i,
+                    message: 'The full name can consist of alphabetical characters and spaces only'
+                }
+              }
+            },
+            stAdhaar: {
+              validators: {
+                notEmpty: {
+                    message: 'The field cannot be empty'
+                    },
+                integer: {
+                        message: 'The value is not an integer'
+                    },
+                stringLength:{
+                    min:12,
+                    max:12,
+                    message: 'The adhaar must contain 12 integer'
+                }
+              }
+            },
+            stFName: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },                            
+                regexp: {
+                    regexp: /^[a-z\s]+$/i,
+                    message: 'The full name can consist of alphabetical characters and spaces only'
+                }
+              }
+            },
+            stFAdhaar: {
+              validators: {
+                notEmpty: {
+                    message: 'The field cannot be empty'
+                    },
+                integer: {
+                        message: 'The value is not an integer'
+                    },
+                stringLength:{
+                    min:12,
+                    max:12,
+                    message: 'The adhaar must contain 12 integer'
+                }
+              }
+            },
+            stMName: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    },                            
+                regexp: {
+                    regexp: /^[a-z\s]+$/i,
+                    message: 'The full name can consist of alphabetical characters and spaces only'
+                }
+              }
+            },
+            stMAdhaar: {
+              validators: {
+                notEmpty: {
+                    message: 'The field cannot be empty'
+                    },
+                integer: {
+                        message: 'The value is not an integer'
+                    },
+                stringLength:{
+                    min:12,
+                    max:12,
+                    message: 'The adhaar must contain 12 integer'
+                }
+              }
+            }
+
+            
+            
+        }
+  });
+
+});
 
 
 </script>

@@ -73,9 +73,9 @@ class StudentController extends Controller
 
     
     public function studentdbmultipage(Request $request){
+        $allClss = Clss::all();
 
-
-        return view ('studentdbmultipage');
+        return view ('studentdbmultipage')->with( 'allClss', $allClss);
     }
 
     public function studentdbmultipageSubmit(Request $request){
