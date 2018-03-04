@@ -101,7 +101,11 @@
 
 
                     <br>
-                    <a href="{{url('/studentdb')}}">Student's Detail View</a>                    
+                    <a href="{{url('/studentdb')}}">Students Detail View</a>                    
+                    <br>
+                    <a href="{{url('/clssec-TaskPage')}}">Students Info Entry View</a>
+                    <br>
+                    <a href="{{url('/clssec-TaskPage')}}">Students Info Entry View</a>
                     
                     <br>                    
                     <a href="{{url('/clssecs')}}">Class Section Entry</a>

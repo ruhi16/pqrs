@@ -128,7 +128,6 @@ Route::get('/studentdbmultipage', 'StudentController@studentdbmultipage');
 
 
 
-
 Route::get('/test', 'BaseController@test');
 
 
