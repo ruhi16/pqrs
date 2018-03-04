@@ -125,6 +125,8 @@ Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
 Route::post('/updateSection', 'StudentController@updateSection');
 
 Route::get('/studentdbmultipage', 'StudentController@studentdbmultipage');
+Route::post('/studentdbmultipage-submit', 'StudentController@studentdbmultipageSubmit');
+Route::get('/studentdbmultipage-search', 'StudentController@studentdbmultipageSearch');
 
 
 

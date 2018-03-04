@@ -9,49 +9,14 @@
 <h1>New Student Details Entry Form</h1>
 
 
-<<<<<<< HEAD
-<form class="form-horizontal">
-=======
 <form class="form-horizontal" method="post" action="{!! url('studentdbmultipage-submit') !!}" id="sform" role="form" data-toggle="validator">
   {{ csrf_field() }}
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
       <div class="panel panel-default">
       {{--  <div class="panel-heading">Official Details</div>  --}}
       <div class="panel-body">
-    
-    <div class="alert alert-success" role="alert">Admission Details (Office )</div>
+
+      <div class="alert alert-info" role="alert">Admission Details (Office )</div>
       <div class="form-group">      
-<<<<<<< HEAD
-        <label class="control-label col-sm-2" for="">Book No:</label>
-        <div class="col-sm-1">
-          <input type="email" class="form-control" id="email" placeholder="">
-        </div>
-
-        <label class="control-label col-sm-1" for="email">Sl No</label>
-        <div class="col-sm-1">
-          <input type="email" class="form-control" id="email" placeholder="">
-        </div>
-
-        <label class="control-label col-sm-2" for="email">Adm. Date</label>
-        <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
-        </div>      
-      </div> {{-- end of form-group --}}
-      <div class="form-group">      
-        <label class="control-label col-sm-2" for="email">Current Class:</label>
-        <div class="col-sm-1">
-          <input type="email" class="form-control" id="email" placeholder="">
-        </div> 
-
-        <label class="control-label col-sm-1" for="email">Pr. Class:</label>
-        <div class="col-sm-1">
-          <input type="email" class="form-control" id="email" placeholder="">
-        </div> 
-        
-        <label class="control-label col-sm-2" for="email">Previous School:</label>
-        <div class="col-sm-5">
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
         <label class="control-label col-sm-2" for="admBookNo">Book No:</label>
         <div class="col-sm-2">
           <input type="text" class="form-control" name="admBookNo" id="admBookNo" placeholder="">
@@ -95,81 +60,53 @@
         <label class="control-label col-sm-2" for="admPrSch">Previous School:</label>
         <div class="col-sm-3">
           <input type="text" class="form-control" name="admPrSch" id="admPrSch" placeholder="">
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div> 
       </div> {{-- end of form-group --}}
       
-      {{--  Image Details Section  --}}
-      <div class="alert alert-info" role="alert">Student Image Details</div>
-      <div class="form-group">
-        <div class="col-sm-3">
-            <div class="thumbnail">
-              <img src="https://picsum.photos/200/200" alt="...">
-              <div class="caption">                
-                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-              </div>
-            </div>
-          </div>
-
-      </div> {{-- end of form-group --}}
-
       {{--  Personal Details Section  --}}
       <div class="alert alert-warning" role="alert">Personal Details</div>
       <div class="form-group">      
-        <label class="control-label col-sm-2" for="">Student Name:</label>
+        <label class="control-label col-sm-2" for="stName">Student Name:</label>
         <div class="col-sm-4">
-<<<<<<< HEAD
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
           <input type="text-uppercase" class="form-control" name="stName" id="stName" placeholder="">
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div>
-        <label class="control-label col-sm-3" for="">Adhaar No:</label>
+        <label class="control-label col-sm-3" for="stAdhaar">Adhaar No:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stAdhaar" id="stAdhaar" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Father Name:</label>
+        <label class="control-label col-sm-2" for="stFName">Father Name:</label>
         <div class="col-sm-5">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stFName" id="stFName" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="">Adhaar No:</label>
+        <label class="control-label col-sm-2" for="stFAdhaar">Adhaar No:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stFAdhaar" id="stFAdhaar" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
       
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Mother Name:</label>
+        <label class="control-label col-sm-2" for="stMName">Mother Name:</label>
         <div class="col-sm-5">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stMName" id="stMName" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="">Adhaar No:</label>
+        <label class="control-label col-sm-2" for="stMAdhaar">Adhaar No:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stMAdhaar" id="stMAdhaar" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
 
       <div class="form-group">
-<<<<<<< HEAD
-        <label class="control-label col-sm-2" for="">Date of Birth:</label>
-        <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
         <label class="control-label col-sm-2" for="stDob">Date of Birth:</label>
         <div class="col-sm-3">          
           <input type="text" class="form-control" name="stDob" id="datepicker2" placeholder="">
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div>
 
-        <label class="control-label col-sm-1" for="">Gender:</label>
+        <label class="control-label col-sm-1" for="stSex">Gender:</label>
         <div class="col-sm-2">
-<<<<<<< HEAD
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
         <select class="form-control" name="stSex" id="stSex">
             <option value=""></option>            
           @foreach($allOptn as $aO)
@@ -179,13 +116,9 @@
           @endforeach
         </select>
           {{--  <input type="text" class="form-control" name="stSex" id="stSex" placeholder="">  --}}
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div>
-        <label class="control-label col-sm-2" for="">Physical Challenged:</label>
+        <label class="control-label col-sm-2" for="stPhCh">Physical Challenged:</label>
         <div class="col-sm-2">
-<<<<<<< HEAD
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
         <select class="form-control" name="stPhCh" id="stPhCh">
             <option value=""></option>            
           @foreach($allOptn as $aO)
@@ -195,17 +128,13 @@
           @endforeach
         </select>
           {{--  <input type="text" class="form-control" name="stPhCh" id="stPhCh" placeholder="">  --}}
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div>
       </div> {{-- end of form-group --}}
   
 
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Religion:</label>
+        <label class="control-label col-sm-2" for="stRelg">Religion:</label>
         <div class="col-sm-3">
-<<<<<<< HEAD
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
         <select class="form-control" name="stRelg" id="stRelg">
             <option value=""></option>            
           @foreach($allOptn as $aO)
@@ -215,14 +144,10 @@
           @endforeach
         </select>
           {{--  <input type="text" class="form-control" name="stRelg" id="stRelg" placeholder="">  --}}
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div>
 
-        <label class="control-label col-sm-1" for="">Caste:</label>
+        <label class="control-label col-sm-1" for="stCaste">Cast:</label>
         <div class="col-sm-2">
-<<<<<<< HEAD
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
         <select class="form-control" name="stCaste" id="stCaste">
             <option value=""></option>            
           @foreach($allOptn as $aO)
@@ -232,13 +157,9 @@
           @endforeach
         </select>
           {{--  <input type="text" class="form-control" name="stCaste" id="stCaste" placeholder="">  --}}
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div>
-        <label class="control-label col-sm-2" for="">Nationality:</label>
+        <label class="control-label col-sm-2" for="stNatn">Nationality:</label>
         <div class="col-sm-2">
-<<<<<<< HEAD
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
         <select class="form-control" name="stNatn" id="stNatn">
             <option value=""></option>            
           @foreach($allOptn as $aO)
@@ -248,79 +169,72 @@
           @endforeach
         </select>
           {{--  <input type="text" class="form-control" name="stNatn" id="stNatn" placeholder="">  --}}
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div>
       </div> {{-- end of form-group --}}
 
-      <div class="alert alert-info" role="alert">Address Details</div>      
+      <div class="alert alert-warning" role="alert">Address Details</div>      
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">Vill:</label>
+        <label class="control-label col-sm-2" for="stVill">Vill:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stVill" id="stVill" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="">PO:</label>
+        <label class="control-label col-sm-1" for="stPO">PO:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stPO" id="stPO" placeholder="">
         </div>
-        <label class="control-label col-sm-1" for="">PS:</label>
+        <label class="control-label col-sm-1" for="stPS">PS:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stPS" id="stPS" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
 
 
 
       <div class="form-group">
-        <label class="control-label col-sm-2" for="">District:</label>
+        <label class="control-label col-sm-2" for="stDist">District:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stDist" id="stDist" placeholder="">
         </div>
 
-        <label class="control-label col-sm-1" for="">PIN:</label>
+        <label class="control-label col-sm-1" for="stPin">PIN:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stPin" id="stPin" placeholder="">
         </div>
-        <label class="control-label col-sm-1" for="">Mobile:</label>
+        <label class="control-label col-sm-1" for="stMob">Mobile:</label>
         <div class="col-sm-3">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stMob" id="stMob" placeholder="">
         </div>
       </div> {{-- end of form-group --}}
       
 
       <div class="alert alert-danger" role="alert">Bank Details (Office )</div>
       <div class="form-group">      
-        <label class="control-label col-sm-2" for="">Account No:</label>
+        <label class="control-label col-sm-2" for="stAccNo">Account No:</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stAccNo" id="stAccNo" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="email">IFSC CODE</label>
+        <label class="control-label col-sm-2" for="stIFSC">IFSC CODE</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stIFSC" id="stIFSC" placeholder="">
         </div>
 
-        <label class="control-label col-sm-2" for="email">MICR Code</label>
+        <label class="control-label col-sm-2" for="stMICR">MICR Code</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stMICR" id="stMICR" placeholder="">
         </div>      
       </div> {{-- end of form-group --}}
       
       <div class="form-group">      
-<<<<<<< HEAD
-        <label class="control-label col-sm-2" for="">Bank Name:</label>
-        <div class="col-sm-4">
-          <input type="email" class="form-control" id="email" placeholder="">
-=======
         <label class="control-label col-sm-2" for="stBnName">Bank Name:</label>
         <div class="col-sm-4">
           <input type="text" class="form-control" name="stBnName" id="stBnName" placeholder="">
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
         </div>
 
-        <label class="control-label col-sm-2" for="email">Branch Name/Code:</label>
+        <label class="control-label col-sm-2" for="stBrName">Branch Name/Code:</label>
         <div class="col-sm-4">
-          <input type="email" class="form-control" id="email" placeholder="">
+          <input type="text" class="form-control" name="stBrName" id="stBrName" placeholder="">
         </div>
 
       </div> {{-- end of form-group --}}
@@ -437,20 +351,14 @@
     
   </div> 
   --}}
-<<<<<<< HEAD
-=======
   <!-- Datepicker CDN-->  
   <link rel="stylesheet" href="{{url('datepicker/jquery-ui.css')}}">
   <script src="{{url('datepicker/jquery-ui.js')}}"></script>
  
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
 
 
 <script type="text/javascript">
   $(document).ready(function(e){
-<<<<<<< HEAD
- 
-=======
     $('#datepicker1').each(function(){
       $(this).datepicker({
         changeMonth: true,
@@ -675,14 +583,11 @@ $(document).ready(function() {
             
         }
   });
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
 
 });
 
 
 </script>
-<<<<<<< HEAD
-=======
 
 
 
@@ -699,7 +604,6 @@ $(document).ready(function() {
     
 </script>
 
->>>>>>> f3a75e854cf5ee1a9341d244191f6c1eac9771e2
 
 @endsection
 
