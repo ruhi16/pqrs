@@ -412,14 +412,14 @@ $(document).ready(function() {
               }
             },
             admDate: {
-              validators: {
-                notEmpty: {
-                        message: 'The field cannot be empty'
-                    },
+              validators: {                
                 date: {
                         format: 'DD-MM-YYYY',
                         message: 'The value is not a valid date'
-                    }
+                    },
+                notEmpty: {
+                    message: 'The field cannot be empty'
+                }
               }
             },
             admCrCls: {
@@ -534,14 +534,14 @@ $(document).ready(function() {
               }
             },
             stDob: {
-              validators: {
-                notEmpty: {
-                        message: 'The field cannot be empty'
-                    },
+              validators: {                
                 date: {
                         format: 'DD-MM-YYYY',
                         message: 'The value is not a valid date'
-                    }
+                },
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                }
               }
             },
             stSex: {
@@ -573,6 +573,48 @@ $(document).ready(function() {
               }
             },
             stNatn: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stVill: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stPO: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stPS: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stDist: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stPin: {
+              validators: {
+                notEmpty: {
+                        message: 'The field cannot be empty'
+                    }
+              }
+            },
+            stMob: {
               validators: {
                 notEmpty: {
                         message: 'The field cannot be empty'
