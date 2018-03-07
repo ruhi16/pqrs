@@ -39,13 +39,9 @@
         <div class="col-sm-2">          
           {{--  {{//$allClss->dump() }}  --}}
           <select class="form-control" name="admCrCls" id="admCrCls">
-          <option value="">{{ $stddbInd->stClss_id }}</option>
-          @foreach($allClss as $aClss)
-            @if( $aClss->id == $stddbInd->stclss_id )
-              <option value="{{ $aClss->name }}" selected>{{ $aClss->name }}</option>
-            @else
-              <option value="{{ $aClss->name }}">{{ $aClss->name }}</option>
-            @endif
+          <option value=""></option>
+          @foreach($allClss as $aClss)            
+              <option value="{{ $aClss->name }}" {{ $aClss->id == $stddbInd->stclss_id ? 'selected':'' }}>{{ $aClss->name }}</option>            
           @endforeach
           </select>
           {{--  <input type="text" class="form-control" name="admCrCls" id="admCrCls" value="{{ $stddbInd->id }}">  --}}
@@ -55,15 +51,9 @@
         <div class="col-sm-2">
           <select class="form-control" name="admPrCls" id="admPrCls">
             <option value=""></option>
-            @if($stddbInd->prCls == 'IV')
-              <option value="IV" selected>IV</option>
-            @endif
-          @foreach($allClss as $aClss)
-            @if($aClss->name == $stddbInd->prCls)
-              <option value="{{ $aClss->name }}" selected>{{ $aClss->name }}</option>
-            @else
-              <option value="{{ $aClss->name }}">{{ $aClss->name }}</option>
-            @endif
+              <option value="IV" {{$stddbInd->prCls == 'IV'?'selected':''}}>IV</option>
+          @foreach($allClss as $aClss)            
+              <option value="{{ $aClss->name }}"  {{$stddbInd->prCls == $aClss->name ? 'selected':''}}>{{ $aClss->name }}</option>            
           @endforeach
           </select>
           {{--  <input type="text" class="form-control" name="admPrCls" id="admPrCls" value="{{ $stddbInd->id }}">  --}}
