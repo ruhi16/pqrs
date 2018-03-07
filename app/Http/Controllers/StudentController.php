@@ -157,8 +157,69 @@ class StudentController extends Controller
 
     public function studentdbmultipageEdit( $id ){
         $stddbInd = Studentdb::find($id);
+        $allClss = Clss::all();
+        $allOptn = Miscoption::all();
 
-        return view('studentdbmultipageView')
-        ->withStddb($stddbInd);
+        return view ('studentdbmultipageEdit')
+            ->with('stddbInd', $stddbInd)
+            ->with( 'allClss', $allClss)->with('allOptn', $allOptn);
+        
+        // return view('studentdbmultipageEdit')
+        //     ->withStddb($stddbInd);
+    }
+
+    public function studentdbmultipageEditSubmit(Request $request){
+        $stddb = Studentdb::find($request->editId);
+
+        $stddb->admBookNo = $request->admBookNo;
+        $stddb->admSlNo = $request->admSlNo;
+        $stddb->admDate = $request->admDate;
+
+        $stddb->prCls = $request->admPrCls;
+        $stddb->prSch = $request->admPrSch;
+        
+        $stddb->name = $request->stName;
+        $stddb->adhaar = $request->stAdhaar;
+        $stddb->fname = $request->stFName;
+        $stddb->fadhaar = $request->stFAdhaar;
+        $stddb->mname = $request->stMName;
+        $stddb->madhaar = $request->stMAdhaar;
+        $stddb->dob = $request->stDob;
+                    
+        $stddb->vill = $request->stVill;
+        $stddb->post = $request->stPO;
+        $stddb->pstn = $request->stPS;
+        $stddb->dist = $request->stDist;
+        $stddb->pin = $request->stPin;
+        $stddb->mobl = $request->stMob;
+        
+        $stddb->ssex = $request->stSex;
+        $stddb->phch = $request->stPhCh;
+        $stddb->relg = $request->stRelg;
+        $stddb->cste = $request->stCaste;
+        $stddb->natn = $request->stNatn;
+
+        $stddb->accNo = $request->stAccNo;
+        $stddb->ifsc = $request->stIFSC;
+        $stddb->micr = $request->stMICR;
+        $stddb->bnnm = $request->stBnName;
+        $stddb->brnm = $request->stBrName;
+
+        $stddb->stclss_id = $request->crCls; //** */
+        //$stddb->stsec_id = $request->stsec_id;
+        //$stddb->stsession_id = $request->stsession_id;
+        //$stddb->streason = $request->streason;
+
+        //$stddb->enclss_id = $request->enclss_id;
+        //$stddb->ensec_id = $request->ensec_id;
+        //$stddb->ensession_id = $request->ensession_id;
+        //$stddb->enreason = $request->enreason;
+
+        $stddb->crstatus = "running"; //$request->crstatus;
+        //$stddb->remarks = $request->remarks;
+
+
+        $stddb->save();
+        return "Successfully";
     }
 }

@@ -128,7 +128,8 @@ Route::get('/studentdbmultipage', 'StudentController@studentdbmultipage');
 Route::post('/studentdbmultipage-submit', 'StudentController@studentdbmultipageSubmit');
 Route::get('/studentdbmultipage-search', 'StudentController@studentdbmultipageSearch');
 Route::get('/studentdbmultipage-view', 'StudentController@studentdbmultipageView');
-Route::get('/studentdbmultipage-edit\{id}', 'StudentController@studentdbmultipageEdit');
+Route::get('/studentdbmultipage-edit/{id}', 'StudentController@studentdbmultipageEdit');
+Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultipageEditSubmit');
 
 
 Route::get('/test', 'BaseController@test');

@@ -36,7 +36,7 @@
     <th>Mobile No</th>
     
     <th>Gender</th>
-    <th>Phy Challanged</th>
+    {{--  <th>Phy Challanged</th>
     <th>Religion</th>
     <th>Caste</th>
     <th>Nationality</th>
@@ -49,13 +49,13 @@
     
     <th>Start Class</th>
     <th>Start Section</th>
-    <th>Start Roll</th>
+    <th>Start Roll</th>  --}}
     <th>Action</th>
 </tr>
 </thead>
-<tbody>
-    <tr> 
+<tbody>    
     @foreach($stddb as $sdb)       
+        <tr> 
         <td>{{ $sdb->id }} </td>    
         <td>{{ $sdb->admBookNo }} </td>
         <td>{{ $sdb->admSlNo }} </td>    
@@ -79,7 +79,7 @@
         <td>{{ $sdb->mobl }} </td>    
         
         <td>{{ $sdb->ssex }} </td>    
-        <td>{{ $sdb->phch }} </td>    
+        {{--  <td>{{ $sdb->phch }} </td>    
         <td>{{ $sdb->relg }} </td>    
         <td>{{ $sdb->cste }} </td>    
         <td>{{ $sdb->natn }} </td>  
@@ -91,14 +91,15 @@
         <td>{{ $sdb->brnm }} </td> 
         
         <td>{{ $sdb->stclss_id }} </td>    
-        <td>{{ $sdb->stsec_id }} </td>    
-        <td>{{ $sdb->stsession_id }} </td>  
+        <td>{{ $sdb->stsec_id }} </td>      
+        <td>{{ $sdb->stsession_id }} </td>  --}}
         <td>
-            <a href="{{url('/studentdbmultipage-edit/1')}}" class="btn btn-primary">Edit</a>
+            <a href="{{url('/studentdbmultipage-edit',[ $sdb->id ])}}" class="btn btn-primary">Edit</a>
             <a href="" class="btn btn-warning">Delete</a>
         </td>
-    @endforeach
     </tr>
+    @endforeach
+    
 </tbody>
 
 
