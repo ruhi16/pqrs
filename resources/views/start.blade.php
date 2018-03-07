@@ -102,17 +102,18 @@
 
                     <br>
                     <a href="{{url('/studentdb')}}">Students Detail View</a>                    
-                    <br>
-                    <a href="{{url('/clssec-TaskPage')}}">Students Info Entry View</a>
-                    <br>
+                    {{--  <br>
                     <a href="{{url('/clssec-TaskPage')}}">Students Info Entry View</a>
                     
                     <br>                    
-                    <a href="{{url('/clssecs')}}">Class Section Entry</a>
+                    <a href="{{url('/clssecs')}}">New Admission Students Details Entry</a>
+                      --}}
+                    <br>
+                    <a href="{{url('/studentdbmultipage')}}">New Admission Students Details View</a>
                     
                     <br>
-                    <a href="{{url('/clssecs-view')}}">Class Section View</a>
-
+                    <a href="{{url('/studentdbmultipage-search')}}">Students Info Entry View</a>
+                    
                     <br>
                     <a href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
 

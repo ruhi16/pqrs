@@ -147,4 +147,11 @@ class StudentController extends Controller
         
         return view('studentdbmultipagesearch')->withStddb($stddb);
     }
+
+    public function studentdbmultipageView(Request $request){
+        $stddb = Studentdb::all();
+
+        return view('studentdbmultipageView')
+        ->withStddb($stddb);
+    }
 }
