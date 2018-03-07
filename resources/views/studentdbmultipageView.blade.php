@@ -50,6 +50,7 @@
     <th>Start Class</th>
     <th>Start Section</th>
     <th>Start Roll</th>
+    <th>Action</th>
 </tr>
 </thead>
 <tbody>
@@ -81,7 +82,21 @@
         <td>{{ $sdb->phch }} </td>    
         <td>{{ $sdb->relg }} </td>    
         <td>{{ $sdb->cste }} </td>    
-        <td>{{ $sdb->natn }} </td>    
+        <td>{{ $sdb->natn }} </td>  
+
+        <td>{{ $sdb->accno }} </td>    
+        <td>{{ $sdb->ifsc }} </td>    
+        <td>{{ $sdb->micr }} </td>    
+        <td>{{ $sdb->bnnm }} </td>    
+        <td>{{ $sdb->brnm }} </td> 
+        
+        <td>{{ $sdb->stclss_id }} </td>    
+        <td>{{ $sdb->stsec_id }} </td>    
+        <td>{{ $sdb->stsession_id }} </td>  
+        <td>
+            <a href="{{url('/studentdbmultipage-edit/1')}}" class="btn btn-primary">Edit</a>
+            <a href="" class="btn btn-warning">Delete</a>
+        </td>
     @endforeach
     </tr>
 </tbody>
