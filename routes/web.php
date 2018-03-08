@@ -141,3 +141,11 @@ Route::get('/btn-unfinalize/{n}','FinalizeController@btnUnFinalize');
 
 Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
 Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
+
+
+
+Route::get('/teachers', 'TeacherController@teachers')->middleware('FinMidware:subjects');
+Route::post('/teachers-submit', 'TeacherController@teachersSubmit');
+Route::get('/teachers-view', 'TeacherController@teachersView');
+Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
+Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
