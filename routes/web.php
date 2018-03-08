@@ -133,6 +133,10 @@ Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultip
 
 
 Route::get('/test', 'BaseController@test');
+Route::get('/clssubjfm/{clss_id}', 'BaseController@clssubjfm');
+Route::post('/clssubjfm-submit', 'BaseController@clssubjfmSubmit');
+
+
 
 Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
 Route::get('/finalizeParticulars-Refresh', 'FinalizeController@finalizeParticularsRefresh')->name('finalizeParticulars-Refresh');

@@ -40,7 +40,7 @@ class BaseController extends Controller
 
 
     public function exmtypclssubSubmit(Request $request){
-        $sessions = Session::all();
+        $ses = Session::whereStatus('CURRENT')->first();
         $exams = Exam::all();
         $extps = Extype::all();
         $clss  = Clss::all();
@@ -62,8 +62,7 @@ class BaseController extends Controller
                     // echo "<br>";
                     // var_dump($request->$name);
                     
-                    if($request->$name[0]){
-                        
+                    if($request->$name[0]){                        
                         if(array_key_exists('exam', $final)){
                             // echo "abcd";                        
                             // print_r($final);
@@ -111,7 +110,7 @@ class BaseController extends Controller
             $etcs->extype_id = $final['type'][$i];
             $etcs->clss_id   = $final['clss'][$i];
             $etcs->fm        = $final['val'][$i];
-            $etcs->session_id= 1;
+            $etcs->session_id= $ses->id;
             $etcs->save();
         }
 
@@ -152,4 +151,33 @@ class BaseController extends Controller
         ->with('clss', $clss)
         ;
     }
+
+    public function clssubjfm($clss_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $cls   = Clss::find($clss_id);
+        $etcss = Exmtypclssub::all(); 
+        $clsbs = Clssub::all();
+        $exams = Exam::all();
+        $etcss = Exmtypclssub::whereClss_id($clss_id)->get();
+
+        // echo $clss->name;
+        // foreach($clss as $c){
+        //     echo $c->id;
+        // }
+        // var_dump($clss);
+
+        return view('clssubjfm')
+        ->withCls($cls)
+        ->withExams($exams)
+        ->withEtcss($etcss)
+        ->withClsbs($clsbs)
+        ->withEtcss($etcss)
+        ;
+    }    
+    public function clssubjfmSubmit(Request $request){
+
+         print_r($request->fm111); //exam_id, extp_id, cls_id
+    }
+
+
 }
