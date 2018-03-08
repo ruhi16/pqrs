@@ -134,8 +134,6 @@ Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultip
 
 Route::get('/test', 'BaseController@test');
 
-
-
 Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
 Route::get('/finalizeParticulars-Refresh', 'FinalizeController@finalizeParticularsRefresh')->name('finalizeParticulars-Refresh');
 Route::get('/btn-finalize/{n}','FinalizeController@btnFinalize');

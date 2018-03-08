@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMiscoptionsTable extends Migration
+class CreateTeachersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class CreateMiscoptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('miscoptions', function (Blueprint $table) {
+        Schema::create('teachers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('session_id');
-            $table->string('tabName');
-            $table->string('fieldName');
-            $table->string('options');
+            $table->string('name');
+            $table->string('mobno');
+            $table->string('desig');
+            $table->string('hqual');
+            $table->string('mnsub_id');
             $table->string('status');
+            $table->string('notes');
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ class CreateMiscoptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('miscoptions');
+        Schema::dropIfExists('teachers');
     }
 }
