@@ -25,16 +25,23 @@ use App\Marksentry;
 class TeacherController extends Controller
 {
     public function teachers(){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $teachers = Teacher::whereSession_id($ses->id)->get();
+        
+        return view('teachers.teachers')
+        ->withTeachers($teachers)
+        ;
 
     }
 
     public function teachersSubmit(Request $request){
 
+
     }
 
     public function teachersView(){
         $ses = Session::whereStatus('CURRENT')->first();
-        $subjects = Subject::whereSession_id($ses->id)->get();
+        $subjects = Teacher::whereSession_id($ses->id)->get();
 
         return view('teachers.teachersView')
             ->withTeachers($teachers);
