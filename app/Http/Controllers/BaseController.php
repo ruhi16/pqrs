@@ -171,8 +171,27 @@ class BaseController extends Controller
         ;
     }    
     public function clssubjfmSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $exams = Exam::all();
+        $extps = Extype::all();
+        $clss  = Clss::all();
 
-         print_r($request->fm111); //exam_id, extp_id, cls_id
+        $etcss = Exmtypclssub::whereClss_id($request->clsId)->get();
+        $clsbs = Clssub::whereClss_id($request->clsId)->get();
+
+        $etcss = Exmtypclssub::all();
+        // echo "Cls Id:".$request->clsId;
+        foreach($exams as $exm){
+            foreach($extps as $ext){
+                print_r($request->fm.$exm->id.$ext->id.$request->clsId);
+                echo "<br>";
+            }
+        }
+        
+        print_r($request->fm111); //exam_id, extp_id, cls_id, subject_id
+        // foreach($request->fm111 as $abc){
+        //     echo $abc;
+        // }
     }
 
 

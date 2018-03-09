@@ -13,6 +13,7 @@
 {{ csrf_field() }}
 <table class="table table-bordered">
 <caption><h3>For Class: {{ $cls->name }}</h3></caption>
+<input type="hidden" name="clsId" value="{{ $cls->id }}">
 <thead>
     <tr>
         <th>Exam Type</th>
@@ -30,7 +31,8 @@
         <td>{{ $clsb->subject->extype->name }}</td>
         <td>{{ $clsb->subject->name }}</td>
         @foreach($exams as $exam)
-            <td><input type="text" value="" name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]"></td>
+            <td><input type="text"  value="{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}" 
+                                    name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]"></td>
         @endforeach
         <td></td>
     </tr>
