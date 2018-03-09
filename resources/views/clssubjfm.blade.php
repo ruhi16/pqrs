@@ -26,17 +26,19 @@
 </thead>
 <tbody>    
     @foreach($clsbs as $clsb)
-    @if($clsb->clss_id == $cls->id)
-    <tr>
-        <td>{{ $clsb->subject->extype->name }}</td>
-        <td>{{ $clsb->subject->name }}</td>
-        @foreach($exams as $exam)
-            <td><input type="text"  value="{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}" 
-                                    name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]"></td>
-        @endforeach
-        <td></td>
-    </tr>
-    @endif
+        @if($clsb->clss_id == $cls->id)
+        <tr>
+            <td>{{ $clsb->subject->extype->name }}</td>
+            <td>{{ $clsb->subject->name }}</td>
+            @foreach($exams as $exam)
+                <td><input type="text"  value="{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}" 
+                                        name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}{{$clsb->subject_id}}[]">
+                <input type="hidden" value="{{$clsb->subject_id}}" name="sb{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]">
+                </td>                
+            @endforeach
+            <td></td>
+        </tr>
+        @endif
     @endforeach
 </tbody>
 </table>

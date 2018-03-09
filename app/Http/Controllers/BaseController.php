@@ -18,7 +18,7 @@ use App\Studentcr;
 use App\Clssub;
 use App\Clssec;
 
-
+use App\Subjfullmark;
 use App\Exmtypclssub;
 use App\Marksentry;
 
@@ -156,6 +156,8 @@ class BaseController extends Controller
         $exams = Exam::all();
         $etcss = Exmtypclssub::whereClss_id($clss_id)->get();
 
+        $flmrs = Subjfullmark::all();
+
         // echo $clss->name;
         // foreach($clss as $c){
         //     echo $c->id;
@@ -183,16 +185,31 @@ class BaseController extends Controller
         // echo "Cls Id:".$request->clsId;
         foreach($exams as $exm){
             foreach($extps as $ext){
-                print_r($request->fm.$exm->id.$ext->id.$request->clsId);
-                echo "<br>";
+                $strSubs = "sb".$exm->id.$ext->id.$request->clsId;
+                $temp = [];
+                foreach($request->$strSubs as $sbId){
+                    $clsbId = Clssub::whereClss_id($request->clsId)
+                            ->whereSubject_id($sbId)->first()->id;
+                    // echo $clsbId ."<br>";                    
+                    // echo $etcs;
+                    $strMrks = "fm".$exm->id.$ext->id.$request->clsId.$sbId;
+                    $rec = [];
+                    $rec['fm'] = $request->$strMrks[0];
+                    $rec['status'] = 'Active';
+                    $rec['notes']  = '';
+                    // print_r($request->$strMrks);
+                    // echo "<br>";
+                    $temp[$clsbId] = $rec;
+                }
+                $etcs = Exmtypclssub::whereSession_id($ses->id)
+                        ->whereExam_id($exm->id)                
+                        ->whereExtype_id($ext->id)
+                        ->whereClss_id($request->clsId)                            
+                        ->first();
+
+                $etcs->clssubs()->sync($temp);                         
             }
-        }
-        
-        print_r($request->fm111); //exam_id, extp_id, cls_id, subject_id
-        // foreach($request->fm111 as $abc){
-        //     echo $abc;
-        // }
+        }        
+        return back();
     }
-
-
 }
