@@ -133,10 +133,6 @@ class BaseController extends Controller
         ;
     }
 
-
-
-
-
     public function test(){
         $sessions = Session::all();
         $extypes = Extype::all();

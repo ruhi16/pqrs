@@ -23,4 +23,9 @@ class Exmtypclssub extends Model
     public function marksentries(){
         return $this->hasMany('App\Marksentry');
     }
+
+    //many to many relation: Clssub & Exmtypclssub, Pivot: subjfullmarks
+    public function clssubs(){
+        return $this->belongsToMany('App\Clssub', 'subjfullmarks');
+    }
 }
