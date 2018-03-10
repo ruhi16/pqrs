@@ -135,6 +135,7 @@ Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultip
 Route::get('/test', 'BaseController@test');
 Route::get('/clssubjfm/{clss_id}', 'BaseController@clssubjfm');
 Route::post('/clssubjfm-submit', 'BaseController@clssubjfmSubmit');
+Route::get('/clssubjfm-view/{clss_id}', 'BaseController@clssubjfmView');
 
 
 

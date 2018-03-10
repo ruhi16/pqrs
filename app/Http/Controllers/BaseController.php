@@ -212,4 +212,30 @@ class BaseController extends Controller
         }        
         return back();
     }
+
+    public function clssubjfmView($clss_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $cls   = Clss::find($clss_id);
+        $etcss = Exmtypclssub::all(); 
+        $clsbs = Clssub::all();
+        $exams = Exam::all();
+        $etcss = Exmtypclssub::whereClss_id($clss_id)->get();
+
+        $flmrs = Subjfullmark::all();
+
+        // echo $clss->name;
+        // foreach($clss as $c){
+        //     echo $c->id;
+        // }
+        // var_dump($clss);
+
+        return view('clssubjfmView')
+        ->withCls($cls)
+        ->withExams($exams)
+        ->withEtcss($etcss)
+        ->withClsbs($clsbs)
+        ->withEtcss($etcss)
+        ;
+    } 
+
 }

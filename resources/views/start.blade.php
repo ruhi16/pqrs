@@ -117,8 +117,10 @@
                     <a href="{{url('/studentdbmultipage-view')}}">New Admission Students Details View Page</a>
                     <br>
                     <a href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
-
-                    
+                    <br>
+                    <a href="{{url('/clssubjfm/1')}}">Exam Term and Class Wise Full Marks Specification Entry (V)</a>
+                    <br>
+                    <a href="{{url('/clssubjfm-view/1')}}">Exam Term and Class Wise Full Marks Specification View (V)</a>
                 </div>
             </div>
         </div>
