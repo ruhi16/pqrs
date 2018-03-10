@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<h1>Exams Display Page...</h1>
+<h1>Teachers Details Display Page...</h1>
 
 <div class="row">
   <div class="panel panel-default">
@@ -24,15 +24,19 @@
 		<table class="table table-bordered" id="tabclss">
 			<thead>
 				<tr>
-          <th>#</th>
-          <th>Exams</th>
-          <th>Session</th>          
-          <th>Status</th> 
-          <th>Action</th>         
+          <th>SL</th>
+          <th>Name</th>
+          <th>Mobile</th>          
+          <th>Designation</th> 
+          <th>Qualification</th>         
+          <th>Main Subject</th>
+          <th>Other Subjects</th>
+          <th>Status</th>
+          <th>Notes</th>
 				</tr>
 			</thead>
 			<tbody>
-      @foreach($exams as $exam)
+      {{--  @foreach($exams as $exam)
         <tr id="tr{{$exam->id}}">
           <th id="id">  {{ $exam->id}}</th>
           <th id="name">{{ $exam->name }}</th>
@@ -41,6 +45,23 @@
           <td>              
           </td>
         </tr>
+      @endforeach  --}}
+      @foreach($teachers as $teacher)
+        <tr>
+          <td>{{ $teacher->id }}</td>
+          <td>{{ $teacher->name }}</td>
+          <td>{{ $teacher->mobno }}</td>          
+          <td>{{ $teacher->desig }}</td> 
+          <td>{{ $teacher->hqual }}</td>         
+          <td>{{ $teacher->mnsub_id }}</td>
+          <td>
+              @foreach($teacher->subjects as $tSub)
+              {{ $tSub->name }} <br>
+              @endforeach
+          </td>
+          <td>{{ $teacher->status }}</td>
+          <td>{{ $teacher->notes }}</td>
+				</tr>
       @endforeach
 			</tbody>
 		</table>

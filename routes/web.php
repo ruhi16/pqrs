@@ -155,7 +155,7 @@ Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finali
 
 
 
-Route::get('/teachers', 'TeacherController@teachers')->middleware('FinMidware:subjects');
+Route::get('/teachers', 'TeacherController@teachers');//->middleware('FinMidware:subjects');
 Route::post('/teachers-submit', 'TeacherController@teachersSubmit');
 Route::get('/teachers-view', 'TeacherController@teachersView');
 Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');

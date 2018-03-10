@@ -27,10 +27,15 @@
 		<table class="table table-bordered" id="tabclss">
 			<thead>
 				<tr>
-          <th>#</th>
-          <th>Teacher Name</th>
-          <th>Session</th>          
-          <th>Status</th> 
+          <th>SL</th>
+          <th>Name</th>
+          <th>Mobile</th>          
+          <th>Designation</th> 
+          <th>Qualification</th>         
+          <th>Main Subject</th>
+          <th>Other Subjects</th>
+          <th>Status</th>
+          <th>Notes</th>				
           <th>Action</th>         
 				</tr>
 			</thead>
@@ -39,8 +44,17 @@
         <tr id="tr{{$teacher->id}}">
           <th id="id">{{$teacher->id}}</th>
           <th id="name">{{ $teacher->name }}</th>
-          <td>{{ $teacher->session_id }}</td>
-          <td>{{ $teacher->session_id }}</td>
+          <td>{{ $teacher->mobno }}</td>
+          <td>{{ $teacher->desig }}</td>
+          <td>{{ $teacher->hqual }}</td>
+          <td>{{ $teacher->mnsub_id }}</td>
+          <td>
+              @foreach($teacher->subjects as $tSub)
+                {{ $tSub->name }} <br>
+              @endforeach
+          </td>
+          <td>{{ $teacher->status }}</td>
+          <td>{{ $teacher->notes }}</td>
           <td>
               <button class="btn btn-success btn-sm btnEdit" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
               <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>
@@ -57,29 +71,84 @@
 
 
 
-<!-- Modal Starts to Add New Exams -->
+<!-- Modal Starts to Add New Teacher -->
 <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       {!! Form::open(['url'=>'/teachers-submit','method'=>'post', 'class'=>'form-horizontal']) !!}
 			<div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Enter New Exam...</h4>
+        <h4 class="modal-title">Enter New Teachers Info...</h4>
       </div>
       <div class="modal-body">        
 
 
 				<div class="form-group">
-        	<label class="control-label col-sm-2" for="teacherName">Teacher Name:</label>
-					<div class="col-sm-5">
+        	<label class="control-label col-sm-1" for="teacherName">Name:</label>
+					<div class="col-sm-7">
 						<input type="text" class="form-control" id="teacherName" name="teacherName" placeholder="">
 					</div>         
         
-        	<label class="control-label col-sm-2" for="teacherName">Designation:</label>
+        	<label class="control-label col-sm-1" for="teacherMob">Mobile:</label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" id="teacherName" name="teacherName" placeholder="">
+						<input type="text" class="form-control" id="teacherMob" name="teacherMob" placeholder="">
 					</div>         
         </div>
+
+
+      <div class="form-group">
+        	<label class="control-label col-sm-1" for="teacherDesig">Desig.:</label>
+					<div class="col-sm-3">
+          <select class="form-control" name="teacherDesig" id="teacherDesig">
+            <option value=""></option>            
+          @foreach($teachDesigs as $tDesig)
+            <option value="{{ $tDesig->options }}">{{ $tDesig->options }}</option>
+          @endforeach
+          </select>
+						{{--  <input type="text" class="form-control" id="teacherDesig" name="teacherDesig" placeholder="">  --}}
+					</div> 
+
+          <label class="control-label col-sm-1" for="teacherHQual">Qual.:</label>
+					<div class="col-sm-3">
+          <select class="form-control" name="teacherHQual" id="teacherHQual">
+            <option value=""></option>            
+          @foreach($teachHQuals as $tHQual)
+            <option value="{{ $tHQual->options }}">{{ $tHQual->options }}</option>
+          @endforeach
+          </select>
+						{{--  <input type="text" class="form-control" id="teacherDesig" name="teacherDesig" placeholder="">  --}}
+					</div> 
+
+
+          <label class="control-label col-sm-1" for="teacherMSubj">Subject.:</label>
+					<div class="col-sm-3">
+          <select class="form-control" name="teacherMSubj" id="teacherMSubj">
+            <option value=""></option>            
+          @foreach($teachSubjs as $tSubj)
+            <option value="{{ $tSubj->id }}">{{ $tSubj->name }}</option>
+          @endforeach
+          </select>
+						
+					</div> 
+      </div>
+
+
+        <div class="col-sm-offset-1 panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">Prefered Subjects</h3>
+          </div>
+          <div class="panel-body">    
+            @foreach($teachSubjs as $tSubj)
+              
+              <div class="checkbox">
+                    <label><input type="checkbox" value="{{ $tSubj->id }}" name="teacherSubj[]">{{ $tSubj->name }}</label>
+                    @php $flag = True; @endphp
+                </div>
+            @endforeach
+
+          </div>
+        </div>
+
 
 
 
@@ -95,7 +164,7 @@
 <!-- Modal Ends -->
 
 
-<!-- Modal Starts to Edit -->
+<!-- Modal Starts to Edit for Teachers Entry -->
 <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
@@ -130,7 +199,7 @@
 <!-- Modal Ends -->
 
 
-<!-- Modal Starts to Delete -->
+<!-- Modal Starts to Delete for Teachers Entry -->
 <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
