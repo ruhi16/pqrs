@@ -69,6 +69,14 @@ Route::get('/grades-view', 'GradeController@gradesView');
 Route::post('/grades-editsubmit', 'GradeController@gradesEditSubmit');
 Route::post('/grades-deltsubmit', 'GradeController@gradesDeltSubmit');
 
+
+
+
+Route::get('/clssubjfm/{clss_id}', 'SubjectFMController@clssubjfm');
+Route::post('/clssubjfm-submit', 'SubjectFMController@clssubjfmSubmit');
+Route::get('/clssubjfm-view/{clss_id}', 'SubjectFMController@clssubjfmView');
+
+
 // till the above entry was tested Oke with middleware too
 
 Route::get('/gradedescription', 'GradedescrController@gradedescr');//->middleware('FinMidware:gradeparticulars');
@@ -121,6 +129,7 @@ Route::get('exmtypclssub-view', 'BaseController@exmtypclssubView');
 
 Route::get('/studentdb', 'StudentController@studentdb');
 Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
+
 //Ajax Update
 Route::post('/updateSection', 'StudentController@updateSection');
 
@@ -133,9 +142,6 @@ Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultip
 
 
 Route::get('/test', 'BaseController@test');
-Route::get('/clssubjfm/{clss_id}', 'BaseController@clssubjfm');
-Route::post('/clssubjfm-submit', 'BaseController@clssubjfmSubmit');
-Route::get('/clssubjfm-view/{clss_id}', 'BaseController@clssubjfmView');
 
 
 

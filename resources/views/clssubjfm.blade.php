@@ -31,7 +31,22 @@
             <td>{{ $clsb->subject->extype->name }}</td>
             <td>{{ $clsb->subject->name }}</td>
             @foreach($exams as $exam)
-                <td><input type="text"  value="{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}" 
+                @php
+                    if(($clsbs->isNotEmpty()) && ($etcss->isNotEmpty()) && ($flmrs->isNotEmpty())){
+                        $etcssId = $etcss->where('clss_id', $cls->id)
+                            ->where('exam_id', $exam->id)
+                            ->where('extype_id', $clsb->subject->extype_id)
+                            ->first()->id;
+                        $csId = $clsbs->where('clss_id', $cls->id)
+                            ->where('subject_id', $clsb->subject_id)
+                            ->first()->id;
+                        $fm = $flmrs->where('exmtypclssub_id', $etcssId)
+                            ->where('clssub_id', $csId)
+                            ->first()->fm;
+                    }
+                @endphp
+
+                <td><input type="text"  value="{{$fm or '0'}}" class="form-control input-sm"
                                         name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}{{$clsb->subject_id}}[]">
                 <input type="hidden" value="{{$clsb->subject_id}}" name="sb{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]">
                 </td>                

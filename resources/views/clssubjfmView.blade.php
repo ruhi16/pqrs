@@ -33,6 +33,7 @@
             @foreach($exams as $exam)
                 <td>
                 @php
+                    if(($clsbs->isNotEmpty()) && ($etcss->isNotEmpty()) && ($flmrs->isNotEmpty())){
                     $etcssId = $etcss->where('clss_id', $cls->id)
                         ->where('exam_id', $exam->id)
                         ->where('extype_id', $clsb->subject->extype_id)
@@ -43,13 +44,9 @@
                     $fm = $flmrs->where('exmtypclssub_id', $etcssId)
                         ->where('clssub_id', $csId)
                         ->first()->fm;
-        
+                    }
                 @endphp
-                {{$fm}}
-                {{--  <input type="text"  value="{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}" 
-                                        name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}{{$clsb->subject_id}}[]">
-                <input type="hidden" value="{{$clsb->subject_id}}" name="sb{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]">  --}}
-                
+                {{$fm or 'Not Assigned'}}
                 </td>                
             @endforeach
             <td></td>
