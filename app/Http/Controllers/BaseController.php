@@ -235,6 +235,7 @@ class BaseController extends Controller
         ->withEtcss($etcss)
         ->withClsbs($clsbs)
         ->withEtcss($etcss)
+        ->withFlmrs($flmrs)
         ;
     } 
 

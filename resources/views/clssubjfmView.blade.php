@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<h1>Exam Exam-Type Class Subject Wise Full Marks Distribution</h1>
+<h1>Exam Exam-Type Class Subject Wise Full Marks Distribution View</h1>
 
 
 {{--  <form method="post" class="form-horizontal" action="{!! url('clssubjfm-submit') !!}" value="{{ csrf_token() }}">  
@@ -32,9 +32,24 @@
             <td>{{ $clsb->subject->name }}</td>
             @foreach($exams as $exam)
                 <td>
+                @php
+                    $etcssId = $etcss->where('clss_id', $cls->id)
+                        ->where('exam_id', $exam->id)
+                        ->where('extype_id', $clsb->subject->extype_id)
+                        ->first()->id;
+                    $csId = $clsbs->where('clss_id', $cls->id)
+                        ->where('subject_id', $clsb->subject_id)
+                        ->first()->id;
+                    $fm = $flmrs->where('exmtypclssub_id', $etcssId)
+                        ->where('clssub_id', $csId)
+                        ->first()->fm;
+        
+                @endphp
+                {{$fm}}
                 {{--  <input type="text"  value="{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}" 
                                         name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}{{$clsb->subject_id}}[]">
                 <input type="hidden" value="{{$clsb->subject_id}}" name="sb{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]">  --}}
+                
                 </td>                
             @endforeach
             <td></td>
