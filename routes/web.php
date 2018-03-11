@@ -156,7 +156,7 @@ Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultip
 
 Route::get('/test', 'BaseController@test');
 Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
-
+Route::get('/PdfSheetExStudentDb', 'ExcelController@PdfSheetExStudentDb');
 
 Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
 Route::get('/finalizeParticulars-Refresh', 'FinalizeController@finalizeParticularsRefresh')->name('finalizeParticulars-Refresh');
