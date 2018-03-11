@@ -51,18 +51,9 @@ class TeacherController extends Controller
         // echo "Name: ".$request->teacherHQual . "<br>";
         // echo "Name: ".$request->teacherMSubj . "<br>";
         // print_r($request->teacherSubj);
-
-        $temp = [];
-        foreach($request->teacherSubj as $tSb){
-            $prop = [];
-            $prop['session_id'] = $ses->id;
-            $prop['status'] = 'OKey';
-            $temp[$tSb] = $prop;
-        }
-
-        // print_r($temp);
-        $teacher = new Teacher;
         
+        //for New Teacher's Data Entry
+        $teacher = new Teacher;        
         $teacher->name  = $request->teacherName; 
         $teacher->mobno   = $request->teacherMob;        
         $teacher->desig = $request->teacherDesig;
@@ -73,6 +64,14 @@ class TeacherController extends Controller
         $teacher->notes  = 'NA';
         $teacher->save();
 
+        //for above Teacher's preferred Subjects Entry
+        $temp = [];
+        foreach($request->teacherSubj as $tSb){
+            $prop = [];
+            $prop['session_id'] = $ses->id;
+            $prop['status'] = 'OKey';
+            $temp[$tSb] = $prop;
+        }
         $teacher->subjects()->sync($temp);
 
 
@@ -87,9 +86,50 @@ class TeacherController extends Controller
             ->withTeachers($teachers);
     }
 
-    public function teachersEditSubmit(Request $request){
+    public function teachersEdit($id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $teacher = Teacher::find($id);//whereSession_id($ses->id)->get();
+        $teachDesigs = Miscoption::where('TabName', 'teachers')->where('FieldName','desig')->get();
+        $teachHQuals = Miscoption::where('TabName', 'teachers')->where('FieldName','hqual')->get();
+        $teachSubjs  = Subject::whereExtype_id(1)->get();
 
-        return back();
+        
+        return view('teachers.teachersEdit')
+        ->withTeacher($teacher)
+        ->withTeachDesigs($teachDesigs)
+        ->withTeachHQuals($teachHQuals)
+        ->withTeachSubjs($teachSubjs);
+    }
+
+
+    public function teachersEditSubmit(Request $request){        
+        $ses = Session::whereStatus('CURRENT')->first();
+        $teacher = Teacher::find($request->teacherId);
+        
+        //for Teacher's  Data Update, Entry Point
+        $teacher->name  = $request->teacherName; 
+        $teacher->mobno   = $request->teacherMob;
+        $teacher->desig = $request->teacherDesig;
+        $teacher->hqual = $request->teacherHQual;
+        $teacher->mnsub_id = $request->teacherMSubj;
+        $teacher->session_id = $ses->id;
+        $teacher->status = 'OKey';
+        $teacher->notes  = 'NA';
+        $teacher->save();
+
+
+        //for above Teacher's preferred Subjects Entry
+        $temp = [];
+        foreach($request->teacherSubj as $tSb){
+            $prop = [];
+            $prop['session_id'] = $ses->id;
+            $prop['status'] = 'OKey';
+            $temp[$tSb] = $prop;
+        }
+        // print_r($temp);
+        $teacher->subjects()->sync($temp);
+
+        return redirect()->to('/teachers-view');
     }
 
     public function teachersDeltSubmit(Request $request){

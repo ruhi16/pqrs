@@ -56,8 +56,9 @@
           <td>{{ $teacher->status }}</td>
           <td>{{ $teacher->notes }}</td>
           <td>
-              <button class="btn btn-success btn-sm btnEdit" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
-              <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>
+              <a class="btn btn-success" href="{{url('/teachers-edit',[$teacher->id])}}">Edit</a>
+              {{--  <button class="btn btn-success btn-sm btnEdit" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#editModal">Edit</button>  --}}
+              {{--  <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>  --}}
               {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}
           </td>
         </tr>
@@ -155,7 +156,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save New Entry</button>
       </div>
 			{!! Form::close() !!}
     </div><!-- /.modal-content -->
@@ -164,27 +165,83 @@
 <!-- Modal Ends -->
 
 
-<!-- Modal Starts to Edit for Teachers Entry -->
+{{--  <!-- Modal Starts to Edit for Teachers Entry -->
 <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
-  <div class="modal-dialog " role="document">
-    <div class="modal-content">
-      {!! Form::open(['url'=>'/teachers-editsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">      
+			{!! Form::open(['url'=>'/teachers-editsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
 			<div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Edit or Update Class...</h4>
+        <h4 class="modal-title">Enter New Teachers Info...</h4>
       </div>
       <div class="modal-body">        
 
 
 				<div class="form-group">
-        	<label class="control-label col-sm-4" for="editclssName">Enter New Class Name:</label>
-					<div class="col-sm-6">
-						<input type="text" class="form-control" id="editclssId" name="editclssName" placeholder="enter new exam term name">
+        	<label class="control-label col-sm-1" for="teacherName">Name:</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="teacherName" name="teacherName" placeholder="">
 					</div>         
-          <div class="col-sm-6">
-						<input type="hidden" class="form-control" id="editclssId" name="editclssId" placeholder="enter new exam term name">
+        
+        	<label class="control-label col-sm-1" for="teacherMob">Mobile:</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="teacherMob" name="teacherMob" placeholder="">
 					</div>         
-      	</div>
+        </div>
+
+
+      <div class="form-group">
+        	<label class="control-label col-sm-1" for="teacherDesig">Desig.:</label>
+					<div class="col-sm-3">
+          <select class="form-control" name="teacherDesig" id="teacherDesig">
+            <option value=""></option>            
+          @foreach($teachDesigs as $tDesig)
+            <option value="{{ $tDesig->options }}">{{ $tDesig->options }}</option>
+          @endforeach
+          </select>						
+					</div> 
+
+          <label class="control-label col-sm-1" for="teacherHQual">Qual.:</label>
+					<div class="col-sm-3">
+          <select class="form-control" name="teacherHQual" id="teacherHQual">
+            <option value=""></option>            
+          @foreach($teachHQuals as $tHQual)
+            <option value="{{ $tHQual->options }}">{{ $tHQual->options }}</option>
+          @endforeach
+          </select>						
+					</div> 
+
+
+          <label class="control-label col-sm-1" for="teacherMSubj">Subject.:</label>
+					<div class="col-sm-3">
+          <select class="form-control" name="teacherMSubj" id="teacherMSubj">
+            <option value=""></option>            
+          @foreach($teachSubjs as $tSubj)
+            <option value="{{ $tSubj->id }}">{{ $tSubj->name }}</option>
+          @endforeach
+          </select>
+						
+					</div> 
+      </div>
+
+
+        <div class="col-sm-offset-1 panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">Prefered Subjects</h3>
+          </div>
+          <div class="panel-body">    
+            @foreach($teachSubjs as $tSubj)
+              
+              <div class="checkbox">
+                    <label><input type="checkbox" value="{{ $tSubj->id }}" name="teacherSubj[]">{{ $tSubj->name }}</label>
+                    @php $flag = True; @endphp
+                </div>
+            @endforeach
+
+          </div>
+        </div>
+
+
 
 
       </div>
@@ -196,7 +253,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!-- Modal Ends -->
+<!-- Modal Ends -->  --}}
 
 
 <!-- Modal Starts to Delete for Teachers Entry -->
@@ -239,6 +296,7 @@
   $(document).ready(function(e){    
     $('.btnEdit').on('click', function(){
       var v = $(this).data('id');
+      
       var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
       var name = $("#tabclss #tr"+v+" #name").text();
       //alert(name);
