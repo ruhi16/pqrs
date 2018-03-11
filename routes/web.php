@@ -14,6 +14,8 @@
 
 Route::get('/', function () {
     return view('start');
+    // $u = App\User::find(1);
+    // print_r(getTableColumns('teachers'));
 });
 
 Auth::routes();
@@ -75,6 +77,17 @@ Route::post('/grades-deltsubmit', 'GradeController@gradesDeltSubmit');
 Route::get('/clssubjfm/{clss_id}', 'SubjectFMController@clssubjfm');
 Route::post('/clssubjfm-submit', 'SubjectFMController@clssubjfmSubmit');
 Route::get('/clssubjfm-view/{clss_id}', 'SubjectFMController@clssubjfmView');
+
+
+
+
+
+Route::get('/teachers', 'TeacherController@teachers');//->middleware('FinMidware:subjects');
+Route::post('/teachers-submit', 'TeacherController@teachersSubmit');
+Route::get('/teachers-view', 'TeacherController@teachersView');
+Route::get('/teachers-edit/{id}', 'TeacherController@teachersEdit');
+Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
+// Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
 
 
 // till the above entry was tested Oke with middleware too
@@ -142,7 +155,7 @@ Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultip
 
 
 Route::get('/test', 'BaseController@test');
-
+Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
 
 
 Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
@@ -154,10 +167,3 @@ Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
 Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
 
 
-
-Route::get('/teachers', 'TeacherController@teachers');//->middleware('FinMidware:subjects');
-Route::post('/teachers-submit', 'TeacherController@teachersSubmit');
-Route::get('/teachers-view', 'TeacherController@teachersView');
-Route::get('/teachers-edit/{id}', 'TeacherController@teachersEdit');
-Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
-Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');

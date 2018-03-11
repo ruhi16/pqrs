@@ -131,4 +131,10 @@
         </div>
     </div>
 </div>
+
+{{--  
+@foreach(getTableColumns('studentdbs') as $abc)
+    {{$abc}}<br>
+@endforeach  
+--}}
 @endsection

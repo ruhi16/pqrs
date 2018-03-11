@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Http\Request;
 
+
 use App\Session;
 use App\Exam;
 use App\Extype;
@@ -41,4 +42,8 @@ function Message($extype, $data){
     // return "Hello".$data;
     if(!$grds)return 'AB';
     return ($grds->gradeparticular->name);
+}
+
+function getTableColumns($table_name) {
+        return DB::connection()->getSchemaBuilder()->getColumnListing($table_name);
 }

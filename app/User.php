@@ -26,4 +26,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    //to get columns name corresponding to the model
+    // public function getTableColumns() {
+    //     return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
+    // }
+    
 }
