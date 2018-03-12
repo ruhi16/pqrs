@@ -24,13 +24,66 @@ use App\Marksentry;
 
 class BaseController extends Controller
 {
+    public function exmtypclssubTaskpane(){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clss  = Clss::whereSession_id($ses->id)->get();
+
+
+        return view('exmtypclssubs.exmtypclssubTaskpane')
+            ->withClss($clss)
+            ;
+    }
+
+    public function exmtypclssubfmEntry($clss_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $cls   = Clss::find($clss_id);
+        $etcss = Exmtypclssub::all(); 
+        $clsbs = Clssub::all();
+        $exams = Exam::all();
+        $etcss = Exmtypclssub::whereClss_id($clss_id)->get();
+
+        $flmrs = Subjfullmark::all();
+
+        return view('exmtypclssubs.exmtypclssubfmEntry')
+        ->withCls($cls)
+        ->withExams($exams)
+        ->withEtcss($etcss)
+        ->withClsbs($clsbs)
+        ->withFlmrs($flmrs)
+        ;
+    }
+
+    public function exmtypclssubfmEntrySubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $exams = Exam::all();
+        $extps = Extype::all();
+        
+        $clsbs = Clssub::whereClss_id($request->clsId)->get();
+
+        foreach($exams as $exm){
+            foreach($extps  as $ext){
+                $strSubs = "sb".$exm->id.$ext->id.$request->clsId;
+                // foreach($request->$strSubs as $sbId){
+                
+                    print_r($request->$strSubs); echo "<br>";
+                // }
+            }
+        }
+
+
+        return "Sucessfully Submitted";
+        
+    }
+
+
+
     public function exmtypclssub(){
         $exams = Exam::all();
         $extps = Extype::all();
         $clss  = Clss::all();
         $etcss = Exmtypclssub::all();
 
-        return view('exmtypclssub')
+        return view('exmtypclssubs.exmtypclssub')
         ->with('exams', $exams)
         ->with('extps', $extps)
         ->with('clss', $clss)
@@ -125,7 +178,7 @@ class BaseController extends Controller
         $clss  = Clss::all();
         $etcss = Exmtypclssub::all(); 
 
-        return view('exmtypclssubView')
+        return view('exmtypclssubs.exmtypclssubView')
         ->with('etcss', $etcss)
         ->with('exams', $exams)
         ->with('extps', $extps)

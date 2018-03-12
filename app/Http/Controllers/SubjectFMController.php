@@ -65,9 +65,7 @@ class SubjectFMController extends Controller
                 $temp = [];
                 foreach($request->$strSubs as $sbId){
                     $clsbId = Clssub::whereClss_id($request->clsId)
-                            ->whereSubject_id($sbId)->first()->id;
-                    // echo $clsbId ."<br>";                    
-                    // echo $etcs;
+                            ->whereSubject_id($sbId)->first()->id;                    
                     $strMrks = "fm".$exm->id.$ext->id.$request->clsId.$sbId;
                     $rec = [];
                     $rec['fm'] = $request->$strMrks[0];

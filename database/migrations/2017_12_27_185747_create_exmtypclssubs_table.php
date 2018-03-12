@@ -18,7 +18,9 @@ class CreateExmtypclssubsTable extends Migration
             $table->integer('exam_id');
             $table->integer('extype_id');
             $table->integer('clss_id');
+            $table->integer('subject_id')->nulable();
             $table->integer('fm');
+            $table->integer('pm');
             $table->integer('session_id');
             $table->timestamps();
         });

@@ -134,10 +134,13 @@ Route::get('/clssec-MarksRegister/{clssec_id}',  'MarksEntryController@clssecMar
 Route::post('/updateMarks', 'MarksEntryController@updateMarks');
 
 
+Route::get('/exmtypclssubTaskpane', 'BaseController@exmtypclssubTaskpane');
+Route::get('/exmtypclssubfmEntry/{id}', 'BaseController@exmtypclssubfmEntry');
+Route::post('/exmtypclssubfmEntry-submit', 'BaseController@exmtypclssubfmEntrySubmit');
 
-Route::get('exmtypclssub', 'BaseController@exmtypclssub');
-Route::post('exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
-Route::get('exmtypclssub-view', 'BaseController@exmtypclssubView');
+Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
+Route::post('/exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
+Route::get('/exmtypclssub-view', 'BaseController@exmtypclssubView');
 
 
 Route::get('/studentdb', 'StudentController@studentdb');

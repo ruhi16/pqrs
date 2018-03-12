@@ -125,7 +125,8 @@
                     <a href="{{url('/teachers')}}">Teachers Details Entry Point</a>
                     <br>
                     <a href="{{url('/teachers-view')}}">Teachers Details View Point</a>
-
+                    <br>
+                    <a href="{{url('/exmtypclssubTaskpane')}}">Exam Type Class Subject Task Pane</a>
                 </div>
             </div>
         </div>
