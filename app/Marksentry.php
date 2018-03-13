@@ -20,6 +20,9 @@ class Marksentry extends Model
         return $this->belongsTo('App\Clssec');
     }
 
+
+
+    
     public function studentcr(){
         return $this->belongsTo('App\Studentcr');
     }
