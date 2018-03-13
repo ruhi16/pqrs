@@ -26,12 +26,12 @@
   <tbody>
     @foreach($clsb as $cl)
     <tr>
-      <td>{{ $cl->subject->extype->name }}</td>
+      <td>{{ $cl->subject->extype->name }}</td> 
       <td>{{ $cl->subject->name }}</td>
       @foreach($exm as $ex)
         <td>
           @foreach($extpcls as $extpcl)
-            @if( $extpcl->exam_id == $ex->id && $extpcl->extype_id == $cl->subject->extype->id )
+            @if( $extpcl->exam_id == $ex->id && $extpcl->extype_id == $cl->subject->extype->id && $extpcl->subject_id == $cl->subject_id)
                {{--  extpcl:{{$extpcl->id}}-clsb:{{$cl->id}}-clsc:{{$clsc->id}}  --}}
                <a href="{{url('/Clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}">Marks Entry</a>
                @if($stdmrk

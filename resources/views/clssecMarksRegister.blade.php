@@ -57,7 +57,7 @@
                         <th>Subject</th>
                         @php                             
                             $typeTotal = 0;
-                          @endphp
+                        @endphp
                         @foreach($exms as $ex)
                           {{--  @php 
                             $ee = $extpclsbs->where('exam_id', $ex->id)->where('extype_id', $et->id)->first();                            
@@ -65,7 +65,7 @@
                           <th>{{$ee->fm}}</th>  --}}
                           @foreach($extpclsbs as $extpclsb)
                             @if($extpclsb->exam_id == $ex->id && $extpclsb->extype_id == $et->id)
-                                <th>{{$ex->name}}/{{ $extpclsb->fm}}</th>
+                                <th>{{$ex->name}}</th>
                                 @php $typeTotal += $extpclsb->fm; @endphp
                             @endif
                           @endforeach
@@ -85,7 +85,7 @@
                       @foreach($exms as $ex)
                       <td class="text-right">
                         @foreach($stdcr->marksentries as $record)
-                          @if($stdcr->id == $record->studentcr_id 
+                            @if($stdcr->id == $record->studentcr_id 
                                   && $clsb->subject->id == $record->clssub->subject->id
                                   && $ex->id == $record->exmtypclssub->exam->id )
                             @if($record->marks >= 0)

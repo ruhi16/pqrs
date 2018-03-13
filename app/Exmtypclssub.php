@@ -20,6 +20,13 @@ class Exmtypclssub extends Model
         return $this->belongsTo('App\Clss');
     }   
     
+    public function subject(){
+        return $this->belongsTo('App\Subject');
+    }
+
+
+
+
     public function marksentries(){
         return $this->hasMany('App\Marksentry');
     }

@@ -73,7 +73,7 @@ Route::post('/grades-deltsubmit', 'GradeController@gradesDeltSubmit');
 
 
 
-
+//temporaryly closed
 Route::get('/clssubjfm/{clss_id}', 'SubjectFMController@clssubjfm');
 Route::post('/clssubjfm-submit', 'SubjectFMController@clssubjfmSubmit');
 Route::get('/clssubjfm-view/{clss_id}', 'SubjectFMController@clssubjfmView');
@@ -135,7 +135,7 @@ Route::post('/updateMarks', 'MarksEntryController@updateMarks');
 
 
 Route::get('/exmtypclssubTaskpane', 'BaseController@exmtypclssubTaskpane');
-Route::get('/exmtypclssubfmEntry/{id}', 'BaseController@exmtypclssubfmEntry');
+Route::get('/exmtypclssubfmEntry/{clss_id}', 'BaseController@exmtypclssubfmEntry');
 Route::post('/exmtypclssubfmEntry-submit', 'BaseController@exmtypclssubfmEntrySubmit');
 
 Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
@@ -157,10 +157,6 @@ Route::get('/studentdbmultipage-edit/{id}', 'StudentController@studentdbmultipag
 Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultipageEditSubmit');
 
 
-Route::get('/test', 'BaseController@test');
-Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
-Route::get('/PdfSheetExStudentDb', 'ExcelController@PdfSheetExStudentDb');
-
 Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
 Route::get('/finalizeParticulars-Refresh', 'FinalizeController@finalizeParticularsRefresh')->name('finalizeParticulars-Refresh');
 Route::get('/btn-finalize/{n}','FinalizeController@btnFinalize');
@@ -169,4 +165,8 @@ Route::get('/btn-unfinalize/{n}','FinalizeController@btnUnFinalize');
 Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
 Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
 
+
+Route::get('/test', 'BaseController@test');
+Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
+Route::get('/PdfSheetExStudentDb', 'ExcelController@PdfSheetExStudentDb');
 
