@@ -63,7 +63,9 @@
                                           ->first()->id == $record->exmtypclssub_id)
                             
                                 {{ $record->marks!= -99 ?: 'AB' }}
-                            
+                                @php 
+                                    $total = $total +  ($record->marks!= -99 ?: 0 );
+                                @endphp
                             @endif
                             
                         @endforeach
