@@ -9,25 +9,6 @@
 @section('content')
 <h1>Class-Section wise Marks Register...</h1>
 
-{{--  @foreach($clsbs as $clsb)
-    {{ $clsb }}<br>
-@endforeach  --}}
-
-{{--  @foreach($stdcrs as $stdcr)
-    Student Name: {{ $stdcr->studentdb->name }}<br>
-    @foreach($stdcr->marksentries as $record)
-        Exam Type Class : {{ $record->exmtypclssub_id }}
-        Class   : {{ $record->exmtypclssub->clss->name }}
-        Section : {{ $record->clssec->section->name }}
-        Exam    : {{ $record->exmtypclssub->exam->name }}
-        Type    : {{ $record->exmtypclssub->extype->name }}
-
-        Subject : {{ $record->clssub->subject->name }}
-        Marks   : {{ $record->marks }}
-        <br>
-    @endforeach
-@endforeach  --}}
-
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -57,17 +38,8 @@
                         @php                             
                             $typeTotal = 0;
                         @endphp
-                        @foreach($exms as $ex)
-                          {{--  @php 
-                            $ee = $extpclsbs->where('exam_id', $ex->id)->where('extype_id', $et->id)->first();                            
-                          @endphp
-                          <th>{{$ee->fm}}</th>  --}}
-                          {{--  @foreach($extpclsbs as $extpclsb)
-                            @if($extpclsb->exam_id == $ex->id && $extpclsb->extype_id == $et->id)  --}}
-                                <th>{{$ex->name}}</th>
-                                {{--  @php $typeTotal += $extpclsb->fm; @endphp
-                            @endif
-                          @endforeach  --}}
+                        @foreach($exms as $ex)                          
+                            <th>{{$ex->name}}</th>                         
                         @endforeach
                         <th>Total/{{$typeTotal}}</th>
                         <th>Grade</th>
@@ -84,33 +56,18 @@
                       @foreach($exms as $ex)
                       <td class="text-right">
                         @foreach($stdcr->marksentries as $record)
-                            {{--  {{$extpclsbs->where('exam_id', $ex->id)
-                                    ->where('extype_id', $et->id)
-                                    ->where('subject_id', $clsb->subject_id)
-                                    ->first()->id
-                            }}  --}}
+                            
                             @if($extpclsbs->where('exam_id', $ex->id)
-                            ->where('extype_id', $et->id)
-                            ->where('subject_id', $clsb->subject_id)
-                            ->first()->id == $record->exmtypclssub_id)
-                            {{--  @if($record->exmtypclssub_id)  --}}
-                                {{$record->marks}}
-                            {{--  @endif  --}}
+                                          ->where('extype_id', $et->id)
+                                          ->where('subject_id', $clsb->subject_id)
+                                          ->first()->id == $record->exmtypclssub_id)
+                            
+                                {{ $record->marks!= -99 ?: 'AB' }}
+                            
                             @endif
                             
                         @endforeach
-                        {{--  @foreach($stdcr->marksentries as $record)
-                            @if($stdcr->id == $record->studentcr_id 
-                                  && $clsb->subject->id == $record->clssub->subject->id
-                                  && $ex->id == $record->exmtypclssub->exam->id )
-                            @if($record->marks >= 0)
-                                {{ $record->marks }}
-                                @php $total = $total + $record->marks; @endphp
-                            @else
-                                AB
-                            @endif
-                          @endif
-                        @endforeach  --}}
+                        
                       </td>
                       @endforeach
                       <th class="text-right">{{ $total }}</th>
@@ -142,35 +99,6 @@
     </tbody>
 </table>
 
-
-
-{{--  @foreach($stdcrs as $stdcr)
-        <tr>
-            <td>{{ $stdcr->studentdb->name }}</td>
-            <td>
-                @foreach($clsbs as $clsb)                    
-                    <table class="table table-bordered">
-                        <tr>
-                            <td>{{ $clsb->subject->name }}</td>                           
-                        </tr>           
-                    </table>
-                @endforeach
-            </td>
-            @foreach($exms as $ex)
-                <td>
-                @foreach($clsbs as $clsb)
-                <table class="table table-bordered">
-                    <tr>
-                        <td>
-                            xx
-                        </td>
-                    </tr>
-                </table>
-                @endforeach
-                </td>
-            @endforeach
-        </tr>
-        @endforeach  --}}
 
 
 
