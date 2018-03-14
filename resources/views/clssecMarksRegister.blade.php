@@ -34,8 +34,7 @@
             <th>Name</th>
             @foreach($extp as $et)
                 <th>{{ $et->name }} DETAILS</th>
-            @endforeach
-            
+            @endforeach            
         </tr>
     </thead>
     <tbody>        
@@ -63,12 +62,12 @@
                             $ee = $extpclsbs->where('exam_id', $ex->id)->where('extype_id', $et->id)->first();                            
                           @endphp
                           <th>{{$ee->fm}}</th>  --}}
-                          @foreach($extpclsbs as $extpclsb)
-                            @if($extpclsb->exam_id == $ex->id && $extpclsb->extype_id == $et->id)
+                          {{--  @foreach($extpclsbs as $extpclsb)
+                            @if($extpclsb->exam_id == $ex->id && $extpclsb->extype_id == $et->id)  --}}
                                 <th>{{$ex->name}}</th>
-                                @php $typeTotal += $extpclsb->fm; @endphp
+                                {{--  @php $typeTotal += $extpclsb->fm; @endphp
                             @endif
-                          @endforeach
+                          @endforeach  --}}
                         @endforeach
                         <th>Total/{{$typeTotal}}</th>
                         <th>Grade</th>
@@ -85,6 +84,22 @@
                       @foreach($exms as $ex)
                       <td class="text-right">
                         @foreach($stdcr->marksentries as $record)
+                            {{--  {{$extpclsbs->where('exam_id', $ex->id)
+                                    ->where('extype_id', $et->id)
+                                    ->where('subject_id', $clsb->subject_id)
+                                    ->first()->id
+                            }}  --}}
+                            @if($extpclsbs->where('exam_id', $ex->id)
+                            ->where('extype_id', $et->id)
+                            ->where('subject_id', $clsb->subject_id)
+                            ->first()->id == $record->exmtypclssub_id)
+                            {{--  @if($record->exmtypclssub_id)  --}}
+                                {{$record->marks}}
+                            {{--  @endif  --}}
+                            @endif
+                            
+                        @endforeach
+                        {{--  @foreach($stdcr->marksentries as $record)
                             @if($stdcr->id == $record->studentcr_id 
                                   && $clsb->subject->id == $record->clssub->subject->id
                                   && $ex->id == $record->exmtypclssub->exam->id )
@@ -95,7 +110,7 @@
                                 AB
                             @endif
                           @endif
-                        @endforeach
+                        @endforeach  --}}
                       </td>
                       @endforeach
                       <th class="text-right">{{ $total }}</th>
@@ -104,7 +119,7 @@
                         
                       @endphp
                       <td>
-                        @php $grd = ($total/$typeTotal)*100; @endphp
+                        @php $grd = ($total)*100; @endphp {{-- /$typeTotal --}}
                         {{ Message($et->name,$grd) }}
                       </td>
                       </tr>
