@@ -30,31 +30,71 @@ class StudentController extends Controller
         $stds = Studentdb::whereStsession_id($ses->id)->get();
         $allClsSec = Clssec::whereSession_id($ses->id)->get();
         $clss = Clss::all();
+        $secs = Section::all();
+        $ssex = Miscoption::where('tabName', 'studentdbs')
+                    ->where('fieldName', 'ssex')
+                    ->get();
+
+        $relg = Miscoption::where('tabName', 'studentdbs')
+                    ->where('fieldName', 'relg')
+                    ->get();
+        
+        $cste = Miscoption::where('tabName', 'studentdbs')
+                    ->where('fieldName', 'cste')
+                    ->get();
+
+        $natn = Miscoption::where('tabName', 'studentdbs')
+                    ->where('fieldName', 'natn')
+                    ->get();
+
 
         return view ('studentdb')
         ->with('stds', $stds)
         ->with('allClsSec', $allClsSec)
         ->withClss($clss)
+        ->withSecs($secs)
+        ->withSsex($ssex)
+        ->withRelg($relg)
+        ->withCste($cste)
+        ->withNatn($natn)
         ;
     }
 
     public function studentdbSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
         // echo $ses->id . "x";
-        $name = $request->name;
-        $clss = $request->clss;
+        echo $request->name;
+        echo $request->clss;
+        echo $request->secs;
+        echo $request->ssex;
+        echo $request->relg;
+        echo $request->cste;
+        echo $request->natn;
         // echo $name . $clss ;
-
+        
+        //==============================
         $stddb = new Studentdb;
-        $stddb->name  = $request->name;
-        $stddb->fname = $request->fname;
-        $stddb->stclss_id = $request->clss;
         $stddb->stsession_id = $ses->id;
-
+        $stddb->name  = $request->name;        
+        $stddb->stclss_id   = $request->clss;
+        $stddb->stsec_id    = $request->secs;
+        $stddb->ssex        = $request->ssex;
+        $stddb->ssex        = $request->ssex;
+        $stddb->relg        = $request->relg;
+        $stddb->cste        = $request->cste;
+        $stddb->natn        = $request->natn;
         $stddb->save();
 
+        //======================
+        $stdcr = new StudentCr;
+        $stdcr->studentdb_id = $stddb->id;
+        $stdcr->session_id = $ses->id;
+        $stdcr->clss_id = $request->clss;
+        $stdcr->section_id = $request->secs;
+        $stdcr->save();
 
-        return back();
+
+        // return back();
     }
 
     //Ajax Update Section

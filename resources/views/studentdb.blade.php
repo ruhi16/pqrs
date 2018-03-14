@@ -83,7 +83,7 @@
        
         <div class="form-group">
           <label class="control-label col-sm-1" for="name">Name:</label>
-          <div class="col-sm-7">
+          <div class="col-sm-5">
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter Students Name">
           </div>
 
@@ -91,39 +91,81 @@
           <div class="col-sm-2">
             <select class="form-control" name="clss" id="cl">
                 <option value="0"></option>
-              @foreach($clss as $cls)              
-                <option value="{{$cls->id}}">{{$cls->name}}</option>              
-              @endforeach
+                @foreach($clss as $cls)              
+                  <option value="{{$cls->id}}">{{$cls->name}}</option>              
+                @endforeach
             </select>
           </div>
+
+          <label class="control-label col-sm-1 text-left" for="secs">Section:</label>
+          <div class="col-sm-2">
+          <select class="form-control" name="secs" id="sc">
+                <option value="0"></option>
+                @foreach($secs as $sec)              
+                  <option value="{{$sec->id}}">{{$sec->name}}</option>              
+                @endforeach
+            </select>            
+          </div>
+
+          
+
         </div>
 
 
 
 
         <div class="form-group">
-          <label class="control-label col-sm-3 text-left" for="fname">Father's Name:</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Father's Name">
+          <label class="control-label col-sm-1 text-left" for="ssex">Gender:</label>
+          <div class="col-sm-2">
+          <select class="form-control" name="ssex" id="sx">
+                <option value="0"></option>
+                @foreach($ssex as $sex)              
+                  <option value="{{$sex->options}}">{{$sex->options}}</option>              
+                @endforeach
+            </select>            
           </div>
 
+          <label class="control-label col-sm-1 text-left" for="relg">Religion:</label>
+          <div class="col-sm-2">
+          <select class="form-control" name="relg" id="rl">
+                <option value="0"></option>
+                @foreach($relg as $rel)              
+                  <option value="{{$rel->id}}">{{$rel->options}}</option>              
+                @endforeach
+            </select>            
+          </div>
+
+          <label class="control-label col-sm-1 text-left" for="cste">Caste:</label>
+          <div class="col-sm-2">
+          <select class="form-control" name="cste" id="cs">
+                <option value="0"></option>
+                @foreach($cste as $cst)              
+                  <option value="{{$cst->options}}">{{$cst->options}}</option>              
+                @endforeach
+            </select>            
+          </div>
+
+          <label class="control-label col-sm-1 text-left" for="natn">Nation:</label>
+          <div class="col-sm-2">
+          <select class="form-control" name="natn" id="nt">
+                <option value="0"></option>
+                @foreach($natn as $nat)              
+                  <option value="{{$nat->options}}" {{$nat->options != 'Indian'?:'selected'}}>{{$nat->options}}</option>              
+                @endforeach
+            </select>            
+          </div>
          
         </div>
 
 
-        <!-- <button type="submit" class="btn btn-primary">Submit</button>
-        </form>  -->
+
 
 
       </div>
       <div class="modal-footer">
-        <button type="button" 
-           class="btn btn-default" 
-           data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <span class="pull-right">
-          <button type="submit" class="btn btn-primary">
-            Add to Favorites
-          </button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </span>
       </div>
     </form>

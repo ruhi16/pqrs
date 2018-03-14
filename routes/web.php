@@ -13,7 +13,7 @@
 */
 
 Route::get('/', function () {
-    return view('start');
+    return view('start'); //homepage
     // $u = App\User::find(1);
     // print_r(getTableColumns('teachers'));
 });
@@ -164,6 +164,9 @@ Route::get('/btn-unfinalize/{n}','FinalizeController@btnUnFinalize');
 
 Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
 Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
+
+Route::get('/IndividualResult', 'ResultController@IndividulaResult');
+
 
 
 Route::get('/test', 'BaseController@test');
