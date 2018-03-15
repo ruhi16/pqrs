@@ -22,4 +22,10 @@ class Clss extends Model
     public function exmtypclssub(){
         return $this->hasMany('App\Exmtypclssub');
     }
+
+
+
+    public function studentdbs(){
+        return $this->hasMany('App\Studentdb','stclss_id');
+    }
 }

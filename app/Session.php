@@ -31,4 +31,9 @@ class Session extends Model
     public function grades(){
         return $this->hasMany('App\Grade');
     }
+
+    public function studentdbs(){
+        return $this->hasMany('App\Studentdb','stsession_id');
+    }
+    
 }

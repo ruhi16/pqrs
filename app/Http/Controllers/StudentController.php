@@ -63,13 +63,13 @@ class StudentController extends Controller
     public function studentdbSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
         // echo $ses->id . "x";
-        echo $request->name;
-        echo $request->clss;
-        echo $request->secs;
-        echo $request->ssex;
-        echo $request->relg;
-        echo $request->cste;
-        echo $request->natn;
+        // echo $request->name;
+        // echo $request->clss;
+        // echo $request->secs;
+        // echo $request->ssex;
+        // echo $request->relg;
+        // echo $request->cste;
+        // echo $request->natn;
         // echo $name . $clss ;
         
         //==============================
@@ -94,7 +94,13 @@ class StudentController extends Controller
         $stdcr->save();
 
 
-        // return back();
+        return back();
+    }
+
+
+    public function studentdbEditSubmit($student_id){
+
+
     }
 
     //Ajax Update Section

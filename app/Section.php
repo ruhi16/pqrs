@@ -15,4 +15,9 @@ class Section extends Model
     public function session(){
         return $this->belongsTo('App\Session');
     }
+
+
+    public function studentdbs(){
+        return $this->hasMany('App\Studentdb','stsec_id');
+    }
 }
