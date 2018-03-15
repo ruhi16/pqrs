@@ -166,7 +166,8 @@ Route::get('/btn-unfinalize/{n}','FinalizeController@btnUnFinalize');
 Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
 Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
 
-Route::get('/IndividualResult', 'ResultController@IndividulaResult');
+Route::get('/clssec-ResultTaskpane/{clssec_id}', 'ResultController@ResultTaskpane');
+Route::get('/clssec-ResultSheet/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheet');
 
 
 

@@ -11,13 +11,14 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <td>#</td>
-            <td>Class</td>
-            <td>Sections</td>
-            <td>Status</td>
-            <td>Admission</td>
-            <td>Marks Entry</td>
-            <td>Marks Register</td>
+            <th>SL</th>
+            <th>Class</th>
+            <th>Sections</th>
+            <th>Status</th>
+            <th>Admission</th>
+            <th>Marks Entry</th>
+            <th>Marks Register</th>
+            <th>Result Sheet</th>
         </tr>
     </thead>
     <tbody>
@@ -30,6 +31,7 @@
     <td><a href="{{url('/clssec-AdminPage',[$clssec->clss_id,$clssec->section_id])}}">Clss-Sec Admission</a></td>
     <td><a href="{{url('/clssec-MrkenPage',[$clssec->id])}}">Clss-Sec Mark Entry Status</a></td>
     <td><a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Clss-Sec Mark Register</a></td>
+    <td><a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Clss-Sec Students Individual Result Sheet</a></td>
     </tr>
 @endforeach
         

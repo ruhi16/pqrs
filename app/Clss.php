@@ -25,6 +25,13 @@ class Clss extends Model
 
 
 
+    public function studentcrs(){
+        return $this->hasMany('App\Studentcr');
+    }
+
+
+
+
     public function studentdbs(){
         return $this->hasMany('App\Studentdb','stclss_id');
     }

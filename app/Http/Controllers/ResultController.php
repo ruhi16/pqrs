@@ -25,10 +25,70 @@ use App\Marksentry;
 
 class ResultController extends Controller
 {
-    public function IndividulaResult(){
+    public function ResultTaskpane(Request $request, $clssec_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clsc = Clssec::find($clssec_id);
 
+        $clsbs = Clssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)->get();
+        
 
         
-        return view('results.indvidualResult');
+        $stdcrs = Studentcr::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->whereSection_id($clsc->section_id)
+            ->get();
+        $exms = Exam::whereSession_id($ses->id)->get();
+        $extp = Extype::whereSession_id($ses->id)->get();
+
+       
+        $extpclsbs = Exmtypclssub::whereSession_id($ses->id)
+        ->whereClss_id($clsc->clss_id)        
+        ->get();
+        
+        $grades = Grade::whereSession_id($ses->id)->get();
+        
+
+        
+        return view('results.ResultTaskpane')
+        ->withStdcrs($stdcrs)
+        ->with('clssec_id', $clssec_id)
+        ->withClsbs($clsbs)
+        ->withExms($exms)
+        ->withExtp($extp)
+        ->withExtpclsbs($extpclsbs)
+        ->withCls($clsc->clss->name)
+        ->withSec($clsc->section->name)
+        ;
+    }
+
+    public function ResultSheet(Request $request, $clssec_id, $studentcr_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clsc = Clssec::find($clssec_id);
+
+        $clsbs = Clssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)->get();
+        
+
+        
+        $stdcrs = Studentcr::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->whereSection_id($clsc->section_id)
+            ->get();
+        $exms = Exam::whereSession_id($ses->id)->get();
+        $extp = Extype::whereSession_id($ses->id)->get();
+
+       
+        $extpclsbs = Exmtypclssub::whereSession_id($ses->id)
+        ->whereClss_id($clsc->clss_id)        
+        ->get();
+        
+        $grades = Grade::whereSession_id($ses->id)->get();
+        
+
+        
+        return view('results.ResultSheet')
+                
+        ;
     }
 }
