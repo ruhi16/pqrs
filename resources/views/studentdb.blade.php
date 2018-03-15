@@ -185,7 +185,7 @@
      aria-labelledby="favoritesModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <form method="post" class="form-horizontal" action="{!! url('studentdbEdit-submit',[]) !!}" value="{{ csrf_token() }}">  
+      <form method="post" class="form-horizontal" action="{!! url('studentdbEdit-submit',[$std->id]) !!}" value="{{ csrf_token() }}">  
       {{ csrf_field() }}
       <div class="modal-header">
         <button type="button" class="close" 
@@ -227,9 +227,9 @@
 
 
         <div class="form-group">
-          <label class="control-label col-sm-1 text-left" for="edSsex">Gender:</label>
+          <label class="control-label col-sm-1 text-left" for="edGndr">Gender:</label>
           <div class="col-sm-2">
-          <select class="form-control" name="edSsex" id="edSsex">
+          <select class="form-control" name="edGndr" id="edGndr">
                 <option value="0"></option>
                 @foreach($ssex as $sex)              
                   <option value="{{$sex->options}}">{{$sex->options}}</option>              
@@ -237,9 +237,9 @@
             </select>            
           </div>
 
-          <label class="control-label col-sm-1 text-left" for="relg">Religion:</label>
+          <label class="control-label col-sm-1 text-left" for="edRelg">Religion:</label>
           <div class="col-sm-2">
-          <select class="form-control" name="relg" id="rl">
+          <select class="form-control" name="edRelg" id="edRelg">
                 <option value="0"></option>
                 @foreach($relg as $rel)              
                   <option value="{{$rel->options}}">{{$rel->options}}</option>              
@@ -247,9 +247,9 @@
             </select>            
           </div>
 
-          <label class="control-label col-sm-1 text-left" for="cste">Caste:</label>
+          <label class="control-label col-sm-1 text-left" for="edCste">Caste:</label>
           <div class="col-sm-2">
-          <select class="form-control" name="cste" id="cs">
+          <select class="form-control" name="edCste" id="edCste">
                 <option value="0"></option>
                 @foreach($cste as $cst)              
                   <option value="{{$cst->options}}">{{$cst->options}}</option>              
@@ -257,9 +257,9 @@
             </select>            
           </div>
 
-          <label class="control-label col-sm-1 text-left" for="natn">Nation:</label>
+          <label class="control-label col-sm-1 text-left" for="edNatn">Nation:</label>
           <div class="col-sm-2">
-          <select class="form-control" name="natn" id="nt">
+          <select class="form-control" name="edNatn" id="edNatn">
                 <option value="0"></option>
                 @foreach($natn as $nat)              
                   <option value="{{$nat->options}}" {{$nat->options != 'Indian'?:'selected'}}>{{$nat->options}}</option>              
@@ -305,23 +305,20 @@
       var clss = $("#tabclss #tr"+v+" #clss").text();
       var secn = $("#tabclss #tr"+v+" #section").text();
       var gndr = $("#tabclss #tr"+v+" #ssex").text();
-      alert ("id:"+gndr);
+      var relg = $("#tabclss #tr"+v+" #relg").text();
+      var cste = $("#tabclss #tr"+v+" #cste").text();
+
+      // alert ("id:"+gndr);
       
       $('input[name="edName"]').val(name);
       $('select[name="edClss"]').find('option:contains('+clss+')').prop("selected",true);
       $('select[name="edSecn"]').find('option:contains('+secn+')').prop("selected",true);
-      $('select[name="edSsex"]').find('option:contains('+gndr+')').prop("selected",true);
+      $('select[name="edGndr"]').find('option:contains('+gndr+')').prop("selected",true);
+      $('select[name="edRelg"]').find('option:contains('+relg+')').prop("selected",true);
+      $('select[name="edCste"]').find('option:contains('+cste+')').prop("selected",true);
 
-
-      // var v = $(this).data('id');
-      // var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
-      // var name = $("#tabclss #tr"+v+" #name").text();
-      // //alert(name);
-
-
-      // $('input[name="editclssName"]').val(name);
-      // $('input[name="editclssId"]').val(v);
-      //$('#editModal').modal('show');
+      
+      //$('#editStudentData').modal('show');
     });
 
 
