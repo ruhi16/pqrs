@@ -309,7 +309,8 @@
       var relg = $("#tabclss #tr"+v+" #relg").text();
       var cste = $("#tabclss #tr"+v+" #cste").text();
 
-      // alert ("id:"+gndr);
+      // alert ("id:"+clss);
+      
       $('input[name="edStdId"]').val(v);
       $('input[name="edName"]').val(name);
       $('select[name="edClss"]').find('option:contains('+clss+')').prop("selected",true);

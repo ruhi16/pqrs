@@ -125,7 +125,7 @@ class StudentController extends Controller
 
         $stdcr = StudentCr::whereStudentdb_id($stddb->id)
                 ->whereSession_id($ses->id)->first();
-        
+        // dd($stdcr);
         $stdcr->session_id = $ses->id;
         $stdcr->clss_id = $request->edSecn;
         $stdcr->section_id = $request->edSecn;
