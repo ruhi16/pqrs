@@ -185,7 +185,7 @@
      aria-labelledby="favoritesModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <form method="post" class="form-horizontal" action="{!! url('studentdbEdit-submit',[$std->id]) !!}" value="{{ csrf_token() }}">  
+      <form method="post" class="form-horizontal" action="{!! url('studentdbEdit-submit') !!}" value="{{ csrf_token() }}">  
       {{ csrf_field() }}
       <div class="modal-header">
         <button type="button" class="close" 
@@ -197,7 +197,8 @@
       </div>
       <div class="modal-body">
 
-       
+        <input type="hidden" class="form-control" id="edStdId" name="edStdId">
+
         <div class="form-group">
           <label class="control-label col-sm-1" for="edName">Name:</label>
           <div class="col-sm-5">
@@ -309,7 +310,7 @@
       var cste = $("#tabclss #tr"+v+" #cste").text();
 
       // alert ("id:"+gndr);
-      
+      $('input[name="edStdId"]').val(v);
       $('input[name="edName"]').val(name);
       $('select[name="edClss"]').find('option:contains('+clss+')').prop("selected",true);
       $('select[name="edSecn"]').find('option:contains('+secn+')').prop("selected",true);

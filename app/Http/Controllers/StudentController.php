@@ -98,10 +98,10 @@ class StudentController extends Controller
     }
 
 
-    public function studentdbEditSubmit(Request $request, $student_id){
-        $ses = Session::whereStatus('CURRENT')->first();
+    public function studentdbEditSubmit(Request $request){
+        $ses    = Session::whereStatus('CURRENT')->first();
+        $stddb  = Studentdb::find($request->edStdId);
 
-        $stddb = Studentdb::find($student_id);
         // print_r($stddb);
         // echo $request->edName;
         // echo $request->edClss;
@@ -110,6 +110,7 @@ class StudentController extends Controller
         // echo $request->edRelg;
         // echo $request->edCste;
         // echo $request->edNatn;
+        // echo $request->edStdId;
 
         $stddb->stsession_id = $ses->id;
         $stddb->name = $request->edName;
@@ -122,12 +123,13 @@ class StudentController extends Controller
         $stddb->save();
 
 
-        $stdcr = StudentCr::whereStudentdb_id($stddb->id);
-        // $stdcr->studentdb_id = $stddb->id;
+        $stdcr = StudentCr::whereStudentdb_id($stddb->id)
+                ->whereSession_id($ses->id)->first();
+        
         $stdcr->session_id = $ses->id;
         $stdcr->clss_id = $request->edSecn;
         $stdcr->section_id = $request->edSecn;
-        // $stdcr->save();
+        $stdcr->save();
 
         
 

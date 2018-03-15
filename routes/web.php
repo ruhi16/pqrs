@@ -145,7 +145,7 @@ Route::get('/exmtypclssub-view', 'BaseController@exmtypclssubView');
 
 Route::get('/studentdb', 'StudentController@studentdb');
 Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
-Route::post('/studentdbEdit-submit/{student_id}', 'StudentController@studentdbEditSubmit');
+Route::post('/studentdbEdit-submit', 'StudentController@studentdbEditSubmit');
 
 //Ajax Update
 Route::post('/updateSection', 'StudentController@updateSection');
