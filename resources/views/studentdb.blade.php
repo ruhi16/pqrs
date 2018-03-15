@@ -18,7 +18,7 @@
 </button>
 </div><br>
 <table class="table table-bordered table-striped" id="tabclss">
-<thead>
+<thead class="thead-dark">
     <tr>
         <th>id</th>
         <th>Name</th>

@@ -131,7 +131,7 @@ class StudentController extends Controller
         $stdcr->section_id = $request->edSecn;
         $stdcr->save();
 
-        
+        return back();
 
     }
 
