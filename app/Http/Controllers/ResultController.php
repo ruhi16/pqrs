@@ -11,6 +11,7 @@ use App\Extype;
 use App\Clss;
 use App\Subject;
 use App\Section;
+use App\School;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -64,31 +65,26 @@ class ResultController extends Controller
 
     public function ResultSheet(Request $request, $clssec_id, $studentcr_id){
         $ses = Session::whereStatus('CURRENT')->first();
+        $sch = School::find(1);       
+
+        $exms = Exam::all();
+        $exts = Extype::all()->sortBy('name');
         $clsc = Clssec::find($clssec_id);
-
-        $clsbs = Clssub::whereSession_id($ses->id)
-            ->whereClss_id($clsc->clss_id)->get();
+        $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
+        $stcr = Studentcr::find($studentcr_id);
         
-
-        
-        $stdcrs = Studentcr::whereSession_id($ses->id)
-            ->whereClss_id($clsc->clss_id)
-            ->whereSection_id($clsc->section_id)
-            ->get();
-        $exms = Exam::whereSession_id($ses->id)->get();
-        $extp = Extype::whereSession_id($ses->id)->get();
-
-       
-        $extpclsbs = Exmtypclssub::whereSession_id($ses->id)
-        ->whereClss_id($clsc->clss_id)        
-        ->get();
-        
-        $grades = Grade::whereSession_id($ses->id)->get();
-        
-
+        $mrks = Marksentry::whereSession_id($ses->id)
+            ->whereStudentcr_id($studentcr_id)->get();
+        // print_r($clsc);
         
         return view('results.ResultSheet')
-                
+        ->withSch($sch)        
+        ->withExms($exms)
+        ->withexts($exts)
+        ->withClsc($clsc)
+        ->withClsb($clsb)
+        ->withStcr($stcr)
+        ->withMrks($mrks)
         ;
     }
 }

@@ -6,9 +6,62 @@
 @endsection
 
 @section('content')
-<h1>Individual Result...</h1>
+<h1 class="text-center">{{$sch->name}}</h1>
+<h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
+<h2 class="text-center">Progress Report</h2>
+<br>
+<strong>Name: </strong>{{$stcr->studentdb->name}} <strong>Class: </strong>{{$stcr->clss->name}}
+<strong>Section: </strong>{{$stcr->section->name}}<strong>Roll No: </strong>{{$stcr->roll_no}}
+<br>
+<br>
+<br>
 
 <table class="table table-bordered">
+  <thead>
+    <tr>
+      @foreach($exts as $ext)
+        <th>{{$ext->name}}</th>
+      @endforeach
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      @foreach($exts as $ext)
+      <td>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>            
+            <th>Sl</th>
+            <th>Subject</th>
+            @foreach($exms as $exm)
+              <th>{{$exm->name}}</th>
+            @endforeach
+            <th>Total</th>
+            <th>Grade</th>
+          </tr>          
+        </thead>
+        <tbody>
+          @foreach($clsb as $cls)
+            @if($cls->subject->extype_id == $ext->id)
+              <tr>
+                <td>{{$cls->id}}</td>
+                <td>{{$cls->subject->name}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            @endif
+          @endforeach
+        </tbody>
+      </table>          
+      </td>
+      @endforeach
+    </tr>
+  </tbody>
+</table>
+{{-- <table class="table table-bordered">
 <thead>
   <tr>
     <th>Sl</th>
@@ -23,7 +76,7 @@
     <th>Action</th>
   </tr>
 </thead>
-<tbody>
+<tbody>  --}}
 {{--  @foreach($stdcrs as $stdcr)
   <tr>
     <td>{{$stdcr->id}}</td>
@@ -37,9 +90,9 @@
     <td></td>
     <td></td>
   </tr>
-@endforeach  --}}
+@endforeach  
 </tbody>
-</table>
+</table>  --}}
 
 
 
