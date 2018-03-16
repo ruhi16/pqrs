@@ -56,16 +56,15 @@
                       @php $total = 0; @endphp
                       @foreach($exms as $ex)
                       <td class="text-right">
-                        @foreach($stdcr->marksentries as $record)
-                            
+                        @foreach($stdcr->marksentries as $record)                            
                             @if($extpclsbs->where('exam_id', $ex->id)
                                           ->where('extype_id', $et->id)
                                           ->where('subject_id', $clsb->subject_id)
                                           ->first()->id == $record->exmtypclssub_id)
-                            
-                                {{ $record->marks!= -99 ?: 'AB' }}
+                                {{ $record->marks == -99 ? 'AB' : $record->marks }}
+                                
                                 @php 
-                                    $total = $total +  ($record->marks!= -99 ?: 0 );
+                                    $total = $total +  ($record->marks == -99 ? 0 : $record->marks);
                                 @endphp
                             @endif
                             

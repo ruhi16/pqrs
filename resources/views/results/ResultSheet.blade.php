@@ -25,8 +25,14 @@
     </tr>
   </thead>
   <tbody>
+    @php 
+      $forGTotal = 0;
+      $sumGTotal = 0;
+      $grTotal = [];
+    @endphp
     <tr>
       @foreach($exts as $ext)
+      @php  $total = 0; @endphp
       <td>
       <table class="table table-bordered table-striped">
         <thead>
@@ -45,65 +51,43 @@
             @if($cls->subject->extype_id == $ext->id)
               <tr>
                 <td>{{$cls->id}}</td>
-                <td>{{$cls->subject->name}}-{{$cls->subject_id}}</td>                
+                <td>{{$cls->subject->name}}</td>                
+                @php $subTotal = 0; @endphp
                 @foreach($exms as $exm)
-                  <td>
-                  {{--  E:{{$exm->id}}-T:{{$ext->id}}-C:{{$cls->clss_id}}-S:{{$cls->subject_id}}  --}}                 
-                    @php
+                  <td>                  
+                    @php                    
                     $etcs_id = $etcs->where('exam_id',$exm->id)
                             ->where('subject_id',$cls->subject_id)
                             ->where('clss_id',$cls->clss_id)->first()->id;
+                    $obmrks  = $mrks->where('exmtypclssub_id', $etcs_id)->pluck('marks')->first();
+                    $subTotal = $subTotal + ($obmrks == -99 ? 0 : $obmrks);
                     @endphp
                     
-                  {{ $mrks->where('exmtypclssub_id', $etcs_id)->pluck('marks')->first() }}
+                  {{ $obmrks == -99 ? 'AB' : $obmrks }}
+
                   </td>
                 @endforeach
-                <td></td>
+                <td>{{$subTotal}}</td>
+                @php  $total = $total + $subTotal; @endphp
                 <td></td>
               </tr>
             @endif
           @endforeach
         </tbody>
-      </table>          
+      </table>   
+            
+      @php  $grTotal[$ext->name] = $total; @endphp
+      
       </td>
       @endforeach
     </tr>
+    <tr>
+      @foreach($exts as $ext)
+        <th>Total: {{ $grTotal[$ext->name] }}</th>
+      @endforeach      
+    </tr>
   </tbody>
 </table>
-{{-- <table class="table table-bordered">
-<thead>
-  <tr>
-    <th>Sl</th>
-    <th>Name</th>
-    <th>Class</th>
-    <th>Section</th>
-    <th>Roll</th>
-    <th>Total Marks Obt</th>
-    <th>Full Marks</th>
-    <th>Nos of Ds</th>
-    <th>Result Status</th>
-    <th>Action</th>
-  </tr>
-</thead>
-<tbody>  --}}
-{{--  @foreach($stdcrs as $stdcr)
-  <tr>
-    <td>{{$stdcr->id}}</td>
-    <td>{{$stdcr->studentdb->name}}</td>
-    <td>{{$stdcr->clss->name}}</td>
-    <td>{{$stdcr->section->name}}</td>
-    <td>{{$stdcr->roll_no}}</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-@endforeach  
-</tbody>
-</table>  --}}
-
-
 
 <script type="text/javascript">
   $(document).ready(function(e){
