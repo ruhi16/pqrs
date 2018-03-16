@@ -40,9 +40,14 @@ class SchoolController extends Controller
         $sch = new School;
         $sch->name = $request->schname;
         $sch->session_id = $ses->id;
+        $sch->vill = $request->vill;
+        $sch->po = $request->poff;
+        $sch->ps = $request->pstn;
+        $sch->pin = $request->pcode;
+        $sch->dist = $request->dist;
         $sch->save();
 
-        // return back();
+        return back();
     }
 
     public function schoolView(){

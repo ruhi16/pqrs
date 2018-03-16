@@ -18,9 +18,9 @@ class CreateSessionsTable extends Migration
             $table->string('name');
             $table->date('stdate');
             $table->date('entdate');
-            $table->string('status');
-            $table->integer('prsession_id');
-            $table->integer('nxsession_id');
+            $table->string('status')->nullable();
+            $table->integer('prsession_id')->nullable();
+            $table->integer('nxsession_id')->nullable();
             $table->timestamps();
         });
     }

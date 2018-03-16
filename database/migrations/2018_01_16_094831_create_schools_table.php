@@ -17,15 +17,15 @@ class CreateSchoolsTable extends Migration
             $table->increments('id');
             $table->integer('session_id');
             $table->string('name');
-            $table->string('vill');
-            $table->string('po');
-            $table->string('ps');
-            $table->string('pin');
-            $table->string('dist');
-            $table->string('index');
-            $table->string('hscode');
-            $table->string('disecode');
-            $table->string('estd');
+            $table->string('vill')->nullable();
+            $table->string('po')->nullable();
+            $table->string('ps')->nullable();
+            $table->string('pin')->nullable();
+            $table->string('dist')->nullable();
+            $table->string('index')->nullable();
+            $table->string('hscode')->nullable();
+            $table->string('disecode')->nullable();
+            $table->string('estd')->nullable();
             $table->timestamps();
         });
     }

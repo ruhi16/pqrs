@@ -50,13 +50,13 @@ class SessionController extends Controller
         $session->stdate = $request->fromdt;
         $session->entdate = $request->todt;
         $session->status = "CLOSED";
-        $session->prsession_id = $max_id;        
+        $session->prsession_id = ($max_id != Null ?: 0);
         $session->save();
 
 
         
         $ses = Session::find($max_id);
-        $ses->nxsession_id = $session->id;
+        $ses->nxsession_id = ($session->id != NULL ?: 0);
         $ses->save();
         
         return back();
