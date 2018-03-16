@@ -9,11 +9,17 @@
 <h1 class="text-center">{{$sch->name}}</h1>
 <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
 <h2 class="text-center">Progress Report</h2>
+
 <br>
-<strong>Name: </strong>{{$stcr->studentdb->name}} <strong>Class: </strong>{{$stcr->clss->name}}
-<strong>Section: </strong>{{$stcr->section->name}}<strong>Roll No: </strong>{{$stcr->roll_no}}
-<br>
-<br>
+
+<table class="table">
+  <tr>
+    <td><b>Name: </B>{{$stcr->studentdb->name}}</td>
+    <td><b>Class: </B>{{$stcr->clss->name}}</td>
+    <td><b>Section: </B>{{$stcr->section->name}}</td>
+    <td><b>Roll No: </B>{{$stcr->roll_no}}</td>
+  </tr>
+</table>
 <br>
 
 <table class="table table-bordered">

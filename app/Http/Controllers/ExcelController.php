@@ -30,7 +30,7 @@ class ExcelController extends Controller
         // }
         // return view('pdfview');
 
-        $pdf = PDF::loadView('ExStudentDb');
+        $pdf = PDF::loadView('exmtypclssubs.exmtypclssubfmEntry');
         return $pdf->download('userlist.pdf');
 
         // return view('pdfview');
