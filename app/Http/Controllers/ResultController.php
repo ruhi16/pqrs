@@ -75,6 +75,7 @@ class ResultController extends Controller
         
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
+        $etcs = Exmtypclssub::all();
         // print_r($clsc);
         
         return view('results.ResultSheet')
@@ -85,6 +86,7 @@ class ResultController extends Controller
         ->withClsb($clsb)
         ->withStcr($stcr)
         ->withMrks($mrks)
+        ->withEtcs($etcs)
         ;
     }
 }

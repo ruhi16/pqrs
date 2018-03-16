@@ -45,10 +45,16 @@
             @if($cls->subject->extype_id == $ext->id)
               <tr>
                 <td>{{$cls->id}}</td>
-                <td>{{$cls->subject->name}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{$cls->subject->name}}-{{$cls->subject_id}}</td>                
+                @foreach($exms as $exm)
+                  <td>
+                  {{$exm->id}}{{$ext->id}}{{$cls->clss_id}}-{{$cls->subject_id}}
+                  {{$etcs->where('emam_id',$exm->id)
+                         ->where('extype_id',$ext->id)
+                         ->where('clss_id',$cls->clss_id)
+                         ->where('subject_id',$cls->subject_id)}}
+                  </td>
+                @endforeach
                 <td></td>
                 <td></td>
               </tr>
