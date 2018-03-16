@@ -48,11 +48,14 @@
                 <td>{{$cls->subject->name}}-{{$cls->subject_id}}</td>                
                 @foreach($exms as $exm)
                   <td>
-                  {{$exm->id}}{{$ext->id}}{{$cls->clss_id}}-{{$cls->subject_id}}
-                  {{$etcs->where('emam_id',$exm->id)
-                         ->where('extype_id',$ext->id)
-                         ->where('clss_id',$cls->clss_id)
-                         ->where('subject_id',$cls->subject_id)}}
+                  {{--  E:{{$exm->id}}-T:{{$ext->id}}-C:{{$cls->clss_id}}-S:{{$cls->subject_id}}  --}}                 
+                    @php
+                    $etcs_id = $etcs->where('exam_id',$exm->id)
+                            ->where('subject_id',$cls->subject_id)
+                            ->where('clss_id',$cls->clss_id)->first()->id;
+                    @endphp
+                    
+                  {{ $mrks->where('exmtypclssub_id', $etcs_id)->pluck('marks')->first() }}
                   </td>
                 @endforeach
                 <td></td>

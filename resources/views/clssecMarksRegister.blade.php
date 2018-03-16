@@ -15,7 +15,8 @@
             <th>Name</th>
             @foreach($extp as $et)
                 <th>{{ $et->name }} DETAILS</th>
-            @endforeach            
+            @endforeach
+            <th>Result Sheet</th>
         </tr>
     </thead>
     <tbody>        
@@ -90,7 +91,8 @@
                   </table>  
                 <b>Total Marks: {{$allSubTotal}}</b>
                 </td>                
-                @endforeach                
+                @endforeach
+            <td><a href="{{url('/clssec-ResultSheet',[$clssec->id,$stdcr])}}" class="btn btn-success">Result</a></td>
             </tr>
             {{--  <tr>
                 

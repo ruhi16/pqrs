@@ -198,6 +198,7 @@ class MarksEntryController extends Controller
         ->withExtpclsbs($extpclsbs)
         ->withCls($clsc->clss->name)
         ->withSec($clsc->section->name)
+        ->withClssec($clsc)
         ;
     }
 }
