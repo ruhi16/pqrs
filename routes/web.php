@@ -120,8 +120,7 @@ Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecA
 Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 
-
-Route::get('/clssub', 'ClsSubController@clssub');
+Route::get('/clssub', 'ClsSubController@clssub')->middleware('FinMidware:clssubs-clsses-subjects');
 Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
 Route::get('/clssub-view', 'ClsSubController@clssubView');
 

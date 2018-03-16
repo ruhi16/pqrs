@@ -23,6 +23,10 @@ class Clss extends Model
         return $this->hasMany('App\Exmtypclssub');
     }
 
+    //manyTomany realtion btn Clss & Subject Model
+    public function subjects(){
+        return $this->belongsToMany('App\Subject', 'clssubs');
+    }
 
 
     public function studentcrs(){

@@ -22,7 +22,9 @@ class Subject extends Model
     }
 
 
-
+    public function clsses(){
+        return $this->belongsToMany('App\Clss','clssubs');
+    }
 
 
     

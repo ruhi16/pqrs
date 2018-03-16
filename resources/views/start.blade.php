@@ -39,8 +39,8 @@
                     <br><a href="{{url('/gradesView')}}">Grade Details View</a>
                     <br><a href="{{url('/clssub')}}">Class - Subject Entry</a>                    
                     <br><a href="{{url('/clssub-view')}}">Class - Subject View</a>                    
-                    <br><a href="{{url('/exmtypclssub')}}">Exam - Type - Class - Subject Entry</a>                    
-                    <br><a href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View</a>                    
+                    <br><a href="{{url('/exmtypclssub')}}">Exam - Type - Class - Subject Entry (X)</a>
+                    <br><a href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View (X)</a>                    
                     <br><a href="{{url('/gradedescription')}}">Grade Description Entry</a>                    
                     <br><a href="{{url('/gradedescription-view')}}">Grade Description View</a>
                     <br><a href="{{url('/studentdb')}}">Students Detail View</a>                    
@@ -52,11 +52,13 @@
                     <br><a href="{{url('/studentdbmultipage-search')}}">New Admission Students Details Search Page</a>
                     <br><a href="{{url('/studentdbmultipage-view')}}">New Admission Students Details View Page</a>
                     <br><a href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
-                    <br><a href="{{url('/clssubjfm/1')}}">Exam Term and Class Wise Full Marks Specification Entry (V)</a>
-                    <br><a href="{{url('/clssubjfm-view/1')}}">Exam Term and Class Wise Full Marks Specification View (V)</a>
-                    <br><a href="{{url('/teachers')}}">Teachers Details Entry Point</a>
-                    <br><a href="{{url('/teachers-view')}}">Teachers Details View Point</a>
                     <br><a href="{{url('/exmtypclssubTaskpane')}}">Exam Type Class Subject Task Pane</a>
+                    {{--  
+                    <br><a href="{{url('/clssubjfm/1')}}">Exam Term and Class Wise Full Marks Specification Entry (V)</a>
+                    <br><a href="{{url('/clssubjfm-view/1')}}">Exam Term and Class Wise Full Marks Specification View (V)</a>  
+                    --}}
+                    <br><a href="{{url('/teachers')}}">Teachers Details Entry Point</a>
+                    <br><a href="{{url('/teachers-view')}}">Teachers Details View Point</a>                    
                 </div>
             </div>
         </div>
