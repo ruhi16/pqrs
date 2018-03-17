@@ -74,9 +74,9 @@ Route::post('/grades-deltsubmit', 'GradeController@gradesDeltSubmit');
 
 
 //temporaryly closed
-Route::get('/clssubjfm/{clss_id}', 'SubjectFMController@clssubjfm');
-Route::post('/clssubjfm-submit', 'SubjectFMController@clssubjfmSubmit');
-Route::get('/clssubjfm-view/{clss_id}', 'SubjectFMController@clssubjfmView');
+// Route::get('/clssubjfm/{clss_id}', 'SubjectFMController@clssubjfm');
+// Route::post('/clssubjfm-submit', 'SubjectFMController@clssubjfmSubmit');
+// Route::get('/clssubjfm-view/{clss_id}', 'SubjectFMController@clssubjfmView');
 
 
 

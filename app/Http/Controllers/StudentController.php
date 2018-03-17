@@ -77,7 +77,7 @@ class StudentController extends Controller
         $stddb->stsession_id = $ses->id;
         $stddb->name  = $request->name;        
         $stddb->stclss_id   = $request->clss;
-        $stddb->stsec_id    = $request->secs;
+        $stddb->stsec_id    = $request->secs;        
         // $stddb->ssex        = $request->ssex;
         $stddb->ssex        = $request->ssex;
         $stddb->relg        = $request->relg;
@@ -86,12 +86,12 @@ class StudentController extends Controller
         $stddb->save();
 
         //======================
-        $stdcr = new StudentCr;
-        $stdcr->studentdb_id = $stddb->id;
-        $stdcr->session_id = $ses->id;
-        $stdcr->clss_id = $request->clss;
-        $stdcr->section_id = $request->secs;
-        $stdcr->save();
+        // $stdcr = new StudentCr;
+        // $stdcr->studentdb_id = $stddb->id;
+        // $stdcr->session_id = $ses->id;
+        // $stdcr->clss_id = $request->clss;
+        // $stdcr->section_id = $request->secs;
+        // $stdcr->save();
 
 
         return back();
@@ -212,12 +212,12 @@ class StudentController extends Controller
 
         $stddb->save();
 
-        echo $request->admBookNo;
-        echo "<br>".$request->admSlNo;
-        echo "<br>".$request->admDate;
-        echo "<br>".$request->admCrCls;
-        echo "<br>".$request->admPrCls;
-        echo "<br>".$request->admPrSch;
+        // echo $request->admBookNo;
+        // echo "<br>".$request->admSlNo;
+        // echo "<br>".$request->admDate;
+        // echo "<br>".$request->admCrCls;
+        // echo "<br>".$request->admPrCls;
+        // echo "<br>".$request->admPrSch;
     }
 
     public function studentdbmultipageSearch(Request $request){
