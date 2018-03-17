@@ -89,4 +89,30 @@ class ResultController extends Controller
         ->withEtcs($etcs)
         ;
     }
+    public function ResultSheetHTML($clssec_id, $studentcr_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $sch = School::find(1);       
+
+        $exms = Exam::all();
+        $exts = Extype::all()->sortBy('name');
+        $clsc = Clssec::find($clssec_id);
+        $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
+        $stcr = Studentcr::find($studentcr_id);
+        
+        $mrks = Marksentry::whereSession_id($ses->id)
+            ->whereStudentcr_id($studentcr_id)->get();
+        $etcs = Exmtypclssub::all();
+        // print_r($clsc);
+        
+        return view('results.ResultSheetHTML')
+        ->withSch($sch)        
+        ->withExms($exms)
+        ->withexts($exts)
+        ->withClsc($clsc)
+        ->withClsb($clsb)
+        ->withStcr($stcr)
+        ->withMrks($mrks)
+        ->withEtcs($etcs)
+        ;
+    }
 }
