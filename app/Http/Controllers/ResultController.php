@@ -104,6 +104,10 @@ class ResultController extends Controller
         $etcs = Exmtypclssub::all();
         // print_r($clsc);
         
+
+        
+
+
         return view('results.ResultSheetHTML')
         ->withSch($sch)        
         ->withExms($exms)

@@ -4,8 +4,8 @@
         <title>Html Result Format</title>
     </head>
     <body>
-        <h1>TEST PAGE</h1>
-        {{--  <h1 class="text-center">{{$sch->name}}</h1>
+        <center>
+        <h1 class="text-center">{{$sch->name}}</h1>
         <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
         <h2 class="text-center">Progress Report</h2>
 
@@ -92,6 +92,7 @@
             @endforeach      
             </tr>
         </tbody>
-        </table>  --}}
+        </table>
+        </center>
     </body>
 </html>

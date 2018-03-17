@@ -5,6 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Excel;
 use PDF;
+use DB;
+use App\Session;
+use App\Exam;
+use App\Extype;
+use App\Clss;
+use App\Subject;
+use App\Section;
+use App\School;
+
+use App\Studentdb;
+use App\Studentcr;
+
+use App\Clssub;
+use App\Clssec;
+use App\Grade;
+
+
+use App\Exmtypclssub;
+use App\Marksentry;
 
 class ExcelController extends Controller
 {
@@ -15,24 +34,7 @@ class ExcelController extends Controller
             $excel->sheet('clients', function($sheet){
                 $sheet->loadView('ExStudentDb');
             });
-        })->export('csv');
-    }
+        })->export('xlsx'); //csv
+    }   
 
-    public function PdfSheetExStudentDb(){
-        // $users = DB::table("users")->get();
-        // view()->share('users',$users);
-
-        // if($request->has('download')) {
-        // 	// pass view file
-        //     $pdf = PDF::loadView('pdfview');
-        //     // download pdf
-        //     return $pdf->download('userlist.pdf');
-        // }
-        // return view('pdfview');
-
-        $pdf = PDF::loadView('ExStudentDb');
-        return $pdf->download('userlist.pdf');
-
-        // return view('pdfview');
-    }
 }

@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+<a href="{{url('/clssec-ResultSheetHTML',[$clsc->id, $stcr->id])}}">Download</a>
 <h1 class="text-center">{{$sch->name}}</h1>
 <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
 <h2 class="text-center">Progress Report</h2>

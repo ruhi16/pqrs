@@ -167,10 +167,12 @@ Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finali
 
 Route::get('/clssec-ResultTaskpane/{clssec_id}', 'ResultController@ResultTaskpane');
 Route::get('/clssec-ResultSheet/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheet');
-Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheetHTML');
+// Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheetHTML');
 
 
 Route::get('/test', 'BaseController@test');
 Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
-Route::get('/PdfSheetExStudentDb', 'ExcelController@PdfSheetExStudentDb');
 
+Route::get('/PdfSheetExStudentDb', 'PdfController@PdfSheetExStudentDb');
+Route::get('/HtmlSheetExStudentDb', 'PdfController@HtmlSheetExStudentDb');
+Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'PdfController@ResultSheetHTML');
