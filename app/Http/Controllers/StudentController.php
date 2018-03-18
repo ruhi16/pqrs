@@ -60,6 +60,15 @@ class StudentController extends Controller
         ;
     }
 
+    public function studentdbEdit(){
+
+
+
+        
+
+        return view ('students.studentdbEdit');
+    }
+
     public function studentdbSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
         // echo $ses->id . "x";

@@ -3,15 +3,27 @@
     <head>
         <title>Html Result Format</title>
     </head>
+    <style>
+    table,th,td {
+        border: 1px solid black;
+        border-spacing: 0px;
+        {{--  width: 100%;  --}}
+        {{--  border-collapse: collapse;  --}}
+        
+    }
+    th, td {
+    padding: 2px;
+    }
+    </style>
     <body>
         <center>
         <h1 class="text-center">{{$sch->name}}</h1>
         <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
         <h2 class="text-center">Progress Report</h2>
-
+        </center>
         <br>
 
-        <table border="1">
+        <table style="width:100%">
         <tr>
             <td><b>Name: </B>{{$stcr->studentdb->name}}</td>
             <td><b>Class: </B>{{$stcr->clss->name}}</td>
@@ -20,8 +32,8 @@
         </tr>
         </table>
         <br>
-
-        <table border="1">
+        
+        <table >
         <thead>
             <tr>
             @foreach($exts as $ext)
@@ -30,6 +42,7 @@
             </tr>
         </thead>
         <tbody>
+        
             @php 
             $forGTotal = 0;
             $sumGTotal = 0;
@@ -39,7 +52,7 @@
             @foreach($exts as $ext)
             @php  $total = 0; @endphp
             <td>
-            <table  border="1">
+            <table  >
                 <thead>
                 <tr>            
                     <th>Sl</th>
@@ -93,6 +106,6 @@
             </tr>
         </tbody>
         </table>
-        </center>
+        
     </body>
 </html>

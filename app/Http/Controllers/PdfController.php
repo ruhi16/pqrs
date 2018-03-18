@@ -77,7 +77,7 @@ class PdfController extends Controller
         $pdf = PDF::loadView('results.ResultSheetHTML', 
             ['sch'=>$sch,   'exms'=>$exms, 'exts'=>$exts, 'clsc'=>$clsc, 
              'clsb'=>$clsb, 'stcr'=>$stcr, 'mrks'=>$mrks, 'etcs'=>$etcs]);
-        return $pdf->download('resultsheet.pdf');
+        return $pdf->stream();//download('resultsheet.pdf');
 
         // return view('results.ResultSheetHTML')
         // ->withSch($sch)        
