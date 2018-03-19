@@ -6,314 +6,140 @@
 @endsection
 
 @section('content')
-<h1>Grade Information Details...</h1>
+<h1>Exam Type Wise Each Subjects Grade-Description Details...</h1>
 
-<div class="row">
-    <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">
-        <h3 class="panel-title pull-left">
-          Grade Infromation Details
-              </h3>
-          <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
-            Add New Grade
-          </button>
-          <div class="clearfix"></div>
-      
+{!! Form::open(['url'=>'/gradedescription-submit','method'=>'post', 'class'=>'form-horizontal']) !!}
+
+@foreach($extps as $etp)
+@if($etp->id == $extype_id)
+    <h1>Exam Type: <small>{{$etp->name}}</small></h1>
+    <table class="table table-bordered" id="table{{$etp->id}}">
+        <thead>
+            <tr>
+                <th>Sl</th>
+                <th>Subject</th>
+                @foreach($grads as $grd)
+                    @if( $etp->id == $grd->extype_id )
+                        <th>{{ $grd->gradeparticular->name }}</th>
+                    @endif
+                @endforeach
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach($subjs as $sub)
+        @if( $etp->id == $sub->extype_id )
+            <tr id="tr{{$sub->id}}">
+                <td>{{ $sub->id}}</td>
+                <td>{{ $sub->name }}</td>
+                @foreach($grads as $grd)
+                    @if( $etp->id == $grd->extype_id )
+                        <td id="td{{$grd->id}}">
+                            <textarea class="form-control" rows="5" id="comment" name="descr{{$etp->id}}[]"></textarea>
+                        </td>
+                    @endif
+                @endforeach
+                {{--  <td><a href="" class="btn btn-info btnEdit" data-toggle="modal" data-target="#myModal"
+                               data-etp_id="{{$etp->id}}" 
+                               data-sub_id="{{$sub->id}}" 
+                               data-grd_id="{{$grd->id}}" >Edit</a></td>  --}}
+            </tr>
+        @endif
+    @endforeach
+    </tbody>
+    </table>
+@endif
+@endforeach
+
+    {{--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  --}}
+    <button type="submit" class="btn btn-primary">Save changes</button>
+
+{!! Form::close() !!}
+
+<!-- Modal -->
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Grade Description</h4>
       </div>
-      {{--  <div class="panel-body">
-        <p>...</p>
-      </div>  --}}
-  
-          <table class="table table-bordered" id="tabclss">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Exam Type</th>
-                <th>Grade</th>
-                <th>Start Percentage</th>
-                <th>End Percentage</th>
-                <th>Session</th>          
-                <th>Description</th> 
-                <th>Action</th>         
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($grades as $grade)
-                <tr id="tr{{$grade->id}}">
-                  <th id="id">{{$grade->id}}</th>
-                  <th id="extyp">{{ $grade->extype->name }}</th>
-                  <td id="grade">{{ $grade->gradeparticular->name }}</td>
-                  <td id="stper">{{ $grade->stpercentage }}</td>
-                  <td id="enper">{{ $grade->enpercentage }}</td>
-                  <td>           {{ $grade->session->name }}</td>
-                  <td id="descr">{{ $grade->descrp }}</td>
-                  <td>
-                      <button class="btn btn-success btn-sm btnEdit" data-id="{{$grade->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
-                      <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$grade->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                      {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}
-                  </td>
-                </tr>
-              @endforeach
-              </tbody>
-          </table>
-    </div><!--/panel starting div -->
-  </div><!--/1st row within 2nd column -->
-  
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 
-<!-- Modal Starts to Add New Grade -->
-<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        {!! Form::open(['url'=>'/grades-submit','method'=>'post', 'class'=>'form-horizontal']) !!}
-              <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Enter New Grade Particular...</h4>
-        </div>
-        <div class="modal-body">        
-  
-  
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="exType">Exam Type:</label>
-                <div class="col-sm-4">
-                  <select class="form-control" name="extype" id="extype">
-                      <option value="0"></option>
-                    @foreach($extypes as $extype)              
-                      <option value="{{$extype->id}}">{{$extype->name}}</option>              
-                    @endforeach
-                  </select>
-
-                </div>
-                <label class="control-label col-sm-1" for="grade">Grade:</label>
-                <div class="col-sm-3">
-                  <select class="form-control" name="grade" id="grade">
-                      <option value="0"></option>
-                    @foreach($grparts as $grpart)              
-                      <option value="{{$grpart->id}}">{{ $grpart->name }}</option>              
-                    @endforeach
-                  </select>
-                </div>         
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="stperc">Start Perc:</label>
-              <div class="col-sm-3">
-                <input type="text" class="form-control" id="stperc" name="stperc" placeholder="start percentage">
-              </div> 
-              <label class="control-label col-sm-2" for="enperc">End Perc:</label>
-              <div class="col-sm-3">
-                <input type="text" class="form-control" id="enperc" name="enperc" placeholder="end percentage">
-              </div> 
-            </div>  
-
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="descr">Description:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="descr" name="descr" placeholder="enter description, if any">
-              </div> 
-            </div>
-  
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-              {!! Form::close() !!}
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-  <!-- Modal Ends -->
+<script type="text/javascript">
+  $(document).ready(function(e){    
+    $('.btnEdit').on('click', function(){
+        var etp = $(this).data('etp_id');
+        var sub = $(this).data('sub_id');
+        
+        //alert(etp+":"+sub); // for all grade :)
+    
+        {{--  $('table tr td').each(function(){
+            var texto = $(this).text();
+            //alert(texto);
+        });  --}}
+        {{--  table.find('tr').each(function (i, el) {
+            var $tds = $(this).find('td'),
+            productId = $tds.eq(0).text(),
+            alert(productId);
+            //product = $tds.eq(1).text(),
+            //Quantity = $tds.eq(2).text();
+        // do something with productId, product, Quantity
+            });  --}}
+        {{--  $('#table'+etp+' #tr'+sub).each(function(){
+           alert(etp+':'+sub) ;
+        });  --}}
+    
+    });
+    
 
 
 
 
-<!-- Modal Starts to Edit Grade -->
-<div class="modal fade" tabindex="-1" role="dialog" id="editModal">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            {!! Form::open(['url'=>'/grades-editsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Edit or Update Grade Particulars ...</h4>
-            </div>    
-            <div class="modal-body"> 
 
 
-  
-            <div class="form-group">            
-              <input type="hidden" class="form-control" id="editGradeId" name="editGradeId" placeholder="Grade Particular Name">
-            
-              <label class="control-label col-sm-2" for="editExType">Exam Type:</label>
-                <div class="col-sm-4">
-                  <select class="form-control" name="editExType" id="editExType">
-                      <option value="0"></option>
-                    @foreach($extypes as $extype)              
-                      <option value="{{$extype->id}}">{{$extype->name}}</option>              
-                    @endforeach
-                  </select>
-
-                </div>
-                <label class="control-label col-sm-1" for="editGrade">Grade:</label>
-                <div class="col-sm-3">
-                  <select class="form-control" name="editGrade" id="editGrade">
-                      <option value="0"></option>
-                    @foreach($grparts as $grpart)              
-                      <option value="{{$grpart->id}}">{{ $grpart->name }}</option>              
-                    @endforeach
-                  </select>
-                </div>         
-            </div>
-
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="editStperc">Start Perc:</label>
-              <div class="col-sm-3">
-                <input type="text" class="form-control" id="editStperc" name="editStperc" placeholder="start percentage">
-              </div> 
-              <label class="control-label col-sm-2" for="editEnperc">End Perc:</label>
-              <div class="col-sm-3">
-                <input type="text" class="form-control" id="editEnperc" name="editEnperc" placeholder="end percentage">
-              </div> 
-            </div>  
-
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="editDescr">Description:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="editDescr" name="editDescr" placeholder="enter description, if any">
-              </div> 
-            </div>
-
-            
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-                  {!! Form::close() !!}
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      <!-- Modal Ends -->
-      
-      
-      <!-- Modal Starts to Delete Grade -->
-      <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            {!! Form::open(['url'=>'/grades-deltsubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
-                  <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Do You Want to Delete Class...</h4>
-            </div>
-            <div class="modal-body">        
-      
-      
-            <div class="form-group">            
-              <input type="hidden" class="form-control" id="deltGradeId" name="deltGradeId" placeholder="Grade Particular Name">
-            
-              <label class="control-label col-sm-2" for="deltExType">Exam Type:</label>
-                <div class="col-sm-4">
-                  <select class="form-control" name="deltExType" id="deltExType" disabled>
-                      <option value="0"></option>
-                    @foreach($extypes as $extype)              
-                      <option value="{{$extype->id}}">{{$extype->name}}</option>              
-                    @endforeach
-                  </select>
-
-                </div>
-                <label class="control-label col-sm-1" for="deltGrade">Grade:</label>
-                <div class="col-sm-3">
-                  <select class="form-control" name="deltGrade" id="deltGrade" disabled>
-                      <option value="0"></option>
-                    @foreach($grparts as $grpart)              
-                      <option value="{{$grpart->id}}">{{ $grpart->name }}</option>              
-                    @endforeach
-                  </select>
-                </div>         
-            </div>
-
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="deltStperc">Start Perc:</label>
-              <div class="col-sm-3">
-                <input type="text" class="form-control" id="deltStperc" name="deltStperc" placeholder="start percentage" disabled>
-              </div> 
-              <label class="control-label col-sm-2" for="deltEnperc">End Perc:</label>
-              <div class="col-sm-3">
-                <input type="text" class="form-control" id="deltEnperc" name="deltEnperc" placeholder="end percentage" disabled>
-              </div> 
-            </div>  
-
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="deltDescr">Description:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="deltDescr" name="deltDescr" placeholder="enter description, if any" disabled>
-              </div> 
-            </div>
-      
-      
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-                  {!! Form::close() !!}
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      <!-- Modal Ends -->
-      
-      
-      
-      <script type="text/javascript">
-        $(document).ready(function(e){    
-          $('.btnEdit').on('click', function(){
-            var v = $(this).data('id');
-            //var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
-            var extyp = $("#tabclss #tr"+v+" #extyp").text();
-            var grade = $("#tabclss #tr"+v+" #grade").text();
-            var stper = $("#tabclss #tr"+v+" #stper").text();
-            var enper = $("#tabclss #tr"+v+" #enper").text();
-            var descr = $("#tabclss #tr"+v+" #descr").text();
-            //alert(extype);
-      
-            $('select[name="editExType"]').find('option:contains('+extyp+')').prop("selected",true);
-            $('select[name="editGrade"]').find('option:contains('+grade+')').prop("selected",true);
-            
-            $('input[name="editStperc"]').val(stper);
-            $('input[name="editEnperc"]').val(enper);
-            $('input[name="editDescr"]').val(descr);
-
-            $('input[name="deltGradeId"]').val(v);
-            //$('#editModal').modal('show');
-          });
-      
+    
+    {{--  $('.btnEdit').on('click', function(){
+      var v = $(this).data('id');
+      var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
+      var name = $("#tabclss #tr"+v+" #name").text();
+      //alert(name);
 
 
-          $('.btnDelt').on('click', function(){
-            var v = $(this).data('id');
-            //var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
-            var extyp = $("#tabclss #tr"+v+" #extyp").text();
-            var grade = $("#tabclss #tr"+v+" #grade").text();
-            var stper = $("#tabclss #tr"+v+" #stper").text();
-            var enper = $("#tabclss #tr"+v+" #enper").text();
-            var descr = $("#tabclss #tr"+v+" #descr").text();
-            //alert(v);
-      
-            $('select[name="deltExType"]').find('option:contains('+extyp+')').prop("selected",true);
-            $('select[name="deltGrade"]').find('option:contains('+grade+')').prop("selected",true);
-            
-            $('input[name="deltStperc"]').val(stper);
-            $('input[name="deltEnperc"]').val(enper);
-            $('input[name="deltDescr"]').val(descr);
+      $('input[name="editclssName"]').val(name);
+      $('input[name="editclssId"]').val(v);
+      //$('#editModal').modal('show');
+    });
 
-            $('input[name="deltGradeId"]').val(v);
+    $('.btnDelt').on('click', function(){
+      var v = $(this).data('id');
+      var MyRows = $('table#tabclss').find('tbody').find('tr+text').text();
+      var name = $("#tabclss #tr"+v+" #name").text();
+      //alert(name);
 
-            //$('select[name="deltExType"]').find('option:contains('+extyp+')').prop('disabled', true);
-            //$('#editModal').modal('show');  
-          });
-        });  
-      </script>
+      $('input[name="deltclssName"]').val(name);
+      $('input[name="deltclssId"]').val(v);  
+    });  --}}
+  });  
+</script>
+
+
+
+
+
 @endsection
 
 @section('footer')

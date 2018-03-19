@@ -92,11 +92,13 @@ Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
 
 // till the above entry was tested Oke with middleware too
 
-Route::get('/gradedescription', 'GradedescrController@gradedescr');//->middleware('FinMidware:gradeparticulars');
-Route::post('/gradedescription-submit', 'GradedescrController@gradedescrSubmit');
-Route::get('/gradedescription-view', 'GradedescrController@gradedescrView');
-Route::post('/gradedescription-editsubmit', 'GradedescrController@gradedescrEditSubmit');
-Route::post('/gradedescription-deltsubmit', 'GradedescrController@gradedescrDeltSubmit');
+Route::get('/gradedescription/{extype_id}', 'GradedescrController@gradedescr');//->middleware('FinMidware:gradeparticulars');
+Route::post('/gradedescription-submit', 'GradedescrController@gradedescriptionSubmit');
+
+// Route::post('/gradedescription-submit', 'GradedescrController@gradedescrSubmit');
+// Route::get('/gradedescription-view', 'GradedescrController@gradedescrView');
+// Route::post('/gradedescription-editsubmit', 'GradedescrController@gradedescrEditSubmit');
+// Route::post('/gradedescription-deltsubmit', 'GradedescrController@gradedescrDeltSubmit');
 
 
 
