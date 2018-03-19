@@ -214,6 +214,11 @@
                 @endforeach
             </select>
           </div>
+          {{--  //=====  --}}
+          {{--  <div class="col-sm-1">
+            <input type="text" class="form-control" id="edClssText" name="edClssText">
+          </div>  --}}
+          {{--  //=====  --}}
 
           <label class="control-label col-sm-1 text-left" for="edSecn">Section:</label>
           <div class="col-sm-2">
@@ -247,6 +252,7 @@
                 @endforeach
             </select>            
           </div>
+
 
           <label class="control-label col-sm-1 text-left" for="edCste">Caste:</label>
           <div class="col-sm-2">
@@ -301,6 +307,7 @@
 <script type="text/javascript">
   $(document).ready(function(e){
     $('.btnEdit').on('click', function(){
+
       var v = $(this).data('id');
       
       var name = $("#tabclss #tr"+v+" #name").text();
@@ -310,10 +317,11 @@
       var relg = $("#tabclss #tr"+v+" #relg").text();
       var cste = $("#tabclss #tr"+v+" #cste").text();     
       
-      //alert ("id:"+clss);
+      alert ("id:"+gndr);
       
       $('input[name="edStdId"]').val(v);//hidden text box to transfer student_id only
-      $('input[name="edName"]').val(name);
+      $('input[name="edName"]').val(name);      
+      {{--  $('inpu[name="edClssText"]').text(clss);  --}}
       $('select[name="edClss"]').find('option:contains('+clss+')').attr("selected",true);
       $('select[name="edSecn"]').find('option:contains('+secn+')').prop("selected",true);
       $('select[name="edGndr"]').find('option:contains('+gndr+')').prop("selected",true);

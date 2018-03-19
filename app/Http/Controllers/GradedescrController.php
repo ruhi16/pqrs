@@ -8,8 +8,9 @@ use App\Http;
 class GradedescrController extends Controller
 {
     public function gradedescr(){
-        echo Message();
-        //return view('gradedescription.gradedescription');
+
+        echo "Hello";
+        //return view('gradedescriptions.gradedescription');
     }
     public function gradedescrSubmit(Request $request){
         
@@ -17,7 +18,7 @@ class GradedescrController extends Controller
     }
     public function gradedescrView(){
         
-        return view('gradedescription.gradedescriptionView');
+        return view('gradedescriptions.gradedescriptionView');
     }
     public function gradedescrEditSubmit(Request $request){
         

@@ -25,8 +25,10 @@
                     <br><a href="{{url('/clsses-view')}}">Class Details Display</a>
                     <br><a href="{{url('/sections')}}">Section Details Entry</a>                    
                     <br><a href="{{url('/sections-view')}}">Section Details Display</a>
-                    <br><a href="{{url('/clssecs')}}">Class-Section Details Entry</a>                    
-                    <br><a href="{{url('/clssecs-view')}}">Class-Section Details Display</a>                    
+                    <br><a href="{{url('/clssecs')}}">Class-Section Details Entry</a>
+                    <br><a href="{{url('/clssecs-view')}}">Class-Section Details Display</a>
+                    <br><a href="{{url('/gradedescription')}}">Grade Description Details Entry</a>
+                    <br><a href="{{url('/gradedescription-view')}}">Grade Description Details Display</a>
                     <br><a href="{{url('/exams')}}">Exam Details Entry</a>                    
                     <br><a href="{{url('/exams-view')}}">Exam Details Display</a>
                     <br><a href="{{url('/extypes')}}">Exam Type Details Entry</a>                    

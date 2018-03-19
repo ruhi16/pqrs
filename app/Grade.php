@@ -17,4 +17,10 @@ class Grade extends Model
     public function session(){
         return $this->belongsTo('App\Session');
     }
+
+    public function gradedescriptions() {
+        return $this->hasMany('App\Gradedescription');
+    }
+
+
 }
