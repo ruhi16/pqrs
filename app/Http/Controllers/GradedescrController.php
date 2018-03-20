@@ -47,7 +47,11 @@ class GradedescrController extends Controller
         $extype_id = $request->extype;
         echo "extype_id:".$extype_id."<br>";
         
-        Gradedescription::where('filename', $filename)->delete();
+        $subjDel = Subject::where('extype_id',$extype_id)->pluck('id');
+        
+        $dataDel = Gradedescription::whereIn('subject_id', $subjDel)->delete();
+        // dd($dataDel);
+
         $subjs = Subject::where('extype_id',$request->extype)->get();
         foreach($subjs as $sub){
 
