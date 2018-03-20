@@ -27,7 +27,7 @@
                     <br><a href="{{url('/sections-view')}}">Section Details Display</a>
                     <br><a href="{{url('/clssecs')}}">Class-Section Details Entry</a>
                     <br><a href="{{url('/clssecs-view')}}">Class-Section Details Display</a>
-                    <br><a href="{{url('/gradedescription')}}">Grade Description Details Entry</a>
+                    <br><a href="{{url('/gradedescription/1')}}">Grade Description Details Entry..</a>
                     <br><a href="{{url('/gradedescription-view')}}">Grade Description Details Display</a>
                     <br><a href="{{url('/exams')}}">Exam Details Entry</a>                    
                     <br><a href="{{url('/exams-view')}}">Exam Details Display</a>
@@ -43,8 +43,8 @@
                     <br><a href="{{url('/clssub-view')}}">Class - Subject View</a>                    
                     <br><a href="{{url('/exmtypclssub')}}">Exam - Type - Class - Subject Entry (X)</a>
                     <br><a href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View (X)</a>                    
-                    <br><a href="{{url('/gradedescription')}}">Grade Description Entry</a>                    
-                    <br><a href="{{url('/gradedescription-view')}}">Grade Description View</a>
+                    {{--  <br><a href="{{url('/gradedescription')}}">Grade Description Entry</a>                    
+                    <br><a href="{{url('/gradedescription-view')}}">Grade Description View</a>  --}}
                     <br><a href="{{url('/studentdb')}}">Students Detail View</a>                    
                     {{--  
                     <br><a href="{{url('/clssec-TaskPage')}}">Students Info Entry View</a>                    

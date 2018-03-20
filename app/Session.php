@@ -36,4 +36,8 @@ class Session extends Model
         return $this->hasMany('App\Studentdb','stsession_id');
     }
     
+
+    public function gradedescriptions(){
+        return $this->hasMany('App\Gradedescription');
+    }
 }

@@ -23,6 +23,8 @@ use App\Clssec;
 
 use App\Exmtypclssub;
 use App\Marksentry;
+use App\Gradedescription;
+
 class GradedescrController extends Controller
 {
     public function gradedescr($extype_id){
@@ -41,10 +43,35 @@ class GradedescrController extends Controller
     }
 
     public function gradedescriptionSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $extype_id = $request->extype;
+        echo "extype_id:".$extype_id."<br>";
+        
+        Gradedescription::where('filename', $filename)->delete();
+        $subjs = Subject::where('extype_id',$request->extype)->get();
+        foreach($subjs as $sub){
 
-        foreach($request->descr1 as $k => $abc){
-            echo $k ." : ".$abc ."<br>";
+            $temp = "descr".$extype_id.$sub->id;
+            foreach($request->$temp as $k => $abc){
+                echo $k ." : ".$abc ."<br>";
+                $subj = Subject::find($sub->id);
+                $grde = Grade::find($k);
+                
+                
+                $grdsc = new Gradedescription;
+                $grdsc->subject()->associate($subj);
+                $grdsc->grade()->associate($grde);
+                $grdsc->desc = $abc;
+
+                $grdsc->save();
+            }
+            echo "--------------<br>";
         }
+
+
+        // foreach($request->descr111 as $k => $abc){
+        //     echo $k ." : ".$abc ."<br>";
+        // }
 
     }
 

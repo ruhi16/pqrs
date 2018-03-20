@@ -10,6 +10,8 @@
 
 {!! Form::open(['url'=>'/gradedescription-submit','method'=>'post', 'class'=>'form-horizontal']) !!}
 
+<input type="hidden" value="{{$extype_id}}" name="extype">
+
 @foreach($extps as $etp)
 @if($etp->id == $extype_id)
     <h1>Exam Type: <small>{{$etp->name}}</small></h1>
@@ -23,7 +25,7 @@
                         <th>{{ $grd->gradeparticular->name }}</th>
                     @endif
                 @endforeach
-                <th>Action</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -35,7 +37,8 @@
                 @foreach($grads as $grd)
                     @if( $etp->id == $grd->extype_id )
                         <td id="td{{$grd->id}}">
-                            <textarea class="form-control" rows="5" id="comment" name="descr{{$etp->id}}[]"></textarea>
+                            {{--  <input type="hidden" value="{{$grd->id}}"            name="grdid{{$etp->id}}{{$sub->id}}[]">  --}}
+                            <textarea class="form-control" rows="5" id="comment" name="descr{{$etp->id}}{{$sub->id}}[{{$grd->id}}]"></textarea>
                         </td>
                     @endif
                 @endforeach

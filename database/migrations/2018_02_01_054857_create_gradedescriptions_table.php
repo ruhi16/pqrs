@@ -15,10 +15,10 @@ class CreateGradedescriptionsTable extends Migration
     {
         Schema::create('gradedescriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('subject_id');
-            $table->integer('grade_id');            
+            $table->integer('subject_id')->nullable();
+            $table->integer('grade_id')->nullable();
             $table->string('desc')->nullable();
-            $table->integer('session_id');
+            $table->integer('session_id')->nullable();
             $table->timestamps();
         });
     }
