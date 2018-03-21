@@ -182,3 +182,8 @@ Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
 Route::get('/PdfSheetExStudentDb', 'PdfController@PdfSheetExStudentDb');
 Route::get('/HtmlSheetExStudentDb', 'PdfController@HtmlSheetExStudentDb');
 Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'PdfController@ResultSheetHTML');
+
+
+
+//Anwer Script
+Route::get('/answerScript-taskpane','AnswerScriptController@answerScriptTaskpane');
