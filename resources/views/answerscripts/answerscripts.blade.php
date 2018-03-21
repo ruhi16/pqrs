@@ -8,7 +8,28 @@
 @section('content')
 <h1>Answer Script Distribution Point...</h1>
 
-
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>SL</th>
+      <th>Class</th>
+      @foreach($exms as $ex)
+        <th>{{$ex->name}}</th>
+      @endforeach
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($clss as $cl)
+    <tr>
+      <td>{{$cl->id}}</td>
+      <td>{{$cl->name}}</td>
+      @foreach($exms as $ex)
+        <td><a href="{{url('/answerscript-distribution',[$ex->id,$cl->id])}}">Edit</a></td>
+      @endforeach
+    </tr>
+    @endforeach
+  </tbody>
+</table>
 
 
 

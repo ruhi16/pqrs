@@ -187,3 +187,4 @@ Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'PdfController@
 
 //Anwer Script
 Route::get('/answerScript-taskpane','AnswerScriptController@answerScriptTaskpane');
+Route::get('/answerscript-distribution/{exam_id}/{clss_id}','AnswerScriptController@answerscriptDistribution');
