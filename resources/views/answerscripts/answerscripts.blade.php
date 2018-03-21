@@ -24,7 +24,7 @@
       <td>{{$cl->id}}</td>
       <td>{{$cl->name}}</td>
       @foreach($exms as $ex)
-        <td><a href="{{url('/answerscript-distribution',[$ex->id,$cl->id])}}">Edit</a></td>
+        <td><a href="{{url('/answerscript-distribution',[$ex->id,$cl->id])}}">Answer Script Distribution</a></td>
       @endforeach
     </tr>
     @endforeach
