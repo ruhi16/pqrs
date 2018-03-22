@@ -24,7 +24,11 @@
         <td>{{$clsb->subject->id}}</td>
         <td>{{$clsb->subject->name}}</td>
         @foreach($clsecns as $clsc)
-          <td><a href="#" class="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit"></span></a>
+          <td><a href="#" class="btn-addTeacher" data-toggle="modal" data-target="#myModal" 
+                data-exam_id="{{$exm->id}}"
+                data-clss_id="{{$cls->id}}"
+                data-secn_id="{{$clsc->id}}"
+                data-subj_id="{{$clsb->id}}"><span class="glyphicon glyphicon-cutlery"></span></a>
             {{--  <button type="button" class="btn btn-info btn-lg" >Open Modal</button>  --}}
           </td>
         @endforeach
@@ -80,7 +84,15 @@
 
 <script type="text/javascript">
   $(document).ready(function(e){
-    
+    $('.btn-addTeacher').on('click', function(){
+      var exId = $(this).data('exam_id');
+      var clId = $(this).data('clss_id');
+      var scId = $(this).data('secn_id');
+      var sbId = $(this).data('subj_id');
+      
+      // alert(exId+':'+clId+':'+scId+':'+sbId);
+      
+    });
   });  
 </script>
 
