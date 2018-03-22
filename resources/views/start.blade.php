@@ -84,7 +84,7 @@
                     <br><a href="{{url('/clssubjfm/1')}}">Exam Term and Class Wise Full Marks Specification Entry (V)</a>
                     <br><a href="{{url('/clssubjfm-view/1')}}">Exam Term and Class Wise Full Marks Specification View (V)</a>  
                     --}}
-                    <br><a href="{{url('/teachers')}}">Teachers Details Entry Point</a>
+                    <br><a href="{{url('/teachers',[2])}}">Teachers Details Entry Point</a>
                     <br><a href="{{url('/teachers-view')}}">Teachers Details View Point</a>
                     <br><a href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
 

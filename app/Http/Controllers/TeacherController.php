@@ -25,13 +25,13 @@ use App\Miscoption;
 
 class TeacherController extends Controller
 {
-    public function teachers(){
+    public function teachers($extype_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $teachers = Teacher::whereSession_id($ses->id)->get();
         
         $teachDesigs = Miscoption::where('TabName', 'teachers')->where('FieldName','desig')->get();
         $teachHQuals = Miscoption::where('TabName', 'teachers')->where('FieldName','hqual')->get();
-        $teachSubjs  = Subject::whereExtype_id(1)->get();
+        $teachSubjs  = Subject::whereExtype_id($extype_id)->get();
 
         return view('teachers.teachers')
         ->withTeachers($teachers)
@@ -74,7 +74,7 @@ class TeacherController extends Controller
         }
         $teacher->subjects()->sync($temp);
 
-
+        return back();
     }
 
     public function teachersView(){
@@ -86,12 +86,12 @@ class TeacherController extends Controller
             ->withTeachers($teachers);
     }
 
-    public function teachersEdit($id){
+    public function teachersEdit($id, $extype_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $teacher = Teacher::find($id);//whereSession_id($ses->id)->get();
         $teachDesigs = Miscoption::where('TabName', 'teachers')->where('FieldName','desig')->get();
         $teachHQuals = Miscoption::where('TabName', 'teachers')->where('FieldName','hqual')->get();
-        $teachSubjs  = Subject::whereExtype_id(1)->get();
+        $teachSubjs  = Subject::whereExtype_id($extype_id)->get();
 
         
         return view('teachers.teachersEdit')

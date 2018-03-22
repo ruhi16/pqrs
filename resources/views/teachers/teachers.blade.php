@@ -56,7 +56,7 @@
           <td>{{ $teacher->status }}</td>
           <td>{{ $teacher->notes }}</td>
           <td>
-              <a class="btn btn-success" href="{{url('/teachers-edit',[$teacher->id])}}">Edit</a>
+              <a class="btn btn-success" href="{{url('/teachers-edit', [$teacher->id,2])}}">Edit</a> {{-- 2 is represented for Extype_id:summative --}}
               {{--  <button class="btn btn-success btn-sm btnEdit" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#editModal">Edit</button>  --}}
               {{--  <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>  --}}
               {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}
@@ -139,8 +139,7 @@
             <h3 class="panel-title">Prefered Subjects</h3>
           </div>
           <div class="panel-body">    
-            @foreach($teachSubjs as $tSubj)
-              
+            @foreach($teachSubjs as $tSubj)              
               <div class="checkbox">
                     <label><input type="checkbox" value="{{ $tSubj->id }}" name="teacherSubj[]">{{ $tSubj->name }}</label>
                     @php $flag = True; @endphp

@@ -82,10 +82,10 @@ Route::post('/grades-deltsubmit', 'GradeController@gradesDeltSubmit');
 
 
 
-Route::get('/teachers', 'TeacherController@teachers');//->middleware('FinMidware:subjects');
+Route::get('/teachers/{extype_id}', 'TeacherController@teachers');//->middleware('FinMidware:subjects');
 Route::post('/teachers-submit', 'TeacherController@teachersSubmit');
 Route::get('/teachers-view', 'TeacherController@teachersView');
-Route::get('/teachers-edit/{id}', 'TeacherController@teachersEdit');
+Route::get('/teachers-edit/{id}/{extype_id}', 'TeacherController@teachersEdit');
 Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
 // Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
 
