@@ -1,3 +1,11 @@
+@extends('layouts.baselayout')
+@section('title','Home')
+
+@section('header')
+	@include('layouts.navbar')
+@endsection
+
+@section('content')
 
 <h1>Test...</h1>
 

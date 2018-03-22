@@ -1,6 +1,31 @@
-@extends('layouts.app')
+{{--  @extends('layouts.app')  --}}
+
+{{--  @section('content')  --}}
+@extends('layouts.baselayout')
+@section('title','Home')
+
+@section('header')
+	@include('layouts.navbar')
+@endsection
 
 @section('content')
+
+<div class="dropdown">
+    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      Dropdown
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
+  </div>
+
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -69,9 +94,25 @@
     </div>
 </div>
 
+
+
 {{--  
 @foreach(getTableColumns('studentdbs') as $abc)
     {{$abc}}<br>
 @endforeach  
 --}}
+{{--  @endsection  --}}
+
+
+<script type="text/javascript">
+$(document).ready(function(e){
+    
+});  
+</script>
+
 @endsection
+
+@section('footer')
+    @include('layouts.footer')
+@endsection
+  

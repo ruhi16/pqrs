@@ -44,7 +44,7 @@ class AnswerScriptController extends Controller
         $cls = Clss::find($clss_id);
         $clsecns = Clssec::where('Clss_id', $clss_id)->get();
         $clsubjs = Clssub::where('Clss_id', $clss_id)->get();
-
+        
 
 
         // return "hello";
