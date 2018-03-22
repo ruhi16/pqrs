@@ -6,55 +6,30 @@
 @endsection
 
 @section('content')
-<h1>Exams Display Page...</h1>
-
-<div class="row">
-  <div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">
-      <h3 class="panel-title pull-left">Exam Details</h3>
-      
-        <div class="clearfix"></div>
-    
-    </div>
-    {{--  <div class="panel-body">
-      <p>...</p>
-    </div>  --}}
-
-		<table class="table table-bordered" id="tabclss">
-			<thead>
-				<tr>
-          <th>#</th>          
-          <th class="text-center">Subject Name</th>   
-          <th>Subject Code</th>   
-          <th>Subject Type</th>
-          <th>Session</th> 
-          <th>Action</th>         
-				</tr>
-			</thead>
-			<tbody>
-      @foreach($subjects as $subject)
-        <tr id="tr{{$subject->id}}">
-          <th id="id">{{$subject->id}}</th>
-          <th id="name">{{ $subject->name }}</th>
-          <th id="code">{{ $subject->code }}</th>
-          <td id="type">{{ $subject->extype->name }}</td>
-          <td>{{ $subject->session_id }}</td>
-          <td>
-              {{--  <button class="btn btn-success btn-sm btnEdit" data-id="{{$subject->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
-              <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$subject->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>  --}}
-              {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}
-          </td>
-        </tr>
+<h1>Answer Script Distribution Point</h1>
+<h2>Exam: {{$exm->name}}, Class: {{$cls->name}}</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Sl</th>
+      <th>Subject</th>
+      @foreach($clsecns as $clsc)
+        <th>{{$clsc->section->name}}</th>
       @endforeach
-			</tbody>
-		</table>
-  </div><!--/panel starting div -->
-</div><!--/1st row within 2nd column -->
-
-
-
-
+    </tr>
+  </thead>
+  <tbody>    
+    @foreach($clsubjs as $clsb)
+      <tr>
+        <td>{{$clsb->subject->id}}</td>
+        <td>{{$clsb->subject->name}}</td>
+        @foreach($clsecns as $clsc)
+          <td></td>
+        @endforeach
+      </tr>
+    @endforeach
+  </tbody>
+</table>
 
 <script type="text/javascript">
   $(document).ready(function(e){

@@ -40,7 +40,21 @@ class AnswerScriptController extends Controller
 
     public function answerscriptDistribution($exam_id, $clss_id){
         $ses = Session::whereStatus('CURRENT')->first();
+        $exm = Exam::find($exam_id);
+        $cls = Clss::find($clss_id);
+        $clsecns = Clssec::where('Clss_id', $clss_id)->get();
+        $clsubjs = Clssub::where('Clss_id', $clss_id)->get();
 
-        return "hello";
+
+
+        // return "hello";
+        return view('answerscripts.answerscriptsView')
+        ->withExm($exm)
+        ->withCls($cls)
+        ->withClsecns($clsecns)
+        ->withClsubjs($clsubjs)
+        ;
+        
+        
     }
 }

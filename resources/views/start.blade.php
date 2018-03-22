@@ -61,7 +61,7 @@
                     --}}
                     <br><a href="{{url('/teachers')}}">Teachers Details Entry Point</a>
                     <br><a href="{{url('/teachers-view')}}">Teachers Details View Point</a>
-                    <br><a href="{{url('/answerScriptTaskpane')}}">Answer Script Distribution Point</a>
+                    <br><a href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
 
                 </div>
             </div>
