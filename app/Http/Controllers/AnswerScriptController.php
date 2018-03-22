@@ -45,16 +45,36 @@ class AnswerScriptController extends Controller
         $clsecns = Clssec::where('Clss_id', $clss_id)->get();
         $clsubjs = Clssub::where('Clss_id', $clss_id)->get();
         
+        $subjs = Subject::all();
+        // foreach($subjs as $subj){
+        // echo "<b>Subject Name: ". $subj->name ."</b><br>";
+        //     foreach($subj->teachers as $teacher){
+        //         echo "Teacher: ".$teacher->name;
+        //         // echo "Teachers:".$subj->pivot->session_id;
+        //         echo "<br>";
+        //     }
+        //     echo "<br>";
+        // }
 
-
-        // return "hello";
+        
         return view('answerscripts.answerscriptsView')
         ->withExm($exm)
         ->withCls($cls)
         ->withClsecns($clsecns)
         ->withClsubjs($clsubjs)
+        ->withSubjs($subjs)
         ;
         
         
+    }
+
+
+
+    public function answerscriptDistributionAddSubject(){
+
+
+
+        return "answerscriptDistributionAddSubject";
+        // return back();
     }
 }

@@ -13,6 +13,7 @@
     <tr>
       <th>Sl</th>
       <th>Subject</th>
+      <th>Teachers</th>
       @foreach($clsecns as $clsc)
         <th>{{$clsc->section->name}}</th>
       @endforeach
@@ -23,6 +24,15 @@
       <tr>
         <td>{{$clsb->subject->id}}</td>
         <td>{{$clsb->subject->name}}</td>
+        <td>
+          @foreach($subjs as $subj)
+            @if($subj->id == $clsb->subject->id)
+              @foreach($subj->teachers as $teacher)
+                <small>{{$teacher->name}},</small><br>
+              @endforeach
+            @endif
+          @endforeach
+        </td>
         @foreach($clsecns as $clsc)
           <td><a href="#" class="btn-addTeacher" data-toggle="modal" data-target="#myModal" 
                 data-exam_id="{{$exm->id}}"
@@ -45,22 +55,54 @@
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
+  <div class="modal-dialog modal-lg">
+  {!! Form::open(['url'=>'/answerscript-distribution-addsubject','method'=>'post', 'class'=>'form-horizontal']) !!}
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 class="modal-title">Select Teacher</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+
+        <div class="form-group">
+        	<label class="control-label col-sm-1" for="exTerm">Term:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="exTerm" name="exTerm" disabled>
+					</div>         
+          
+          <label class="control-label col-sm-1" for="exClss">Class:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="exClss" name="exClss" disabled>
+					</div> 
+          
+          <label class="control-label col-sm-1" for="exSecn">Section:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="exSecn" name="exSecn" disabled>
+					</div> 
+                  
+          <label class="control-label col-sm-1" for="exSubj">Subject:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="exSubj" name="exSubj" disabled>
+					</div> 
+
+      	</div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="exSubj">Select Teacher:</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="exSubj" name="exSubj" disabled>
+					</div> 
+        </div>
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
     </div>
-
+   {!! Form::close() !!}
   </div>
 </div>
 

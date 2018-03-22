@@ -95,6 +95,7 @@ Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
 Route::get('/gradedescription/{extype_id}', 'GradedescrController@gradedescr');//->middleware('FinMidware:gradeparticulars');
 Route::post('/gradedescription-submit', 'GradedescrController@gradedescriptionSubmit');
 
+
 // Route::post('/gradedescription-submit', 'GradedescrController@gradedescrSubmit');
 // Route::get('/gradedescription-view', 'GradedescrController@gradedescrView');
 // Route::post('/gradedescription-editsubmit', 'GradedescrController@gradedescrEditSubmit');
@@ -188,3 +189,4 @@ Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'PdfController@
 //Anwer Script
 Route::get('/answerScript-taskpane','AnswerScriptController@answerScriptTaskpane');
 Route::get('/answerscript-distribution/{exam_id}/{clss_id}','AnswerScriptController@answerscriptDistribution');
+Route::post('/answerscript-distribution-addsubject', 'AnswerScriptController@answerscriptDistributionAddSubject');
