@@ -15,6 +15,7 @@ use App\School;
 use App\Gradeparticular;
 use App\Grade;
 use App\Description;
+use App\Teacher;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -24,6 +25,7 @@ use App\Clssec;
 use App\Exmtypclssub;
 use App\Marksentry;
 use App\Gradedescription;
+use App\Answerscriptdistribution;
 
 class AnswerScriptController extends Controller
 {
@@ -44,7 +46,9 @@ class AnswerScriptController extends Controller
         $cls = Clss::find($clss_id);
         $clsecns = Clssec::where('Clss_id', $clss_id)->get();
         $clsubjs = Clssub::where('Clss_id', $clss_id)->get();
-        
+        $ansscrdists = Answerscriptdistribution::where('session_id', $ses->id)->get();
+        $teachers = Teacher::all();
+
         $subjs = Subject::all();
         // foreach($subjs as $subj){
         // echo "<b>Subject Name: ". $subj->name ."</b><br>";
@@ -63,6 +67,8 @@ class AnswerScriptController extends Controller
         ->withClsecns($clsecns)
         ->withClsubjs($clsubjs)
         ->withSubjs($subjs)
+        ->withAnsscrdists($ansscrdists)
+        ->withTeachers($teachers)
         ;
         
         
@@ -70,11 +76,34 @@ class AnswerScriptController extends Controller
 
 
 
-    public function answerscriptDistributionAddSubject(){
+    public function answerscriptDistributionAddSubject(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        echo "Exam Id: ". Exam::where('name', $request->exTerm)->first()->id;
+        // echo "Extp Id: ". Extype::where('name', $request->exTyype)->first()->id;
+        echo "Class Id:". Clss::where('name', $request->exClss)->first()->id;
+        echo "Section Id:". Section::where('name', $request->exSecn)->first()->id;
+        echo "Subject Id:". Subject::where('name', $request->exSubj)->first()->extype_id;
+        echo "Teacher Id: ". $request->exTeach;
 
 
+        $ansscrdist = new Answerscriptdistribution;
+        $ansscrdist->session_id = $ses->id;
+        $ansscrdist->exam_id = Exam::where('name', $request->exTerm)->first()->id;
+        $ansscrdist->extype_id = Subject::where('name', $request->exSubj)->first()->extype_id;
+        $ansscrdist->clss_id = Clss::where('name', $request->exClss)->first()->id;
+        $ansscrdist->section_id = Section::where('name', $request->exSecn)->first()->id;
+        $ansscrdist->subject_id = Subject::where('name', $request->exSubj)->first()->id;
+        $ansscrdist->teacher_id = $request->exTeach;
+        // $ansscrdist->noscripted_rec = 
+        // $ansscrdist->nostudent_pre =
+        // $ansscrdist->issue_dt =
+        // $ansscrdist->submt_dt =
+        // $ansscrdist->finlz_dt =
+        // $ansscrdist->status =
+        // $ansscrdist->remark =
 
-        return "answerscriptDistributionAddSubject";
-        // return back();
+        $ansscrdist->save();
+        // return "answerscriptDistributionAddSubject";
+        return back();
     }
 }

@@ -34,11 +34,27 @@
           @endforeach
         </td>
         @foreach($clsecns as $clsc)
-          <td><a href="#" class="btn-addTeacher" data-toggle="modal" data-target="#myModal" 
-                data-exam_id="{{$exm->id}}"
-                data-clss_id="{{$cls->id}}"
-                data-secn_id="{{$clsc->id}}"
-                data-subj_id="{{$clsb->id}}"><span class="glyphicon glyphicon-cutlery"></span></a>
+          <td>
+                
+                {{--  {{$clsc->section->id}}                  --}}
+                {{--  {{$clsb->subject->id}}   <br>  --}}
+                @php
+                  $teacher_id = $ansscrdists->where('exam_id', $exm->id)
+                    ->where('clss_id', $cls->id) 
+                    ->where('section_id', $clsc->section->id)
+                    ->where('subject_id', $clsb->subject->id)->pluck('teacher_id')->first()
+                @endphp
+                <small>{{ $teachers->where('id', $teacher_id)->pluck('name')->first()}}</small>
+                <br>
+
+                <a href="#" class="btn-addTeacher" data-toggle="modal" data-target="#myModal" 
+                data-exam_nm="{{$exm->name}}"
+                data-clss_nm="{{$cls->name}}"
+                data-secn_nm="{{$clsc->section->name}}"
+                data-subj_nm="{{$clsb->subject->name}}"
+                data-subj_id="{{$clsb->subject->id  }}">                
+                <span class="glyphicon glyphicon-cutlery"></span>                
+                </a>
             {{--  <button type="button" class="btn btn-info btn-lg" >Open Modal</button>  --}}
           </td>
         @endforeach
@@ -68,30 +84,41 @@
         <div class="form-group">
         	<label class="control-label col-sm-1" for="exTerm">Term:</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" id="exTerm" name="exTerm" disabled>
+						<input type="text" class="form-control" id="exTerm" name="exTerm" readonly>
 					</div>         
           
           <label class="control-label col-sm-1" for="exClss">Class:</label>
-					<div class="col-sm-2">
-						<input type="text" class="form-control" id="exClss" name="exClss" disabled>
+					<div class="col-sm-1">
+						<input type="text" class="form-control" id="exClss" name="exClss" readonly>
 					</div> 
           
           <label class="control-label col-sm-1" for="exSecn">Section:</label>
-					<div class="col-sm-2">
-						<input type="text" class="form-control" id="exSecn" name="exSecn" disabled>
+					<div class="col-sm-1">
+						<input type="text" class="form-control" id="exSecn" name="exSecn" readonly>
 					</div> 
                   
           <label class="control-label col-sm-1" for="exSubj">Subject:</label>
-					<div class="col-sm-2">
-						<input type="text" class="form-control" id="exSubj" name="exSubj" disabled>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="exSubj" name="exSubj" readonly>
 					</div> 
 
       	</div>
 
         <div class="form-group">
-          <label class="control-label col-sm-4" for="exSubj">Select Teacher:</label>
+          <label class="control-label col-sm-4" for="exTeach">Select Teacher:</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="exSubj" name="exSubj" disabled>
+            {{--  <input type="text" value="" name="tempSubId">  --}}
+            <select class="form-control" name="exTeach" id="exTeach">
+              <option value="0">                          </option>
+              @foreach($subjs as $subj)
+                {{--  @if($subj->id == 3)  --}}
+                    @foreach($subj->teachers as $teacher)              
+                      <option value="{{$teacher->id}}">{{$teacher->name}}</option>              
+                    @endforeach  
+                {{--  @endif  --}}
+              @endforeach
+            </select>      
+						{{--  <input type="text" class="form-control" id="exTeach" name="exTeach" disabled>  --}}
 					</div> 
         </div>
 
@@ -127,10 +154,19 @@
 <script type="text/javascript">
   $(document).ready(function(e){
     $('.btn-addTeacher').on('click', function(){
-      var exId = $(this).data('exam_id');
-      var clId = $(this).data('clss_id');
-      var scId = $(this).data('secn_id');
-      var sbId = $(this).data('subj_id');
+      var exId = $(this).data('exam_nm');
+      var clId = $(this).data('clss_nm');
+      var scId = $(this).data('secn_nm');
+      var sbId = $(this).data('subj_nm');
+      
+      var sbjctId = $(this).data('subj_id');
+
+      $('input[name="exTerm"]').val(exId);
+      $('input[name="exClss"]').val(clId);
+      $('input[name="exSecn"]').val(scId);
+      $('input[name="exSubj"]').val(sbId);
+
+      $('input[name="tempSubId"]').val(sbjctId);
       
       // alert(exId+':'+clId+':'+scId+':'+sbId);
       

@@ -11,4 +11,8 @@ class Teacher extends Model
     public function subjects(){
         return $this->belongsToMany('App\Subject', 'subjteachers');
     }
+
+    public function answerscriptdistributions(){
+        return $this->hasMany('App\Answerscriptdistribution');
+    }
 }
