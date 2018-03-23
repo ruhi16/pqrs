@@ -10,19 +10,50 @@
 
 @section('content')
 
+<div class="row">
+    
+<button class="btn btn-warning"> Students </button>
+<button class="btn btn-warning"> Admission </button>
+
 <div class="dropdown">
-    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      Dropdown
-      <span class="caret"></span>
+    <button class="btn btn-primary dropdown-toggle" type="button" id="bsetingDetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
+        Basic Setings <span class="caret"></span>
     </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">Separated link</a></li>
+    <ul class="dropdown-menu" aria-labelledby="bsetingDetails">
+        <li><a href="#">School/Madrasah Details</a></li>
+        <li><a href="#">Current Session Setup</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">Class Persueid</a></li>
+        <li><a href="#">Section Divisions</a></li>
+        <li><a href="#">Subject Initialization</a></li>        
+        <li><a href="#">Exam Scheduled</a></li>
+        <li><a href="#">Exam Type Occured</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">Grade Particular Assignment</a></li>
     </ul>
-  </div>
+</div>
+
+<div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="csetingDetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
+            Compount Setings <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="csetingDetails">
+            <li><a href="#">Class & Section Combination</a></li>
+            <li><a href="#">Class-Subject Allotment & Subject Type Specification</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Exam Exam-Type Class Subject wish Full Marks Allotment</a></li>
+            <li><a href="#">Exam Type Wise Grade Specification</a></li>
+            <li><a href="#">Grade Descirption</a></li>        
+            
+        </ul>
+    </div>
+
+<button class="btn btn-success"> Class Management</button>
+
+<button class="btn btn-danger"> Exam Administration</button>
+
+<button class="btn btn-info"> Teachers Section </button>
+<button class="btn btn-success"> Reports Hub </button>
 
 
 
