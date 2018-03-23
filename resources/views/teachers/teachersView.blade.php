@@ -33,6 +33,7 @@
           <th>Other Subjects</th>
           <th>Status</th>
           <th>Notes</th>
+          <th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -61,6 +62,7 @@
           </td>
           <td>{{ $teacher->status }}</td>
           <td>{{ $teacher->notes }}</td>
+          <td><a href="{{url('/teachers-takspan',[$teacher->id])}}">Go to Taskpane</a></td>
 				</tr>
       @endforeach
 			</tbody>

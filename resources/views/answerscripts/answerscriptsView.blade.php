@@ -112,9 +112,11 @@
               <option value="0">                          </option>
               @foreach($subjs as $subj)
                 {{--  @if($subj->id == 3)  --}}
-                    @foreach($subj->teachers as $teacher)              
+                <optgroup label="{{$subj->name}}">
+                    @foreach($subj->teachers as $teacher)                                  
                       <option value="{{$teacher->id}}">{{$teacher->name}}</option>              
                     @endforeach  
+                </optgroup>
                 {{--  @endif  --}}
               @endforeach
             </select>      
@@ -122,7 +124,7 @@
 					</div> 
         </div>
 
-
+      
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

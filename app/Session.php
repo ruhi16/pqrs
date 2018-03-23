@@ -40,4 +40,11 @@ class Session extends Model
     public function gradedescriptions(){
         return $this->hasMany('App\Gradedescription');
     }
+
+
+    
+    public function answerscriptdistributions(){
+        return $this->hasMany('App\Answerscriptdistribution');
+    }
+
 }

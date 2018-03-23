@@ -39,4 +39,10 @@ class Clss extends Model
     public function studentdbs(){
         return $this->hasMany('App\Studentdb','stclss_id');
     }
+
+
+
+    public function answerscriptdistributions(){
+        return $this->hasMany('App\Answerscriptdistribution');
+    }
 }

@@ -23,6 +23,8 @@ use App\Exmtypclssub;
 use App\Marksentry;
 use App\Miscoption;
 
+use App\Answerscriptdistribution;
+
 class TeacherController extends Controller
 {
     public function teachers($extype_id){
@@ -135,5 +137,26 @@ class TeacherController extends Controller
     public function teachersDeltSubmit(Request $request){
      
         return back();
+    }
+
+
+
+    public function teachersTakspan($teacher_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $teacher = Teacher::find($teacher_id);
+        $anscrdists = Answerscriptdistribution::where('teacher_id',$teacher_id)->get();
+
+        $extpclsbs = Exmtypclssub::where('session_id', $ses->id)->get();
+        $clscs = Clssec::where('session_id', $ses->id)->get();
+        $clsbs = Clssub::where('session_id', $ses->id)->get();
+
+        return view('teachers.teacherTaskpane')
+            ->withTeacher($teacher)
+            ->withAnscrdists($anscrdists)
+            
+            ->withExtpclsbs($extpclsbs)
+            ->withClscs($clscs)
+            ->withClsbs($clsbs)
+        ;
     }
 }

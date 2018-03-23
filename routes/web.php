@@ -88,7 +88,7 @@ Route::get('/teachers-view', 'TeacherController@teachersView');
 Route::get('/teachers-edit/{id}/{extype_id}', 'TeacherController@teachersEdit');
 Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
 // Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
-
+Route::get('/teachers-takspan/{teacher_id}', 'TeacherController@teachersTakspan');
 
 // till the above entry was tested Oke with middleware too
 
