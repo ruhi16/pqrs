@@ -70,7 +70,7 @@
                         </div>
                     @endif
 
-                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('xyz')}}'">Test123</button>
+                    {{--  <button type="button" class="btn btn-primary" onclick="location.href='{{route('xyz')}}'">Test123</button>  --}}
                     You are logged in!!!!!!!
                     <br><a href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>                    
                     <br><a href="{{url('/finalizeSessions')}}">Finalize Sessions</a>                    

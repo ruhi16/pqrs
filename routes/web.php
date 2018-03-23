@@ -11,22 +11,29 @@
 |
 | Middleware: FinMidware => 1st:combined Table Name, 2nd: Content Table Names, 3rd: so on
 */
+Auth::routes();
 
 Route::get('/', function () {
-    return view('start'); //homepage
+    return view('welcome'); //homepage
     // $u = App\User::find(1);
     // print_r(getTableColumns('teachers'));
 });
+Route::get('/start', function () {
+    return view('start'); //homepage
+});
+Route::get('/login', 'HomeController@login');
 
-Auth::routes();
+Route::group(['middleware' => ['auth']], function () {
 
-Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@index']);
+    Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@start']);
 
-Route::get('/clsses', 'ClssesController@clsses')->middleware('FinMidware:clsses');
-Route::post('/clsses-submit', 'ClssesController@clssesSubmit');
-Route::get('/clsses-view', 'ClssesController@clssesView');
-Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
-Route::post('/clsses-deltsubmit', 'ClssesController@clssesDeltSubmit');
+    Route::get('/clsses', 'ClssesController@clsses')->middleware('FinMidware:clsses');
+    Route::post('/clsses-submit', 'ClssesController@clssesSubmit');
+    Route::get('/clsses-view', 'ClssesController@clssesView');
+    Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
+    Route::post('/clsses-deltsubmit', 'ClssesController@clssesDeltSubmit');
+ 
+});
 
 Route::get('/exams', 'ExamController@exams')->middleware('FinMidware:exams');
 Route::post('/exams-submit', 'ExamController@examsSubmit');
@@ -190,3 +197,6 @@ Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'PdfController@
 Route::get('/answerScript-taskpane','AnswerScriptController@answerScriptTaskpane');
 Route::get('/answerscript-distribution/{exam_id}/{clss_id}','AnswerScriptController@answerscriptDistribution');
 Route::post('/answerscript-distribution-addsubject', 'AnswerScriptController@answerscriptDistributionAddSubject');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -1,29 +1,47 @@
     <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{!! url('/home') !!}">Home Page</a>
+          <a class="navbar-brand" href="{!! url('/home') !!}">Dashboard</a>
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li><a href="{!! url('/dashboard') !!}">Dashboard</a></li> <!-- class="active" -->
-            {{-- <li><a href="{!! url('/students') !!}">Students</a></li> <!-- class="active" -->
-            <li><a href="{!! url('/subject') !!}">Subjects</a></li>
-            <li><a href="{!! url('/classDetails') !!}">Classes</a></li>
-            <li><a href="{!! url('/test2') !!}">Stu-Sub-Marks</a></li>
-            <li><a href="{!! url('/test') !!}">Marks Entry</a></li>            
-            <li><a href="{!! url('/reportDetails') !!}">Reports</a></li>
-            <li><a href="{!! url('/selectSubjectPdf') !!}">Pdf Subject</a></li>
-            <li><a href="{!! url('/studentRoll') !!}">Update Student Roll </a></li> --}}
-          </ul>
+        <div class="collapse navbar-collapse" id="myNavbar">          
+          @if (Auth::check()) 
+              <ul class="nav navbar-nav">
+                <li><a href="{!! url('/start') !!}">Home Page</a></li>
+                <li><a href="{!! url('/start') !!}">Students</a></li>
+                <li><a href="{!! url('/start') !!}">Admission</a></li>
+                <li><a href="{!! url('/start') !!}">Exam</a></li>
+                <li><a href="{!! url('/start') !!}">Class</a></li>
+                <li><a href="{!! url('/start') !!}">Teacher</a></li>
+                <li><a href="{!! url('/start') !!}">Miscellenous</a></li>
+                <li><a href="{!! url('/start') !!}">Reports</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Settings <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">School</a></li>
+                    <li><a href="#">Session</a></li>
+                    <li><a href="#">Class</a></li>
+                    <li><a href="#">Section</a></li>
+                    <li><a href="#">Subject</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Exam</a></li>
+                    <li><a href="#">Exam Type</a></li>
+                    <li><a href="#">Grade</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+              </li>
 
-          @if(session()->has('user'))
+              </ul>
+
               <ul class="nav navbar-nav navbar-right">
-                <li><p class="navbar-brand"><small>Welcome, {!! session()->get('user') !!}</small></p></li>
+                <li><p class="navbar-brand"><small>{{ Auth::user()->name }}</small></p></li>
                 <li><a href="{{ url('/logout') }}"><span class="glyphicon glyphicon-log-out"></span>Log Out</a></li>
               </ul>
           @else
