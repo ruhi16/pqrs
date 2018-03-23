@@ -78,22 +78,31 @@ class AnswerScriptController extends Controller
 
     public function answerscriptDistributionAddSubject(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
-        echo "Exam Id: ". Exam::where('name', $request->exTerm)->first()->id;
+        // echo "Exam Id: ". Exam::where('name', $request->exTerm)->first()->id;
         // echo "Extp Id: ". Extype::where('name', $request->exTyype)->first()->id;
-        echo "Class Id:". Clss::where('name', $request->exClss)->first()->id;
-        echo "Section Id:". Section::where('name', $request->exSecn)->first()->id;
-        echo "Subject Id:". Subject::where('name', $request->exSubj)->first()->extype_id;
-        echo "Teacher Id: ". $request->exTeach;
+        // echo "Class Id:". Clss::where('name', $request->exClss)->first()->id;
+        // echo "Section Id:". Section::where('name', $request->exSecn)->first()->id;
+        // echo "Subject Id:". Subject::where('name', $request->exSubj)->first()->extype_id;
+        // echo "Teacher Id: ". $request->exTeach;
 
 
-        $ansscrdist = new Answerscriptdistribution;
-        $ansscrdist->session_id = $ses->id;
-        $ansscrdist->exam_id = Exam::where('name', $request->exTerm)->first()->id;
-        $ansscrdist->extype_id = Subject::where('name', $request->exSubj)->first()->extype_id;
-        $ansscrdist->clss_id = Clss::where('name', $request->exClss)->first()->id;
-        $ansscrdist->section_id = Section::where('name', $request->exSecn)->first()->id;
-        $ansscrdist->subject_id = Subject::where('name', $request->exSubj)->first()->id;
+
+
+        $ansscrdist = Answerscriptdistribution::firstOrNew([
+        'session_id'    => $ses->id,
+        'exam_id'       => Exam::where('name', $request->exTerm)->first()->id,
+        'extype_id'     => Subject::where('name', $request->exSubj)->first()->extype_id,
+        'clss_id'       => Clss::where('name', $request->exClss)->first()->id,
+        'section_id'    => Section::where('name', $request->exSecn)->first()->id,
+        'subject_id'    => Subject::where('name', $request->exSubj)->first()->id,        
+        ]);
         $ansscrdist->teacher_id = $request->exTeach;
+        $ansscrdist->save();
+        // if($ansscrdist->wasRecentlyCreated){
+        //     echo 'Created successfully';
+        // } else {
+        //         echo 'Already exist';
+        // }
         // $ansscrdist->noscripted_rec = 
         // $ansscrdist->nostudent_pre =
         // $ansscrdist->issue_dt =
@@ -102,7 +111,7 @@ class AnswerScriptController extends Controller
         // $ansscrdist->status =
         // $ansscrdist->remark =
 
-        $ansscrdist->save();
+        // $ansscrdist->save();
         // return "answerscriptDistributionAddSubject";
         return back();
     }
