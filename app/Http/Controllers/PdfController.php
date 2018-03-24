@@ -24,6 +24,8 @@ use App\Grade;
 
 use App\Exmtypclssub;
 use App\Marksentry;
+use App\Gradedescription;
+
 
 class PdfController extends Controller
 {
@@ -73,21 +75,24 @@ class PdfController extends Controller
             ->whereStudentcr_id($studentcr_id)->get();
         $etcs = Exmtypclssub::all();
         // print_r($clsc);
+        $grddescr = Gradedescription::all();
         
         $pdf = PDF::loadView('results.ResultSheetHTML', 
             ['sch'=>$sch,   'exms'=>$exms, 'exts'=>$exts, 'clsc'=>$clsc, 
-             'clsb'=>$clsb, 'stcr'=>$stcr, 'mrks'=>$mrks, 'etcs'=>$etcs]);
+             'clsb'=>$clsb, 'stcr'=>$stcr, 'mrks'=>$mrks, 'etcs'=>$etcs,
+             'grddes'=>$grddescr]);
         return $pdf->stream();//download('resultsheet.pdf');
 
-        // return view('results.ResultSheetHTML')
-        // ->withSch($sch)        
-        // ->withExms($exms)
-        // ->withexts($exts)
-        // ->withClsc($clsc)
-        // ->withClsb($clsb)
-        // ->withStcr($stcr)
-        // ->withMrks($mrks)
-        // ->withEtcs($etcs)
-        // ;
+        return view('results.ResultSheetHTML')
+        ->withSch($sch)        
+        ->withExms($exms)
+        ->withexts($exts)
+        ->withClsc($clsc)
+        ->withClsb($clsb)
+        ->withStcr($stcr)
+        ->withMrks($mrks)
+        ->withEtcs($etcs)
+        ->withGrddes($grddescr)
+        ;
     }
 }

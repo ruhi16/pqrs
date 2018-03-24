@@ -11,51 +11,10 @@
 @section('content')
 
 <div class="row">
+
+
+<div class="dropdown">
     
-<button class="btn btn-warning"> Students </button>
-<button class="btn btn-warning"> Admission </button>
-
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" id="bsetingDetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
-        Basic Setings <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="bsetingDetails">
-        <li><a href="#">School/Madrasah Details</a></li>
-        <li><a href="#">Current Session Setup</a></li>
-        <li role="separator" class="divider"></li>
-        <li><a href="#">Class Persueid</a></li>
-        <li><a href="#">Section Divisions</a></li>
-        <li><a href="#">Subject Initialization</a></li>        
-        <li><a href="#">Exam Scheduled</a></li>
-        <li><a href="#">Exam Type Occured</a></li>
-        <li role="separator" class="divider"></li>
-        <li><a href="#">Grade Particular Assignment</a></li>
-    </ul>
-</div>
-
-<div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="csetingDetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
-            Compount Setings <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="csetingDetails">
-            <li><a href="#">Class & Section Combination</a></li>
-            <li><a href="#">Class-Subject Allotment & Subject Type Specification</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Exam Exam-Type Class Subject wish Full Marks Allotment</a></li>
-            <li><a href="#">Exam Type Wise Grade Specification</a></li>
-            <li><a href="#">Grade Descirption</a></li>        
-            
-        </ul>
-    </div>
-
-<button class="btn btn-success"> Class Management</button>
-
-<button class="btn btn-danger"> Exam Administration</button>
-
-<button class="btn btn-info"> Teachers Section </button>
-<button class="btn btn-success"> Reports Hub </button>
-
-
 
 <div class="container">
     <div class="row">
@@ -115,7 +74,7 @@
                     <br><a href="{{url('/clssubjfm/1')}}">Exam Term and Class Wise Full Marks Specification Entry (V)</a>
                     <br><a href="{{url('/clssubjfm-view/1')}}">Exam Term and Class Wise Full Marks Specification View (V)</a>  
                     --}}
-                    <br><a href="{{url('/teachers',[2])}}">Teachers Details Entry Point</a>
+                    <br><a href="{{url('/teachers')}}">Teachers Details Entry Point</a>
                     <br><a href="{{url('/teachers-view')}}">Teachers Details View Point</a>
                     <br><a href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
 

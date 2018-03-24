@@ -1,6 +1,14 @@
-@extends('layouts.app')
+{{--  @extends('layouts.app')  --}}
+{{--  @section('content')  --}}
+@extends('layouts.baselayout')
+@section('title','Home')
+
+@section('header')
+	@include('layouts.navbar')
+@endsection
 
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -67,4 +75,17 @@
         </div>
     </div>
 </div>
+{{--  @endsection  --}}
+
+<script type="text/javascript">
+$(document).ready(function(e){
+    
+});  
+</script>
+
 @endsection
+
+@section('footer')
+    @include('layouts.footer')
+@endsection
+  

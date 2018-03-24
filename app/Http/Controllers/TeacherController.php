@@ -27,13 +27,15 @@ use App\Answerscriptdistribution;
 
 class TeacherController extends Controller
 {
-    public function teachers($extype_id){
+    public function teachers(){
         $ses = Session::whereStatus('CURRENT')->first();
         $teachers = Teacher::whereSession_id($ses->id)->get();
         
         $teachDesigs = Miscoption::where('TabName', 'teachers')->where('FieldName','desig')->get();
         $teachHQuals = Miscoption::where('TabName', 'teachers')->where('FieldName','hqual')->get();
-        $teachSubjs  = Subject::whereExtype_id($extype_id)->get();
+        
+        $sumtvSubjs = Extype::whereName('Summative')->whereSession_id($ses->id)->first();
+        $teachSubjs  = Subject::whereExtype_id($sumtvSubjs->id)->get();
 
         return view('teachers.teachers')
         ->withTeachers($teachers)
