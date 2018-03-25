@@ -23,6 +23,7 @@ use App\Grade;
 
 use App\Exmtypclssub;
 use App\Marksentry;
+use App\Gradedescription;
 
 class ResultController extends Controller
 {
@@ -77,6 +78,7 @@ class ResultController extends Controller
             ->whereStudentcr_id($studentcr_id)->get();
         $etcs = Exmtypclssub::all();
         // print_r($clsc);
+        $grddescr = Gradedescription::all();
         
         return view('results.ResultSheet')
         ->withSch($sch)        
@@ -87,6 +89,7 @@ class ResultController extends Controller
         ->withStcr($stcr)
         ->withMrks($mrks)
         ->withEtcs($etcs)
+        ->withGrddes($grddescr)
         ;
     }
     public function ResultSheetHTML($clssec_id, $studentcr_id){
@@ -103,7 +106,7 @@ class ResultController extends Controller
             ->whereStudentcr_id($studentcr_id)->get();
         $etcs = Exmtypclssub::all();
         // print_r($clsc);
-        
+        $grddescr = Gradedescription::all();
 
         
 
@@ -117,6 +120,7 @@ class ResultController extends Controller
         ->withStcr($stcr)
         ->withMrks($mrks)
         ->withEtcs($etcs)
+        ->withGrddes($grddescr)
         ;
     }
 }

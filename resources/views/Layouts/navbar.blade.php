@@ -147,7 +147,7 @@
 
               <ul class="nav navbar-nav navbar-right">
                 <li><p class="navbar-brand"><small>{{ Auth::user()->name }}</small></p></li>
-                <li><a href="{{ url('/logout') }}">Log Out</a></li>
+                <li><a href="{{ route('logout') }}">Log Out</a></li>
               </ul>
           @else
               <ul class="nav navbar-nav navbar-right">

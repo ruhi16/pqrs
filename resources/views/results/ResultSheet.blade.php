@@ -96,6 +96,106 @@
   </tbody>
 </table>
 
+
+  <div class="row">
+        <div class="col-sm-8">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Grade</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($grddes as $gdes)
+                <tr>
+                @if(($loop->iteration % 4) == 1 )
+                  <td rowspan="4">{{$gdes->subject->name}}</td>
+                @endif
+                <td>{{$gdes->grade->gradeparticular->name}}</td>
+                <td><small>{{$gdes->desc}}</small></td>
+                </tr>
+            @endforeach
+        </tbody>
+        </table>
+        </div>
+        
+        <div class="col-sm-4">
+          <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Particulars</th>
+                    @foreach($exms as $exm)
+                        <th>{{$exm->name}}</th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Attendance of Students</td>
+                    @foreach($exms as $exm)
+                        <td></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>Signature of Class Teacer</td>
+                    @foreach($exms as $exm)
+                        <td></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>Signature of HM/TIC</td>
+                    @foreach($exms as $exm)
+                        <td></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>Signature of Gurdian</td>
+                    @foreach($exms as $exm)
+                        <td></td>
+                    @endforeach
+                </tr>
+            </tbody>
+        </table>
+
+
+        
+          <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Exam Type</th>
+                    <th>Grade </th>
+                    <th>From %</th>
+                    <th>To %</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($exts as $ext)
+                @foreach($ext->grades as $grd)
+                <tr>
+                <td>{{ $ext->name }}</td>
+                <td>{{ $grd->gradeparticular->name }}</td>
+                <td>{{ $grd->stpercentage }}</td>
+                <td>{{ $grd->stpercentage }}</td>
+                </tr>
+                @endforeach
+            @endforeach
+        </tbody>
+        </table> 
+      
+        
+        </div>
+
+
+    </div>
+        
+        
+
+
+
+
+
 <script type="text/javascript">
   $(document).ready(function(e){
     

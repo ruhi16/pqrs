@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Html Result Format</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     </head>
     <style>
     table,th,td {
@@ -15,25 +16,32 @@
     padding: 2px;
     }
     </style>
+    <style>
+    .page-break {
+        page-break-after: always;
+    }
+    </style>
+
+
     <body>
         <center>
         <h1 class="text-center">{{$sch->name}}</h1>
         <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
         <h2 class="text-center">Progress Report</h2>
         </center>
-        <br>
+    
 
-        <table style="width:100%">
-        <tr>
-            <td><b>Name: </B>{{$stcr->studentdb->name}}</td>
-            <td><b>Class: </B>{{$stcr->clss->name}}</td>
-            <td><b>Section: </B>{{$stcr->section->name}}</td>
-            <td><b>Roll No: </B>{{$stcr->roll_no}}</td>
-        </tr>
-        </table>
-        <br>
+    <table style="width:100%">
+    <tr>
+        <td><b>Name: </B>{{$stcr->studentdb->name}}</td>
+        <td><b>Class: </B>{{$stcr->clss->name}}</td>
+        <td><b>Section: </B>{{$stcr->section->name}}</td>
+        <td><b>Roll No: </B>{{$stcr->roll_no}}</td>
+    </tr>
+    </table>
+    <br>
         
-        <table >
+    <table>
         <thead>
             <tr>
             @foreach($exts as $ext)
@@ -52,16 +60,16 @@
             @foreach($exts as $ext)
             @php  $total = 0; @endphp
             <td>
-            <table  >
+            <table>
                 <thead>
                 <tr>            
-                    <th>Sl</th>
-                    <th>Subject</th>
+                    <th><small>Sl</small></th>
+                    <th><small>Subject</small></th>
                     @foreach($exms as $exm)
-                    <th>{{$exm->name}}</th>
+                        <th><small>{{$exm->name}}</small></th>
                     @endforeach
-                    <th>Total</th>
-                    <th>Grade</th>
+                    <th><small>Total</small></th>
+                    <th><small>Grade</small></th>
                 </tr>          
                 </thead>
                 <tbody>
@@ -69,7 +77,7 @@
                     @if($cls->subject->extype_id == $ext->id)
                     <tr>
                         <td>{{$cls->id}}</td>
-                        <td>{{$cls->subject->name}}</td>                
+                        <td><small>{{$cls->subject->name}}</small></td>                
                         @php $subTotal = 0; @endphp
                         @foreach($exms as $exm)
                         <td>                  
@@ -81,9 +89,10 @@
                             $subTotal = $subTotal + ($obmrks == -99 ? 0 : $obmrks);
                             @endphp
                             
-                        {{ $obmrks == -99 ? 'AB' : $obmrks }}
+                        <small>{{ $obmrks == -99 ? 'AB' : $obmrks }}</small>
 
                         </td>
+                        {{--  <td>xxx</td>  --}}
                         @endforeach
                         <td>{{$subTotal}}</td>
                         @php  $total = $total + $subTotal; @endphp
@@ -105,88 +114,124 @@
             @endforeach      
             </tr>
         </tbody>
-        </table>
-        <br>
-
-        <table width="100%">
-            <thead>
-                <tr>
-                    <th>Particulars</th>
-                    @foreach($exms as $exm)
-                        <th>{{$exm->name}}</th>
-                    @endforeach
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Attendance of Students</td>
-                    @foreach($exms as $exm)
-                        <td></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Signature of Class Teacer</td>
-                    @foreach($exms as $exm)
-                        <td></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Signature of HM/TIC</td>
-                    @foreach($exms as $exm)
-                        <td></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Signature of Gurdian</td>
-                    @foreach($exms as $exm)
-                        <td></td>
-                    @endforeach
-                </tr>
-            </tbody>
-        </table>
-<br><br>
-        <table width="100%">
-            <thead>
-                <tr>
-                    <th>Subject</th>
-                    <th>Grade</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($grddes as $gdes)
-                <tr>
-                <td>{{$gdes->subject->name}}</td>
-                <td>{{$gdes->grade->gradeparticular->name}}</td>
-                <td>{{$gdes->desc}}</td>
-                </tr>
-            @endforeach
-        </tbody>
-        </table>
+    </table>
 <br>
 
-        
-        <table width="100%">
-            <thead>
-                <tr>
-                    <th>Exam Type</th>
-                    <th>Grade </th>
-                    <th>From %</th>
-                    <th>To %</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($exts as $ext)
-                @foreach($ext->grades as $grd)
-                <tr>
-                <td>{{ $ext->name }}</td>
-                <td>{{ $grd->gradeparticular->name }}</td>
-                <td>{{ $grd->stpercentage }}</td>
-                <td>{{ $grd->stpercentage }}</td>
-                </tr>
-                @endforeach
+<table>
+    <tr>
+        <th>Obtained Marks</th>
+        <th>Full Marks</th>
+        <th>Percentage</th>
+        <th>Remarks</th>
+    </tr>
+    <tr>
+        <td>800</td>
+        <td>357</td>
+        <td>125</td>
+        <td>Not Very Good</td>
+    </tr>
+</table>
+
+<br>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Particulars</th>
+            @foreach($exms as $exm)
+                <th>{{$exm->name}}</th>
             @endforeach
-        </tbody>
-        </table>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Attendance of Students</td>
+            @foreach($exms as $exm)
+                <td></td>
+            @endforeach
+        </tr>
+        <tr>
+            <td>Signature of Class Teacer</td>
+            @foreach($exms as $exm)
+                <td></td>
+            @endforeach
+        </tr>
+        <tr>
+            <td>Signature of HM/TIC</td>
+            @foreach($exms as $exm)
+                <td></td>
+            @endforeach
+        </tr>
+        <tr>
+            <td>Signature of Gurdian</td>
+            @foreach($exms as $exm)
+                <td></td>
+            @endforeach
+        </tr>
+    </tbody>
+</table>
+<div class="page-break"></div>
+<br>
+<table>
+    <tbody>
+        <tr><td>
+            {{--  <table class="table table-bordered table-sm">                
+                <tbody>  --}}
+                <table>
+                @foreach($grddes as $gdes)
+                    
+                    @if( $loop->iteration % 4 == 1 )    //no of grade in formative is 4
+                        <tr>
+                            <td colspan="2"><center><b>{{$gdes->subject->name}}</b></center></td></tr><tr>                        
+                            <td>{{$gdes->grade->gradeparticular->name}}</td>
+                            <td><small>{{$gdes->desc}}</small></td>    
+                        </tr>
+                    @else
+                        <tr>                        
+                            <td><small>{{$gdes->grade->gradeparticular->name}}</small></td>
+                            <td><small>{{$gdes->desc}}</small></td>
+                        </tr>
+                    @endif
+                    
+                @endforeach
+                </table>
+                {{--  </tbody>
+            </table>  --}}
+            
+            </td>
+            <td>
+            
+            
+            </td>
+        </tr>  
+    </tbody>
+</table>
+ 
+
+        
+    <br>            
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Exam Type</th>
+                        <th>Grade </th>
+                        <th>From %</th>
+                        <th>To %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($exts as $ext)
+                    @foreach($ext->grades as $grd)
+                    <tr>
+                    <td>{{ $ext->name }}</td>
+                    <td>{{ $grd->gradeparticular->name }}</td>
+                    <td>{{ $grd->stpercentage }}</td>
+                    <td>{{ $grd->stpercentage }}</td>
+                    </tr>
+                    @endforeach
+                @endforeach
+                </tbody>
+            </table> 
+
     </body>
 </html>

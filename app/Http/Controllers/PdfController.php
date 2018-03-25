@@ -81,6 +81,7 @@ class PdfController extends Controller
             ['sch'=>$sch,   'exms'=>$exms, 'exts'=>$exts, 'clsc'=>$clsc, 
              'clsb'=>$clsb, 'stcr'=>$stcr, 'mrks'=>$mrks, 'etcs'=>$etcs,
              'grddes'=>$grddescr]);
+        $pdf->setPaper("legal");        
         return $pdf->stream();//download('resultsheet.pdf');
 
         return view('results.ResultSheetHTML')
