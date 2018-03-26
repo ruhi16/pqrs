@@ -75,6 +75,13 @@
                     <input type="text" class="form-control" id="grPart" name="grPart" placeholder="enter new grade particular">
                 </div>         
             </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-5" for="grDesc">Grade Description:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="grDesc" name="grDesc" placeholder="enter grade description">
+                </div>         
+            </div>
   
   
         </div>

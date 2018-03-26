@@ -34,8 +34,8 @@
                     <br><a href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>                    
                     <br><a href="{{url('/finalizeSessions')}}">Finalize Sessions</a>                    
                     <br><a href="{{url('/session')}}">Session Details</a>
-                    <br><a href="{{url('/school')}}">School Details</a>                    
-                    <br><a href="{{url('/schoolView')}}">School Details View</a>                    
+                    <br><a href="{{url('/schools')}}">School Details</a>                    
+                    <br><a href="{{url('/schools-view')}}">School Details View</a>                    
                     <br><a href="{{url('/clsses')}}">Class Details Entry</a>                    
                     <br><a href="{{url('/clsses-view')}}">Class Details Display</a>
                     <br><a href="{{url('/sections')}}">Section Details Entry</a>                    

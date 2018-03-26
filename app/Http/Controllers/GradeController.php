@@ -50,7 +50,7 @@ class GradeController extends Controller
         $grade->gradeparticular_id = $request->grade;
         $grade->stpercentage = $request->stperc;
         $grade->enpercentage = $request->enperc;
-        $grade->descrp = $request->desscr;
+        $grade->descrp = $request->descr;
         $grade->session_id = $ses->id;
         $grade->save();
 

@@ -38,7 +38,7 @@ class GradeparticularController extends Controller
         if($request->grPart != NULL){
             $grpart = new Gradeparticular;
             $grpart->name = $request->grPart;
-            $grpart->status = "Oke";
+            $grpart->status = $request->grDesc;
             $grpart->session_id = $ses->id;
             $grpart->save();
         }
@@ -58,6 +58,7 @@ class GradeparticularController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $grpartedit = Gradeparticular::find($request->editGrPartId);
         $grpartedit->name = $request->editGrPartName;
+
         $grpartedit->save();
         // echo $request->editGrPartName;
         // echo $request->editGrPartId;

@@ -37,14 +37,17 @@ class SchoolController extends Controller
     public function schoolSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
         // echo $request->schname;
-        $sch = new School;
+        $sch = School::firstOrNew(['disecode'=>$request->schdise]);
+        // $sch = new School;//::firstOrNew(['disecode'=>$request->estd]);
         $sch->name = $request->schname;
         $sch->session_id = $ses->id;
         $sch->vill = $request->vill;
         $sch->po = $request->poff;
         $sch->ps = $request->pstn;
-        $sch->pin = $request->pcode;
         $sch->dist = $request->dist;
+        $sch->pin = $request->pcode;
+        $sch->disecode = $request->schdise;
+        $sch->estd = $request->estd;
         $sch->save();
 
         return back();

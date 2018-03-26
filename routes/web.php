@@ -64,9 +64,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/subjects-editsubmit', 'SubjectController@subjectsEditSubmit');
         Route::post('/subjects-deltsubmit', 'SubjectController@subjectsDeltSubmit');
 
-        Route::get('/school', 'SchoolController@school')->middleware('FinMidware:schools');//->name('xyz');
-        Route::post('/school-submit', 'SchoolController@schoolSubmit');
-        Route::get('/schoolView', 'SchoolController@schoolView');
+        Route::get('/schools', 'SchoolController@school')->middleware('FinMidware:schools');//->name('xyz');
+        Route::post('/schools-submit', 'SchoolController@schoolSubmit');
+        Route::get('/schools-view', 'SchoolController@schoolView');
 
         Route::get('/gradeparticulars', 'GradeparticularController@gradeparticulars')->middleware('FinMidware:gradeparticulars');
         Route::post('/gradeparticulars-submit', 'GradeparticularController@gradeparticularsSubmit');
