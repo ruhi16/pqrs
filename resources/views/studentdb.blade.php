@@ -63,7 +63,8 @@
     
     <td>
       <button class="btn btn-primary btnEdit" data-id="{{$std->id}}" data-toggle="modal" data-target="#editStudentData">Edit</button>
-      <button class="btn btn-danger  btnDelt">Delete</button>
+      <a href="{{url('/studentdbEditpage',[$std->id])}}" class="btn btn-info">Edit By Page</a>
+      {{--  <button class="btn btn-danger  btnDelt">Delete</button>  --}}
     </td>
 </tr>
 @endforeach

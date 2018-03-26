@@ -60,14 +60,52 @@ class StudentController extends Controller
         ;
     }
 
-    public function studentdbEdit(){
+    public function studentdbEditpage($studentdb_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        // $stddbs = Studentdb::where('session_id', $ses->id)->get();
+        $stddb = Studentdb::find($studentdb_id);
+        // echo $studentdb_id;
+        $clss = Clss::all();
+        $secn = Section::all();
+        $ssex = Miscoption::where('tabName', 'studentdbs')
+                    ->where('fieldName', 'ssex')
+                    ->get();
 
+        $relg = Miscoption::where('tabName', 'studentdbs')
+                    ->where('fieldName', 'relg')
+                    ->get();
+        
+        $cste = Miscoption::where('tabName', 'studentdbs')
+                    ->where('fieldName', 'cste')
+                    ->get();
 
-
+        $natn = Miscoption::where('tabName', 'studentdbs')
+                    ->where('fieldName', 'natn')
+                    ->get();
         
 
-        return view ('students.studentdbEdit');
+        return view ('students.studentdbEdit')
+        ->with('stddb', $stddb)
+        ->with('clss', $clss)
+        ->with('secn', $secn)
+        ->withSsex($ssex)
+        ->withRelg($relg)
+        ->withCste($cste)
+        ->withNatn($natn)
+        ;
     }
+
+    public function studentdbEditpageSubmit(Request $requst){
+        echo $request->editStddbId;
+        $stddb = Studentdb::find($request->editStddbId);
+        echo "hello";
+        $stddb->name = $request->admName;
+        $stddb->stclss_id = $request->admClss;
+    }
+
+
+
+
 
     public function studentdbSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();

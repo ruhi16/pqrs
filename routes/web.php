@@ -159,11 +159,17 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/studentdb', 'StudentController@studentdb');
         Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
-        //Route::get('/studentdbEdit/{student_id}', 'StudentController@studentdbEdit');
+
+        Route::get('/studentdbEditpage/{studentdb_id}', 'StudentController@studentdbEditpage');
+        Route::post('/studentdbEditpage-submit', 'StudentController@studentdbEditpageSubmit');
+        
         Route::post('/studentdbEdit-submit', 'StudentController@studentdbEditSubmit');
 
         //Ajax Update
         Route::post('/updateSection', 'StudentController@updateSection');
+
+
+
 
         Route::get('/studentdbmultipage', 'StudentController@studentdbmultipage');
         Route::post('/studentdbmultipage-submit', 'StudentController@studentdbmultipageSubmit');
