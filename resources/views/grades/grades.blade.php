@@ -143,7 +143,7 @@
 
   
             <div class="form-group">            
-              <input type="hidden" class="form-control" id="editGradeId" name="editGradeId" placeholder="Grade Particular Name">
+              <input type="hidden" class="form-control" id="editGradeId" name="editGradeId" value="">
             
               <label class="control-label col-sm-2" for="editExType">Exam Type:</label>
                 <div class="col-sm-4">
@@ -284,7 +284,7 @@
             $('input[name="editEnperc"]').val(enper);
             $('input[name="editDescr"]').val(descr);
 
-            $('input[name="deltGradeId"]').val(v);
+            $('input[name="editGradeId"]').val(v);
             //$('#editModal').modal('show');
           });
       

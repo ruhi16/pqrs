@@ -57,6 +57,18 @@ class GradeController extends Controller
         return back();
     }
 
+    public function gradesView(){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $grparts = Gradeparticular::all();
+
+        return view('grades.gradesView')
+            ->with('grparts', $grparts)
+            
+            ;
+    }
+
+
+
     public function gradesEditSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
 
@@ -69,12 +81,12 @@ class GradeController extends Controller
         $grade->descrp = $request->editDescr;
         $grade->save();
 
-        // echo "<br>". $request->editGradeId;
-        // echo "<br>". $request->editExType;
-        // echo "<br>". $request->editGrade;
-        // echo "<br>". $request->editStperc;
-        // echo "<br>". $request->editEnperc;
-        // echo "<br>". $request->editDescr;
+        // echo "<br>id:". $request->editGradeId;
+        // echo "<br>extp:". $request->editExType;
+        // echo "<br>gr:". $request->editGrade;
+        // echo "<br>stpr:". $request->editStperc;
+        // echo "<br>enpr". $request->editEnperc;
+        // echo "<br>desc:". $request->editDescr;
         return back();
     }
     public function gradesDeltSubmit(Request $request){

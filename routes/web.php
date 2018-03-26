@@ -74,7 +74,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/gradeparticulars-editsubmit', 'GradeparticularController@gradeparticularsEditSubmit');
         Route::post('/gradeparticulars-deltsubmit', 'GradeparticularController@gradeparticularsDeltSubmit');
 
-        Route::get('/grades', 'GradeController@grades');//->middleware('FinMidware:grades');
+        Route::get('/grades', 'GradeController@grades')->middleware('FinMidware:grades');
         Route::post('/grades-submit', 'GradeController@gradesSubmit');
         Route::get('/grades-view', 'GradeController@gradesView');
         Route::post('/grades-editsubmit', 'GradeController@gradesEditSubmit');
