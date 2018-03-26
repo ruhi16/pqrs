@@ -38,7 +38,7 @@
           <select class="form-control" name="admSecn" id="admSecn">
             <option value=""> </option>
             @foreach($secn as $sec)
-              <option value="{{ $sec->name }}" {{ $sec->id == $stddb->stsec_id ? 'selected' : ''}}>{{ $sec->name }}</option>            
+              <option value="{{ $sec->id }}" {{ $sec->id == $stddb->stsec_id ? 'selected' : ''}}>{{ $sec->name }}</option>            
             @endforeach
           </select>
         </div>

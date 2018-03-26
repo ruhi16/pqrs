@@ -95,12 +95,19 @@ class StudentController extends Controller
         ;
     }
 
-    public function studentdbEditpageSubmit(Request $requst){
-        echo $request->editStddbId;
+    public function studentdbEditpageSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
         $stddb = Studentdb::find($request->editStddbId);
-        echo "hello";
+        
         $stddb->name = $request->admName;
         $stddb->stclss_id = $request->admClss;
+        $stddb->stsec_id = $request->admSecn;
+        $stddb->ssex = $request->admGndr;
+        $stddb->relg = $request->admRelg;
+        $stddb->cste = $request->admCste;
+
+        $stddb->save();
+        return redirect()->to('/studentdb');
     }
 
 

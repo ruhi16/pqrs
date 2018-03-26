@@ -124,7 +124,7 @@
           <label class="control-label col-sm-1 text-left" for="ssex">Gender:</label>
           <div class="col-sm-2">
           <select class="form-control" name="ssex" id="sx">
-                <option value="0"></option>
+                <option value=""></option>
                 @foreach($ssex as $sex)              
                   <option value="{{$sex->options}}">{{$sex->options}}</option>              
                 @endforeach
@@ -237,7 +237,7 @@
           <label class="control-label col-sm-1 text-left" for="edGndr">Gender:</label>
           <div class="col-sm-2">
           <select class="form-control" name="edGndr" id="edGndr">
-                <option value="0"></option>
+                <option value=""></option>
                 @foreach($ssex as $sex)              
                   <option value="{{$sex->options}}">{{$sex->options}}</option>              
                 @endforeach
@@ -318,7 +318,7 @@
       var relg = $("#tabclss #tr"+v+" #relg").text();
       var cste = $("#tabclss #tr"+v+" #cste").text();     
       
-      alert ("id:"+gndr);
+      {{--  alert ("id:"+gndr);  --}}
       
       $('input[name="edStdId"]').val(v);//hidden text box to transfer student_id only
       $('input[name="edName"]').val(name);      
