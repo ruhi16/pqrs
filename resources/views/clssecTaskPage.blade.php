@@ -30,10 +30,7 @@
     <td>{{$clssec->section()->first()->name}}</td>
     <td>
         <button class="btn btn-success btn-sm btnClsTeacherEdit" data-toggle="modal"  data-cls="{{$clssec->clss->id}}" data-sec="{{$clssec->section->id}}" data-target="#myModal">Edit</button> 
-        {{--  @foreach($teachers as $teacher)
-            {{$teacher->name}}
-
-        @endforeach  --}}
+        
         @php $teacher_id = $clssteachers->where('clss_id', $clssec->clss->id)->where('section_id', $clssec->section->id)->pluck('id')->first() @endphp
 
         {{ $teachers->where('id', $teacher_id)->pluck('name')}}
