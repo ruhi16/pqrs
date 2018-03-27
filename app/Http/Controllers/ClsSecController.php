@@ -11,6 +11,7 @@ use App\Extype;
 use App\Clss;
 use App\Subject;
 use App\Section;
+use App\Teacher;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -18,7 +19,7 @@ use App\Studentcr;
 use App\Clssub;
 use App\Clssec;
 
-
+use App\Clssteacher;
 use App\Exmtypclssub;
 use App\Marksentry;
 
@@ -106,15 +107,36 @@ class ClsSecController extends Controller
     public function clssecTaskPage(){
         $ses = Session::whereStatus('CURRENT')->first();
         $clssecs = Clssec::whereSession_id($ses->id)->get();
-        
-
+        $teachers = Teacher::all();
+        $clssteachers = Clssteacher::all();
         // foreach($clssecs as $cs){
         //    print_r($cs->clss()->first()->name);echo "<br>";
         // }
         return view('clssecTaskPage')
         ->with('clssecs', $clssecs)
+        ->with('teachers', $teachers)
+        ->with('clssteachers', $clssteachers)
         ;
     }
+
+    public function clssecTaskPageTeacherSubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+
+        $teacher = Clssteacher::firstOrNew([ 'clss_id'=>$request->clssId, 
+                                'section_id'=>$request->secnId,
+                                'session_id'=>$ses->id]);
+        $teacher->clss_id = $request->clssId;
+        $teacher->section_id = $request->secnId;
+        $teacher->teacher_id = $request->selectTeacher;
+        $teacher->session_id = $ses->id;
+        $teacher->save();
+
+        return back();
+    }
+
+
+
+
 
     public function clssecAdminPage($clss_id, $section_id){
         $ses = Session::whereStatus('CURRENT')->first();        
