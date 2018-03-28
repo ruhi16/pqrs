@@ -15,4 +15,9 @@ class Teacher extends Model
     public function answerscriptdistributions(){
         return $this->hasMany('App\Answerscriptdistribution');
     }
+
+
+    public function clssteacher(){
+        return $this->hasOne('App\Clssteacher');
+    }
 }

@@ -31,9 +31,12 @@
     <td>
         <button class="btn btn-success btn-sm btnClsTeacherEdit" data-toggle="modal"  data-cls="{{$clssec->clss->id}}" data-sec="{{$clssec->section->id}}" data-target="#myModal">Edit</button> 
         
-        @php $teacher_id = $clssteachers->where('clss_id', $clssec->clss->id)->where('section_id', $clssec->section->id)->pluck('id')->first() @endphp
+        @php $teacher_id = $clssteachers->where('clss_id', $clssec->clss->id)
+                ->where('section_id', $clssec->section->id)->first()['teacher_id'] 
+        @endphp
 
-        {{ $teachers->where('id', $teacher_id)->pluck('name')}}
+        {{ $teachers->where('id', $teacher_id)->first()['name']}}
+
     </td>
     <td><a href="{{url('/clssec-AdminPage',[$clssec->clss_id,$clssec->section_id])}}">Clss-Sec Admission</a></td>
     <td><a href="{{url('/clssec-MrkenPage',[$clssec->id])}}">Clss-Sec Mark Entry Status</a></td>
@@ -55,15 +58,15 @@
       {!! Form::open(['url'=>'/clssecTaskPage-teacherSubmit','method'=>'post', 'class'=>'form-horizontal']) !!}
 			<div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Enter New Class...</h4>
+        <h4 class="modal-title">Select Class Teacher</h4>
       </div>
       <div class="modal-body">        
 
 
 		    <div class="form-group">
         	    <label class="control-label col-sm-4" for="clssName">Select Teachers:</label>
-                <input type="text" name="clssId" >
-                <input type="text" name="secnId" >
+                <input type="hidden" name="clssId" >
+                <input type="hidden" name="secnId" >
 				<div class="col-sm-6">
                     <select class="form-control" name="selectTeacher" id="selectTeacher">
                     <option value="0"></option>
