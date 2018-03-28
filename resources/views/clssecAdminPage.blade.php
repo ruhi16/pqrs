@@ -11,12 +11,12 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <td>#</td>
-            <td>Name</td>
-            <td>Class</td>
-            <td>Sections</td>
-            <td>Roll No</td>
-            <td>Action</td>
+            <th>#</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Sections</th>
+            <th>Roll No</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -26,7 +26,7 @@
         <td>{{$std->id}}</td>
         <td>{{$std->name}}</td>
         <td>{{$std->stclss_id}}</td>
-        <td>{{$std->id}}</td>
+        <td>{{$std->stsec_id}}</td>
         <td></td>
         <td>          
             <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>          
