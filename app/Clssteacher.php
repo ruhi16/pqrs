@@ -11,4 +11,10 @@ class Clssteacher extends Model
     public function teacher(){
         return $this->belongsTo('App\Teacher');
     }
+    public function clss(){
+        return $this->belongsTo('App\Clss');
+    }
+    public function section(){
+        return $this->belongsTo('App\Section');
+    }
 }
