@@ -1,5 +1,5 @@
 <?php
-// use Fpdf;
+//use Fpdf;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -211,6 +211,8 @@ Route::group(['middleware' => ['auth']], function () {
 });
   
 
+Route::get('/fpdf-test', 'fPdfController@fPdfMethod');
+
 
 Route::get('/fpdf', function () {
 
@@ -218,6 +220,7 @@ Route::get('/fpdf', function () {
     Fpdf::SetFont('Courier', 'B', 18);
     Fpdf::Cell(50, 25, 'Hello World!');
     Fpdf::Output();
+    exit;
 
 });
 
@@ -228,5 +231,5 @@ Route::get('/fpdf2', function (Codedge\Fpdf\Fpdf\Fpdf $fpdf) {
     $fpdf->SetFont('Courier', 'B', 18);
     $fpdf->Cell(50, 25, 'Hello World!');
     $fpdf->Output();
-
+    exit;
 });
