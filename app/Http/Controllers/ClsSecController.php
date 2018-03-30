@@ -188,10 +188,10 @@ class ClsSecController extends Controller
         // print_r($stcr);
         // dd($stcr);
         if($stcr->count() > 0){
-            echo $stcr->count();
-            print_r($stcr);
+            // echo $stcr->count();
+            // print_r($stcr);
         }else{
-            echo $stcr->count();
+            // echo $stcr->count();
         }
 
         $stdcr = new Studentcr;
@@ -200,7 +200,7 @@ class ClsSecController extends Controller
         $stdcr->clss_id = $stddb->stclss_id;
         $stdcr->section_id = $stddb->stsec_id;
         $stdcr->roll_no = ($stcr->count() > 0 ? ($stcr->first()->roll_no+1): 1);//((empty($stcr) ? 0 : $stcr->first()->roll_no ) + 1);
-        echo "roll".$stdcr->roll_no;
+        // echo "roll".$stdcr->roll_no;
         $stdcr->save();
         return redirect()->to(url('/clssec-AdminPage',[$stddb->stclss_id, $stddb->stsec_id]));
     }

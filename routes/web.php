@@ -211,7 +211,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
   
 
-Route::get('/fpdf-test', 'fPdfController@fPdfMethod');
+Route::get('/ResultSheetPdf/{clssec_id}/{studentcr_id}', 'fPdfController@fPdfResultSheet');
 
 
 Route::get('/fpdf', function () {
@@ -219,7 +219,7 @@ Route::get('/fpdf', function () {
     Fpdf::AddPage();
     Fpdf::SetFont('Courier', 'B', 18);
     Fpdf::Cell(50, 25, 'Hello World!');
-    Fpdf::Output();
+    Fpdf::Output('abc.pdf', F);
     exit;
 
 });
@@ -229,7 +229,7 @@ Route::get('/fpdf2', function (Codedge\Fpdf\Fpdf\Fpdf $fpdf) {
 
     $fpdf->AddPage();
     $fpdf->SetFont('Courier', 'B', 18);
-    $fpdf->Cell(50, 25, 'Hello World!');
+    $fpdf->Cell(50, 25, 'Hello World! দিস ইস টেস্ট');
     $fpdf->Output();
     exit;
 });

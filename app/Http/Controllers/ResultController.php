@@ -66,8 +66,7 @@ class ResultController extends Controller
 
     public function ResultSheet(Request $request, $clssec_id, $studentcr_id){
         $ses = Session::whereStatus('CURRENT')->first();
-        $sch = School::find(1);       
-
+        $sch = School::find(1);               
         $exms = Exam::all();
         $exts = Extype::all()->sortBy('name');
         $clsc = Clssec::find($clssec_id);
