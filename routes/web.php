@@ -210,6 +210,20 @@ Route::group(['middleware' => ['auth']], function () {
         
 });
   
+Route::get('/get-logout', function(){
+
+   auth()->logout();
+    // auth()->logout();
+   Session::flush();
+   return redirect('/');
+
+});
+
+Event::listen('auth.login', function()
+{
+    Session::set('Key', "Registered");
+});
+
 
 Route::get('/ResultSheetPdf/{clssec_id}/{studentcr_id}', 'fPdfController@fPdfResultSheet');
 

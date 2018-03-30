@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Fpdf;
 
 use DB;
@@ -63,6 +64,10 @@ class fPdfController extends Controller
         
         Fpdf::Ln();
         Fpdf::Cell(190, 8,$strStdDetail ,0,1,'C');
+
+        session(['key' => 'value']);
+        $str = session('Key');//auth()->user()->name; //\Auth::user()////->get('key1');//Hash::make(str_random(8));
+        Fpdf::Cell(190, 8, $str ,0,1,'C');
         
         
         

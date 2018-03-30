@@ -15,8 +15,8 @@
 
 <table class="table">
   <tr>
-    <td><b>Name: </B>{{$stcr->studentdb->name}}</td>
-    <td><b>Class: </B>{{$stcr->clss->name}}</td>
+    <td><b>Name:    </B>{{$stcr->studentdb->name}}</td>
+    <td><b>Class:   </B>{{$stcr->clss->name}}</td>
     <td><b>Section: </B>{{$stcr->section->name}}</td>
     <td><b>Roll No: </B>{{$stcr->roll_no}}</td>
   </tr>
