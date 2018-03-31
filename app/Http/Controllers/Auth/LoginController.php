@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -35,11 +37,24 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');   
- 
-        // if (Auth::check()) {
-        //     Session::set('Key', "Registered");
-        // }     
-    }    
+        //$this->setSession();
+           
+    }   
+    // public function authenticate()
+    // {
+    //     if (Auth::attempt(['email' => $email, 'password' => $password])) {
+    //         // Authentication passed...
+    //         session(['key'=> 'oiko']);
+    //         return redirect()->intended('dashboard');
+    //     }
+    // }
+
+
+    // public function setSession(){
+    //     if(Auth::check()){
+    //         session(['key'=> auth()->user()->name]);
+    //     }
+    // }
 
 
 }

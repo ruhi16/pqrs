@@ -14,18 +14,19 @@
 Auth::routes();
 
 Route::get('/', function () {
-    return view('welcome'); //homepage
-    // $u = App\User::find(1);
-    // print_r(getTableColumns('teachers'));
+    return view('welcome'); 
 });
 Route::get('/start', function () {
     return view('start'); //homepage
 });
-// Route::get('/login', 'HomeController@index');
-// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
-    
+
+        // Route::group(['middleware' => ['CheckUser']], function () {
+        //     Route::get('/login', 'Auth\LoginController@setSession');
+        // });
+
+
         Route::get('/home', 'HomeController@index')->name('home');
         // Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@start']);
 
@@ -211,39 +212,10 @@ Route::group(['middleware' => ['auth']], function () {
 });
   
 Route::get('/get-logout', function(){
-
-   auth()->logout();
-    // auth()->logout();
+   auth()->logout();    
    Session::flush();
    return redirect('/');
-
 });
-
-Event::listen('auth.login', function()
-{
-    Session::set('Key', "Registered");
-});
-
 
 Route::get('/ResultSheetPdf/{clssec_id}/{studentcr_id}', 'fPdfController@fPdfResultSheet');
 
-
-Route::get('/fpdf', function () {
-
-    Fpdf::AddPage();
-    Fpdf::SetFont('Courier', 'B', 18);
-    Fpdf::Cell(50, 25, 'Hello World!');
-    Fpdf::Output('abc.pdf', F);
-    exit;
-
-});
-
-
-Route::get('/fpdf2', function (Codedge\Fpdf\Fpdf\Fpdf $fpdf) {
-
-    $fpdf->AddPage();
-    $fpdf->SetFont('Courier', 'B', 18);
-    $fpdf->Cell(50, 25, 'Hello World! দিস ইস টেস্ট');
-    $fpdf->Output();
-    exit;
-});

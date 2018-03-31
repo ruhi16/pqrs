@@ -34,7 +34,7 @@
                     <a class="btn btn-primary" href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>                    
                     <a class="btn btn-warning" href="{{url('/finalizeSessions')}}">Finalize Sessions</a>                    
                     <a class="btn btn-success" href="{{url('/session')}}">Session Details</a>
-                    <a class="btn btn-info" href="{{url('/schools')}}">School Details</a>                    
+                    <a class="btn btn-info"    href="{{url('/schools')}}">School Details</a>                    
                     <a class="btn btn-primary" href="{{url('/schools-view')}}">School Details View</a>                    
                     <a class="btn btn-info" href="{{url('/clsses')}}">Class Details Entry</a>                    
                     <a class="btn btn-success" href="{{url('/clsses-view')}}">Class Details Display</a>
