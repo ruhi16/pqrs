@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>@yield('title')</title>
-	@include('layouts.supports')
+	{{--  @include('layouts.supports')  --}}
 </head>
 <body>
 
