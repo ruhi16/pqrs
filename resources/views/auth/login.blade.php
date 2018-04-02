@@ -1,4 +1,4 @@
-{{--  @extends('layouts.app')  --}}  --}}
+{{--  @extends('layouts.app')  --}}  
 {{--  @section('content')  --}}
 
 @extends('layouts.baselayout')
@@ -75,7 +75,10 @@
         </div>
     </div>
 </div>
-@endsection
+
+
+
+{{--  @endsection  --}}
 
 
 
