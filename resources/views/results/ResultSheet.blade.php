@@ -46,8 +46,8 @@
           <tr>            
             <th>Sl</th>
             <th>Subject</th>
-            @foreach($exms as $exm)
-              <th>{{$exm->name}}</th>
+            @foreach($exms as $exm) 
+              <th><b>{{$exm->name}},</b></th>
             @endforeach
             <th>Total</th>
             <th>Grade</th>
