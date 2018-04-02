@@ -1,14 +1,14 @@
-@extends('layouts.app')  --}}
-@section('content')
+{{--  @extends('layouts.app')  --}}  --}}
+{{--  @section('content')  --}}
 
-{{--  @extends('layouts.baselayout')
+@extends('layouts.baselayout')
 @section('title','Home')
 
 @section('header')
-	{{--  @include('layouts.navbar')  --}}
-{{--  @endsection  --}}
+	@include('layouts.navbar')
+@endsection
 
-{{--  @section('content')    --}}
+@section('content')  
 
 <div class="container">
     <div class="row">
@@ -75,20 +75,20 @@
         </div>
     </div>
 </div>
-{{--  @endsection  --}}
+@endsection
 
 
 
 
 <script type="text/javascript">
-$(document).ready(function(e){
+    $(document).ready(function(e){
     
-});  
+    });  
 </script>
 
 @endsection
 
 @section('footer')
-    {{--  @include('layouts.footer')  --}}
+    @include('layouts.footer')
 @endsection
   
