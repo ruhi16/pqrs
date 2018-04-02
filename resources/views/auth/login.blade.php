@@ -89,6 +89,6 @@ $(document).ready(function(e){
 @endsection
 
 @section('footer')
-    @include('layouts.footer')
+    {{--  @include('layouts.footer')  --}}
 @endsection
   
