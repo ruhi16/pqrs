@@ -1,13 +1,13 @@
-{{--  @extends('layouts.app')  --}}
-{{--  @section('content')  --}}
-@extends('layouts.baselayout')
-@section('title','Home')
-
-@section('header')
-	{{--  @include('layouts.navbar')  --}}
-@endsection
-
+@extends('layouts.app')
 @section('content')
+{{--  @extends('layouts.baselayout')  --}}
+{{--  @section('title','Home')  --}}
+
+{{--  @section('header')  --}}
+	{{--  @include('layouts.navbar')  --}}
+{{--  @endsection  --}}
+
+{{--  @section('content')  --}}
 
 <div class="container">
     <div class="row">
