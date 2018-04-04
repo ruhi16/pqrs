@@ -91,7 +91,7 @@ class BaseController extends Controller
     }
 
 
-
+// old methods
     public function exmtypclssub(){
         $exams = Exam::all();
         $extps = Extype::all();

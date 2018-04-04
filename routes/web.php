@@ -138,9 +138,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 
-        Route::get('/clssub', 'ClsSubController@clssub')->middleware('FinMidware:clssubs-clsses-subjects');
+        Route::get('/clssubs', 'ClsSubController@clssub')->middleware('FinMidware:clssubs-clsses-subjects');
         Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
-        Route::get('/clssub-view', 'ClsSubController@clssubView');
+        Route::get('/clssubs-view', 'ClsSubController@clssubView');
 
 
 
@@ -155,9 +155,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/exmtypclssubfmEntry/{clss_id}', 'BaseController@exmtypclssubfmEntry');
         Route::post('/exmtypclssubfmEntry-submit', 'BaseController@exmtypclssubfmEntrySubmit');
 
-        Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
-        Route::post('/exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
-        Route::get('/exmtypclssub-view', 'BaseController@exmtypclssubView');
+        // Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
+        // Route::post('/exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
+        // Route::get('/exmtypclssub-view', 'BaseController@exmtypclssubView');
 
 
         Route::get('/studentdb', 'StudentController@studentdb');

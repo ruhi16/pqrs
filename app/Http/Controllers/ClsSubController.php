@@ -92,7 +92,7 @@ class ClsSubController extends Controller
         }// end of if
         
 
-        return redirect()->to('clssub-view');
+        return redirect()->to('clssubs-view');
     }
     public function clssubView(){
         $sessions = Session::all();//$ses = Session::whereStatus('CURRENT')->first();

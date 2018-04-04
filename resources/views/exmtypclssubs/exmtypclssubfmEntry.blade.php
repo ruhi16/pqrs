@@ -35,6 +35,11 @@
                     {{--  to extract subject_id, use an hidden textbox  --}}
                     <input type="hidden"value="{{$clsb->subject_id}}" 
                                         name="sb{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]">
+                    {{--  @php 
+                    $fm = $etcss->where('examm_id',$exam->id)->where('extype_id', $clsb->subject->extype->id)
+                                ->where('subject_id', $clsb->subject_id);
+
+                    @endphp  --}}
 
                     <input type="text"  value="" class="form-control input-sm"
                                         name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}{{$clsb->subject_id}}[]">

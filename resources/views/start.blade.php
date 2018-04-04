@@ -54,10 +54,10 @@
                     <a class="btn btn-warning" href="{{url('/gradeparticulars-view')}}">Grade particular View</a>
                     <a class="btn btn-danger" href="{{url('/grades')}}">Grade Details Entry</a>                    
                     <a class="btn btn-primary" href="{{url('/gradesView')}}">Grade Details View</a>
-                    <a class="btn btn-info" href="{{url('/clssub')}}">Class - Subject Entry</a>                    
-                    <a class="btn btn-danger" href="{{url('/clssub-view')}}">Class - Subject View</a>                    
-                    <a class="btn btn-primary" href="{{url('/exmtypclssub')}}">Exam - Type - Class - Subject Entry (X)</a>
-                    <a class="btn btn-success" href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View (X)</a>                    
+                    <a class="btn btn-info" href="{{url('/clssubs')}}">Class - Subject Entry</a>                    
+                    <a class="btn btn-danger" href="{{url('/clssubs-view')}}">Class - Subject View</a>                    
+                    {{--  <a class="btn btn-primary" href="{{url('/exmtypclssub')}}">Exam - Type - Class - Subject Entry (X)</a>
+                    <a class="btn btn-success" href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View (X)</a>                      --}}
                     {{--  <a class="btn btn-primary" href="{{url('/gradedescription')}}">Grade Description Entry</a>                    
                     <a class="btn btn-primary" href="{{url('/gradedescription-view')}}">Grade Description View</a>  --}}
                     <a class="btn btn-primary" href="{{url('/studentdb')}}">Students Detail View</a>                    
