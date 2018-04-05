@@ -33,10 +33,12 @@ class AnswerScriptController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $exms = Exam::all();
         $clss = Clss::all();
+        $clssec = Clssec::all();
 
         return view('answerscripts.answerscripts')
         ->withExms($exms)
         ->withClss($clss)
+        ->withClssec($clssec)
         ;
     }
 

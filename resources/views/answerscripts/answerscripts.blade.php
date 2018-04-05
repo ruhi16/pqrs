@@ -13,6 +13,7 @@
     <tr>
       <th>SL</th>
       <th>Class</th>
+      <th>Sections</th>
       @foreach($exms as $ex)
         <th>{{$ex->name}}</th>
       @endforeach
@@ -23,6 +24,11 @@
     <tr>
       <td>{{$cl->id}}</td>
       <td>{{$cl->name}}</td>
+      <td>
+        @foreach($clssec as $cs)          
+            {{ $cs->clss_id == $cl->id ? $cs->section->name : ''}}          
+        @endforeach
+      </td>
       @foreach($exms as $ex)
         <td><a href="{{url('/answerscript-distribution',[$ex->id,$cl->id])}}">Answer Script Distribution</a></td>
       @endforeach

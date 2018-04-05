@@ -68,16 +68,18 @@
                     <a class="btn btn-info" href="{{url('/studentdbmultipage')}}">New Admission Students Details Entry Page</a>                    
                     <a class="btn btn-danger" href="{{url('/studentdbmultipage-search')}}">New Admission Students Details Search Page</a>
                     <a class="btn btn-warning" href="{{url('/studentdbmultipage-view')}}">New Admission Students Details View Page</a>
-                    <a class="btn btn-info" href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
-                    <a class="btn btn-success" href="{{url('/exmtypclssubTaskpane')}}">Exam Type Class Subject Task Pane</a>
+                    
+                    
                     {{--  
                     <a class="btn btn-primary" href="{{url('/clssubjfm/1')}}">Exam Term and Class Wise Full Marks Specification Entry (V)</a>
                     <a class="btn btn-primary" href="{{url('/clssubjfm-view/1')}}">Exam Term and Class Wise Full Marks Specification View (V)</a>  
                     --}}
+                    <a class="btn btn-success" href="{{url('/exmtypclssubTaskpane')}}">Exam Type Class Subject Task Pane</a>
                     <a class="btn btn-info" href="{{url('/teachers')}}">Teachers Details Entry Point</a>
                     <a class="btn btn-primary" href="{{url('/teachers-view')}}">Teachers Details View Point</a>
                     <a class="btn btn-default" href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
-
+                    <a class="btn btn-info" href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
+                    
                 </div>
             </div>
         </div>

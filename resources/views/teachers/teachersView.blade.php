@@ -62,7 +62,7 @@
           </td>
           <td>{{ $teacher->status }}</td>
           <td>{{ $teacher->notes }}</td>
-          <td><a href="{{url('/teachers-takspan',[$teacher->id])}}">Go to Taskpane</a></td>
+          <td><a href="{{url('/teachers-takspan',[$teacher->id])}}" class="btn btn-info">Go to Taskpane</a></td>
 				</tr>
       @endforeach
 			</tbody>
