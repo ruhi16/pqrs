@@ -154,8 +154,7 @@ class TeacherController extends Controller
 
         return view('teachers.teacherTaskpane')
             ->withTeacher($teacher)
-            ->withAnscrdists($anscrdists)
-            
+            ->withAnscrdists($anscrdists)            
             ->withExtpclsbs($extpclsbs)
             ->withClscs($clscs)
             ->withClsbs($clsbs)

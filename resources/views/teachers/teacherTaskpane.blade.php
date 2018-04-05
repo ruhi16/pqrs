@@ -31,7 +31,7 @@
       <tr>
         <td>{{$anscr->id}}</td>
         <td>{{$anscr->exam->name}}</td>
-        <td>{{$anscr->clss->name}}</'td>
+        <td>{{$anscr->clss->name}}</td>
         <td>{{$anscr->section->name}}</td>
         <td>{{$anscr->subject->name}}</td>
         <td>{{$anscr->nostudent_pre}}</td>
