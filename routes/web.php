@@ -22,6 +22,15 @@ Route::get('/start', function () {
 
 Route::group(['middleware' => ['auth']], function () {
 
+        
+        Route::get('/admin', 'HomeController@admin')
+            ->middleware('admin');
+
+
+        Route::get('/user', 'HomeController@user')
+            ->middleware('user');
+
+
         // Route::group(['middleware' => ['CheckUser']], function () {
         //     Route::get('/login', 'Auth\LoginController@setSession');
         // });
@@ -98,7 +107,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/teachers-edit/{id}/{extype_id}', 'TeacherController@teachersEdit');
         Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
         // Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
-        Route::get('/teachers-takspan/{teacher_id}', 'TeacherController@teachersTakspan');
+        Route::get('/teachers-takspan/{teacher_id}', 'TeacherController@teachersTakspan')
+            ->middleware('user');
 
         // till the above entry was tested Oke with middleware too
 

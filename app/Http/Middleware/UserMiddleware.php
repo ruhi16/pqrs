@@ -14,12 +14,11 @@ class UserMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-        foreach(auth()->user()->roles as $role){
-            if($role->name == 'User'){
-                return $next($request);
-            }
+{        
+        if(auth()->user()->role->name == 'User'){
+            return $next($request);
         }
+    
         return redirect()->to('/');
     }
 }

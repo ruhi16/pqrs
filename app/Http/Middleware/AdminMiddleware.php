@@ -15,11 +15,10 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        foreach(auth()->user()->roles as $role){
-            if($role->name == 'Admin'){
-                return $next($request);
-            }
-        }
+        
+        if(auth()->user()->role->name == 'Admin'){
+            return $next($request);
+        }    
         return redirect()->to('/');
     }
 }
