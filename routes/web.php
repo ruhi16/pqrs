@@ -12,7 +12,7 @@
 | Middleware: FinMidware=> 1st:combined Table Name, 2nd: Content Table Names, 3rd: so on
 | Middleware: admin     => check the user is admin or not?
 | Middleware: user      => check the user is user of not?
-| Middleware: matchUser => not to open other's profile
+| Middleware: matchUser => if not admin, auth teacher_id with logged User_id
 */
 Auth::routes();
 

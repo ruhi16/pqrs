@@ -16,11 +16,15 @@ class MatchUserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if( Auth::user()->id == $request->route('teacher_id') ){
-            // echo "User: ". Auth::user()->name;
+        if( Auth::user()->role->name == "Admin" ){
+            return $next($request);    
         }else{
-            // echo "User not found";
-            return redirect()->to('/');
+            if( Auth::user()->id == $request->route('teacher_id') ){
+                // echo "User: ". Auth::user()->name;
+            }else{
+                // echo "User not found";
+                return redirect()->to('/');
+            }
         }
         return $next($request);
     }
