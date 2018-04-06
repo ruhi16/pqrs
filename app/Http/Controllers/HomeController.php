@@ -37,11 +37,13 @@ class HomeController extends Controller
     }
 
     public function admin(){
-        return view('/admin');
+
+        return redirect()->to('/start'); //admin.blade.php
     }
 
     public function user(){
-        return view('/user');
+
+        return redirect()->to('/teachers'); //user.blad.php
     }
 
 

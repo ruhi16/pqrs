@@ -9,35 +9,38 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-| Middleware: FinMidware => 1st:combined Table Name, 2nd: Content Table Names, 3rd: so on
+| Middleware: FinMidware=> 1st:combined Table Name, 2nd: Content Table Names, 3rd: so on
+| Middleware: admin     => check the user is admin or not?
+| Middleware: user      => check the user is user of not?
+| Middleware: matchUser => not to open other's profile
 */
 Auth::routes();
 
 Route::get('/', function () {
-    return view('welcome'); 
+    return view('welcome');
+
 });
+
 Route::get('/start', function () {
     return view('start'); //homepage
+
 });
 
 Route::group(['middleware' => ['auth']], function () {
+        Route::get('/home', 'HomeController@index')->name('home');
+        
+        Route::group(['middleware' => ['admin']], function(){
+            Route::get('/admin', 'HomeController@admin');
+
+        });
+        
+        Route::group(['middleware' => ['user']], function(){
+            Route::get('/user', 'HomeController@user');
+
+        });
+        
 
         
-        Route::get('/admin', 'HomeController@admin')
-            ->middleware('admin');
-
-
-        Route::get('/user', 'HomeController@user')
-            ->middleware('user');
-
-
-        // Route::group(['middleware' => ['CheckUser']], function () {
-        //     Route::get('/login', 'Auth\LoginController@setSession');
-        // });
-
-
-        Route::get('/home', 'HomeController@index')->name('home');
-        // Route::get('/home', ['as'=>'xyz', 'uses'=>'HomeController@start']);
 
         Route::get('/clsses', 'ClssesController@clsses')->middleware('FinMidware:clsses');
         Route::post('/clsses-submit', 'ClssesController@clssesSubmit');
