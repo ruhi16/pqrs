@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
-class checkUserMiddleware
+class checkUser
 {
     /**
      * Handle an incoming request.
@@ -14,11 +15,14 @@ class checkUserMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-        // if(\Auth::check()){
-        //     return redirect('/clsses');
-        // }
-        // Session::set('Key', "Registered");
-         return $next($request);//redirect()->to('/');
+    {     
+        if( Auth::user()->id == $request->route('id') ){
+            // echo "User: ". Auth::user()->name;
+        }else{
+            // echo "User not found";
+            return redirect()->to('/');
+        }
+                
+        return $next($request);
     }
 }

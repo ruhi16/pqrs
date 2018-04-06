@@ -25,4 +25,16 @@ class HomeController extends Controller
     {
         return view('/start');
     }
+
+    // public function index()
+    // {
+    //     session(['key' => Auth::user()->name]);
+    //     foreach(auth()->user()->roles as $role){
+    //         if($role->name == "Admin"){
+    //             return redirect()->to('/admins');
+    //         }else{
+    //             return redirect()->to('/users');
+    //         }
+    //     }
+    // }
 }

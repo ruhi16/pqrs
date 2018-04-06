@@ -6,7 +6,16 @@
 @endsection
 
 @section('content')
-<h1>Teachers Takpane ...</h1>
+
+<div class="well well-sm"><h1>Teachers Takpane ...</h1></div>
+
+<ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
+  <li role="presentation" class="active"><a href="#">Home</a></li>
+  <li role="presentation"><a href="#">Profile</a></li>
+  <li role="presentation"><a href="#">Messages</a></li>  
+
+</ul>
+<div class="clearfix"></div>
 <h2><b>Name:</b> {{$teacher->name}}</h2>
 
 <table class="table table-bordered">

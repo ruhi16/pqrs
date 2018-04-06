@@ -32,5 +32,9 @@ class User extends Authenticatable
     // public function getTableColumns() {
     //     return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
     // }
+
+    public function role(){
+        return $this->belongsTo('App\Role');
+    }
     
 }
