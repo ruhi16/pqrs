@@ -108,7 +108,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
         // Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
         Route::get('/teachers-takspan/{teacher_id}', 'TeacherController@teachersTakspan')
-            ->middleware('user');
+            ->middleware('matchUser')
+            ;
 
         // till the above entry was tested Oke with middleware too
 
