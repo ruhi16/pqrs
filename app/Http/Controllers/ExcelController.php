@@ -27,14 +27,21 @@ use App\Marksentry;
 
 class ExcelController extends Controller
 {
+    public function ExcelSheetExStudentDbHtml(){
+
+    }
+    public function ExStudentDb(){
+        return view ('excels.ExStudentDb');
+    }
+
     public function ExcelSheetExStudentDb(){
         
         //return view('ExStudentDb');
         Excel::create('clients', function($excel){
             $excel->sheet('clients', function($sheet){
-                $sheet->loadView('ExStudentDb');
+                $sheet->loadView('excels.ExStudentDb');
             });
-        })->export('xlsx'); //csv
+        })->export('xlsx'); //csv 
     }   
 
 }

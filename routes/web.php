@@ -210,6 +210,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::get('/test', 'BaseController@test');
+        Route::get('/ExStudentDb', 'ExcelController@ExStudentDb');
         Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
 
         Route::get('/PdfSheetExStudentDb', 'PdfController@PdfSheetExStudentDb');
