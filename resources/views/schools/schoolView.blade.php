@@ -26,27 +26,27 @@
 		<table class="table table-bordered" id="tabclss">
 			<thead>
 				<tr>
-          <th>#</th>          
-          <th class="text-center">School Name</th>   
-          <th>Subject Code</th>   
-          <th>Subject Type</th>
-          <th>Session</th> 
-          <th>Action</th>         
-				</tr>
+                    <th>#</th>          
+                    <th class="text-center">School Name</th>   
+                    <th>Address</th>   
+                    <th>Dise Code</th>
+                    <th>Estd</th> 
+                    <th>Action</th>         
+		        </tr>
 			</thead>
 			<tbody>
             @foreach($schools as $school)
                 <tr id="tr{{$school->id}}">
-                <th id="id">{{$school->id}}</th>
-                <th id="name">{{ $school->name }}</th>
-                <th id="code">{{ $school->vill }}</th>
-                <td id="type">{{ $school->post }}</td>
-                <td>{{ $school->session_id }}</td>
-                <td>
-                    {{--  <button class="btn btn-success btn-sm btnEdit" data-id="{{$subject->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
-                    <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$subject->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>  --}}
-                    {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}
-                </td>
+                    <th id="id">{{$school->id}}</th>
+                    <th id="name">{{ $school->name }}</th>
+                    <th id="code">{{ $school->po }}, {{ $school->ps }}, {{ $school->dist }}, {{ $school->pin }}</th>
+                    <td id="type">{{ $school->disecode }}</td>
+                    <td>{{ $school->estd }}</td>
+                    <td>
+                        {{--  <button class="btn btn-success btn-sm btnEdit" data-id="{{$subject->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
+                        <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$subject->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>  --}}
+                        {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}
+                    </td>
                 </tr>
             @endforeach
 			</tbody>
@@ -55,11 +55,31 @@
 </div><!--/1st row within 2nd column -->
 
 
+{{--  
+<link rel="stylesheet" href="http://harshniketseta.github.io/popupMultiSelect/dist/stylesheets/multiselect.min.css">
+<script src="http://harshniketseta.github.io/popupMultiSelect/dist/javascripts/multiselect.min.js"></script>
+
+<div class="container">
+    <h1>Bootstrap Popupmultiselect Example</h1>
+    <select multiple name="language" id="my-language">
+      <option value="1">Laravel</option>
+      <option value="2">PHP</option>
+      <option value="3">Codeigniter</option>
+      <option value="4">JQuery</option>
+      <option value="5">HTML</option>
+      <option value="6">CSS</option>
+      <option value="7">AngularJS</option>
+    </select>
+</div>
 
 
-
-
-
+<script type="text/javascript">
+  $("#my-language").multiselect(
+      {
+        title: "Select Language",
+        maxSelectionAllowed: 5
+      });
+</script>  --}}
 
 {{--  <div class="form-group">
     <label class="control-label col-sm-2" for="schname">School Name:</label>

@@ -39,6 +39,14 @@ Route::group(['middleware' => ['auth']], function () {
 
         });
         
+        
+
+
+
+        Route::get('/session', 'SessionController@session');
+        Route::get('/setSession/{session_id}', 'SessionController@setSession');
+        Route::post('/addSession', 'SessionController@addSession');
+        Route::get('/editSession/{session_id}', 'SessionController@editSession');
 
         
 
@@ -127,14 +135,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-
-
-
-
-        Route::get('/session', 'SessionController@session');
-        Route::get('/setSession/{session_id}', 'SessionController@setSession');
-        Route::post('/addSession', 'SessionController@addSession');
-        Route::get('/editSession/{session_id}', 'SessionController@editSession');
 
 
         Route::get('/clssecs', 'ClsSecController@clssec')->middleware('FinMidware:clssecs-clsses-sections');

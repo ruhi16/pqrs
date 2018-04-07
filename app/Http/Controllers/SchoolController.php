@@ -50,7 +50,7 @@ class SchoolController extends Controller
         $sch->estd = $request->estd;
         $sch->save();
 
-        return back();
+        return redirect()->to('/schools-view');
     }
 
     public function schoolView(){
