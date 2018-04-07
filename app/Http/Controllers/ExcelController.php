@@ -31,6 +31,7 @@ class ExcelController extends Controller
 
     }
     public function ExStudentDb(){
+        
         return view ('excels.ExStudentDb');
     }
 

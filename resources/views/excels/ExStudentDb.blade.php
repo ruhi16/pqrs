@@ -5,7 +5,7 @@
 
 </head>
 <body>
-<a href="{{url('/ExcelSheetExStudentDb')}}">PDF Download</a>
+<a href="{{url('/ExcelSheetExStudentDb')}}">PDF Download(/ExcelSheetExStudentDb)</a>
 
 <table class="table table-bordered">
 <thead>
