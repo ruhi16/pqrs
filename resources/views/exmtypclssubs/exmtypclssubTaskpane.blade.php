@@ -23,7 +23,7 @@
             <td>{{ $cls->id }}</td>
             <td>{{ $cls->name }}</td>
             <td class="text-center"><a href="{{ url('/exmtypclssubfmEntry', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a></td>
-            <td></td>
+            <td class="text-center"><a href="{{ url('/exmtypclssubfmView', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a></td>
         </tr>
         @endforeach
     </tbody>

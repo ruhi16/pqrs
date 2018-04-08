@@ -9,8 +9,8 @@
 <h1>Exam Exam-Type Class Subject Wise Full Marks Distribution</h1>
 
 
-<form method="post" class="form-horizontal" action="{!! url('/exmtypclssubfmEntry-submit') !!}" value="{{ csrf_token() }}">  
-{{ csrf_field() }}
+{{--  <form method="post" class="form-horizontal" action="{!! url('/exmtypclssubfmEntry-submit') !!}" value="{{ csrf_token() }}">  
+{{ csrf_field() }}  --}}
 <table class="table table-bordered">
 <caption><h3>For Class: {{ $cls->name }}</h3></caption>
 <input type="hidden" name="clsId" value="{{ $cls->id }}">
@@ -50,20 +50,20 @@
                     
                     @endphp
 
-                    <input type="text"  value="{{ $subMarks }}" class="form-control input-sm"
-                                        name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}{{$clsb->subject_id}}[]">
+                    {{ $subMarks }}
+                    
                     @php $subTotal += $subMarks ; @endphp
                 </td>                
             @endforeach
-            <td>{{ $subTotal }}</td>
+            <td><b>{{ $subTotal }}</b></td>
         </tr>
         @endif
     @endforeach
 </tbody>
 </table>
 
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>
+{{--  <button type="submit" class="btn btn-primary">Submit</button>  --}}
+{{--  </form>  --}}
 
 <br>
 

@@ -20,14 +20,18 @@ use App\Clssec;
 
 use App\Exmtypclssub;
 use App\Marksentry;
+use App\Finalizeparticular;
 
 class SessionController extends Controller
 {
     public function session(){
         $sessions = Session::all();
+        $sessionfin = Finalizeparticular::where('particular', 'sessions')->first();
 
-        return view ('session')
+
+        return view ('sessions.session')
         ->withSessions($sessions)
+        ->with('sessionfin', $sessionfin)
         ;
     }
     public function setSession($session_id){
@@ -40,6 +44,14 @@ class SessionController extends Controller
         $session->save();
         return back();
     } 
+
+    public function sessionsView(){
+        $sessions = Session::all();
+
+        return view('sessions.sessionView')
+        ->withSessions($sessions)
+        ;
+    }
     
     public function addSession(Request $request){
         

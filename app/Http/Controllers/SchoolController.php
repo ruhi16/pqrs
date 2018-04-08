@@ -60,4 +60,6 @@ class SchoolController extends Controller
         return view('schools.schoolView')
         ->withSchools($schools);
     }
+
+    
 }

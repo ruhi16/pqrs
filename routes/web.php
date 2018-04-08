@@ -43,11 +43,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-        Route::get('/session', 'SessionController@session');
+        Route::get('/session', 'SessionController@session')->middleware('FinMidware:sessions');
         Route::get('/setSession/{session_id}', 'SessionController@setSession');
         Route::post('/addSession', 'SessionController@addSession');
         Route::get('/editSession/{session_id}', 'SessionController@editSession');
-
+        Route::get('/sessions-view', 'SessionController@sessionsView');
         
 
         Route::get('/clsses', 'ClssesController@clsses')->middleware('FinMidware:clsses');
@@ -167,6 +167,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/exmtypclssubTaskpane', 'BaseController@exmtypclssubTaskpane');
         Route::get('/exmtypclssubfmEntry/{clss_id}', 'BaseController@exmtypclssubfmEntry');
+        Route::get('/exmtypclssubfmView/{clss_id}', 'BaseController@exmtypclssubfmView');
         Route::post('/exmtypclssubfmEntry-submit', 'BaseController@exmtypclssubfmEntrySubmit');
 
         // Route::get('/exmtypclssub', 'BaseController@exmtypclssub');

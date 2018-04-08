@@ -43,8 +43,29 @@ class BaseController extends Controller
         $etcss = Exmtypclssub::whereClss_id($clss_id)->get();
 
         $flmrs = Subjfullmark::all();
+        // dd($etcss);
 
         return view('exmtypclssubs.exmtypclssubfmEntry')
+        ->withCls($cls)
+        ->withExams($exams)
+        ->withEtcss($etcss)
+        ->withClsbs($clsbs)
+        ->withFlmrs($flmrs)
+        ;
+    }
+
+    public function exmtypclssubfmView($clss_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $cls   = Clss::find($clss_id);
+        $etcss = Exmtypclssub::all(); 
+        $clsbs = Clssub::all();
+        $exams = Exam::all();
+        $etcss = Exmtypclssub::whereClss_id($clss_id)->get();
+
+        $flmrs = Subjfullmark::all();
+        // dd($etcss);
+
+        return view('exmtypclssubs.exmtypclssubfmView')
         ->withCls($cls)
         ->withExams($exams)
         ->withEtcss($etcss)

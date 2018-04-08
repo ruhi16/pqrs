@@ -55,6 +55,11 @@
       @endforeach
 			</tbody>
 			</table>
+
+     
+      <a href="{{ url('/btn-finalize', [$sessionfin->id]) }}" class="btn btn-primary">Finalize</a>
+      
+     
       </div><!--/panel starting div -->
     </div><!--/1st row within 2nd column -->
 
