@@ -42,8 +42,8 @@
                     <a class="btn btn-success" href="{{url('/sections-view')}}">Section Details Display</a>
                     <a class="btn btn-primary" href="{{url('/clssecs')}}">Class-Section Details Entry</a>
                     <a class="btn btn-warning" href="{{url('/clssecs-view')}}">Class-Section Details Display</a>
-                    <a class="btn btn-danger" href="{{url('/gradedescription/1')}}">Grade Description Details Entry..</a>
-                    <a class="btn btn-success" href="{{url('/gradedescription-view')}}">Grade Description Details Display</a>
+                    <a class="btn btn-danger" href="{{url('/gradedescriptions/1')}}">Grade Description Details Entry..</a>
+                    <a class="btn btn-success" href="{{url('/gradedescriptions-view/1')}}">Grade Description Details Display</a>
                     <a class="btn btn-info" href="{{url('/exams')}}">Exam Details Entry</a>                    
                     <a class="btn btn-primary" href="{{url('/exams-view')}}">Exam Details Display</a>
                     <a class="btn btn-success" href="{{url('/extypes')}}">Exam Type Details Entry</a>                    

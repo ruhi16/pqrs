@@ -6,57 +6,50 @@
 @endsection
 
 @section('content')
-<h1>Grade Particular Information View...</h1>
-<div class="row">
-        <div class="panel panel-default">
-          <!-- Default panel contents -->
-          <div class="panel-heading">
-            <h3 class="panel-title pull-left">Grade Particular Details</h3>
-              {{--  <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
-                Add New Gradeparticular
-              </button>  --}}
-              <div class="clearfix"></div>
-          
-          </div>
-          {{--  <div class="panel-body">
-            <p>...</p>
-          </div>  --}}
-      
-              <table class="table table-bordered" id="tabclss">
-                  <thead>
-                      <tr>
-                <th>#</th>
-                <th>Grade Paticular</th>
-                <th>Session</th>          
-                <th>Status</th> 
-                <th>Action</th>         
-                      </tr>
-                  </thead>
-                  <tbody>
-            @foreach($grparts as $grpart)
-              <tr id="tr{{$grpart->id}}">
-                <th id="id">{{$grpart->id}}</th>
-                <th id="name">{{ $grpart->name }}</th>
-                <td>{{ $grpart->session_id }}</td>
-                <td>{{ $grpart->session_id }}</td>
-                <td>
-                    {{--  <button class="btn btn-success btn-sm btnEdit" data-id="{{$grpart->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
-                    <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$grpart->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>  --}}
-                    {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}
-                </td>
-              </tr>
-            @endforeach
-                  </tbody>
-              </table>
-        </div><!--/panel starting div -->
-      </div><!--/1st row within 2nd column -->
-      
-    
+<h1>Exam Type Wise Each Subjects Grade-Description Details...</h1>
+
+@foreach($extps as $etp)
+@if($etp->id == $extype_id)
+    <h1>Exam Type: <small>{{$etp->name}}</small></h1>
+    <table class="table table-bordered" id="table{{$etp->id}}">
+        <thead>
+            <tr>
+                <th>Sl</th>
+                <th>Subject</th>
+                @foreach($grads as $grd)
+                    @if( $etp->id == $grd->extype_id )
+                        <th>{{ $grd->gradeparticular->name }}</th>
+                    @endif
+                @endforeach
+                
+            </tr>
+        </thead>
+        <tbody>
+    @foreach($subjs as $sub)
+        @if( $etp->id == $sub->extype_id )
+            <tr id="tr{{$sub->id}}">
+                <td>{{ $sub->id}}</td>
+                <td>{{ $sub->name }}</td>
+                @foreach($grads as $grd)
+                    @if( $etp->id == $grd->extype_id )
+                        <td id="td{{$grd->id}}">
+                          {{ $grddes->where('subject_id', $sub->id)
+                                  ->where('grade_id', $grd->id)->first()->desc or 'Not Assigned!!! :)'}}
+                        </td>
+                    @endif
+                @endforeach                
+            </tr>
+        @endif
+    @endforeach
+    </tbody>
+    </table>
+@endif
+@endforeach
+
 
 <script type="text/javascript">
-  $(document).ready(function(e){
-    
-  });  
+
+
 </script>
 
 @endsection

@@ -32,6 +32,7 @@ class GradedescrController extends Controller
         $extps = Extype::all();
         $subjs = Subject::all();
         $grads = Grade::all();
+        $grddes = Gradedescription::all();
 
         // echo "Hello";
         return view('gradedescriptions.gradedescription')
@@ -39,13 +40,14 @@ class GradedescrController extends Controller
         ->withExtps($extps)
         ->withSubjs($subjs)
         ->withGrads($grads)
+        ->withGrddes($grddes)
         ;
     }
 
     public function gradedescriptionSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
         $extype_id = $request->extype;
-        echo "extype_id:".$extype_id."<br>";
+        // echo "extype_id:".$extype_id."<br>";
         
         $subjDel = Subject::where('extype_id',$extype_id)->pluck('id');
         
@@ -57,7 +59,7 @@ class GradedescrController extends Controller
 
             $temp = "descr".$extype_id.$sub->id;
             foreach($request->$temp as $k => $abc){
-                echo $k ." : ".$abc ."<br>";
+                // echo $k ." : ".$abc ."<br>";
                 $subj = Subject::find($sub->id);
                 $grde = Grade::find($k);
                 
@@ -69,7 +71,7 @@ class GradedescrController extends Controller
 
                 $grdsc->save();
             }
-            echo "--------------<br>";
+            // echo "--------------<br>";
         }
 
 
@@ -81,7 +83,22 @@ class GradedescrController extends Controller
 
 
 
+    public function gradedescrView($extype_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $extps = Extype::all();
+        $subjs = Subject::all();
+        $grads = Grade::all();
+        $grddes = Gradedescription::all();
 
+        // echo "Hello";
+        return view('gradedescriptions.gradedescriptionView')
+        ->with('extype_id',$extype_id)
+        ->withExtps($extps)
+        ->withSubjs($subjs)
+        ->withGrads($grads)
+        ->withGrddes($grddes)
+        ;
+    }
 
 
 
@@ -92,10 +109,10 @@ class GradedescrController extends Controller
         
         return back();
     }
-    public function gradedescrView(){
+    // public function gradedescrView(){
         
-        return view('gradedescriptions.gradedescriptionView');
-    }
+    //     return view('gradedescriptions.gradedescriptionView');
+    // }
     public function gradedescrEditSubmit(Request $request){
         
         return back();

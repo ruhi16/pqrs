@@ -8,7 +8,7 @@
 @section('content')
 <h1>Exam Type Wise Each Subjects Grade-Description Details...</h1>
 
-{!! Form::open(['url'=>'/gradedescription-submit','method'=>'post', 'class'=>'form-horizontal']) !!}
+{!! Form::open(['url'=>'/gradedescriptions-submit','method'=>'post', 'class'=>'form-horizontal']) !!}
 
 <input type="hidden" value="{{$extype_id}}" name="extype">
 
@@ -37,8 +37,11 @@
                 @foreach($grads as $grd)
                     @if( $etp->id == $grd->extype_id )
                         <td id="td{{$grd->id}}">
+
                             {{--  <input type="hidden" value="{{$grd->id}}"            name="grdid{{$etp->id}}{{$sub->id}}[]">  --}}
-                            <textarea class="form-control" rows="5" id="comment" name="descr{{$etp->id}}{{$sub->id}}[{{$grd->id}}]"></textarea>
+                            <textarea   class="form-control" rows="5" id="comment" 
+                                        name="descr{{$etp->id}}{{$sub->id}}[{{$grd->id}}]">{{ $grddes->where('subject_id', $sub->id)
+                                                ->where('grade_id', $grd->id)->first()->desc}}</textarea>
                         </td>
                     @endif
                 @endforeach

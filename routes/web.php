@@ -124,9 +124,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         // till the above entry was tested Oke with middleware too
 
-        Route::get('/gradedescription/{extype_id}', 'GradedescrController@gradedescr');//->middleware('FinMidware:gradeparticulars');
-        Route::post('/gradedescription-submit', 'GradedescrController@gradedescriptionSubmit');
-
+        Route::get('/gradedescriptions/{extype_id}', 'GradedescrController@gradedescr');//->middleware('FinMidware:gradeparticulars');
+        Route::post('/gradedescriptions-submit', 'GradedescrController@gradedescriptionSubmit');
+        Route::get('/gradedescriptions-view/{extype_id}', 'GradedescrController@gradedescrView');
 
         // Route::post('/gradedescription-submit', 'GradedescrController@gradedescrSubmit');
         // Route::get('/gradedescription-view', 'GradedescrController@gradedescrView');
