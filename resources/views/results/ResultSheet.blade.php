@@ -44,14 +44,23 @@
       <table class="table table-bordered table-striped">
         <thead>
           <tr>            
-            <th>Sl</th>
-            <th>Subject</th>
+            <th rowspan="2"  class="text-center">Sl</th>
+            <th rowspan="2">Subject</th>
             @foreach($exms as $exm) 
-              <th><b>{{$exm->name}},</b></th>
+              <th colspan="2"><b>{{$exm->name}},</b></th>
             @endforeach
-            <th>Total</th>
-            <th>Grade</th>
-          </tr>          
+            <th rowspan="2">Total</th>
+            <th rowspan="2">Grade</th>
+          </tr> 
+          <tr>
+            
+            
+            @foreach($exms as $exm) 
+              <th>OM</th>
+              <th>FM</th>
+            @endforeach
+            
+          </tr>         
         </thead>
         <tbody>
           @foreach($clsb as $cls)
@@ -69,14 +78,22 @@
                     $obmrks  = $mrks->where('exmtypclssub_id', $etcs_id)->pluck('marks')->first();
                     $subTotal = $subTotal + ($obmrks == -99 ? 0 : $obmrks);
                     @endphp
-                    
-                  {{ $obmrks == -99 ? 'AB' : $obmrks }}
-
+                    <small>
+                    {{ $obmrks == -99 ? 'AB' : $obmrks }}
+                    </small>
+                  </td>
+                  <td><small>
+                      {{ $etcs->where('exam_id', $exm->id)
+                            ->where('extype_id', $ext->id)                                
+                            ->where('subject_id', $cls->subject_id)
+                            ->first()->fm or ''          
+                      }}
+                      </small>
                   </td>
                 @endforeach
                 <td>{{$subTotal}}</td>
                 @php  $total = $total + $subTotal; @endphp
-                <td></td>
+                <td>{{ findGrade($ext->name , $total) }}</td>
               </tr>
             @endif
           @endforeach
@@ -90,8 +107,25 @@
     </tr>
     <tr>
       @foreach($exts as $ext)
-        <th>Total: {{ $grTotal[$ext->name] }}</th>
+        <th>Total: {{ $grTotal[$ext->name] }}<br>
+                    Grade: {{ findGrade($ext->name , $total) }}
+        </th>
       @endforeach      
+    </tr>
+    <tr>
+        @php
+            $str = '';
+        @endphp
+            @foreach($exts as $ext)
+                @if($loop->first)
+                    @php $str .=  $ext->name;   @endphp
+                @else
+                    @php $str .= " + ". $ext->name; @endphp
+                @endif
+            @endforeach
+        @endphp
+
+        <th colspan="2">Total ({{ $str }}): {{array_sum($grTotal)}}</th>
     </tr>
   </tbody>
 </table>

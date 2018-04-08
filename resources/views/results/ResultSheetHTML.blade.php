@@ -9,6 +9,7 @@
         border: 1px solid black;
         border-spacing: 0px;
         {{--  width: 100%;  --}}
+        font-size: 14px;
         {{--  border-collapse: collapse;  --}}
         
     }
@@ -63,21 +64,30 @@
             <table>
                 <thead>
                 <tr>            
-                    <th><small>Sl</small></th>
-                    <th><small>Subject</small></th>
-                    @foreach($exms as $exm)
-                        <th><small>{{$exm->name}}</small></th>
+                    <th rowspan="2"  class="text-center">Sl</th>
+                    <th rowspan="2">Subject</th>
+                    @foreach($exms as $exm) 
+                    <th colspan="2"><b>{{$exm->name}}</b></th>
                     @endforeach
-                    <th><small>Total</small></th>
-                    <th><small>Grade</small></th>
-                </tr>          
+                    <th rowspan="2">Total</th>
+                    <th rowspan="2">Grade</th>
+                </tr> 
+                <tr>
+                    
+                    
+                    @foreach($exms as $exm) 
+                    <th>OM</th>
+                    <th>FM</th>
+                    @endforeach
+                    
+                </tr>            
                 </thead>
                 <tbody>
                 @foreach($clsb as $cls)
                     @if($cls->subject->extype_id == $ext->id)
                     <tr>
                         <td>{{$cls->id}}</td>
-                        <td><small>{{$cls->subject->name}}</small></td>                
+                        <td>{{$cls->subject->name}}</td>                
                         @php $subTotal = 0; @endphp
                         @foreach($exms as $exm)
                         <td>                  
@@ -88,15 +98,22 @@
                             $obmrks  = $mrks->where('exmtypclssub_id', $etcs_id)->pluck('marks')->first();
                             $subTotal = $subTotal + ($obmrks == -99 ? 0 : $obmrks);
                             @endphp
-                            
-                        <small>{{ $obmrks == -99 ? 'AB' : $obmrks }}</small>
-
+                            <small>
+                            {{ $obmrks == -99 ? 'AB' : $obmrks }}
+                            </small>
                         </td>
-                        {{--  <td>xxx</td>  --}}
+                        <td><small>
+                            {{ $etcs->where('exam_id', $exm->id)
+                                    ->where('extype_id', $ext->id)                                
+                                    ->where('subject_id', $cls->subject_id)
+                                    ->first()->fm or ''          
+                            }}
+                            </small>
+                        </td>
                         @endforeach
                         <td>{{$subTotal}}</td>
                         @php  $total = $total + $subTotal; @endphp
-                        <td></td>
+                        <td>{{ findGrade($ext->name , $total) }}</td>
                     </tr>
                     @endif
                 @endforeach
@@ -110,8 +127,24 @@
             </tr>
             <tr>
             @foreach($exts as $ext)
-                <th>Total: {{ $grTotal[$ext->name] }}</th>
+                <th>Total: {{ $grTotal[$ext->name] }} <br>
+                    Grade: {{ findGrade($ext->name , $total) }}</th>
             @endforeach      
+            </tr>
+            <tr>
+                @php
+                    $str = '';
+                @endphp
+                    @foreach($exts as $ext)
+                        @if($loop->first)
+                            @php $str .=  $ext->name;   @endphp
+                        @else
+                            @php $str .= " + ". $ext->name; @endphp
+                        @endif
+                    @endforeach
+                @endphp
+
+                <th colspan="2">Total ({{ $str }}): {{array_sum($grTotal)}}</th>
             </tr>
         </tbody>
     </table>
@@ -125,10 +158,10 @@
         <th>Remarks</th>
     </tr>
     <tr>
-        <td>800</td>
-        <td>357</td>
-        <td>125</td>
-        <td>Not Very Good</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>xx</td>
     </tr>
 </table>
 

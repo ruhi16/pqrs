@@ -22,7 +22,7 @@ use App\Exmtypclssub;
 use App\Marksentry;
 
 
-function Message($extype, $data){
+function findGrade($extype, $data){
     $ses = Session::whereStatus('CURRENT')->first();
     $extyps = Extype::whereSession_id($ses->id)
                 ->whereName($extype)->first();

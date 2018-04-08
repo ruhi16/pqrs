@@ -207,16 +207,18 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/clssec-ResultTaskpane/{clssec_id}', 'ResultController@ResultTaskpane');
         Route::get('/clssec-ResultSheet/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheet');
-        // Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheetHTML');
+        Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheetHTML');
+        Route::get('/clssec-ResultSheetPDF/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheetPDF');
+        Route::get('/clssec-ResultSheetFPDF/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheetFPDF');
 
 
         Route::get('/test', 'BaseController@test');
         Route::get('/ExStudentDb', 'ExcelController@ExStudentDb');
         Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
 
-        Route::get('/PdfSheetExStudentDb', 'PdfController@PdfSheetExStudentDb');
-        Route::get('/HtmlSheetExStudentDb', 'PdfController@HtmlSheetExStudentDb');
-        Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'PdfController@ResultSheetHTML');
+        //Route::get('/PdfSheetExStudentDb', 'PdfController@PdfSheetExStudentDb');
+        //Route::get('/HtmlSheetExStudentDb', 'PdfController@HtmlSheetExStudentDb');
+        //Route::get('/clssec-ResultSheetHTML/{clssec_id}/{studentcr_id}', 'PdfController@ResultSheetHTML');
 
 
 
@@ -233,5 +235,5 @@ Route::get('/get-logout', function(){
    return redirect('/');
 });
 
-Route::get('/ResultSheetPdf/{clssec_id}/{studentcr_id}', 'fPdfController@fPdfResultSheet');
+
 
