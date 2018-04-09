@@ -48,7 +48,7 @@ class StudentController extends Controller
                     ->get();
 
 
-        return view ('studentdb')
+        return view ('students.studentdb')
         ->with('stds', $stds)
         ->with('allClsSec', $allClsSec)
         ->withClss($clss)
@@ -353,5 +353,34 @@ class StudentController extends Controller
 
         $stddb->save();
         return "Successfully";
+    }
+
+    public function studentdbmultipageListToUpdateSection(){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $stds = Studentdb::whereStsession_id($ses->id)->get();
+        $allClsSec = Clssec::whereSession_id($ses->id)->get();
+        
+
+        
+        return view('students.studentdbmultipageList')
+        ->with('stds', $stds)
+        ->with('allClsSec', $allClsSec)        
+        ;
+    }
+
+    public function studentdbmultipageUpdateSection(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        console.log("hello");
+        // $str = $request['sec'];
+        // $ar = explode('-', $str);
+        // $data = $ar[0];
+        // $stdb = Studentdb::find($ar[0]);
+        // $stdb->stsec_id = $ar[1];
+        // $stdb->save();
+
+        // $sec = Section::find($ar[1]);
+        // return response()->json( ['sid'=> $stdb->id, 'ssec'=>$sec->name]);
+
+
     }
 }

@@ -9,13 +9,19 @@
 @section('content')
 <h1>Students Detail Records...</h1>
 <div class="row">
+<a href="{{ url('/studentdbmultipage') }}"
+   class="brn btn-warning btn-lg pull-right">
+Add New Students (Detail)
+</a>
+<p></p>
 <button 
    type="button" 
-   class="btn btn-success btn-lg pull-right" 
+   class="btn btn-success btn-sm pull-right" 
    data-toggle="modal" 
    data-target="#newStudentData">
-  Add New Students
+  Add New Students (shortly)
 </button>
+
 </div><br>
 <table class="table table-bordered table-striped" id="tabclss">
 <thead class="thead-dark">
@@ -62,8 +68,9 @@
     <td id="cste">{{$std->cste}}</td>
     
     <td>
-      <button class="btn btn-primary btnEdit" data-id="{{$std->id}}" data-toggle="modal" data-target="#editStudentData">Edit</button>
-      <a href="{{url('/studentdbEditpage',[$std->id])}}" class="btn btn-info">Edit By Page</a>
+      {{--  <button class="btn btn-primary btnEdit btn-sm" data-id="{{$std->id}}" data-toggle="modal" data-target="#editStudentData">Edit</button>  --}}
+      <a href="{{url('/studentdbEditpage',[$std->id])}}" class="btn btn-success btn-sm">Edit By Page</a>
+      <a href="{{url('/studentdbmultipage-edit',[$std->id])}}" class="btn btn-warning btn-lg">Edit By Page in Details</a>
       {{--  <button class="btn btn-danger  btnDelt">Delete</button>  --}}
     </td>
 </tr>
@@ -180,6 +187,8 @@
 
 
 
+
+{{-- 
 <!-- Modal Starts for Edit Student Information -->
 <div class="modal fade" id="editStudentData" 
      tabindex="-1" role="dialog" 
@@ -215,11 +224,7 @@
                 @endforeach
             </select>
           </div>
-          {{--  //=====  --}}
-          {{--  <div class="col-sm-1">
-            <input type="text" class="form-control" id="edClssText" name="edClssText">
-          </div>  --}}
-          {{--  //=====  --}}
+          
 
           <label class="control-label col-sm-1 text-left" for="edSecn">Section:</label>
           <div class="col-sm-2">
@@ -291,7 +296,7 @@
     </div>
   </div>
 </div>
-
+<!-- Modal Ends for Edit Student Information -->
 
 
 

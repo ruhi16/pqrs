@@ -175,13 +175,15 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/exmtypclssub-view', 'BaseController@exmtypclssubView');
 
 
+
+
         Route::get('/studentdb', 'StudentController@studentdb');
-        Route::post('/studentdb-submit', 'StudentController@studentdbSubmit');
+        Route::post('/studentdb-submit', 'StudentController@studentdbSubmit'); // for new student data submit
 
         Route::get('/studentdbEditpage/{studentdb_id}', 'StudentController@studentdbEditpage');
         Route::post('/studentdbEditpage-submit', 'StudentController@studentdbEditpageSubmit');
         
-        Route::post('/studentdbEdit-submit', 'StudentController@studentdbEditSubmit');
+        Route::post('/studentdbEdit-submit', 'StudentController@studentdbEditSubmit'); // modal data submit
 
         //Ajax Update
         Route::post('/updateSection', 'StudentController@updateSection');
@@ -195,6 +197,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/studentdbmultipage-view', 'StudentController@studentdbmultipageView');
         Route::get('/studentdbmultipage-edit/{id}', 'StudentController@studentdbmultipageEdit');
         Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultipageEditSubmit');
+        
+        //Ajax Update
+        Route::get('/studentdbmultipage-listToUpdateSection', 'StudentController@studentdbmultipageListToUpdateSection');
+        Route::post('/studentdbmultipage-updateSection', 'StudentController@studentdbmultipageUpdateSection');
+
+
+
 
 
         Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
