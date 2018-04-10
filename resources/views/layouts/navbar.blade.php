@@ -33,10 +33,10 @@
                     Admission <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href="{{url('/studentdb')}}">View Admitted Students</a></li>
                     <li><a href="{{url('/studentdb')}}">New Admission</a></li>
+                    <li><a href="{{url('/studentdbmultipage-view')}}">Newly Admited Student</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#">Section Allotment</a></li>                    
+                    <li><a href="{{url('/studentdbmultipage-listToUpdateSection')}}">Section Allotment</a></li>                    
                   </ul>
                 </li>
 

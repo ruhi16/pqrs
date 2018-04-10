@@ -6,12 +6,17 @@
 @endsection
 
 @section('content')
+<style >
+table{
+    font-size:10px
+}
+</style>
 <h1>Students DB Multipage View...</h1>
 
 
 {{--  {{ $stddb->dump() }}  --}}
-
-<table class="table table-bordered">
+{{--  <font size="1">  --}}
+<table class="" border="1">
 <thead>
 <tr>
     <th>ID</th>
@@ -94,8 +99,8 @@
         <td>{{ $sdb->stsec_id }} </td>      
         <td>{{ $sdb->stsession_id }} </td>  --}}
         <td>
-            <a href="{{url('/studentdbmultipage-edit',[ $sdb->id ])}}" class="btn btn-primary">Edit</a>
-            <a href="" class="btn btn-warning">Delete</a>
+            <a href="{{url('/studentdbmultipage-edit',[ $sdb->id ])}}" class="">Edit</a>
+            <a href="" class="">Delete</a>
         </td>
     </tr>
     @endforeach
@@ -104,7 +109,7 @@
 
 
 </table>
-
+{{--  </font>  --}}
 
 
 <script type="text/javascript">

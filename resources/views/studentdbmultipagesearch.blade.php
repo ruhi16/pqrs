@@ -13,8 +13,8 @@
     <thead>
       <tr>
         <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
+        <th>Class</th>
+        <th>Section</th>
       </tr>
     </thead>
     <tbody>      
@@ -22,11 +22,16 @@
       @foreach($stddb as $sdb)
         <tr>
           <td>{{$sdb->name}}</td>
-          <td>{{$sdb->fname}}</td>
-          <td>{{$sdb->mname}}</td>
+          <td>{{$sdb->clss->name}}</td>
+          <td>{{$sdb->section->name}}</td>
         </tr>
       @endforeach      
     </tbody>
+    <tfoot>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tfoot>
   </table>
 
 
@@ -77,6 +82,11 @@ https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css  --}}
         ]
     });
  
+
+
+
+  
+
   });  
 </script>
 
