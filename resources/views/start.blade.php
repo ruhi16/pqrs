@@ -61,6 +61,7 @@
                     {{--  <a class="btn btn-primary" href="{{url('/gradedescription')}}">Grade Description Entry</a>                    
                     <a class="btn btn-primary" href="{{url('/gradedescription-view')}}">Grade Description View</a>  --}}
                     <a class="btn btn-primary" href="{{url('/studentdb')}}">Students Detail View</a>                    
+                    <a class="btn btn-primary" href="{{url('/studentdbmultipage-listToUpdateSection')}}">New Adm Student List for Section</a>
                     {{--  
                     <a class="btn btn-primary" href="{{url('/clssec-TaskPage')}}">Students Info Entry View</a>                    
                     <a class="btn btn-primary" href="{{url('/clssecs')}}">New Admission Students Details Entry</a>

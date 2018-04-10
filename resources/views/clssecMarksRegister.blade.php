@@ -79,7 +79,7 @@
                       @endphp
                       <td>
                         @php $grd = ($total)*100; @endphp {{-- /$typeTotal --}}
-                        {{ Message($et->name,$grd) }}
+                        {{ findGrade($et->name,$grd) }}
                       </td>
                       </tr>
                       @endif

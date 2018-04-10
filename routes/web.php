@@ -163,7 +163,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-MarksRegister/{clssec_id}',  'MarksEntryController@clssecMarksRegister');
         //Ajax Update
         Route::post('/updateMarks', 'MarksEntryController@updateMarks');
-
+        
 
         Route::get('/exmtypclssubTaskpane', 'BaseController@exmtypclssubTaskpane');
         Route::get('/exmtypclssubfmEntry/{clss_id}', 'BaseController@exmtypclssubfmEntry');
@@ -198,8 +198,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/studentdbmultipage-edit/{id}', 'StudentController@studentdbmultipageEdit');
         Route::post('/studentdbmultipageEdit-submit', 'StudentController@studentdbmultipageEditSubmit');
         
-        //Ajax Update
+        
         Route::get('/studentdbmultipage-listToUpdateSection', 'StudentController@studentdbmultipageListToUpdateSection');
+        //Ajax Update
         Route::post('/studentdbmultipage-updateSection', 'StudentController@studentdbmultipageUpdateSection');
 
 

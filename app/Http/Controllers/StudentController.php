@@ -356,8 +356,10 @@ class StudentController extends Controller
     }
 
     public function studentdbmultipageListToUpdateSection(){
+        //list shoube those student who is not in stdcr
         $ses = Session::whereStatus('CURRENT')->first();
-        $stds = Studentdb::whereStsession_id($ses->id)->get();
+        $stds = Studentdb::whereStsession_id($ses->id)->get();//->where('crstatus', NULL)
+
         $allClsSec = Clssec::whereSession_id($ses->id)->get();
         
 
@@ -368,10 +370,32 @@ class StudentController extends Controller
         ;
     }
 
+    // Ajax Function...
     public function studentdbmultipageUpdateSection(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
-        console.log("hello");
-        // $str = $request['sec'];
+        
+        //console.log('bbb');
+        $sid = $request['sid'];
+        $sec = $request['sec'];
+        $stddb = Studentdb::find($sid);
+
+        $stdcr = Studentcr::firstOrNew(['studentdb_id'=> $sid]);
+        $stdcr->studentdb_id = $stddb->id; //$sid
+        $stdcr->session_id = $ses->id;
+        $stdcr->clss_id = $stddb->stclss_id;
+        $stdcr->section_id = $sec;
+        $stdcr->save();
+
+
+
+        $stddb->stsec_id = $sec;
+        if($stddb->crstatus == NULL){
+            $stddb->crstatus = $stdcr->id; 
+        }else{
+            $stddb->crstatus .= "-" . $stdcr->id; 
+        }
+        $stddb->save();
+        
         // $ar = explode('-', $str);
         // $data = $ar[0];
         // $stdb = Studentdb::find($ar[0]);
@@ -379,7 +403,8 @@ class StudentController extends Controller
         // $stdb->save();
 
         // $sec = Section::find($ar[1]);
-        // return response()->json( ['sid'=> $stdb->id, 'ssec'=>$sec->name]);
+        $section = Section::find($sec);
+        return response()->json( ['sid'=> $sid, 'sec'=>$section->name, 'crst'=>$stddb->crstatus]);
 
 
     }

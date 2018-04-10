@@ -18,6 +18,7 @@
             <th>Class</th>
             <th>Sec</th>            
             <th>Action</th>
+            <th>Verification</th>
         </tr>
     </thead>
     <tbody>
@@ -27,20 +28,28 @@
         <td id="name">{{$std->name}}</td>
         <td id="fname">{{$std->fname}}</td>
         <td id="clss">{{$std->clss->name}}</td>
-        <td id="section"></td>
+        <td id="section">{{$std->section->name}}</td>
         
-        <td>
-            @php 
-                $allSecs = $allClsSec->where('clss_id', $std->stclss_id) 
-
-            @endphp            
-            <select class="form-control std_sec" name="sec">
+        
+            @php  $allSecs = $allClsSec->where('clss_id', $std->stclss_id);    @endphp            
+            @if($std->crstatus == NULL)
+            <td>
+            <select class="form-control std_sec" name="sec" data-sid="{{$std->id}}">
+                    <option ></option>
                 @foreach($allSecs as $sec)
-                    <option >{{ $sec->section->name }}</option></option>
+                    <option value="{{ $sec->id }}">{{ $sec->section->name }}</option></option>
                     
                 @endforeach
-            </select>            
-        </td>
+            </select>
+            </td>
+            <td>
+                <button class="btn btn-info btn-veryfy">Verify</button>
+            </td>
+            @else
+                <td>Selected</td>
+                <td>Verified</td>
+            @endif
+        
     </tr>
     @endforeach
     </tbody>
@@ -54,20 +63,26 @@
   $(document).ready(function(e){
     $('.std_sec').change(function(){
         var sec = $(this).val();
+        var sid = $(this).data('sid');
         //alert(sec);
+        //console.log('aaa');
+        
         var u = '{{ url("/studentdbmultipage-updateSection") }}';//'{{url("/updateRoll")}}';
         var t = '{{ csrf_token() }}';
+        // alert(t);
         $.ajax({
             method: 'post',
             url: u,
-            data:{sec:sec,  _token:t},
-            //success: function(msg){
-                //console.log('StdDB Id:'+msg['sid']+", Section Id:"+msg['ssec']);
-                //$('#tr'+msg['sid']+' #tdsec'+msg['sid']).html(msg['ssec']);
-            //},
-            //error: function(data){
-                //console.log(data);
-            //}
+            data:{sid:sid, sec:sec, _token:t},
+            success: function(msg){
+                console.log("from Ajax");
+                
+                console.log('StdDB Id:'+msg['sid']+", Section Id:"+msg['sec']+", Cr Status:"+msg['crst']);
+                $('#tr'+msg['sid']+' #section').html(msg['sec']);
+            },
+            error: function(data){
+                console.log(data);
+            }
         });
     });
 });  
