@@ -379,7 +379,7 @@ class StudentController extends Controller
         $sec = $request['sec'];
         $stddb = Studentdb::find($sid);
 
-        $stdcr = Studentcr::firstOrNew(['studentdb_id'=> $sid]);
+        $stdcr = Studentcr::firstOrNew(['studentdb_id'=> $sid, 'session_id'=>$ses->id]);
         $stdcr->studentdb_id = $stddb->id; //$sid
         $stdcr->session_id = $ses->id;
         $stdcr->clss_id = $stddb->stclss_id;
@@ -389,23 +389,38 @@ class StudentController extends Controller
 
 
         $stddb->stsec_id = $sec;
-        if($stddb->crstatus == NULL){
-            $stddb->crstatus = $stdcr->id; 
-        }else{
-            $stddb->crstatus .= "-" . $stdcr->id; 
-        }
+        // if($stddb->crstatus == NULL){
+        //     $stddb->crstatus = $stdcr->id; 
+        // }else{
+        //     $stddb->crstatus .= "-" . $stdcr->id; 
+        // }
         $stddb->save();
         
-        // $ar = explode('-', $str);
-        // $data = $ar[0];
-        // $stdb = Studentdb::find($ar[0]);
-        // $stdb->stsec_id = $ar[1];
-        // $stdb->save();
 
-        // $sec = Section::find($ar[1]);
         $section = Section::find($sec);
         return response()->json( ['sid'=> $sid, 'sec'=>$section->name, 'crst'=>$stddb->crstatus]);
 
 
+    }
+
+
+    public function studentdbmultipageVerifySection(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        
+        $sid = $request['sid']; // stddb_id
+        $stdcr = Studentcr::where('studentdb_id', $sid)
+                    ->where('session_id', $ses->id)->first();
+
+        $stddb = Studentdb::find($sid);
+        if($stddb->crstatus == NULL){
+            $stddb->crstatus = $stdcr->id; 
+        }else{
+            if($stddb->stsession_id != $ses->id){
+                $stddb->crstatus .= "-" . $stdcr->id; 
+            }
+        }
+        $stddb->save();
+
+        return response()->json(['m' => $stdcr->id]);
     }
 }

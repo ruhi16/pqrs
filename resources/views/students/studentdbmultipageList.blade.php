@@ -43,7 +43,11 @@
             </select>
             </td>
             <td>
-                <button class="btn btn-info btn-veryfy">Verify</button>
+                {{--  @if($std->stsec_id == NULL)  --}}
+                    {{--  Verified  --}}
+                {{--  @else  --}}
+                    <button class="btn btn-info btn-verify" data-sid="{{$std->id}}" >Verify</button>
+                {{--  @endif  --}}
             </td>
             @else
                 <td>Selected</td>
@@ -85,6 +89,26 @@
             }
         });
     });
+
+    $('.btn-verify').click(function(){
+        var sid = $(this).data('sid');
+        // alert(sid);
+        var u = '{{ url("/studentdbmultipage-verifySection") }}';
+        var t = '{{ csrf_token() }}';
+        $.ajax({
+            method: 'post',
+            url: u,
+            data:{sid:sid, _token:t},
+            success: function(msg){
+                console.log('verify section success:'+msg['m']);
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    });
+
+
 });  
 </script>
 

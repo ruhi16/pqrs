@@ -202,7 +202,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/studentdbmultipage-listToUpdateSection', 'StudentController@studentdbmultipageListToUpdateSection');
         //Ajax Update
         Route::post('/studentdbmultipage-updateSection', 'StudentController@studentdbmultipageUpdateSection');
-
+        Route::post('/studentdbmultipage-verifySection', 'StudentController@studentdbmultipageVerifySection');
 
 
 
