@@ -83,6 +83,7 @@ class ResultController extends Controller
         $grddescr = Gradedescription::all();
         
         return view('results.ResultSheet')
+        ->withSes($ses)
         ->withSch($sch)        
         ->withExms($exms)
         ->withexts($exts)

@@ -9,7 +9,7 @@
 <a href="{{url('/clssec-ResultSheetHTML',[$clsc->id, $stcr->id])}}">Download</a>
 <h1 class="text-center">{{$sch->name}}</h1>
 <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
-<h2 class="text-center">Progress Report</h2>
+<h2 class="text-center">Progress Report for Session - {{$ses->name}}</h2>
 
 <br>
 
@@ -56,7 +56,7 @@
             
             
             @foreach($exms as $exm) 
-              <th>OM</th>
+              <th>MO</th>
               <th>FM</th>
             @endforeach
             
@@ -78,9 +78,9 @@
                     $obmrks  = $mrks->where('exmtypclssub_id', $etcs_id)->pluck('marks')->first();
                     $subTotal = $subTotal + ($obmrks == -99 ? 0 : $obmrks);
                     @endphp
-                    <small>
+                    <b>
                     {{ $obmrks == -99 ? 'AB' : $obmrks }}
-                    </small>
+                  </b>
                   </td>
                   <td><small>
                       {{ $etcs->where('exam_id', $exm->id)
@@ -108,7 +108,7 @@
     <tr>
       @foreach($exts as $ext)
         <th>Total: {{ $grTotal[$ext->name] }}<br>
-                    Grade: {{ findGrade($ext->name , $total) }}
+                    {{-- Grade: {{ findGrade($ext->name , $total) }} --}}
         </th>
       @endforeach      
     </tr>
@@ -211,7 +211,7 @@
                 <td>{{ $ext->name }}</td>
                 <td>{{ $grd->gradeparticular->name }}</td>
                 <td>{{ $grd->stpercentage }}</td>
-                <td>{{ $grd->stpercentage }}</td>
+                <td>{{ $grd->enpercentage }}</td>
                 </tr>
                 @endforeach
             @endforeach
