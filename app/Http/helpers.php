@@ -20,7 +20,9 @@ use App\Clssec;
 
 use App\Exmtypclssub;
 use App\Marksentry;
-
+/**
+ * 
+ */
 
 function findGrade($extype, $data){
     $ses = Session::whereStatus('CURRENT')->first();
@@ -32,15 +34,17 @@ function findGrade($extype, $data){
     // echo $extyps->id;
 
     $grds = Grade::whereExtype_id($extyps->id)
-        ->where('stpercentage','<=',$data)          
-        ->where('enpercentage','>=',$data)      
+        ->where('stpercentage', '<=', $data)          
+        ->where('enpercentage', '>=', $data)      
         ->first();
 
     // foreach($grds as $grd){
     //     echo $grd->gradeparticular->name;
     // }
     // return "Hello".$data;
-    if(!$grds)return 'AB';
+    if( !$grds ){ 
+        return 'AB';
+    }
     return ($grds->gradeparticular->name);
 }
 
