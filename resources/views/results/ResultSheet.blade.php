@@ -9,11 +9,11 @@
 <a href="{{url('/clssec-ResultSheetHTML',[$clsc->id, $stcr->id])}}">Download</a>
 <h1 class="text-center">{{$sch->name}}</h1>
 <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
-<h2 class="text-center">Progress Report for Session - {{$ses->name}}</h2>
+<h2 class="text-center">Progress Report for Session - <U>{{$ses->name}}</u></h2>
 
 <br>
 
-<table class="table">
+<table class="table table-bordered">
   <tr>
     <td><b>Name:    </B>{{$stcr->studentdb->name}}</td>
     <td><b>Class:   </B>{{$stcr->clss->name}}</td>
@@ -21,13 +21,13 @@
     <td><b>Roll No: </B>{{$stcr->roll_no}}</td>
   </tr>
 </table>
-<br>
+
 
 <table class="table table-bordered">
   <thead>
     <tr>
       @foreach($exts as $ext)
-        <th>{{$ext->name}}</th>
+        <th class="text-center">{{$ext->name}}</th>
       @endforeach
     </tr>
   </thead>
@@ -47,7 +47,7 @@
             <th rowspan="2"  class="text-center">Sl</th>
             <th rowspan="2">Subject</th>
             @foreach($exms as $exm) 
-              <th colspan="2"><b>{{$exm->name}},</b></th>
+              <th colspan="2"><b><small>{{ $exm->name }}</small></b></th>
             @endforeach
             <th rowspan="2">Total</th>
             <th rowspan="2">Grade</th>
@@ -123,7 +123,7 @@
                     @php $str .= " + ". $ext->name; @endphp
                 @endif
             @endforeach
-        @endphp
+        
 
         <th colspan="2">Total ({{ $str }}): {{array_sum($grTotal)}}</th>
     </tr>

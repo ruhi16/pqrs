@@ -21,17 +21,20 @@
     {{--  {{ dd($stddb) }}  --}}
       @foreach($stddb as $sdb)
         <tr>
-          <td>{{$sdb->name}}</td>
-          <td>{{$sdb->clss->name}}</td>
-          <td>{{$sdb->section->name}}</td>
+          <th>{{$sdb->name}}</th>
+          <th>{{$sdb->clss->name}}</th>
+          <th>{{$sdb->section->name}}</th>
         </tr>
       @endforeach      
     </tbody>
+    
     <tfoot>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tfoot>
+      <tr>
+      <th>Firstname</th>
+        <th>Class</th>
+        <th>Section</th>
+      </tr>
+    </tfoot>    
   </table>
 
 
@@ -75,16 +78,35 @@ https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css  --}}
 
 <script type="text/javascript">
   $(document).ready(function(e){
-    $('#myTable').DataTable({
-      dom: 'Bfrtip',
-        buttons: [
+        // Place the Search input box at the bottom
+        $('#myTable tfoot th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        });
+        
+        // DataTable with Main Search with Download Buttons
+        var table = $('#myTable').DataTable({
+          dom: 'Bfrtip',
+          //"paging":   false,
+          "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+          //"pageLength": 50
+          buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
+          ]
+        });
+
+        // Apply the Column Search Method
+        table.columns().every( function () {
+        var that = this;
  
-
-
-
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        });
+      });
   
 
   });  
