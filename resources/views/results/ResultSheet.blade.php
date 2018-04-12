@@ -43,9 +43,12 @@
       <td>
       <table class="table table-bordered table-striped">
         <thead>
-          <tr>            
-            <th rowspan="2"  class="text-center">Sl</th>
-            <th rowspan="2">Subject</th>
+          <tr> 
+            
+            {{-- <th rowspan="2"  class="text-center">Sl</th> --}}
+            <th rowspan="2" class="text-center">
+                    {{-- <div style="height:2.5em;border:1px solid #fff">Subjects</div> --}}
+                Subject</th>
             @foreach($exms as $exm) 
               <th colspan="2"><b><small>{{ $exm->name }}</small></b></th>
             @endforeach
@@ -59,18 +62,18 @@
               <th>MO</th>
               <th>FM</th>
             @endforeach
-            
+          
           </tr>         
         </thead>
         <tbody>
           @foreach($clsb as $cls)
             @if($cls->subject->extype_id == $ext->id)
               <tr>
-                <td>{{$cls->id}}</td>
+                {{-- <td>{{$cls->id}}</td> --}}
                 <td>{{$cls->subject->name}}</td>                
                 @php $subTotal = 0; @endphp
                 @foreach($exms as $exm)
-                  <td>                  
+                  <td class="text-right">                  
                     @php                    
                     $etcs_id = $etcs->where('exam_id',$exm->id)
                             ->where('subject_id',$cls->subject_id)
@@ -82,7 +85,8 @@
                     {{ $obmrks == -99 ? 'AB' : $obmrks }}
                   </b>
                   </td>
-                  <td><small>
+                  <td  class="text-right">
+                      <small>
                       {{ $etcs->where('exam_id', $exm->id)
                             ->where('extype_id', $ext->id)                                
                             ->where('subject_id', $cls->subject_id)
@@ -91,9 +95,16 @@
                       </small>
                   </td>
                 @endforeach
-                <td>{{$subTotal}}</td>
+                <td class="text-right">{{$subTotal}}</td>
+
                 @php  $total = $total + $subTotal; @endphp
-                <td>{{ findGrade($ext->name , $total) }}</td>
+                
+                {{-- @if($loop->iteration >= $loop->count - 1)
+                    <td rowspan="2"></td>
+                @else
+                    <td class="text-center">{{ findGrade($ext->name , $subTotal) }}</td>
+                @endif --}}
+                <td class="text-center">{{ findGrade($ext->name , $subTotal) }}</td>
               </tr>
             @endif
           @endforeach

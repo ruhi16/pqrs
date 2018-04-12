@@ -19,4 +19,10 @@ class Extype extends Model
     public function grades(){
         return $this->hasMany('App\Grade');
     }
+
+
+    //relationship with sql-view
+    public function extclssubfmpms(){
+        return $this->hasMany('App\Extclssubfmpm');
+    }
 }

@@ -52,4 +52,10 @@ class Clss extends Model
     }
 
 
+    //relationship with sql-view
+    public function extclssubfmpms(){
+        return $this->hasMany('App\Extclssubfmpm');
+    }
+    
+
 }

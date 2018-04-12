@@ -1,5 +1,6 @@
 <?php
 //use Fpdf;
+use App\Extclssubfmpm;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +18,11 @@
 Auth::routes();
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    $xxx = App\Extclssubfmpm::all();
+    foreach($xxx as $x){
+        echo $x->subject->name."<br>";
+    }
 
 });
 
