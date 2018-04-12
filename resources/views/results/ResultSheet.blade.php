@@ -45,7 +45,7 @@
         <thead>
           <tr> 
             
-            {{-- <th rowspan="2"  class="text-center">Sl</th> --}}
+            <th rowspan="2"  class="text-center">Sl</th>
             <th rowspan="2" class="text-center">
                     {{-- <div style="height:2.5em;border:1px solid #fff">Subjects</div> --}}
                 Subject</th>
@@ -69,7 +69,7 @@
           @foreach($clsb as $cls)
             @if($cls->subject->extype_id == $ext->id)
               <tr>
-                {{-- <td>{{$cls->id}}</td> --}}
+                <td>{{$cls->id}}</td>
                 <td>{{$cls->subject->name}}</td>                
                 @php $subTotal = 0; @endphp
                 @foreach($exms as $exm)
@@ -98,13 +98,31 @@
                 <td class="text-right">{{$subTotal}}</td>
 
                 @php  $total = $total + $subTotal; @endphp
-                
+                {{--  <td class="text-center">
+                    {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}
+                </td>  --}}
+
+
                 {{-- @if($loop->iteration >= $loop->count - 1)
                     <td rowspan="2"></td>
                 @else
                     <td class="text-center">{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}</td>
                 @endif --}}
-                <td class="text-center">{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}</td>
+                @if( $loop->iteration == 11 )
+                    <td class="text-center" rowspan="2">
+                        xx{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}
+                        
+                    
+                    </td>
+
+                @elseif($loop->iteration != 11+1)
+                    <td class="text-center">
+                        {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}
+                    </td>
+
+                @endif
+                    
+
               </tr>
             @endif
           @endforeach

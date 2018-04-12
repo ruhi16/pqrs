@@ -113,7 +113,7 @@
                         @endforeach
                         <td>{{$subTotal}}</td>
                         @php  $total = $total + $subTotal; @endphp
-                        <td>{{ findGrade($ext->name , $total) }}</td>
+                        <td>{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}</td>
                     </tr>
                     @endif
                 @endforeach
@@ -128,7 +128,8 @@
             <tr>
             @foreach($exts as $ext)
                 <th>Total: {{ $grTotal[$ext->name] }} <br>
-                    Grade: {{ findGrade($ext->name , $total) }}</th>
+                    {{--  Grade: {{ findGrade($ext->name , $total) }}  --}}
+                </th>
             @endforeach      
             </tr>
             <tr>

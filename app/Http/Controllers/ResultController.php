@@ -27,6 +27,7 @@ use App\Grade;
 use App\Exmtypclssub;
 use App\Marksentry;
 use App\Gradedescription;
+use App\Extclssubfmpm;
 
 class ResultController extends Controller
 {

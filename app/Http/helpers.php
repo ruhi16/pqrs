@@ -21,9 +21,7 @@ use App\Clssec;
 use App\Exmtypclssub;
 use App\Marksentry;
 use App\Extclssubfmpm;
-/**
- * 
- */
+
 
 function findGrade($extypeid, $clssid, $clssubid, $data){
     $ses = Session::whereStatus('CURRENT')->first();
