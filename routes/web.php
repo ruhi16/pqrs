@@ -18,11 +18,11 @@ use App\Extclssubfmpm;
 Auth::routes();
 
 Route::get('/', function () {
-    //return view('welcome');
-    $xxx = App\Extclssubfmpm::all();
-    foreach($xxx as $x){
-        echo $x->subject->name."<br>";
-    }
+    return view('welcome');
+    // $xxx = App\Extclssubfmpm::all();
+    // foreach($xxx as $x){
+    //     echo $x->subject->name."<br>";
+    // }
 
 });
 

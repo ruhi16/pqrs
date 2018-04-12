@@ -102,9 +102,9 @@
                 {{-- @if($loop->iteration >= $loop->count - 1)
                     <td rowspan="2"></td>
                 @else
-                    <td class="text-center">{{ findGrade($ext->name , $subTotal) }}</td>
+                    <td class="text-center">{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}</td>
                 @endif --}}
-                <td class="text-center">{{ findGrade($ext->name , $subTotal) }}</td>
+                <td class="text-center">{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}</td>
               </tr>
             @endif
           @endforeach
@@ -119,7 +119,7 @@
     <tr>
       @foreach($exts as $ext)
         <th>Total: {{ $grTotal[$ext->name] }}<br>
-                    {{-- Grade: {{ findGrade($ext->name , $total) }} --}}
+                    
         </th>
       @endforeach      
     </tr>
