@@ -97,7 +97,9 @@
                 @endforeach
                 <td class="text-right">{{$subTotal}}</td>
 
-                @php  $total = $total + $subTotal; @endphp
+                @php  
+                    $total = $total + $subTotal; 
+                @endphp
                 {{--  <td class="text-center">
                     {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}
                 </td>  --}}
@@ -117,7 +119,8 @@
 
                 @elseif($loop->iteration != 11+1)
                     <td class="text-center">
-                        {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}
+                        {{ getGrade($ext->id, $subTotal, 80 ) }}
+                        {{--  {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}  --}}
                     </td>
 
                 @endif

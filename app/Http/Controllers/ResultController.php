@@ -85,7 +85,7 @@ class ResultController extends Controller
         
         return view('results.ResultSheet')
         ->withSes($ses)
-        ->withSch($sch)        
+        ->withSch($sch)
         ->withExms($exms)
         ->withexts($exts)
         ->withClsc($clsc)

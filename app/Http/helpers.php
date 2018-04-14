@@ -22,6 +22,26 @@ use App\Exmtypclssub;
 use App\Marksentry;
 use App\Extclssubfmpm;
 
+function getGrade($extypeid, $data, $fullMarks){
+    $ses = Session::whereStatus('CURRENT')->first();
+    $extyps = Extype::whereSession_id($ses->id)
+                ->whereName($extypeid)->first();
+     
+    $data = ( $data / $fullMarks ) * 100; // calculate %
+  
+    $grds = Grade::whereExtype_id($extypeid)
+        ->where('stpercentage', '<=', $data)          
+        ->where('enpercentage', '>=', $data)      
+        ->first();
+
+  
+    if( !$grds ){ 
+        return 'AB';
+    }
+    return ($grds->gradeparticular->name);
+}
+
+
 
 function findGrade($extypeid, $clssid, $clssubid, $data){
     $ses = Session::whereStatus('CURRENT')->first();
