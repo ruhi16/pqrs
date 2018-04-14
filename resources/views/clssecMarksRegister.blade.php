@@ -78,8 +78,14 @@
                         
                       @endphp
                       <td>
-                        @php $grd = ($total)*100; @endphp {{-- /$typeTotal --}}
-                        {{ findGrade($et->name,$grd) }}
+                        @php $grd = ($total)*100; 
+                             $subject_fm = $etclsbfm->where('clss_id', $clsb->clss_id)
+                                ->where('extype_id', $et->id)
+                                ->where('subject_id', $clsb->subject_id)->first()->subject_fm;
+                            
+                        @endphp
+                        {{ getGrade($et->id, $total, $subject_fm ) }}
+                        
                       </td>
                       </tr>
                       @endif

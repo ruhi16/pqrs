@@ -21,6 +21,7 @@ use App\Grade;
 
 use App\Exmtypclssub;
 use App\Marksentry;
+use App\Extclssubfmpm;
 
 class MarksEntryController extends Controller
 {
@@ -188,7 +189,7 @@ class MarksEntryController extends Controller
         ->get();
         
         $grades = Grade::whereSession_id($ses->id)->get();
-        
+        $etclsbfm = Extclssubfmpm::all();
 
         return view('clssecMarksRegister')
         ->withStdcrs($stdcrs)
@@ -199,6 +200,7 @@ class MarksEntryController extends Controller
         ->withCls($clsc->clss->name)
         ->withSec($clsc->section->name)
         ->withClssec($clsc)
+        ->withEtclsbfm($etclsbfm)
         ;
     }
 }

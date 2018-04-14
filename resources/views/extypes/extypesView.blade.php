@@ -24,20 +24,22 @@
 		<table class="table table-bordered" id="tabclss">
 			<thead>
 				<tr>
-          <th>#</th>
-          <th>Exams</th>
+          <th>SL</th>
+          <th>Exams Types</th>
+          <th>Exam Mode</th>
           <th>Session</th>          
           <th>Status</th> 
           <th>Action</th>         
 				</tr>
 			</thead>
 			<tbody>
-      @foreach($exams as $exam)
-        <tr id="tr{{$exam->id}}">
-          <th id="id">  {{ $exam->id}}</th>
-          <th id="name">{{ $exam->name }}</th>
-          <td>{{ $exam->session_id }}</td>
-          <td>{{ $exam->session_id }}</td>
+      @foreach($exams as $extype)
+        <tr id="tr{{$extype->id}}">
+          <th id="id">  {{ $extype->id}}</th>
+          <th id="name">{{ $extype->name }}</th>
+          <th id="mode">{{ $extype->mode }}</th>
+          <td>{{ $extype->session_id }}</td>
+          <td>{{ $extype->session_id }}</td>
           <td>              
           </td>
         </tr>

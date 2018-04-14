@@ -16,6 +16,7 @@ class CreateExtypesTable extends Migration
         Schema::create('extypes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('mode');
             $table->integer('session_id');
             $table->timestamps();
         });

@@ -18,15 +18,21 @@ use App\Clssec;
 
 use App\Exmtypclssub;
 use App\Marksentry;
+use App\Miscoption;
 
 class ExtypeController extends Controller
 {
     public function extypes(){
         $ses = Session::whereStatus('CURRENT')->first();
         $extypes = Extype::whereSession_id($ses->id)->get();
+        $exmodes = Miscoption::where('tabName', 'extypes')
+                ->where('fieldName', 'mode')
+                ->get();
+
 
         return view('extypes.extypes')
         ->withExtypes($extypes)
+        ->withExmodes($exmodes)
         ;
     }
 
@@ -35,9 +41,10 @@ class ExtypeController extends Controller
         // echo $request->examName;
         $extype = new Extype;
         $extype->name = $request->extypeName;
+        $extype->mode = $request->extypeMode;
         $extype->session_id = $ses->id;
         $extype->save();
-
+        
         return back();
     }
 
@@ -54,7 +61,9 @@ class ExtypeController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $extype = Extype::find($request->editclssId);
         $extype->name = $request->editclssName;
+        $extype->mode = $request->editextypeMode;
         $extype->save();
+        //echo $request->editextypeMode;
         return back();
     }
 
