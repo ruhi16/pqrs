@@ -72,7 +72,12 @@ class ResultController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $sch = School::find(1);               
         $exms = Exam::all();
-        $exts = Extype::all()->sortBy('name');
+        // $exts = Extype::all()->sortBy('name');
+        // ============================================================
+        $exts = Exmtypclssub::groupBy('extype_id')->pluck('extype_id');
+        $exts = Extype::whereIn('id', $exts->toArray())->get();
+        // ============================================================
+
         $clsc = Clssec::find($clssec_id);
         $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
         $stcr = Studentcr::find($studentcr_id);
@@ -83,6 +88,12 @@ class ResultController extends Controller
         // print_r($clsc);
         $grddescr = Gradedescription::all();
         
+        // print_r($extss);
+
+        // foreach($exts as $ext){
+        //     echo $ext->name ."<br>";
+        // }
+
         return view('results.ResultSheet')
         ->withSes($ses)
         ->withSch($sch)
@@ -101,7 +112,12 @@ class ResultController extends Controller
         $sch = School::find(1);       
 
         $exms = Exam::all();
-        $exts = Extype::all()->sortBy('name');
+        // $exts = Extype::all()->sortBy('name');
+        // ============================================================
+        $exts = Exmtypclssub::groupBy('extype_id')->pluck('extype_id');
+        $exts = Extype::whereIn('id', $exts->toArray())->get();
+        // ============================================================
+        
         $clsc = Clssec::find($clssec_id);
         $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
         $stcr = Studentcr::find($studentcr_id);
@@ -133,7 +149,12 @@ class ResultController extends Controller
         $sch = School::find(1);       
 
         $exms = Exam::all();
-        $exts = Extype::all()->sortBy('name');
+        // $exts = Extype::all()->sortBy('name');
+        // ============================================================
+        $exts = Exmtypclssub::groupBy('extype_id')->pluck('extype_id');
+        $exts = Extype::whereIn('id', $exts->toArray())->get();
+        // ============================================================
+        
         $clsc = Clssec::find($clssec_id);
         $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
         $stcr = Studentcr::find($studentcr_id);
@@ -168,7 +189,12 @@ class ResultController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $sch = School::find(1);               
         $exms = Exam::all();
-        $exts = Extype::all()->sortBy('name');
+        // $exts = Extype::all()->sortBy('name');
+        // ============================================================
+        $exts = Exmtypclssub::groupBy('extype_id')->pluck('extype_id');
+        $exts = Extype::whereIn('id', $exts->toArray())->get();
+        // ============================================================
+        
         $clsc = Clssec::find($clssec_id);
         $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
         $stcr = Studentcr::find($studentcr_id);

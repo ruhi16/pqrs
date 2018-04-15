@@ -52,17 +52,7 @@ class AnswerScriptController extends Controller
         $teachers = Teacher::all();
 
         $subjs = Subject::all();
-        // foreach($subjs as $subj){
-        // echo "<b>Subject Name: ". $subj->name ."</b><br>";
-        //     foreach($subj->teachers as $teacher){
-        //         echo "Teacher: ".$teacher->name;
-        //         // echo "Teachers:".$subj->pivot->session_id;
-        //         echo "<br>";
-        //     }
-        //     echo "<br>";
-        // }
-
-        
+                
         return view('answerscripts.answerscriptsView')
         ->withExm($exm)
         ->withCls($cls)

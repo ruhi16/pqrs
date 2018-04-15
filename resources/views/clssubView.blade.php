@@ -30,7 +30,7 @@
                     <ul>
                         @foreach($clssubs as $clssub)
                             @if( $clssub->clss_id == $cls->id && $extp->id == $clssub->subject->extype_id)
-                                <li>{{ $clssub->subject->name }}</li>
+                                <li>{{ $clssub->subject->name }} </li>
                             @endif
                         @endforeach
                     </ul>
