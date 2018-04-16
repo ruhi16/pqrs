@@ -110,4 +110,16 @@ class ClsSubController extends Controller
         ->with('subjects', $subjects) 
         ;
     }
+
+    public function viewModalSubmit(Request $request){
+        print_r($request->subj);
+    }
+
+    public function viewModalSubmitAjax(Request $request){
+        $subj = Subject::find($request['sid']);
+        $subjs = Subject::where('extype_id', $subj->extype_id)->get();
+        $abcd = json_encode($subjs);
+        return response()->json($abcd);
+        // return response()->json( ['sid'=> $subj->id, 'sname'=>$subj->name]);
+    }
 }

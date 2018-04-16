@@ -160,8 +160,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssubs', 'ClsSubController@clssub')->middleware('FinMidware:clssubs-clsses-subjects');
         Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
         Route::get('/clssubs-view', 'ClsSubController@clssubView');
-
-
+        
+        Route::post('/clssubsView-ModalSubmit', 'ClsSubController@viewModalSubmit');
+        Route::post('/clssubsView-combineSubject', 'ClsSubController@viewModalSubmitAjax');
 
         Route::get('/clssec-MrkenPage/{clssec_id}', 'MarksEntryController@clssecMrkenPage');
         Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'MarksEntryController@ClssecstdMarksEntry');

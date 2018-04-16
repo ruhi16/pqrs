@@ -64,6 +64,9 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
+        <form method="post" class="form-horizontal" action="{!! url('clssubsView-ModalSubmit') !!}" value="{{ csrf_token() }}">  
+        {{ csrf_field() }}
+
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Combine Subjects</h5>
@@ -73,10 +76,9 @@
         </div>
         
         
-        <div class="modal-body">
-            Subjects Id:
-            <div>
-                <input type="text" class="form-control subjectName" value="">
+        <div class="modal-body">            
+            <div class="subjectDetails">
+                {{--  <input type="text" class="form-control subjectName" value="{{ $subjects->where('id',1)->first()->name }}">  --}}
             </div>
         </div>
 
@@ -84,9 +86,12 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
         </div>
+
+        {{--  <button type="submit" class="btn btn-primary">Submit</button>  --}}
+        </form>
     </div>
 </div>
 
@@ -98,7 +103,56 @@
   $(document).ready(function(e){
       $('.btn-comb').on("click", function(){          
         var subjectId = $(this).data('id');        
-        $(".subjectName").val( subjectId );
+        //$(".subjectName").val( subjectId );
+        //$(".subjectDetails").append( '<input type="text" class="form-control subjectName" value="'+subjectId+'">' );
+        //alert(subjectId);
+        //var str = '<input type="text" class="form-control subjectName" name="subj" value="@{{ $subjects->where(\'id\',' ; 
+        //1)->first()->name }}">';
+        //str += subjectId +')->first()->name';
+        //str += ' }';
+        //str += '}">';
+
+        var u = '{{ url("/clssubsView-combineSubject") }}';//'{{url("/updateRoll")}}';
+        var t = '{{ csrf_token() }}';
+        
+        $.ajax({
+            method: 'post',
+            url: u,
+            data:{sid:subjectId, _token:t},
+            success: function(msg){
+                //console.log("from Ajax"+msg);
+                //console.log($.parseJSON(msg));
+                var str ='';
+                //str = "Combine selected subject<b> " + msg['name'] +"</b> with the following...";
+                
+                str +="<div class='panel panel-default'><div class='panel-heading'>Panel Heading</div><div class='panel-body'>";//A Basic Panel</div></div>";
+                
+                if(msg){                    
+                    //var len = msg.length;
+                    //console.log(len);
+
+                    var obj = jQuery.parseJSON( msg );
+                    for(i=0; i<obj.length; i++){
+                        str += "<label class='checkbox-inline'><input type='checkbox' name='subj[]' value='"+obj[i].id+"'>";//"'>Option 1</label>
+                        str += obj[i].name;
+                        str += "</label>";
+                        //console.log(obj[i].name);
+                    }
+                }
+
+                str += "</div></div>";
+                
+                $(".subjectDetails").html( str );      
+
+                
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+
+        //$(".subjectDetails").html( str );
         
       });
   });  
