@@ -30,7 +30,15 @@
                     <ul>
                         @foreach($clssubs as $clssub)
                             @if( $clssub->clss_id == $cls->id && $extp->id == $clssub->subject->extype_id)
-                                <li>{{ $clssub->subject->name }} </li>
+                                <li>
+                                    {{ $clssub->subject->name }}{{ $clssub->subject->combination_id }} 
+                                    <a  href="#" class="btn-comb" data-toggle="modal" data-target="#exampleModal" 
+                                        data-id="{{ $clssub->subject->id }}">Comb</a>
+                                    {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Launch demo modal
+                                    </button> --}}
+                                    {{-- <button class="btn btn-primary btn-sm">C</button> --}}
+                                </li>
                             @endif
                         @endforeach
                     </ul>
@@ -53,10 +61,46 @@
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Combine Subjects</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        
+        
+        <div class="modal-body">
+            Subjects Id:
+            <div>
+                <input type="text" class="form-control subjectName" value="">
+            </div>
+        </div>
+
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <script type="text/javascript">
   $(document).ready(function(e){
-    
+      $('.btn-comb').on("click", function(){          
+        var subjectId = $(this).data('id');        
+        $(".subjectName").val( subjectId );
+        
+      });
   });  
 </script>
 
