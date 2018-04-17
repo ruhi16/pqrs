@@ -112,12 +112,24 @@ class ClsSubController extends Controller
     }
 
     public function viewModalSubmit(Request $request){
-        print_r($request->subj);
+        //print_r($request->subj);
+        if($request->subj){
+            $max = Subject::max('combination_no');//orderBy('combination_no', 'DESC')->first()->combination_no;
+            echo "MAX ID:". $max;
+            foreach($request->subj as $reqSubj){
+                $subject = Subject::find($reqSubj);
+                $subject->combination_no = ( $maxCombNo == NULL ? 1 : ($maxCombNo+1) );
+                // $subject->save();
+            }
+        }   
     }
 
     public function viewModalSubmitAjax(Request $request){
         $subj = Subject::find($request['sid']);
-        $subjs = Subject::where('extype_id', $subj->extype_id)->get();
+        $subjs = Subject::where('extype_id', $subj->extype_id)
+                    ->where('combination_no', $subj->combination_no)
+                    ->orWhere('combination_no', NULL)
+                    ->get();
         
         
         

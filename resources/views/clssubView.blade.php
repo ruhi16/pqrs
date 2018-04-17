@@ -103,15 +103,7 @@
   $(document).ready(function(e){
       $('.btn-comb').on("click", function(){          
         var subjectId = $(this).data('id');        
-        //$(".subjectName").val( subjectId );
-        //$(".subjectDetails").append( '<input type="text" class="form-control subjectName" value="'+subjectId+'">' );
-        //alert(subjectId);
-        //var str = '<input type="text" class="form-control subjectName" name="subj" value="@{{ $subjects->where(\'id\',' ; 
-        //1)->first()->name }}">';
-        //str += subjectId +')->first()->name';
-        //str += ' }';
-        //str += '}">';
-
+        
         var u = '{{ url("/clssubsView-combineSubject") }}';//'{{url("/updateRoll")}}';
         var t = '{{ csrf_token() }}';
         
@@ -120,10 +112,8 @@
             url: u,
             data:{sid:subjectId, _token:t},
             success: function(msg){
-                //console.log("from Ajax"+msg);
-                //console.log($.parseJSON(msg));
+                
                 var str ='';
-                //str = "Combine selected subject<b> " + msg['name'] +"</b> with the following...";
                 
                 str +="<div class='panel panel-default'><div class='panel-heading'>Panel Heading</div><div class='panel-body'>";//A Basic Panel</div></div>";
                 
