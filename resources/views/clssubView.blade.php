@@ -33,7 +33,8 @@
                                 <li>
                                     {{ $clssub->subject->name }}{{ $clssub->subject->combination_id }} 
                                     <a  href="#" class="btn-comb" data-toggle="modal" data-target="#exampleModal" 
-                                        data-id="{{ $clssub->subject->id }}">Comb</a>
+                                        data-sbid="{{ $clssub->subject->id }}"
+                                        data-clid="{{ $clssub->clss->id }}">Comb</a>
                                     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                         Launch demo modal
                                     </button> --}}
@@ -102,19 +103,18 @@
 <script type="text/javascript">
   $(document).ready(function(e){
       $('.btn-comb').on("click", function(){          
-        var subjectId = $(this).data('id');        
-        
+        var subjectId = $(this).data('sbid');
+        var clssId = $(this).data('clid');
+        // alert(subjectId+'='+clssId)
         var u = '{{ url("/clssubsView-combineSubject") }}';//'{{url("/updateRoll")}}';
         var t = '{{ csrf_token() }}';
         
         $.ajax({
             method: 'post',
             url: u,
-            data:{sid:subjectId, _token:t},
-            success: function(msg){
-                
-                var str ='';
-                
+            data:{sid:subjectId, cid:clssId, _token:t},
+            success: function(msg){                
+                {{--  var str ='';                
                 str +="<div class='panel panel-default'><div class='panel-heading'>Panel Heading</div><div class='panel-body'>";//A Basic Panel</div></div>";
                 
                 if(msg){                    
@@ -132,9 +132,9 @@
 
                 str += "</div></div>";
                 
-                $(".subjectDetails").html( str );      
+                $(".subjectDetails").html( str );        --}}
 
-                
+                console.log(msg['sid']);
             },
             error: function(data){
                 console.log(data);
