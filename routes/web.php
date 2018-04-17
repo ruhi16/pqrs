@@ -148,6 +148,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/addSec/{n}', 'ClsSecController@addSec');
         Route::get('/delSec/{n}', 'ClsSecController@delSec');
 
+        Route::get('/clssecsreport-stdList/{clss_id}/{section_id}', 'ClsSecController@reportStdList');
+        Route::get('/clssecsreport-stdListPdf/{clss_id}/{section_id}', 'ClsSecController@reportsStdListPdf');
 
 
         Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');

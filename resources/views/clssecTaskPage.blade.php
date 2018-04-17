@@ -20,6 +20,7 @@
             {{--  <th>Subject Wise Full Marks</th>  --}}
             <th>Marks Register</th>
             <th>Result Sheet</th>
+            <th>Reports</th>
         </tr>
     </thead>
     <tbody>
@@ -31,7 +32,8 @@
     <td>
         <button class="btn btn-success btn-sm btnClsTeacherEdit" data-toggle="modal"  data-cls="{{$clssec->clss->id}}" data-sec="{{$clssec->section->id}}" data-target="#myModal">Edit</button> 
         
-        @php $teacher_id = $clssteachers->where('clss_id', $clssec->clss->id)
+        @php 
+            $teacher_id = $clssteachers->where('clss_id', $clssec->clss->id)
                 ->where('section_id', $clssec->section->id)->first()['teacher_id'] 
         @endphp
 
@@ -43,6 +45,10 @@
     {{--  <td><a href="{{url('/exmtypclssubfmEntry',[$clssec->clss_id])}}">Full Mark Entry</a></td>  --}}
     <td><a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Clss-Sec Mark Register</a></td>
     <td><a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Students Individual Result Sheet</a></td>
+    <td>
+        <a href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List</a><br>
+        <a href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a>
+    </td>
     </tr>
 @endforeach
         

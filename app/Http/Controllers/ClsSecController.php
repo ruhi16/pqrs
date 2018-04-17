@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+use PDF;
 use App\Session;
 use App\Exam;
 use App\Extype;
@@ -12,6 +13,7 @@ use App\Clss;
 use App\Subject;
 use App\Section;
 use App\Teacher;
+use App\School;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -101,6 +103,56 @@ class ClsSecController extends Controller
 
 
 
+
+
+
+    //Class Section wise Reports
+    public function reportStdList($clss_id, $section_id){
+        $school = School::all()->first();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clss = Clss::find($clss_id);
+        $secs = Section::find($section_id);
+        
+        $stds = Studentdb::where('stsession_id',$ses->id)
+                ->where('stclss_id', $clss_id)
+                ->where('stsec_id', $section_id)
+                ->get();
+
+        $exms = Exam::where('session_id', $ses->id)->get();
+        
+
+
+        return view('clssecs.reports.reportsstdlist')
+            ->with('stdList', $stds)
+            ->with('exms', $exms)
+            ->with('clss', $clss)
+            ->with('section', $secs)
+            ->with('session', $ses)
+            ->with('school', $school)            ;
+    }
+    public function reportsStdListPdf($clss_id, $section_id){
+        $school = School::all()->first();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clss = Clss::find($clss_id);
+        $secs = Section::find($section_id);
+
+        $stds = Studentdb::where('stsession_id',$ses->id)
+                ->where('stclss_id', $clss_id)
+                ->where('stsec_id', $section_id)
+                ->get();
+
+        $exms = Exam::where('session_id', $ses->id)->get();
+        
+
+        $pdf = PDF::loadView('clssecs.reports.reportsstdlistHTML', 
+            ['stdList'=>$stds, 'exms'=>$exms,'clss'=>$clss, 'section'=>$secs, 'session'=>$ses, 
+             'school' =>$school
+            ]);
+
+        $pdf->setPaper("legal");        
+        return $pdf->stream();//download('resultsheet.pdf');
+
+    }
 
 
     
