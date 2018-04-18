@@ -126,19 +126,36 @@ class ClsSubController extends Controller
 
     public function viewModalSubmitAjax(Request $request){
         //$subj = Subject::find($request['sid']);
-        $clsb = Clssub::where('clss_id', $request['cid'])
-                    ->where('subject_id', $request['sid'])
-                    ->first();
+        $subject = Subject::find($request['sid']);
+        $subjects = Subject::where('extype_id', $subject->extype_id)
+            ->select('id')->get();
+
+
+        $clssub = Clssub::where('clss_id', $request['cid'])
+            ->where('subject_id', $request['sid'])
+            ->first();
+        $clssubs = Clssub::where('clss_id', $request['cid'])
+            ->where('combination_no', $clssub->combination_no)
+            ->whereIn('subject_id', $subjects)
+            ->get();
         
-        $clssubs = Clssub::where('combination_no', $subj->combination_no)
-        //             ->orWhere('combination_no', NULL)
-                    ->first();
+
+        // $clsb = Clssub::where('clss_id', $request['cid'])
+        //             ->where('subject_id', $request['sid'])
+        //             ->first();
         
+        // $clssubs = Clssub::where('combination_no', $subj->combination_no)
+        // //             ->orWhere('combination_no', NULL)
+        //             ->first();
         
+        // $str='';
+        // foreach($clssubs as $subj){
+        //     $str .= $subj->subject->name . '-';
+        // }
         
+        $jsonclssubs = json_encode($clssubs);
+        return response()->json($jsonclssubs);
         
-        // $abcd = json_encode($subjs);
-        // return response()->json($abcd);
-        return response()->json( ['sid'=> $subjs->id ]);
+        //return response()->json( ['sid'=> 'Ex:'. $str ]);
     }
 }

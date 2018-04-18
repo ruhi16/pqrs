@@ -114,27 +114,28 @@
             url: u,
             data:{sid:subjectId, cid:clssId, _token:t},
             success: function(msg){                
-                {{--  var str ='';                
+                var str ='';                
                 str +="<div class='panel panel-default'><div class='panel-heading'>Panel Heading</div><div class='panel-body'>";//A Basic Panel</div></div>";
                 
                 if(msg){                    
                     //var len = msg.length;
-                    //console.log(len);
+                    console.log( jQuery.parseJSON( msg ) );
+                    console.log(jQuery.parseJSON( msg )[0].id)
 
-                    var obj = jQuery.parseJSON( msg );
-                    for(i=0; i<obj.length; i++){
-                        str += "<label class='checkbox-inline'><input type='checkbox' name='subj[]' value='"+obj[i].id+"'>";//"'>Option 1</label>
-                        str += obj[i].name;
-                        str += "</label>";
-                        //console.log(obj[i].name);
-                    }
+                    // var obj = jQuery.parseJSON( msg );
+                    // for(i=0; i<obj.length; i++){
+                    //     str += "<label class='checkbox-inline'><input type='checkbox' name='subj[]' value='"+obj[i].id+"'>";//"'>Option 1</label>
+                    //     str += obj[i].name;
+                    //     str += "</label>";
+                    //     //console.log(obj[i].name);
+                    // }
                 }
 
                 str += "</div></div>";
                 
-                $(".subjectDetails").html( str );        --}}
+                //$(".subjectDetails").html( str );
 
-                console.log(msg['sid']);
+                //console.log(msg['sid']);
             },
             error: function(data){
                 console.log(data);
