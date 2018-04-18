@@ -77,7 +77,8 @@
         </div>
         
         
-        <div class="modal-body">            
+        <div class="modal-body">
+            <input type="text" name="clss" value="">
             <div class="subjectDetails">
                 {{--  <input type="text" class="form-control subjectName" value="{{ $subjects->where('id',1)->first()->name }}">  --}}
             </div>
@@ -105,6 +106,9 @@
       $('.btn-comb').on("click", function(){          
         var subjectId = $(this).data('sbid');
         var clssId = $(this).data('clid');
+
+        $('input[name="clss"]').val(clssId);
+
         // alert(subjectId+'='+clssId)
         var u = '{{ url("/clssubsView-combineSubject") }}';//'{{url("/updateRoll")}}';
         var t = '{{ csrf_token() }}';
@@ -119,21 +123,21 @@
                 
                 if(msg){                    
                     //var len = msg.length;
-                    console.log( jQuery.parseJSON( msg ) );
+                    console.log( msg );
                     //console.log(jQuery.parseJSON( msg )[0].id)
 
-                    // var obj = jQuery.parseJSON( msg );
-                    // for(i=0; i<obj.length; i++){
-                    //     str += "<label class='checkbox-inline'><input type='checkbox' name='subj[]' value='"+obj[i].id+"'>";//"'>Option 1</label>
-                    //     str += obj[i].name;
-                    //     str += "</label>";
-                    //     //console.log(obj[i].name);
-                    // }
+                    var obj = jQuery.parseJSON( msg );
+                    for(i = 0; i < obj.length; i++){
+                        str += "<label class='checkbox-inline'><input type='checkbox' name='subj[]' value='"+obj[i].id+"'"+obj[i].status+">";//"'>Option 1</label>
+                        str += obj[i].name;
+                        str += "</label>";
+                        console.log(obj[i].name);
+                    }
                 }
 
                 str += "</div></div>";
                 
-                //$(".subjectDetails").html( str );
+                $(".subjectDetails").html( str );
 
                 //console.log(msg['sid']);
             },

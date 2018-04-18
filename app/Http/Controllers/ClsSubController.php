@@ -112,14 +112,15 @@ class ClsSubController extends Controller
     }
 
     public function viewModalSubmit(Request $request){
-        //print_r($request->subj);
+        $clss_id = $request->clss;
+        print_r($request->subj);
         if($request->subj){
-            $max = Subject::max('combination_no');//orderBy('combination_no', 'DESC')->first()->combination_no;
-            echo "MAX ID:". $max;
-            foreach($request->subj as $reqSubj){
-                $subject = Subject::find($reqSubj);
-                $subject->combination_no = ( $maxCombNo == NULL ? 1 : ($maxCombNo+1) );
-                // $subject->save();
+            //$max = Subject::max('combination_no');//orderBy('combination_no', 'DESC')->first()->combination_no;
+            //echo "MAX ID:". $max;
+            foreach($request->subj as $reqSubj){                
+                $subject = Clssub::find($reqSubj);
+                $subject->combination_no = 1;//( $maxCombNo == NULL ? 1 : ($maxCombNo+1) );
+                $subject->save();
             }
         }   
     }
@@ -135,33 +136,26 @@ class ClsSubController extends Controller
             ->where('subject_id', $request['sid'])
             ->first();
         $clssubs = Clssub::where('clss_id', $request['cid'])
-            ->where('combination_no', $clssub->combination_no)
+            ->where('combination_no', $clssub->combination_no)            
             ->whereIn('subject_id', $subjects)
             ->get();
 
+                
+        $status = False;
+        if($clssub->combination_no != 0){
+            $status = True;
+        }
+        foreach($clssubs as &$clssub){
+            $clssub['name'] = $clssub->subject->name;
         
-        // $clssubs = $clssubs->toArray();
-        // array_push($clssubs, 10);
-        // foreach($clssubs as $clssub){
-            //$clssub['name'] = 'abcd';//$clssub->subject->name;
+            if($clssub->combination_no != 0){
+                $clssub['status'] = 'checked';
+            }else{
+                $clssub['status'] = '';
+            }
             
-            
-            
-        // }
-        
-        // $clsb = Clssub::where('clss_id', $request['cid'])
-        //             ->where('subject_id', $request['sid'])
-        //             ->first();
-        
-        // $clssubs = Clssub::where('combination_no', $subj->combination_no)
-        // //             ->orWhere('combination_no', NULL)
-        //             ->first();
-        
-        // $str='';
-        // foreach($clssubs as $subj){
-        //     $str .= $subj->subject->name . '-';
-        // }
-        
+        }
+                
         $jsonclssubs = json_encode($clssubs);
         return response()->json($jsonclssubs);
         
