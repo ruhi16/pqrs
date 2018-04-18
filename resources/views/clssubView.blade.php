@@ -120,7 +120,7 @@
                 if(msg){                    
                     //var len = msg.length;
                     console.log( jQuery.parseJSON( msg ) );
-                    console.log(jQuery.parseJSON( msg )[0].id)
+                    //console.log(jQuery.parseJSON( msg )[0].id)
 
                     // var obj = jQuery.parseJSON( msg );
                     // for(i=0; i<obj.length; i++){

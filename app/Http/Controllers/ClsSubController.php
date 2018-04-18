@@ -138,8 +138,17 @@ class ClsSubController extends Controller
             ->where('combination_no', $clssub->combination_no)
             ->whereIn('subject_id', $subjects)
             ->get();
-        
 
+        
+        // $clssubs = $clssubs->toArray();
+        // array_push($clssubs, 10);
+        // foreach($clssubs as $clssub){
+            //$clssub['name'] = 'abcd';//$clssub->subject->name;
+            
+            
+            
+        // }
+        
         // $clsb = Clssub::where('clss_id', $request['cid'])
         //             ->where('subject_id', $request['sid'])
         //             ->first();
