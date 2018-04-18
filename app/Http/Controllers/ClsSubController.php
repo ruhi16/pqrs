@@ -112,18 +112,33 @@ class ClsSubController extends Controller
     }
 
     public function viewModalSubmit(Request $request){
-        print_r($request->subj);
+        //print_r($request->subj);
+        if($request->subj){
+            $max = Subject::max('combination_no');//orderBy('combination_no', 'DESC')->first()->combination_no;
+            echo "MAX ID:". $max;
+            foreach($request->subj as $reqSubj){
+                $subject = Subject::find($reqSubj);
+                $subject->combination_no = ( $maxCombNo == NULL ? 1 : ($maxCombNo+1) );
+                // $subject->save();
+            }
+        }   
     }
 
     public function viewModalSubmitAjax(Request $request){
-        $subj = Subject::find($request['sid']);
-        $subjs = Subject::where('extype_id', $subj->extype_id)->get();
+        //$subj = Subject::find($request['sid']);
+        $clsb = Clssub::where('clss_id', $request['cid'])
+                    ->where('subject_id', $request['sid'])
+                    ->first();
+        
+        $clssubs = Clssub::where('combination_no', $subj->combination_no)
+        //             ->orWhere('combination_no', NULL)
+                    ->first();
         
         
         
         
-        $abcd = json_encode($subjs);
-        return response()->json($abcd);
-        // return response()->json( ['sid'=> $subj->id, 'sname'=>$subj->name]);
+        // $abcd = json_encode($subjs);
+        // return response()->json($abcd);
+        return response()->json( ['sid'=> $subjs->id ]);
     }
 }

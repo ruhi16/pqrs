@@ -150,7 +150,10 @@ class ClsSecController extends Controller
             ]);
 
         $pdf->setPaper("legal");        
-        return $pdf->stream();//download('resultsheet.pdf');
+        // return $pdf->stream(); //only to show in browser
+
+        $nameStr = $ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
+        return $pdf->download($nameStr);
 
     }
 
