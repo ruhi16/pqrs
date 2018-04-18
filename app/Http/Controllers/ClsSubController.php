@@ -112,17 +112,26 @@ class ClsSubController extends Controller
     }
 
     public function viewModalSubmit(Request $request){
-        $clss_id = $request->clss;
-        print_r($request->subj);
+        $clsbids = explode('-', $request->clss);
+        // $xx = Clssub::find($clsbids)->update(['combination_no', 0]);
+        //print_r($clsbids);
+        foreach($clsbids as $clsbid){
+            $clsb = Clssub::find($clsbid);
+            $clsb->combination_no = 0;
+            $clsb->save();
+        }
+
         if($request->subj){
-            //$max = Subject::max('combination_no');//orderBy('combination_no', 'DESC')->first()->combination_no;
+            
+            $maxCombNo = Clssub::max('combination_no');//orderBy('combination_no', 'DESC')->first()->combination_no;
             //echo "MAX ID:". $max;
             foreach($request->subj as $reqSubj){                
                 $subject = Clssub::find($reqSubj);
-                $subject->combination_no = 1;//( $maxCombNo == NULL ? 1 : ($maxCombNo+1) );
+                $subject->combination_no = ( $maxCombNo == 0 ? 1 : ($maxCombNo+1) );
                 $subject->save();
             }
         }   
+        return back();
     }
 
     public function viewModalSubmitAjax(Request $request){

@@ -78,7 +78,7 @@
         
         
         <div class="modal-body">
-            <input type="text" name="clss" value="">
+            <input type="hidden" name="clss" value="">
             <div class="subjectDetails">
                 {{--  <input type="text" class="form-control subjectName" value="{{ $subjects->where('id',1)->first()->name }}">  --}}
             </div>
@@ -123,15 +123,18 @@
                 
                 if(msg){                    
                     //var len = msg.length;
-                    console.log( msg );
+                    //console.log( msg );
                     //console.log(jQuery.parseJSON( msg )[0].id)
-
+                    var idstr = '';
                     var obj = jQuery.parseJSON( msg );
                     for(i = 0; i < obj.length; i++){
                         str += "<label class='checkbox-inline'><input type='checkbox' name='subj[]' value='"+obj[i].id+"'"+obj[i].status+">";//"'>Option 1</label>
                         str += obj[i].name;
                         str += "</label>";
-                        console.log(obj[i].name);
+                        idstr += obj[i].id +'-';
+                        
+                        //console.log(idstr);
+                         $('input[name="clss"]').val(idstr.slice(0, -1));
                     }
                 }
 
