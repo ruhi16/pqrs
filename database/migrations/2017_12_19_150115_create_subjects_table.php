@@ -17,8 +17,7 @@ class CreateSubjectsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('code')->nullable();
-            $table->integer('extype_id');
-            $table->integer('combination_no')->default('0');
+            $table->integer('extype_id');            
             $table->integer('session_id');
             $table->timestamps();
         });

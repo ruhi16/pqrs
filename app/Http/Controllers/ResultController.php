@@ -84,6 +84,7 @@ class ResultController extends Controller
         
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
+            
         $etcs = Exmtypclssub::where('clss_id', $clsc->clss_id )->get();
         // print_r($clsc);
         $grddescr = Gradedescription::all();

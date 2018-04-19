@@ -57,7 +57,6 @@
           </tr> 
           <tr>
             
-            
             @foreach($exms as $exm) 
               <th>MO</th>
               <th>FM</th>
@@ -65,13 +64,18 @@
           
           </tr>         
         </thead>
-        <tbody>
+        <tbody>      
+          @php 
+            $flag = true;
+          @endphp
           @foreach($clsb as $cls)
             @if($cls->subject->extype_id == $ext->id)
               <tr>
                 <td>{{$cls->id}}</td>
                 <td>{{$cls->subject->name}}</td>                
-                @php $subTotal = 0; @endphp
+                @php 
+                    $subTotal = 0;                     
+                @endphp
                 @foreach($exms as $exm)
                   <td class="text-right">                  
                     @php                    
@@ -100,29 +104,50 @@
                 @php  
                     $total = $total + $subTotal; 
                 @endphp
-                {{--  <td class="text-center">
-                    {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}
-                </td>  --}}
-
-
-                {{-- @if($loop->iteration >= $loop->count - 1)
-                    <td rowspan="2"></td>
-                @else
-                    <td class="text-center">{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}</td>
-                @endif --}}
-                @if( $loop->iteration == 11 )
-                    <td class="text-center" rowspan="2">
-                        xx{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}
-                        
+                
+                @if( $cls->combination_no == 0 )
+                    
+                    <td class="text-center">
+                        {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}                        
                     
                     </td>
 
-                @elseif($loop->iteration != 11+1)
-                    <td class="text-center">
-                        {{ getGrade($ext->id, $subTotal, 80 ) }}
-                        {{--  {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}  --}}
-                    </td>
+                @else 
+                    @if($flag == true)
+                        @php
+                            $flag = false;
+                            $combSubCount = $clsb->where('combination_no', $cls->combination_no)->count();
 
+                            $subIds = $clsb->where('combination_no', $cls->combination_no)->pluck('subject_id');
+                            
+                            $etcsIds = $etcs->whereIn('subject_id', $subIds->toArray())
+                                ->where('extype_id',$ext->id)->pluck('id');
+
+                            $etcsFMs = $etcs->whereIn('subject_id', $subIds->toArray())
+                                ->where('extype_id',$ext->id)->sum('fm');
+
+
+                            $fullMarks = $mrks->whereIn('exmtypclssub_id', $etcsIds->toArray())->pluck('marks');
+                            $fullObtMarks = 0;
+                            foreach($fullMarks as $mark){
+                                $fullObtMarks += ( $mark == -99 ? 0 : $mark );
+                            }
+                        @endphp
+                        
+                        <td class="text-center" rowspan="{{ $combSubCount }}">
+                            {{--  {{ $combSubCount }}  --}}
+                            
+                            {{ $fullObtMarks }}
+
+                            <br>{{ getGrade($ext->id, $fullObtMarks, $etcsFMs) }}
+                            {{--  @foreach($etcsFMs as $fm)
+                                {{ $fm }}
+                            @endforeach  --}}
+
+                            {{--  {{ getGrade($ext->id, $subTotal, 80 ) }}  --}}
+                            {{--  {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}  --}}
+                        </td>
+                    @endif
                 @endif
                     
 
