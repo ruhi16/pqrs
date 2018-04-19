@@ -105,13 +105,13 @@
                     $total = $total + $subTotal; 
                 @endphp
                 
-                @if( $cls->combination_no == 0 )
+                @if( $cls->combination_no == 0 ) 
                     
                     <td class="text-center">
                         {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}                        
                     
                     </td>
-
+                {{--  for Grade Cell only: Combined Subjects shows the Total & Grade cobinedly  --}}
                 @else 
                     @if($flag == true)
                         @php
@@ -134,20 +134,16 @@
                             }
                         @endphp
                         
-                        <td class="text-center" rowspan="{{ $combSubCount }}">
-                            {{--  {{ $combSubCount }}  --}}
+                        <td class="text-center" rowspan="{{ $combSubCount }}">                            
                             
                             {{ $fullObtMarks }}
 
                             <br>{{ getGrade($ext->id, $fullObtMarks, $etcsFMs) }}
-                            {{--  @foreach($etcsFMs as $fm)
-                                {{ $fm }}
-                            @endforeach  --}}
-
-                            {{--  {{ getGrade($ext->id, $subTotal, 80 ) }}  --}}
-                            {{--  {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}  --}}
+                            
                         </td>
                     @endif
+
+
                 @endif
                     
 
