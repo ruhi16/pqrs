@@ -55,6 +55,7 @@
                     @php $subTotal += $subMarks ; @endphp
                 </td>                
             @endforeach
+            
             <td>{{ $subTotal }}</td>
         </tr>
         @endif

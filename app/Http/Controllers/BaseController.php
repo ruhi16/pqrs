@@ -34,6 +34,8 @@ class BaseController extends Controller
             ;
     }
 
+
+
     public function exmtypclssubfmEntry($clss_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $cls   = Clss::find($clss_id);
@@ -53,6 +55,47 @@ class BaseController extends Controller
         ->withFlmrs($flmrs)
         ;
     }
+
+
+
+    public function exmtypclssubfmEntrySubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $exams = Exam::all();
+        $extps = Extype::all();
+        // ============================================================
+        $extps = Exmtypclssub::where('clss_id', $request->clsId)->groupBy('extype_id')->pluck('extype_id');
+        $extps = Extype::whereIn('id', $extps->toArray())->get();
+        // ============================================================
+        $clsbs = Clssub::whereClss_id($request->clsId)->get();
+        
+        //delete existing records of that class
+        Exmtypclssub::where('clss_id', $request->clsId)->delete();
+        foreach($exams as $exm){
+            foreach($extps  as $ext){
+                $strSubs = "sb".$exm->id.$ext->id.$request->clsId;
+                foreach($request->$strSubs as $sbId){
+                    $strFms = "fm".$exm->id.$ext->id.$request->clsId.$sbId;
+                    // print_r($request->$strFms);
+                    // echo "<br>";
+                    // echo "Exam:".$exm->name.", ExTp:". $ext->name .", Clss:".$request->clsId.", Subj:".$sbId;
+                    // echo "=>FM: ".($request->$strFms[0] != NULL?$request->$strFms[0]:0);
+                    $etcs = new Exmtypclssub;
+                    $etcs->session_id   = $ses->id; 
+                    $etcs->exam_id      = $exm->id;
+                    $etcs->extype_id    = $ext->id;                
+                    $etcs->clss_id      = $request->clsId;
+                    $etcs->subject_id   = $sbId;
+                    $etcs->fm           = ($request->$strFms[0] != NULL?$request->$strFms[0]:0);
+                    $etcs->pm           = 0;
+                    $etcs->save();
+                    // print_r($request->$strSubs); echo "<br>";
+                }
+            }
+        }
+        return "Sucessfully Submitted";
+    }
+
+
 
     public function exmtypclssubfmView($clss_id){
         $ses = Session::whereStatus('CURRENT')->first();
@@ -74,42 +117,7 @@ class BaseController extends Controller
         ;
     }
 
-    public function exmtypclssubfmEntrySubmit(Request $request){
-        $ses = Session::whereStatus('CURRENT')->first();
-        $exams = Exam::all();
-        $extps = Extype::all();
-        
-        $clsbs = Clssub::whereClss_id($request->clsId)->get();
-        
-        //delete existing records of that class
-        Exmtypclssub::where('clss_id', $request->clsId)->delete();
-        foreach($exams as $exm){
-            foreach($extps  as $ext){
-                $strSubs = "sb".$exm->id.$ext->id.$request->clsId;
-                foreach($request->$strSubs as $sbId){
-                    $strFms = "fm".$exm->id.$ext->id.$request->clsId.$sbId;
-                    // print_r($request->$strFms);
-                    echo "<br>";
-                    echo "Exam:".$exm->name.", ExTp:". $ext->name .", Clss:".$request->clsId.", Subj:".$sbId;
-                    echo "=>FM: ".($request->$strFms[0] != NULL?$request->$strFms[0]:0);
-                    $etcs = new Exmtypclssub;
-                    $etcs->session_id   = $ses->id; 
-                    $etcs->exam_id      = $exm->id;
-                    $etcs->extype_id    = $ext->id;                
-                    $etcs->clss_id      = $request->clsId;
-                    $etcs->subject_id   = $sbId;
-                    $etcs->fm           = ($request->$strFms[0] != NULL?$request->$strFms[0]:0);
-                    $etcs->pm           = 0;
-                    $etcs->save();
-                    // print_r($request->$strSubs); echo "<br>";
-                }
-            }
-        }
-
-
-        return "Sucessfully Submitted";
-        
-    }
+    
 
 
 // old methods
@@ -192,14 +200,20 @@ class BaseController extends Controller
 
         }// end of for
         // print_r($final);
-        Exmtypclssub::truncate();
+        //Exmtypclssub::truncate();
         for($i=0; $i<count($final['exam']); $i++){
-            $etcs = new Exmtypclssub;
-            $etcs->exam_id   = $final['exam'][$i];
-            $etcs->extype_id = $final['type'][$i];
-            $etcs->clss_id   = $final['clss'][$i];
-            $etcs->fm        = $final['val'][$i];
-            $etcs->session_id= $ses->id;
+            $etcs = Exmtypclssub::firstOrNew([
+                'exam_id'=>$final['exam'][$i],
+                'extype_id'=>$final['type'][$i],
+                'clss_id'=>$final['clss'][$i],
+                'fm'=>$final['val'][$i],
+                'session_id'=>$ses->id,
+            ]);//new Exmtypclssub;
+            // $etcs->exam_id   = $final['exam'][$i];
+            // $etcs->extype_id = $final['type'][$i];
+            // $etcs->clss_id   = $final['clss'][$i];
+            // $etcs->fm        = $final['val'][$i];
+            // $etcs->session_id= $ses->id;
             $etcs->save();
         }
 

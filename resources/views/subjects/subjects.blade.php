@@ -89,7 +89,7 @@
             <select class="form-control" name="subjectType" id="subjectType">
               <option value="0">                          </option>
               @foreach($extypes as $extype)              
-                <option value="{{$extype->id}}">{{$extype->name}}</option>              
+                <option value="{{$extype->id}}">{{ $extype->name }}-{{ $extype->mode }}</option>              
               @endforeach
             </select>        
           </div>

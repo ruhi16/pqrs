@@ -173,7 +173,11 @@ class MarksEntryController extends Controller
             ->whereSection_id($clsc->section_id)
             ->get();
         $exms = Exam::whereSession_id($ses->id)->get();
-        $extp = Extype::whereSession_id($ses->id)->get();
+        //$extp = Extype::whereSession_id($ses->id)->get();
+        // ============================================================
+        $extps = Exmtypclssub::where('clss_id',$clsc->clss_id)->groupBy('extype_id')->pluck('extype_id');
+        $extp = Extype::whereIn('id', $extps->toArray())->get();
+        // ============================================================
 
         
         // print_r($stdcrs);
