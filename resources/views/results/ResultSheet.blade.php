@@ -39,16 +39,16 @@
     @endphp
     <tr>
       @foreach($exts as $ext)
-      @php  $total = 0; @endphp
+      @php  
+        $total = 0;       
+        $combSubjectCount = 0; 
+      @endphp
       <td>
       <table class="table table-bordered table-striped">
         <thead>
-          <tr> 
-            
+          <tr>            
             <th rowspan="2"  class="text-center">Sl</th>
-            <th rowspan="2" class="text-center">
-                    {{-- <div style="height:2.5em;border:1px solid #fff">Subjects</div> --}}
-                Subject</th>
+            <th rowspan="2" class="text-center">Subject</th>
             @foreach($exms as $exm) 
               <th colspan="2"><b><small>{{ $exm->name }}</small></b></th>
             @endforeach
@@ -101,18 +101,19 @@
                 @endforeach
                 <td class="text-right">{{$subTotal}}</td>
 
-                @php  
+                @php                      
                     $total = $total + $subTotal; 
+                    $combSubjectCount++;
                 @endphp
                 
                 @if( $cls->combination_no == 0 ) 
                     
                     <td class="text-center">
                         {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}                        
-                    
+                        
                     </td>
-                {{--  for Grade Cell only: Combined Subjects shows the Total & Grade cobinedly  --}}
-                @else 
+                
+                @else   {{--  for Grade Cell for Combined Subjects shows the Total & Grade cobinedly  --}}
                     @if($flag == true)
                         @php
                             $flag = false;
@@ -141,6 +142,10 @@
                             <br>{{ getGrade($ext->id, $fullObtMarks, $etcsFMs) }}
                             
                         </td>
+                    @else
+                        @if($combSubjectCount == $combSubCount)
+                            @php $flag = true; @endphp
+                        @endif
                     @endif
 
 

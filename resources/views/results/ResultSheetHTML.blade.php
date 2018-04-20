@@ -59,7 +59,10 @@
             @endphp
             <tr>
             @foreach($exts as $ext)
-            @php  $total = 0; @endphp
+            @php  
+                $total = 0; 
+                $combSubjectCount = 0;             
+            @endphp
             <td>
             <table>
                 <thead>
@@ -67,7 +70,7 @@
                     <th rowspan="2"  class="text-center">Sl</th>
                     <th rowspan="2">Subject</th>
                     @foreach($exms as $exm) 
-                    <th colspan="2"><b>{{$exm->name}}</b></th>
+                        <th colspan="2"><b>{{$exm->name}}</b></th>
                     @endforeach
                     <th rowspan="2">Total</th>
                     <th rowspan="2">Grade</th>
@@ -83,6 +86,9 @@
                 </tr>            
                 </thead>
                 <tbody>
+                @php 
+                    $flag = true;
+                @endphp
                 @foreach($clsb as $cls)
                     @if($cls->subject->extype_id == $ext->id)
                     <tr>
@@ -112,8 +118,49 @@
                         </td>
                         @endforeach
                         <td>{{$subTotal}}</td>
-                        @php  $total = $total + $subTotal; @endphp
-                        <td>{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}</td>
+                        @php  
+                            $total = $total + $subTotal;                         
+                            $combSubjectCount++;
+                        @endphp
+                        @if( $cls->combination_no == 0 ) 
+                            <td>{{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}</td>
+                        @else   {{--  for Grade Cell for Combined Subjects shows the Total & Grade cobinedly  --}}
+                    @if($flag == true)
+                        @php
+                            $flag = false;
+                            $combSubCount = $clsb->where('combination_no', $cls->combination_no)->count();
+
+                            $subIds = $clsb->where('combination_no', $cls->combination_no)->pluck('subject_id');
+                            
+                            $etcsIds = $etcs->whereIn('subject_id', $subIds->toArray())
+                                ->where('extype_id',$ext->id)->pluck('id');
+
+                            $etcsFMs = $etcs->whereIn('subject_id', $subIds->toArray())
+                                ->where('extype_id',$ext->id)->sum('fm');
+
+
+                            $fullMarks = $mrks->whereIn('exmtypclssub_id', $etcsIds->toArray())->pluck('marks');
+                            $fullObtMarks = 0;
+                            foreach($fullMarks as $mark){
+                                $fullObtMarks += ( $mark == -99 ? 0 : $mark );
+                            }
+                        @endphp
+                        
+                        <td class="text-center" rowspan="{{ $combSubCount }}">                            
+                            
+                            {{ $fullObtMarks }}
+
+                            <br>{{ getGrade($ext->id, $fullObtMarks, $etcsFMs) }}
+                            
+                        </td>
+                    @else
+                        @if($combSubjectCount == $combSubCount)
+                            @php $flag = true; @endphp
+                        @endif
+                    @endif
+
+
+                @endif
                     </tr>
                     @endif
                 @endforeach
