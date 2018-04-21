@@ -58,31 +58,15 @@ class MarksEntryController extends Controller
         $clsc = Clssec::find($clsc_id);
         $clsb = Clssub::find($clsb_id);
 
-
-        // echo "Exam:". Exmtypclssub::find($extpcl_id)->exam->name;
-        // echo "<br>Exam Type:". Exmtypclssub::find($extpcl_id)->extype->name;
-        // echo "<br>Class:". Exmtypclssub::find($extpcl_id)->clss->name;
-        
-        // echo "<br>Subject:". Clssec::find($clsc_id)->section->name;
-
-        // echo "<br>Subject:". Clssub::find($clsb_id)->subject->name;
-
-        // echo "<br><br>Student List";
         $stdcrs = Studentcr::whereSession_id($ses->id)
         ->whereClss_id(Clssec::find($clsc_id)->clss->id)
         ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
-        // foreach($stdcrs as $stdcr){
-        //     echo "<br>". $stdcr->id ."=>". $stdcr->studentdb->name;
-        // }
 
         $stdmrks = Marksentry::whereSession_id($ses->id)
             ->whereExmtypclssub_id($extpcl_id)
             ->whereClssec_id($clsc_id)
             ->whereClssub_id($clsb_id)//->whereStudentcr_id($sid)
             ->get();
-
-        // foreach($stdmrks )
-
 
         return view ('clssecMrkentryPage')
         ->withExtpcls($extpcls)
@@ -96,7 +80,7 @@ class MarksEntryController extends Controller
 
     //Ajax Function
     public function updateMarks(Request $request){
-        //console.log("hello");
+
         $ses = Session::whereStatus('CURRENT')->first();
         $sid = $request['sid']; //Student Id
         $etc = $request['etc']; //ExamType Id
@@ -160,23 +144,15 @@ class MarksEntryController extends Controller
         $clsbs = Clssub::whereSession_id($ses->id)
             ->whereClss_id($clsc->clss_id)->get();
         
-
-
-        // foreach($clsbs as $clsb){
-        //     echo $clsb->subject->extype->name ;
-        //     echo $clsb->subject->name. "<br>";
-        // }
-        // echo $clsc->clss_id;
-        
         $stdcrs = Studentcr::whereSession_id($ses->id)
             ->whereClss_id($clsc->clss_id)
             ->whereSection_id($clsc->section_id)
             ->get();
         $exms = Exam::whereSession_id($ses->id)->get();
-        //$extp = Extype::whereSession_id($ses->id)->get();
+        $extp = Extype::whereSession_id($ses->id)->get();
         // ============================================================
-        $extps = Exmtypclssub::where('clss_id',$clsc->clss_id)->groupBy('extype_id')->pluck('extype_id');
-        $extp = Extype::whereIn('id', $extps->toArray())->get();
+        // $extps = Exmtypclssub::where('clss_id',$clsc->clss_id)->groupBy('extype_id')->pluck('extype_id');
+        // $extp = Extype::whereIn('id', $extps->toArray())->get();
         // ============================================================
 
         

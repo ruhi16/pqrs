@@ -177,7 +177,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/exmtypclssubfmEntry/{clss_id}', 'BaseController@exmtypclssubfmEntry');
         Route::get('/exmtypclssubfmView/{clss_id}', 'BaseController@exmtypclssubfmView');
         Route::post('/exmtypclssubfmEntry-submit', 'BaseController@exmtypclssubfmEntrySubmit');
-
+        
+        
+        // Route::get('/test', 'BaseController@test');
         // Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
         // Route::post('/exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
         // Route::get('/exmtypclssub-view', 'BaseController@exmtypclssubView');
@@ -230,7 +232,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-ResultSheetFPDF/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheetFPDF');
 
 
-        Route::get('/test', 'BaseController@test');
+        
         Route::get('/ExStudentDb', 'ExcelController@ExStudentDb');
         Route::get('/ExcelSheetExStudentDb', 'ExcelController@ExcelSheetExStudentDb');
 
