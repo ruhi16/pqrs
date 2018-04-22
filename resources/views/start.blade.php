@@ -17,6 +17,74 @@
     
 
 <div class="container">
+<div class="panel panel-default">
+    <div class="panel-heading text-center"><b>Class-Section wise Total Students Detail</b></div>        
+    <div class="panel-body">
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Particulars</th>
+                @foreach($clssecs->unique('clss_id')  as $clssec )
+                    <th class="text-center" colspan="{{ $clssecs->where('clss_id', $clssec->clss->id)->count() }}">
+                        {{ $clssec->clss->name }}                        
+                        
+                    </th>
+                @endforeach
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Sections</th>
+                @foreach($clssecs->unique('clss_id')  as $clssec )                
+                    @foreach($clssecs as $clsc)                    
+                        @if($clsc->clss_id == $clssec->clss->id)
+                        <th class="text-center">
+                            {{ $clsc->section->name }}
+                            {{--  :{{ $stdcrs->where('clss_id',$clsc->clss->id)
+                                    ->where('section_id', $clsc->section->id)
+                                    ->count()
+                              }},   --}}
+                        </th>
+                        @endif                    
+                    @endforeach                    
+                
+                @endforeach
+                <td></td>
+            </tr>
+            <tr>
+                <th>Total Students </th>
+                @php $total = 0; @endphp
+                @foreach($clssecs->unique('clss_id')  as $clssec )                
+                    @foreach($clssecs as $clsc)                    
+                        @if($clsc->clss_id == $clssec->clss->id)
+                        <td class="text-center">                            
+                            @php
+                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                    ->where('section_id', $clsc->section->id)
+                                    ->count();
+
+                            $total += $clscStd;
+                            @endphp
+                            {{ $clscStd }}
+                        </td>
+                        @endif                    
+                    @endforeach                    
+                
+                @endforeach
+                <th class="text-center">{{ $total }}</th>
+            </tr>
+        </tbody>
+        </table>
+        
+            
+
+        
+    </div>
+</div>
+
+
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -82,7 +150,7 @@
                     <a class="btn btn-default" href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
                     <a class="btn btn-info" href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
                     <a class="btn btn-success" href="{{ url('/ExStudentDb') }}" >Excel HTML</a>
-
+                    <a class="btn btn-primary" href="{{ url('/answerScript-teacherAllotment/1') }}" >Answer Script Disburshment 1st Term</a>
                     
                 </div>
             </div>

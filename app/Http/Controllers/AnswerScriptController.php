@@ -107,4 +107,49 @@ class AnswerScriptController extends Controller
         // return "answerscriptDistributionAddSubject";
         return back();
     }
+
+    public function answerscriptTeacherAllotment(Request $request, $exam_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clssecs = Clssec::where('session_id', $ses->id);
+
+        $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
+            ->where('exam_id', $exam_id)
+            ->where('extype_id', 2)
+            // ->where('clss_id', 1)
+            // ->where('section_id', 1)
+            ->get()
+            ;
+
+        // $stdcrs = Studentcr::where('session_id', $ses->id)->get();
+        // foreach($stdcrs as $stdcr){
+        //     echo $stdcr->count() ."<br>";
+        // }
+        // echo $ansscdists->first()->clss->name;
+        $clssecs = Clssec::all();
+        $clss = Clss::all();
+
+        foreach($clssecs as $clssec){
+            echo $clssec ."<br>";
+            foreach($ansscdists as $anssc){
+                $abcd = $anssc->where('clss_id', $clssec->clss_id)->where('section_id', $clssec->section->id)->get();
+                foreach($abcd as $ab){
+                    echo $ab->teacher->name ."<br>";
+                }
+                
+                // echo $abcd->teacher_id;
+            }
+        }
+
+        foreach($ansscdists as $ansscdist){
+            echo $ansscdist->subject->name ." - ";
+            echo $ansscdist->teacher->name ."<br>";
+        }
+
+
+
+
+        //return view('answerscripts.answerscriptTeacherAllotment');
+    }
+
+
 }

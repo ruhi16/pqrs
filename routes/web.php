@@ -27,8 +27,14 @@ Route::get('/', function () {
 });
 
 Route::get('/start', function () {
-    return view('start'); //homepage
+    $ses = App\Session::whereStatus('CURRENT')->first();
+    $clssecs = App\Clssec::whereSession_id($ses->id)->get();
+    $stdcrs = App\Studentcr::where('session_id', $ses->id)->get();
 
+    return view('start')
+        ->with('clssecs', $clssecs)
+        ->with('stdcrs', $stdcrs)        
+        ; //homepage
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -242,11 +248,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-        //Anwer Script
+        //Anwer Script Manipulation
         Route::get('/answerScript-taskpane','AnswerScriptController@answerScriptTaskpane');
         Route::get('/answerscript-distribution/{exam_id}/{clss_id}','AnswerScriptController@answerscriptDistribution');
         Route::post('/answerscript-distribution-addsubject', 'AnswerScriptController@answerscriptDistributionAddSubject');
-        
+        Route::get('/answerScript-teacherAllotment/{exam_id}', 'AnswerScriptController@answerscriptTeacherAllotment');
 });
   
 Route::get('/get-logout', function(){
