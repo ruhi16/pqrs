@@ -120,6 +120,13 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/clssubjfm-view/{clss_id}', 'SubjectFMController@clssubjfmView');
 
 
+        Route::get('/exmtypmodcls-Taskpane', 'ModeController@Taskpane');
+
+
+
+
+
+
 
 
 
