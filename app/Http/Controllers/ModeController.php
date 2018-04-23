@@ -44,4 +44,13 @@ class ModeController extends Controller
             ->with('mods', $mods)
         ;
     }
+
+
+    public function taskpaneSubmit(Request $request){
+
+
+
+
+        echo "Hello";
+    }
 }

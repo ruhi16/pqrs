@@ -8,6 +8,11 @@
 @section('content')
 
 <h1>Mode Controller...</h1>
+
+<form method="post" class="form-horizontal" action="{!! url('exmtypmodcls-taskpaneSubmit') !!}" value="{{ csrf_token() }}">  
+{{ csrf_field() }}
+
+
 <table class="table table-striped table-bordered">
 <thead>
   <tr>
@@ -20,28 +25,32 @@
 </thead>
 <tbody>
    @foreach($clss as $cls)
-  {{-- <tr>
-    <td>{{ $cls->name }}</td>
-    <td>  --}}
+  
     @foreach($exts as $ext)
     <tr>
       <td>{{ $cls->name }}</td>
       <td>{{ $ext->name }}</td>
       @foreach($exms as $exm)
         <td>
-        @foreach($mods as $mod)
-          {{ $mod->name }}
-        @endforeach
+        <div class="form-check form-check-inline">        
+          @foreach($mods as $mod)            
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+            <label class="form-check-label" for="inlineCheckbox1">{{ $mod->name }}</label>
+          @endforeach
+        </div>
         </td>
       @endforeach
     </tr>
     @endforeach
-    {{--  </td>
-  </tr> --}}
+    
   @endforeach
 </tbody>
 </table>
 
+
+<button type="submit" class="btn btn-primary">Submit</button>
+<button type="reset" class="btn btn-default">Reset</button>
+</form>
 
 
 

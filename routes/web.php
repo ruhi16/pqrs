@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::get('/exmtypmodcls-Taskpane', 'ModeController@Taskpane');
-
+        Route::post('/exmtypmodcls-taskpaneSubmit','ModeController@taskpaneSubmit');
 
 
 
