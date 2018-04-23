@@ -85,6 +85,22 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -147,11 +163,45 @@
                     <a class="btn btn-success" href="{{url('/exmtypclssubTaskpane')}}">Exam Type Class Subject Task Pane</a>
                     <a class="btn btn-info" href="{{url('/teachers')}}">Teachers Details Entry Point</a>
                     <a class="btn btn-primary" href="{{url('/teachers-view')}}">Teachers Details View Point</a>
-                    <a class="btn btn-default" href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
+                    
                     <a class="btn btn-info" href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
                     <a class="btn btn-success" href="{{ url('/ExStudentDb') }}" >Excel HTML</a>
-                    <a class="btn btn-primary" href="{{ url('/answerScript-teacherAllotment/1') }}" >Answer Script Disburshment 1st Term</a>
                     
+
+
+                    <br>
+                    <a class="btn btn-default" href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
+
+                    {{--  //first: exam_id, second: extype_id (summative=2)  --}}
+                    <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Ans Sc Disburshment Class-Section Wise
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="{{ url('/answerScript-clss-sectionAllotment/1/2') }}">First Terminal</a></li>
+                        <li><a href="{{ url('/answerScript-clss-sectionAllotment/2/2') }}">Second Terminal</a></li>
+                        <li><a href="{{ url('/answerScript-clss-sectionAllotment/3/2') }}">Third Terminal</a></li>
+                        
+                    </ul>
+                    </div>
+
+
+                    
+                    {{--  //first: exam_id, second: extype_id (summative=2)  --}}                    
+                    <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Ans Sc Disburshment Teacher Wise
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="{{ url('/answerScript-teacherAllotment/1/2') }}">First Terminal</a></li>
+                        <li><a href="{{ url('/answerScript-teacherAllotment/2/2') }}">Second Terminal</a></li>
+                        <li><a href="{{ url('/answerScript-teacherAllotment/3/2') }}">Third Terminal</a></li>
+                        
+                    </ul>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -108,48 +108,52 @@ class AnswerScriptController extends Controller
         return back();
     }
 
-    public function answerscriptTeacherAllotment(Request $request, $exam_id){
-        $ses = Session::whereStatus('CURRENT')->first();
-        $clssecs = Clssec::where('session_id', $ses->id);
+    public function answerscriptClssSectionAllotment(Request $request, $exam_id, $extype_id){
+        $ses = Session::whereStatus('CURRENT')->first();        
+        $clss = Clss::all();
 
         $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
             ->where('exam_id', $exam_id)
-            ->where('extype_id', 2)
+            ->where('extype_id', $extype_id)
             // ->where('clss_id', 1)
             // ->where('section_id', 1)
             ->get()
             ;
 
-        // $stdcrs = Studentcr::where('session_id', $ses->id)->get();
-        // foreach($stdcrs as $stdcr){
-        //     echo $stdcr->count() ."<br>";
-        // }
-        // echo $ansscdists->first()->clss->name;
-        $clssecs = Clssec::all();
-        $clss = Clss::all();
+        $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
+                        ->where('exam_id', $exam_id)
+                        ->where('extype_id', $extype_id)
+                        ->get();
 
-        foreach($clssecs as $clssec){
-            echo $clssec ."<br>";
-            foreach($ansscdists as $anssc){
-                $abcd = $anssc->where('clss_id', $clssec->clss_id)->where('section_id', $clssec->section->id)->get();
-                foreach($abcd as $ab){
-                    echo $ab->teacher->name ."<br>";
-                }
-                
-                // echo $abcd->teacher_id;
-            }
-        }
+        $teacher = Teacher::all();
 
-        foreach($ansscdists as $ansscdist){
-            echo $ansscdist->subject->name ." - ";
-            echo $ansscdist->teacher->name ."<br>";
-        }
+        $stdcrs = Studentcr::where('session_id', $ses->id)->get();
 
 
-
-
-        //return view('answerscripts.answerscriptTeacherAllotment');
+        return view('answerscripts.answerscriptClssSectionAllotment')
+        ->with('clss', $clss)
+        ->with('ansscdists', $ansscdists)
+        ->with('teacher', $teacher)
+        ->with('stdcrs', $stdcrs)
+        ;
     }
 
+
+    public function answerscriptTeacherAllotment(Request $request, $exam_id, $extype_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $teachers = Teacher::all();
+        $clss = Clss::all();
+        $ansscdist = Answerscriptdistribution::all();
+        $stdcrs = Studentcr::where('session_id', $ses->id)->get();
+
+
+
+        return view('answerscripts.answerscriptTeacherAllotment')
+            ->with('teachers', $teachers)
+            ->with('clss', $clss)
+            ->with('ansscdist', $ansscdist)
+            ->with('stdcrs', $stdcrs)
+            ;
+    }
 
 }

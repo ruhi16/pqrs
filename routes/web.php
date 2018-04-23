@@ -252,7 +252,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/answerScript-taskpane','AnswerScriptController@answerScriptTaskpane');
         Route::get('/answerscript-distribution/{exam_id}/{clss_id}','AnswerScriptController@answerscriptDistribution');
         Route::post('/answerscript-distribution-addsubject', 'AnswerScriptController@answerscriptDistributionAddSubject');
-        Route::get('/answerScript-teacherAllotment/{exam_id}', 'AnswerScriptController@answerscriptTeacherAllotment');
+        Route::get('/answerScript-clss-sectionAllotment/{exam_id}/{extype_id}', 'AnswerScriptController@answerscriptClssSectionAllotment');
+        Route::get('/answerScript-teacherAllotment/{exam_id}/{extype_id}', 'AnswerScriptController@answerscriptTeacherAllotment');
+
 });
   
 Route::get('/get-logout', function(){
