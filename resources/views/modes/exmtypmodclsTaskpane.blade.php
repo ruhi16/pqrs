@@ -34,8 +34,10 @@
         <td>
         <div class="form-check form-check-inline">        
           @foreach($mods as $mod)            
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">{{ $mod->name }}</label>
+            <input  class="form-check-input" type="checkbox" 
+                    name="fm{{$cls->id}}{{$ext->id}}{{$exm->id}}{{$mod->id}}" id="inlineCheckbox1" 
+                    value="option1">
+            <label class="form-check-label" for="inlineCheckbox1">{{ $mod->name }}</label><br>
           @endforeach
         </div>
         </td>

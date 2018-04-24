@@ -19,7 +19,6 @@ class CreateExmtypmodclsTable extends Migration
             $table->integer('extype_id');
             $table->integer('mode_id');
             $table->integer('clss_id');
-
             $table->string('status')->nullable();
             $table->integer('session_id');
             $table->timestamps();
