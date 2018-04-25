@@ -10,7 +10,7 @@
 <form method="post" class="form-horizontal" action="{!! url('exmtypmodcls-AssignSubmit') !!}" value="{{ csrf_token() }}">  
 {{ csrf_field() }}
 
-<input type="text" name="cls" value="{{ $clss->first()->name }}">
+<input type="hidden" name="clsId" value="{{ $clss->first()->id }}">
 <table class="table table-striped table-bordered">
 <thead>
   <tr>
@@ -31,10 +31,11 @@
         <div class="form-check form-check-inline">        
           @foreach($mods as $mod)    
 
-            <input type="text" name="cls" value="{{ $ext->id}}{{$exm->id}}{{$mod->id}} ">
-            <input  class="form-check-input" type="checkbox" 
-                    name="fm" id="inlineCheckbox1" 
-                    value="option1">
+            
+            <input  class="form-check-input" 
+                    type="checkbox" 
+                    name="etmcss[]"  
+                    value="{{ $ext->id}}-{{$exm->id}}-{{$mod->id}}">
             <label class="form-check-label" for="inlineCheckbox1">{{ $mod->name }}</label>
           @endforeach
         </div>

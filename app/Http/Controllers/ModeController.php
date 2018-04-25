@@ -116,10 +116,23 @@ class ModeController extends Controller
     }
 
     public function exmtypmodclsAssignSubmit(Request $request){
-
-        $str ="fm".$request->cls ;//"fm".$clss->first()->id.$ext->id.$exm->id.$mod->id;
+        $ses = Session::whereStatus('CURRENT')->first();
+        $str = $request->clsId ;//"fm".$clss->first()->id.$ext->id.$exm->id.$mod->id;
         echo $str ;
-        print_r($request->fm);
-        
+        // extype > exam > mode > (clss)
+        print_r($request->etmcs);
+        $arr = explode("-", $request->etmcss);
+        foreach($request->etmcs as $rec){
+            $etmcs = Exmtypmodcls::firstOrNew([
+                    'session_id'=> $ses->id,
+                    'clss_id'   => $clss_id,
+                    'extype_id' => $arr[0],
+                    'exam_id'   => $arr[1],
+                    'mode_id'   => $arr[2],
+            ]);
+            
+            $etmcs->status = "Oke";
+            $etmcs->save();
+        }
     }
 }
