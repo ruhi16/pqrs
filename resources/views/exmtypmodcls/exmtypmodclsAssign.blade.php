@@ -6,13 +6,11 @@
 @endsection
 
 @section('content')
-
-<h1>Mode Controller...</h1>
-
-<form method="post" class="form-horizontal" action="{!! url('exmtypmodcls-taskpaneSubmit') !!}" value="{{ csrf_token() }}">  
+<h1>Exam Mode Assignment</h1>
+<form method="post" class="form-horizontal" action="{!! url('exmtypmodcls-AssignSubmit') !!}" value="{{ csrf_token() }}">  
 {{ csrf_field() }}
 
-
+<input type="text" name="cls" value="{{ $clss->first()->name }}">
 <table class="table table-striped table-bordered">
 <thead>
   <tr>
@@ -24,28 +22,26 @@
   </tr>
 </thead>
 <tbody>
-   @foreach($clss as $cls)
-  
     @foreach($exts as $ext)
     <tr>
-      <td>{{ $cls->name }}</td>
+      <td class="text-center">{{ $clss->first()->name }}</td>
       <td>{{ $ext->name }}</td>
       @foreach($exms as $exm)
         <td>
         <div class="form-check form-check-inline">        
-          @foreach($mods as $mod)            
+          @foreach($mods as $mod)    
+
+            <input type="text" name="cls" value="{{ $ext->id}}{{$exm->id}}{{$mod->id}} ">
             <input  class="form-check-input" type="checkbox" 
-                    name="fm{{$cls->id}}{{$ext->id}}{{$exm->id}}{{$mod->id}}" id="inlineCheckbox1" 
+                    name="fm" id="inlineCheckbox1" 
                     value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">{{ $mod->name }}</label><br>
+            <label class="form-check-label" for="inlineCheckbox1">{{ $mod->name }}</label>
           @endforeach
         </div>
         </td>
       @endforeach
     </tr>
-    @endforeach
-    
-  @endforeach
+    @endforeach    
 </tbody>
 </table>
 
@@ -53,6 +49,10 @@
 <button type="submit" class="btn btn-primary">Submit</button>
 <button type="reset" class="btn btn-default">Reset</button>
 </form>
+
+
+
+
 
 
 

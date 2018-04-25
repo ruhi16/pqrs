@@ -84,8 +84,8 @@ class BaseController extends Controller
                         'subject_id'=>$sbId,                       
                     ]);
                     
-                    $etcs->fm           = ($request->$strFms[0] != NULL ? $request->$strFms[0] : 0);
-                    $etcs->pm           = 0;
+                    $etcs->fm   = ($request->$strFms[0] != NULL ? $request->$strFms[0] : 0);
+                    $etcs->pm   = 0;
                     $etcs->save();
                     
                 }

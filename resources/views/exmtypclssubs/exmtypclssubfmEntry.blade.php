@@ -16,12 +16,18 @@
 <input type="hidden" name="clsId" value="{{ $cls->id }}">
 <thead>
     <tr>
-        <th>Exam Type</th>
-        <th>Subject</th>
+        <th rowspan="2">Exam Type</th>
+        <th rowspan="2">Subject</th>
         @foreach($exams as $exam)
-            <th>{{ $exam->name }}</th>
+            <th colspan="2">{{ $exam->name }}</th>
         @endforeach
-        <th>Total</th>
+        <th rowspan="2">Total</th>
+    </tr>
+    <tr>        
+        @foreach($exams as $exam)
+            <th>ORAL</th>
+            <th>WRITTEN</th>
+        @endforeach        
     </tr>
 </thead>
 <tbody>    
@@ -53,7 +59,11 @@
                     <input type="text"  value="{{ $subMarks }}" class="form-control input-sm"
                                         name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}{{$clsb->subject_id}}[]">
                     @php $subTotal += $subMarks ; @endphp
-                </td>                
+                </td>
+                <td>
+                    <input type="text"  value="" class="form-control input-sm"
+                                        name="">
+                </td>
             @endforeach
             
             <td>{{ $subTotal }}</td>

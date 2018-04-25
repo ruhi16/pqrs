@@ -13,6 +13,7 @@
         <tr>
             <th class="text-center">SL</th>
             <th class="text-center">Class</th>
+            <th class="text-center">Exam Mode Selection</th>
             <th class="text-center">Assign Full Marks</th>
             <th class="text-center">Remarks</th>
         </tr>
@@ -22,6 +23,7 @@
         <tr>
             <td>{{ $cls->id }}</td>
             <td>{{ $cls->name }}</td>
+            <td class="text-center"><a href="{{ url('/exmtypmodcls-Assign', [$cls->id])}}">Assign Exam Mode {{ $cls->name }}</a></td>
             <td class="text-center"><a href="{{ url('/exmtypclssubfmEntry', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a></td>
             <td class="text-center"><a href="{{ url('/exmtypclssubfmView', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a></td>
         </tr>

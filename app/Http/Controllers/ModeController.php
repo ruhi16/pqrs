@@ -96,4 +96,30 @@ class ModeController extends Controller
 
         echo "Hello";
     }
+
+
+
+    public function exmtypmodclsAssign(Request $request, $clss_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $exms = Exam::where('session_id', $ses->id)->get();
+        $clss = Clss::where('session_id', $ses->id)
+                    ->where('id', $clss_id)->get();
+        $exts = Extype::where('session_id', $ses->id)->get();
+        $mods = Mode::where('session_id', $ses->id)->get();
+        
+        return view ('exmtypmodcls.exmtypmodclsAssign')
+            ->with('exms', $exms)
+            ->with('clss', $clss)
+            ->with('exts', $exts)
+            ->with('mods', $mods)
+            ;
+    }
+
+    public function exmtypmodclsAssignSubmit(Request $request){
+
+        $str ="fm".$request->cls ;//"fm".$clss->first()->id.$ext->id.$exm->id.$mod->id;
+        echo $str ;
+        print_r($request->fm);
+        
+    }
 }
