@@ -160,11 +160,11 @@
                     <a class="btn btn-primary" href="{{url('/clssubjfm/1')}}">Exam Term and Class Wise Full Marks Specification Entry (V)</a>
                     <a class="btn btn-primary" href="{{url('/clssubjfm-view/1')}}">Exam Term and Class Wise Full Marks Specification View (V)</a>  
                     --}}
-                    <a class="btn btn-success" href="{{url('/exmtypclssubTaskpane')}}">Exam Type Class Subject Task Pane</a>
+                    <a class="btn btn-success" href="{{url('/exmtypclssubTaskpane')}}">Class Task-Pane</a>
                     <a class="btn btn-info" href="{{url('/teachers')}}">Teachers Details Entry Point</a>
                     <a class="btn btn-primary" href="{{url('/teachers-view')}}">Teachers Details View Point</a>
                     
-                    <a class="btn btn-info" href="{{url('/clssec-TaskPage')}}">Class Section Task Pane View</a>
+                    <a class="btn btn-info" href="{{url('/clssec-TaskPage')}}">Class-Section Task-Pane</a>
                     <a class="btn btn-success" href="{{ url('/ExStudentDb') }}" >Excel HTML</a>
                     
 

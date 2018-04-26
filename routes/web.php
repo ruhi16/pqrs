@@ -51,7 +51,11 @@ Route::group(['middleware' => ['auth']], function () {
         });
         
         
-
+        
+        
+        Route::get('/schools', 'SchoolController@school')->middleware('FinMidware:schools');//->name('xyz');
+        Route::post('/schools-submit', 'SchoolController@schoolSubmit');
+        Route::get('/schools-view', 'SchoolController@schoolView');
 
 
         Route::get('/session', 'SessionController@session')->middleware('FinMidware:sessions');
@@ -61,26 +65,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/sessions-view', 'SessionController@sessionsView');
         
 
+
         Route::get('/clsses', 'ClssesController@clsses')->middleware('FinMidware:clsses');
         Route::post('/clsses-submit', 'ClssesController@clssesSubmit');
         Route::get('/clsses-view', 'ClssesController@clssesView');
         Route::post('/clsses-editsubmit', 'ClssesController@clssesEditSubmit');
         Route::post('/clsses-deltsubmit', 'ClssesController@clssesDeltSubmit');
     
-
-
-        Route::get('/exams', 'ExamController@exams')->middleware('FinMidware:exams');
-        Route::post('/exams-submit', 'ExamController@examsSubmit');
-        Route::get('/exams-view', 'ExamController@examsView');
-        Route::post('/exams-editsubmit', 'ExamController@examsEditSubmit');
-        Route::post('/exams-deltsubmit', 'ExamController@examsDeltSubmit');
-
-
-        Route::get('/extypes', 'ExtypeController@extypes')->middleware('FinMidware:extypes');
-        Route::post('/extypes-submit', 'ExtypeController@extypesSubmit');
-        Route::get('/extypes-view', 'ExtypeController@extypesView');
-        Route::post('/extypes-editsubmit', 'ExtypeController@extypesEditSubmit');
-        Route::post('/extypes-deltsubmit', 'ExtypeController@extypesDeltSubmit');
 
 
         Route::get('/sections', 'SectionController@sections')->middleware('FinMidware:sections');
@@ -90,21 +81,39 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/sections-deltsubmit', 'SectionController@sectionsDeltSubmit');
 
 
+
         Route::get('/subjects', 'SubjectController@subjects')->middleware('FinMidware:subjects');
         Route::post('/subjects-submit', 'SubjectController@subjectsSubmit');
         Route::get('/subjects-view', 'SubjectController@subjectsView');
         Route::post('/subjects-editsubmit', 'SubjectController@subjectsEditSubmit');
         Route::post('/subjects-deltsubmit', 'SubjectController@subjectsDeltSubmit');
 
-        Route::get('/schools', 'SchoolController@school')->middleware('FinMidware:schools');//->name('xyz');
-        Route::post('/schools-submit', 'SchoolController@schoolSubmit');
-        Route::get('/schools-view', 'SchoolController@schoolView');
 
+
+        Route::get('/exams', 'ExamController@exams')->middleware('FinMidware:exams');
+        Route::post('/exams-submit', 'ExamController@examsSubmit');
+        Route::get('/exams-view', 'ExamController@examsView');
+        Route::post('/exams-editsubmit', 'ExamController@examsEditSubmit');
+        Route::post('/exams-deltsubmit', 'ExamController@examsDeltSubmit');
+
+
+
+        Route::get('/extypes', 'ExtypeController@extypes')->middleware('FinMidware:extypes');
+        Route::post('/extypes-submit', 'ExtypeController@extypesSubmit');
+        Route::get('/extypes-view', 'ExtypeController@extypesView');
+        Route::post('/extypes-editsubmit', 'ExtypeController@extypesEditSubmit');
+        Route::post('/extypes-deltsubmit', 'ExtypeController@extypesDeltSubmit');
+
+
+
+        
         Route::get('/gradeparticulars', 'GradeparticularController@gradeparticulars')->middleware('FinMidware:gradeparticulars');
         Route::post('/gradeparticulars-submit', 'GradeparticularController@gradeparticularsSubmit');
         Route::get('/gradeparticulars-view', 'GradeparticularController@gradeparticularsView');
         Route::post('/gradeparticulars-editsubmit', 'GradeparticularController@gradeparticularsEditSubmit');
         Route::post('/gradeparticulars-deltsubmit', 'GradeparticularController@gradeparticularsDeltSubmit');
+
+
 
         Route::get('/grades', 'GradeController@grades')->middleware('FinMidware:grades');
         Route::post('/grades-submit', 'GradeController@gradesSubmit');
@@ -113,8 +122,32 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/grades-deltsubmit', 'GradeController@gradesDeltSubmit');
 
 
+        
+        Route::get('/gradedescriptions/{extype_id}', 'GradedescrController@gradedescr');//->middleware('FinMidware:gradeparticulars');
+        Route::post('/gradedescriptions-submit', 'GradedescrController@gradedescriptionSubmit');
+        Route::get('/gradedescriptions-view/{extype_id}', 'GradedescrController@gradedescrView');
 
-        //temporaryly closed
+        // Route::post('/gradedescription-submit', 'GradedescrController@gradedescrSubmit');
+        // Route::get('/gradedescription-view', 'GradedescrController@gradedescrView');
+        // Route::post('/gradedescription-editsubmit', 'GradedescrController@gradedescrEditSubmit');
+        // Route::post('/gradedescription-deltsubmit', 'GradedescrController@gradedescrDeltSubmit');
+
+
+
+
+        Route::get('/teachers', 'TeacherController@teachers');//->middleware('FinMidware:subjects');
+        Route::post('/teachers-submit', 'TeacherController@teachersSubmit');
+        Route::get('/teachers-view', 'TeacherController@teachersView');
+        Route::get('/teachers-edit/{id}/{extype_id}', 'TeacherController@teachersEdit');
+        Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
+        // Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
+        Route::get('/teachers-takspan/{teacher_id}', 'TeacherController@teachersTakspan')
+            ->middleware('matchUser');
+
+
+
+
+        // temporaryly closed
         // Route::get('/clssubjfm/{clss_id}', 'SubjectFMController@clssubjfm');
         // Route::post('/clssubjfm-submit', 'SubjectFMController@clssubjfmSubmit');
         // Route::get('/clssubjfm-view/{clss_id}', 'SubjectFMController@clssubjfmView');
@@ -130,34 +163,22 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-
-
-
-        Route::get('/teachers', 'TeacherController@teachers');//->middleware('FinMidware:subjects');
-        Route::post('/teachers-submit', 'TeacherController@teachersSubmit');
-        Route::get('/teachers-view', 'TeacherController@teachersView');
-        Route::get('/teachers-edit/{id}/{extype_id}', 'TeacherController@teachersEdit');
-        Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
-        // Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
-        Route::get('/teachers-takspan/{teacher_id}', 'TeacherController@teachersTakspan')
-            ->middleware('matchUser')
-            ;
-
         // till the above entry was tested Oke with middleware too
 
-        Route::get('/gradedescriptions/{extype_id}', 'GradedescrController@gradedescr');//->middleware('FinMidware:gradeparticulars');
-        Route::post('/gradedescriptions-submit', 'GradedescrController@gradedescriptionSubmit');
-        Route::get('/gradedescriptions-view/{extype_id}', 'GradedescrController@gradedescrView');
-
-        // Route::post('/gradedescription-submit', 'GradedescrController@gradedescrSubmit');
-        // Route::get('/gradedescription-view', 'GradedescrController@gradedescrView');
-        // Route::post('/gradedescription-editsubmit', 'GradedescrController@gradedescrEditSubmit');
-        // Route::post('/gradedescription-deltsubmit', 'GradedescrController@gradedescrDeltSubmit');
 
 
 
+        Route::get('/clssubs', 'ClsSubController@clssub')->middleware('FinMidware:clssubs-clsses-subjects');
+        Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
+        Route::get('/clssubs-view', 'ClsSubController@clssubView');
+        
+        Route::post('/clssubsView-ModalSubmit', 'ClsSubController@viewModalSubmit');
+        Route::post('/clssubsView-combineSubject', 'ClsSubController@viewModalSubmitAjax');
 
 
+
+
+        
         Route::get('/clssecs', 'ClsSecController@clssec')->middleware('FinMidware:clssecs-clsses-sections');
         Route::post('/clssec-submit', 'ClsSecController@clssecSubmit');
         Route::get('/clssecs-view', 'ClsSecController@clssecView');
@@ -168,6 +189,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssecsreport-stdListPdf/{clss_id}/{section_id}', 'ClsSecController@reportsStdListPdf');
 
 
+
+
+
         Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
         Route::post('/clssecTaskPage-teacherSubmit', 'ClsSecController@clssecTaskPageTeacherSubmit');
 
@@ -175,12 +199,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 
-        Route::get('/clssubs', 'ClsSubController@clssub')->middleware('FinMidware:clssubs-clsses-subjects');
-        Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
-        Route::get('/clssubs-view', 'ClsSubController@clssubView');
-        
-        Route::post('/clssubsView-ModalSubmit', 'ClsSubController@viewModalSubmit');
-        Route::post('/clssubsView-combineSubject', 'ClsSubController@viewModalSubmitAjax');
+
+
+
+
 
         Route::get('/clssec-MrkenPage/{clssec_id}', 'MarksEntryController@clssecMrkenPage');
         Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'MarksEntryController@ClssecstdMarksEntry');
@@ -188,6 +210,8 @@ Route::group(['middleware' => ['auth']], function () {
         //Ajax Update
         Route::post('/updateMarks', 'MarksEntryController@updateMarks');
         
+
+
 
         Route::get('/exmtypclssubTaskpane', 'BaseController@exmtypclssubTaskpane');
         Route::get('/exmtypclssubfmEntry/{clss_id}', 'BaseController@exmtypclssubfmEntry');
@@ -199,6 +223,9 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
         // Route::post('/exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
         // Route::get('/exmtypclssub-view', 'BaseController@exmtypclssubView');
+
+
+
 
 
 
@@ -233,6 +260,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
+
+
+
         Route::get('/finalizeParticulars', 'FinalizeController@finalizeParticulars');
         Route::get('/finalizeParticulars-Refresh', 'FinalizeController@finalizeParticularsRefresh')->name('finalizeParticulars-Refresh');
         Route::get('/btn-finalize/{n}','FinalizeController@btnFinalize');
@@ -240,6 +270,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
         Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
+
+
 
         Route::get('/clssec-ResultTaskpane/{clssec_id}', 'ResultController@ResultTaskpane');
         Route::get('/clssec-ResultSheet/{clssec_id}/{studentcr_id}', 'ResultController@ResultSheet');

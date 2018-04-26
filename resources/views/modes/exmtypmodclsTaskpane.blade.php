@@ -7,8 +7,8 @@
 
 @section('content')
 <h1>Exam Mode Assignment</h1>
-<form method="post" class="form-horizontal" action="{!! url('exmtypmodcls-AssignSubmit') !!}" value="{{ csrf_token() }}">  
-{{ csrf_field() }}
+{{--  <form method="post" class="form-horizontal" action="{!! url('exmtypmodcls-AssignSubmit') !!}" value="{{ csrf_token() }}">  
+{{ csrf_field() }}  --}}
 
 <input type="hidden" name="clsId" value="{{ $clss->first()->id }}">
 <table class="table table-striped table-bordered">
@@ -34,9 +34,9 @@
             
             <input  class="form-check-input" 
                     type="checkbox" 
-                    name="fma[]"  
+                    name="fm"  
                     value="{{$ext->id}}-{{$exm->id}}-{{$mod->id}}">
-            <label class="form-check-label" for="inlineCheckbox1">{{ $mod->name }}xx</label>
+            <label class="form-check-label" for="inlineCheckbox1">{{ $mod->name }}</label>
           @endforeach
         </div>
         </td>
@@ -47,9 +47,9 @@
 </table>
 
 
-<button type="submit" class="btn btn-primary">Submit</button>
+{{--  <button type="submit" class="btn btn-primary">Submit</button>
 <button type="reset" class="btn btn-default">Reset</button>
-</form>
+</form>  --}}
 
 
 

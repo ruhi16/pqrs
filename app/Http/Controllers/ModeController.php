@@ -117,22 +117,60 @@ class ModeController extends Controller
 
     public function exmtypmodclsAssignSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
-        $str = $request->clsId ;//"fm".$clss->first()->id.$ext->id.$exm->id.$mod->id;
-        echo $str ;
+        $clss_id = $request->clsId ;//"fm".$clss->first()->id.$ext->id.$exm->id.$mod->id;
+        echo "Class ID: ". $clss_id . "<br>";
+        
         // extype > exam > mode > (clss)
-        print_r($request->etmcs);
-        $arr = explode("-", $request->etmcss);
-        foreach($request->etmcs as $rec){
-            $etmcs = Exmtypmodcls::firstOrNew([
-                    'session_id'=> $ses->id,
-                    'clss_id'   => $clss_id,
-                    'extype_id' => $arr[0],
-                    'exam_id'   => $arr[1],
-                    'mode_id'   => $arr[2],
-            ]);
-            
-            $etmcs->status = "Oke";
-            $etmcs->save();
+        // print_r($request->fma);
+        if(is_array($request->fma)){            
+            Exmtypmodcls::where('session_id', $ses->id)                      
+                       ->where('clss_id', $clss_id)
+                    //    ->where('extype_id', $arr[0])
+                    //    ->where('exam_id', $arr[1])
+                       ->delete();
+                       
+            foreach($request->fma as $rec){
+                $arr = explode('-', $rec);
+                $etmcs = Exmtypmodcls::firstOrNew([
+                        'session_id'=> $ses->id,
+                        'clss_id'   => $clss_id,
+                        'extype_id' => $arr[0],
+                        'exam_id'   => $arr[1],
+                        'mode_id'   => $arr[2],
+                ]);
+                
+                $etmcs->status = "Oke";
+                $etmcs->save();
+                echo "successful";
+            }
+        }else{
+            echo "no";
         }
+        // foreach($request->fma as $test){
+        //     $arr = explode('-', $test);
+        //     print_r($arr); //=>
+        //     echo "test:". $test ."<BR>";
+        // }
+        // echo is_array($request->etmcss);
+        // $arr = explode('-', $request->fma);
+        // echo $arr;
+        // if($request->fm != NULL){
+        //     foreach($request->fm as $rec){
+        //         $etmcs = Exmtypmodcls::firstOrNew([
+        //                 'session_id'=> $ses->id,
+        //                 'clss_id'   => $clss_id,
+        //                 'extype_id' => $arr[0],
+        //                 'exam_id'   => $arr[1],
+        //                 'mode_id'   => $arr[2],
+        //         ]);
+                
+        //         $etmcs->status = "Oke";
+        //         // $etmcs->save();
+        //         echo "successful";
+        //     }
+        // }else{
+        //     echo "No Data";
+        // }
+
     }
 }
