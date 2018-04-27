@@ -106,12 +106,16 @@ class ModeController extends Controller
                     ->where('id', $clss_id)->get();
         $exts = Extype::where('session_id', $ses->id)->get();
         $mods = Mode::where('session_id', $ses->id)->get();
+
+        $etmcs = Exmtypmodcls::all();
         
         return view ('exmtypmodcls.exmtypmodclsAssign')
             ->with('exms', $exms)
             ->with('clss', $clss)
             ->with('exts', $exts)
             ->with('mods', $mods)
+            ->with('ses', $ses)
+            ->with('etmcs', $etmcs)
             ;
     }
 
@@ -128,7 +132,7 @@ class ModeController extends Controller
                     //    ->where('extype_id', $arr[0])
                     //    ->where('exam_id', $arr[1])
                        ->delete();
-                       
+
             foreach($request->fma as $rec){
                 $arr = explode('-', $rec);
                 $etmcs = Exmtypmodcls::firstOrNew([
@@ -146,31 +150,7 @@ class ModeController extends Controller
         }else{
             echo "no";
         }
-        // foreach($request->fma as $test){
-        //     $arr = explode('-', $test);
-        //     print_r($arr); //=>
-        //     echo "test:". $test ."<BR>";
-        // }
-        // echo is_array($request->etmcss);
-        // $arr = explode('-', $request->fma);
-        // echo $arr;
-        // if($request->fm != NULL){
-        //     foreach($request->fm as $rec){
-        //         $etmcs = Exmtypmodcls::firstOrNew([
-        //                 'session_id'=> $ses->id,
-        //                 'clss_id'   => $clss_id,
-        //                 'extype_id' => $arr[0],
-        //                 'exam_id'   => $arr[1],
-        //                 'mode_id'   => $arr[2],
-        //         ]);
-                
-        //         $etmcs->status = "Oke";
-        //         // $etmcs->save();
-        //         echo "successful";
-        //     }
-        // }else{
-        //     echo "No Data";
-        // }
-
+    
+    return back();
     }
 }

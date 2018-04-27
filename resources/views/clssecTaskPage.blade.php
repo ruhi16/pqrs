@@ -40,11 +40,11 @@
         {{ $teachers->where('id', $teacher_id)->first()['name']}}
 
     </td>
-    <td><a href="{{url('/clssec-AdminPage',[$clssec->clss_id,$clssec->section_id])}}">Clss-Sec Admission</a></td>
-    <td><a href="{{url('/clssec-MrkenPage',[$clssec->id])}}">Clss-Sec Mark Entry Status</a></td>
+    <td><a href="{{url('/clssec-AdminPage',[$clssec->clss_id,$clssec->section_id])}}">Admission</a></td>
+    <td><a href="{{url('/clssec-MrkenPage',[$clssec->id])}}">Mark Entry Status</a></td>
     {{--  <td><a href="{{url('/exmtypclssubfmEntry',[$clssec->clss_id])}}">Full Mark Entry</a></td>  --}}
-    <td><a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Clss-Sec Mark Register</a></td>
-    <td><a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Students Individual Result Sheet</a></td>
+    <td><a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Mark Register</a></td>
+    <td><a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Individual Result</a></td>
     <td>
         <a href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List</a><br>
         <a href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a>
