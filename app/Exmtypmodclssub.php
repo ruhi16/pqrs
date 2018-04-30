@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Exmtypmodcls extends Model
+class Exmtypmodclssub extends Model
 {
     protected $guarded = ['id'];
 
@@ -22,7 +22,10 @@ class Exmtypmodcls extends Model
     
     public function clss(){
         return $this->belongsTo('App\Clss');
-    }   
+    } 
 
+    public function subject(){
+        return $this->belongsTo('App\Subject');
+    }
 
 }

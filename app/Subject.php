@@ -46,4 +46,8 @@ class Subject extends Model
     public function extclssubfmpms(){
         return $this->hasMany('App\Extclssubfmpm');
     }
+
+    public function exmtypmodclssubs(){
+        return $this->hasMany('App\Exmtypmodclssub');
+    }
 }

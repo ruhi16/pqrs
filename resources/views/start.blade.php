@@ -203,10 +203,19 @@
                     </div>
 
                     <a class="btn btn-warning" href="{{ url('/exmtypmodcls-Taskpane') }}" >Exam Mode Selection</a>
-
                     
+                    <br>
+                    <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Class wise Full Marks Assignment
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    @foreach($clss as $cls)
+                        <li><a href="{{ url('/exmtypmodclssubfmEntry', [$cls->id]) }}">{{$cls->name}} Class</a></li>
+                        
 
-
+                    @endforeach
                 </div>
             </div>
         </div>

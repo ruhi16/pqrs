@@ -14,4 +14,14 @@ class Exam extends Model
     public function answerscriptdistributions(){
         return $this->hasMany('App\Answerscriptdistribution');
     }
+
+
+    
+    public function exmtypmodcls(){
+        return $this->hasMany('App\Exmtypmodcls');
+    }
+
+    public function exmtypmodclssubs(){
+        return $this->hasMany('App\Exmtypmodclssub');
+    }
 }

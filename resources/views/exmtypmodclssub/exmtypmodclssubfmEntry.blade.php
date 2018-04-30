@@ -30,8 +30,7 @@
             <th>
             @foreach($etmcs as $emd)
                @if($emd->exam_id == $exm->id && $emd->extype_id == $ext->id)
-                {{ $emd->mode_id }}
-            
+                {{ $emd->mode_id }}            
 
                 @endif
             @endforeach
@@ -44,24 +43,26 @@
 
 
 
-{{--  <form method="post" class="form-horizontal" action="{!! url('/exmtypclssubfmEntry-submit') !!}" value="{{ csrf_token() }}">  
-{{ csrf_field() }}  --}}
+<form method="post" class="form-horizontal" action="{!! url('/exmtypmodclssubfmEntry-Submit') !!}" value="{{ csrf_token() }}">  
+{{ csrf_field() }}
+
+
 <table class="table table-bordered">
-<caption><h3>For Class: {{ $cls->name }}</h3></caption>
+<caption class = "text-center"><h3>For Class: {{ $cls->name }}</h3></caption>
 <input type="hidden" name="clsId" value="{{ $cls->id }}">
 <thead>
     <tr>
-        <th rowspan="2">Exam Type</th>
-        <th rowspan="2">Subject</th>
+        <th rowspan="2" class="text-center">Exam Type</th>
+        <th rowspan="2" class="text-center">Subject</th>
         @foreach($exams as $exam)
-            <th colspan="2">{{ $exam->name }}</th>
+            <th colspan="2" class="text-center">{{ $exam->name }}</th>
         @endforeach
         <th rowspan="2">Total</th>
     </tr>
     <tr>        
         @foreach($exams as $exam)
-            <th>ORAL</th>
-            <th>WRITTEN</th>
+            <th class="text-center">ORAL</th>
+            <th class="text-center">WRITTEN</th>
         @endforeach        
     </tr>
 </thead>
@@ -73,32 +74,32 @@
             <td>{{ $clsb->subject->extype->name }}</td>
             <td>{{ $clsb->subject->name }}</td>
             
-            @foreach($exams as $exam)                
-                <td>
-                    {{--  to extract subject_id, use an hidden textbox  --}}
-                    <input type="hidden"value="{{$clsb->subject_id}}" 
-                                        name="sb{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}[]">
-                    @php                    
-                    $xyz = $etcss->where('exam_id', $exam->id)
-                                ->where('extype_id', $clsb->subject->extype->id)
-                                ->where('subject_id', $clsb->subject_id)
-                                ->first();
-                    if($xyz == NULL){
-                        $subMarks = 0;
-                    }else{
-                        $subMarks = $xyz->fm;
-                    }
-                    
+            @foreach($exams as $exm)
+                @foreach($exmds as $emd)
+                    @php
+                        $flag = $etmcs->where('exam_id', $exm->id)
+                                      ->where('extype_id', $clsb->subject->extype_id)
+                                      ->where('mode_id', $emd->id)
+                                      ->first();
                     @endphp
 
-                    <input type="text"  value="{{ $subMarks }}" class="form-control input-sm"
-                                        name="fm{{$exam->id}}{{$clsb->subject->extype->id}}{{$cls->id}}{{$clsb->subject_id}}[]">
-                    @php $subTotal += $subMarks ; @endphp
-                </td>
-                <td>
-                    <input type="text"  value="" class="form-control input-sm"
-                                        name="">
-                </td>
+                    
+                    @if($flag)
+                        <td>
+                        <input type="hidden" class="form-control input-sm"
+                                value="{{$exm->id}}-{{$clsb->subject->extype_id}}-{{$emd->id}}-{{$cls->id}}-{{$clsb->subject_id}}"
+                                name="fmarksId[]">
+
+                        <input  type="text"  
+                                value="" 
+                                class="form-control input-sm"
+                                name="fmarks[]">
+                        </td> 
+                    @else
+                        <td></td>
+                    @endif
+                    
+                @endforeach
             @endforeach
             
             <td>{{ $subTotal }}</td>
@@ -108,8 +109,8 @@
 </tbody>
 </table>
 
-{{--  <button type="submit" class="btn btn-primary">Submit</button>
-</form>  --}}
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
 <br>
 

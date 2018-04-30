@@ -30,10 +30,12 @@ Route::get('/start', function () {
     $ses = App\Session::whereStatus('CURRENT')->first();
     $clssecs = App\Clssec::whereSession_id($ses->id)->get();
     $stdcrs = App\Studentcr::where('session_id', $ses->id)->get();
+    $clss = App\Clss::where('session_id', $ses->id)->get();
 
     return view('start')
         ->with('clssecs', $clssecs)
-        ->with('stdcrs', $stdcrs)        
+        ->with('stdcrs', $stdcrs)    
+        ->with('clss', $clss)    
         ; //homepage
 });
 
@@ -220,6 +222,7 @@ Route::group(['middleware' => ['auth']], function () {
         
 
         Route::get('/exmtypmodclssubfmEntry/{clss_id}', 'ModefmController@exmtypmodclssubfmEntry');
+        Route::post('/exmtypmodclssubfmEntry-Submit', 'ModefmController@exmtypmodclssubfmEntrySubmit');
         
         // Route::get('/test', 'BaseController@test');
         // Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
