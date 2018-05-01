@@ -15,6 +15,7 @@ use App\Clss;
 use App\Subject;
 use App\Section;
 use App\School;
+use App\Mode;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -81,7 +82,8 @@ class ResultController extends Controller
         $clsc = Clssec::find($clssec_id);
         $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
         $stcr = Studentcr::find($studentcr_id);
-        
+        $mode = Mode::whereClss_id($clsc->clss_id)->get();
+
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
             
@@ -99,7 +101,8 @@ class ResultController extends Controller
         ->withSes($ses)
         ->withSch($sch)
         ->withExms($exms)
-        ->withexts($exts)
+        ->withExts($exts)
+        ->withMode($mode)
         ->withClsc($clsc)
         ->withClsb($clsb)
         ->withStcr($stcr)

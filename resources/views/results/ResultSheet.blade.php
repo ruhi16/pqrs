@@ -189,7 +189,7 @@
 </table>
 
 
-  <div class="row">
+  {{--  <div class="row">
         <div class="col-sm-8">
         <table class="table table-bordered table-sm">
             <thead>
@@ -280,7 +280,7 @@
         </div>
 
 
-    </div>
+    </div>  --}}
         
         
 
