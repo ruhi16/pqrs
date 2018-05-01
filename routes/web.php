@@ -19,11 +19,6 @@ Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
-    // $xxx = App\Extclssubfmpm::all();
-    // foreach($xxx as $x){
-    //     echo $x->subject->name."<br>";
-    // }
-
 });
 
 Route::get('/start', function () {
@@ -207,7 +202,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::get('/clssec-MrkenPage/{clssec_id}', 'MarksEntryController@clssecMrkenPage');
-        Route::get('/Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'MarksEntryController@ClssecstdMarksEntry');
+        Route::get('/clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'MarksEntryController@clssecstdMarksEntry');
         Route::get('/clssec-MarksRegister/{clssec_id}',  'MarksEntryController@clssecMarksRegister');
         //Ajax Update
         Route::post('/updateMarks', 'MarksEntryController@updateMarks');

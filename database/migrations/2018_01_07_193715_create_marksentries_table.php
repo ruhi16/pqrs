@@ -15,7 +15,7 @@ class CreateMarksentriesTable extends Migration
     {
         Schema::create('marksentries', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('exmtypclssub_id');
+            $table->integer('exmtypmodclssub_id');
             $table->integer('clssec_id');
             $table->integer('clssub_id');
             $table->integer('studentcr_id');

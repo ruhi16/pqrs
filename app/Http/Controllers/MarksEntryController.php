@@ -10,6 +10,7 @@ use App\Extype;
 use App\Clss;
 use App\Subject;
 use App\Section;
+use App\Mode;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -22,6 +23,7 @@ use App\Grade;
 use App\Exmtypclssub;
 use App\Marksentry;
 use App\Extclssubfmpm;
+use App\Exmtypmodclssub;
 
 class MarksEntryController extends Controller
 {
@@ -29,32 +31,33 @@ class MarksEntryController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $clssec = Clssec::find($clssec_id);
         
-        $extpcls = Exmtypclssub::whereSession_id($ses->id)
-             ->whereClss_id($clssec->clss_id)->get();
+        $extpcls = Exmtypmodclssub::whereSession_id($ses->id)
+                   ->whereClss_id($clssec->clss_id)->get();
 
-        // $cls = Clss::find($clss_id);
+                // Exmtypclssub::whereSession_id($ses->id)
+                // ->whereClss_id($clssec->clss_id)->get();
+
+        
         $exm = Exam::all();
-        // $ext = Extype::all();
+        $modes = Mode::all();
         $clsb = Clssub::whereClss_id($clssec->clss_id)->get();
 
         $stdmrk = Marksentry::whereSession_id($ses->id)->get();
-        // $stdcrs = Studentcr::whereSession_id($ses->id)
-        // ->whereClss_id($clss_id)
-        // ->whereSection_id($section_id)->get();
-
+        
         return view('clssecMrkenPage')
         ->withExtpcls($extpcls)
         ->withClsb($clsb)
         ->withClsc($clssec)        
         ->withExm($exm) 
+        ->withModes($modes) 
         ->withStdmrk($stdmrk)       
         ;
     }
 
 
-    public function ClssecstdMarksEntry($extpcl_id, $clsb_id, $clsc_id){
+    public function clssecstdMarksEntry($extpcl_id, $clsb_id, $clsc_id){
         $ses = Session::whereStatus('CURRENT')->first();
-        $extpcls = Exmtypclssub::find($extpcl_id);
+        $extpcls = Exmtypmodclssub::find($extpcl_id);
         $clsc = Clssec::find($clsc_id);
         $clsb = Clssub::find($clsb_id);
 
@@ -63,7 +66,7 @@ class MarksEntryController extends Controller
         ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
 
         $stdmrks = Marksentry::whereSession_id($ses->id)
-            ->whereExmtypclssub_id($extpcl_id)
+            ->whereExmtypmodclssub_id($extpcl_id)
             ->whereClssec_id($clsc_id)
             ->whereClssub_id($clsb_id)//->whereStudentcr_id($sid)
             ->get();
@@ -92,40 +95,16 @@ class MarksEntryController extends Controller
             $mrk = $request['mrk']; //Marks
         }
 
-        // $stdmrks = Marksentry::whereSession_id($ses->id)
-        //     ->whereExmtypclssub_id($etc)
-        //     ->whereClssec_id($csc)
-        //     ->whereClssub_id($csb)
-        //     ->whereStudentcr_id($sid)
-        //     ->get();
-        
-        // if($stdmrks->count() > 0){
-        //     $stdmrks->first()->id;
-        //     $stdmrks = Marksentry::find($stdmrks->first()->id);
-        // }else{
-        //     $stdmrks = new Marksentry;
-        // }
-        // $stdmrks = new Marksentry;
-        // $stdmrks->exmtypclssub_id = $etc;
-        // $stdmrks->clssec_id = $csc;
-        // $stdmrks->clssub_id = $csb;
-        // $stdmrks->studentcr_id = $sid;
-        // $stdmrks->session_id = $ses->id;
-        // $stdmrks->marks = $mrk;
-        // $stdmrks->status = "Correct";
-        // $stdmrks->save();
-
-
         $stdmarks = Marksentry::firstOrNew([
             'session_id' => $ses->id,
-            'exmtypclssub_id' => $etc,
+            'exmtypmodclssub_id' => $etc,
             'clssec_id' => $csc,
             'clssub_id' => $csb,
             'studentcr_id' => $sid
         ]);
 
         $stdmarks->clssec_id = $csc;
-        $stdmarks->exmtypclssub_id = $etc;
+        $stdmarks->exmtypmodclssub_id = $etc;
         $stdmarks->clssub_id = $csb;
         $stdmarks->studentcr_id = $sid;
         $stdmarks->session_id = $ses->id;
@@ -150,21 +129,8 @@ class MarksEntryController extends Controller
             ->get();
         $exms = Exam::whereSession_id($ses->id)->get();
         $extp = Extype::whereSession_id($ses->id)->get();
-        // ============================================================
-        // $extps = Exmtypclssub::where('clss_id',$clsc->clss_id)->groupBy('extype_id')->pluck('extype_id');
-        // $extp = Extype::whereIn('id', $extps->toArray())->get();
-        // ============================================================
-
-        
-        // print_r($stdcrs);
-        // foreach($stdcrs as $stdcr){
-        //     echo $stdcr->studentdb->name ."<br>";
-        //     // print_r($stdcr->studentcr);
-        //     foreach($stdcr->marksentries as $abc){
-        //         echo $abc . "<br>";
-        //     }
-        // }
-        $extpclsbs = Exmtypclssub::whereSession_id($ses->id)
+        $mode = Mode::whereSession_id($ses->id)->get();
+        $extpclsbs = Exmtypmodclssub::whereSession_id($ses->id)
         ->whereClss_id($clsc->clss_id)        
         ->get();
         
@@ -176,6 +142,7 @@ class MarksEntryController extends Controller
         ->withClsbs($clsbs)
         ->withExms($exms)
         ->withExtp($extp)
+        ->withMode($mode)
         ->withExtpclsbs($extpclsbs)
         ->withCls($clsc->clss->name)
         ->withSec($clsc->section->name)

@@ -8,18 +8,15 @@
 @section('content')
 <h1>Class Section Marks Entry Page</h1>
 
-{{--  @foreach($extpcls as $extpcl)
-  {{$extpcl}}
-@endforeach  --}}
-
-
 <table class="table table-bordered">
   <thead>
     <tr>
       <th>Exam Type</th>
       <th>Subject Name</th>
       @foreach($exm as $ex)
-        <th>{{ $ex->name }}</th>
+        @foreach($modes as $mode)
+          <th>{{ $ex->name }}-{{ $mode->name }}</th>
+        @endforeach  
       @endforeach
     </tr>
   </thead>
@@ -29,50 +26,33 @@
       <td>{{ $cl->subject->extype->name }}</td> 
       <td>{{ $cl->subject->name }}</td>
       @foreach($exm as $ex)
+        @foreach($modes as $mode)
         <td>
           @foreach($extpcls as $extpcl)
-            @if( $extpcl->exam_id == $ex->id && $extpcl->extype_id == $cl->subject->extype->id && $extpcl->subject_id == $cl->subject_id)
+            @if(  $extpcl->exam_id == $ex->id && 
+                  $extpcl->extype_id == $cl->subject->extype->id && 
+                  $extpcl->subject_id == $cl->subject_id  &&
+                  $extpcl->mode_id == $mode->id )
                {{--  extpcl:{{$extpcl->id}}-clsb:{{$cl->id}}-clsc:{{$clsc->id}}  --}}
-               <a href="{{url('/Clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}">Marks Entry</a>
-               @if($stdmrk
-                  ->where('exmtypclssub_id', $extpcl->id)
-                  ->where('clssec_id', $clsc->id)
-                  ->where('clssub_id',$cl->id)->sum('marks')  != 0)
-                  <b>Done</b>
+               <a href="{{url('/clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}"><span class="glyphicon glyphicon-floppy-saved"></span></span></a>
+                @if($stdmrk
+                    ->where('exmtypmodclssub_id', $extpcl->id)
+                    ->where('clssec_id', $clsc->id)
+                    ->where('clssub_id',$cl->id)->sum('marks')  != 0)
+                    <b>Done</b>
                 @else
-                <b>Pending</b>
+                  <b>Pending</b>
                 @endif
+            
             @endif
           @endforeach
         </td>
+        @endforeach
       @endforeach
     </tr>
     @endforeach
   </tbody>
 </table>
-
-
-{{--  <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th></th>
-      
-    </tr>
-  </thead>
-  <tbody>
-@foreach($stdcrs as $stdcr)
-    <tr>
-      <td>{{ $stdcr->studentdb_id }}</td>
-      <td>{{ $stdcr->studentdb->name }}</td>
-      <td>{{ $stdcr->roll_no }}</td>
-    </tr>
-@endforeach
-  </tbody>
-</table>  --}}
-
-
 
 
 <script type="text/javascript">

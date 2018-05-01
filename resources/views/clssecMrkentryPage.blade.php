@@ -62,9 +62,7 @@
         var etc = $(this).data('etc');
         var csc = $(this).data('csc');
         var csb = $(this).data('csb');
-        //alert(etc+' '+csc+' '+csb);
-        //alert($('.marks').val());
-        //alert(sid);
+        
         
         var mrk = $('.marks'+sid).val();
     var u = '{{url("/updateMarks")}}';//'{{url("/updateRoll")}}';
