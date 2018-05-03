@@ -26,6 +26,7 @@ use App\Grade;
 
 
 use App\Exmtypclssub;
+use App\Exmtypmodclssub;
 use App\Marksentry;
 use App\Gradedescription;
 use App\Extclssubfmpm;
@@ -71,108 +72,175 @@ class ResultController extends Controller
 
     public function ResultSheet(Request $request, $clssec_id, $studentcr_id){
         $ses = Session::whereStatus('CURRENT')->first();
-        $sch = School::find(1);               
-        $exms = Exam::all();
-        $exts = Extype::whereSession_id($ses->id)->get()->sortBy('name');
-        // ============================================================
-        // $exts = Exmtypclssub::groupBy('extype_id')->pluck('extype_id');
-        // $exts = Extype::whereIn('id', $exts->toArray())->get();
-        // ============================================================
+        $sch = School::find(1);
+        $exms = Exam::whereSession_id($ses->id)->get();
 
         $clsc = Clssec::find($clssec_id);
-        $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
-        $stcr = Studentcr::find($studentcr_id);
-        $mode = Mode::whereClss_id($clsc->clss_id)->get();
+        $clsbs = Clssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)->get();
 
+        $stcr = Studentcr::find($studentcr_id);
+        
+        
+        
+        
+        
+        
+        $xx = Exmtypmodclssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->groupBy('extype_id')
+            ->pluck('extype_id');
+        $extp = Extype::whereSession_id($ses->id)
+                    ->whereIn('id', $xx)->get();
+        
+        $extpclsbs = Exmtypmodclssub::whereSession_id($ses->id)
+        ->whereClss_id($clsc->clss_id)        
+        ->get();
+        
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
-            
-        $etcs = Exmtypclssub::where('clss_id', $clsc->clss_id )->get();
-        // print_r($clsc);
-        $grddescr = Gradedescription::all();
-        
-        // print_r($extss);
-
-        // foreach($exts as $ext){
-        //     echo $ext->name ."<br>";
-        // }
 
         return view('results.ResultSheet')
         ->withSes($ses)
         ->withSch($sch)
-        ->withExms($exms)
-        ->withExts($exts)
-        ->withMode($mode)
-        ->withClsc($clsc)
-        ->withClsb($clsb)
         ->withStcr($stcr)
         ->withMrks($mrks)
-        ->withEtcs($etcs)
-        ->withGrddes($grddescr)
+        ->withClsbs($clsbs)
+        ->withExms($exms)
+        ->withExtp($extp)
+        ->withExtpclsbs($extpclsbs)
+        ->withCls($clsc->clss->name)
+        ->withSec($clsc->section->name)
+        ->withClssec($clsc)
         ;
     }
+
     public function ResultSheetHTML($clssec_id, $studentcr_id){
         $ses = Session::whereStatus('CURRENT')->first();
-        $sch = School::find(1);       
+        $sch = School::find(1);
+        $exms = Exam::whereSession_id($ses->id)->get();
 
-        $exms = Exam::all();
-        $exts = Extype::whereSession_id($ses->id)->get()->sortBy('name');
-        // ============================================================
-        // $exts = Exmtypclssub::groupBy('extype_id')->pluck('extype_id');
-        // $exts = Extype::whereIn('id', $exts->toArray())->get();
-        // ============================================================
-        
         $clsc = Clssec::find($clssec_id);
-        $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
+        $clsbs = Clssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)->get();
+
         $stcr = Studentcr::find($studentcr_id);
+        
+        
+        
+        
+        
+        
+        $xx = Exmtypmodclssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->groupBy('extype_id')
+            ->pluck('extype_id');
+        $extp = Extype::whereSession_id($ses->id)
+                    ->whereIn('id', $xx)->get();
+        
+        $extpclsbs = Exmtypmodclssub::whereSession_id($ses->id)
+        ->whereClss_id($clsc->clss_id)        
+        ->get();
         
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
-        $etcs = Exmtypclssub::all();
-        // print_r($clsc);
-        $grddescr = Gradedescription::all();
+
+        return view('results.ResultSheetHTML')
+        ->withSes($ses)
+        ->withSch($sch)
+        ->withStcr($stcr)
+        ->withMrks($mrks)
+        ->withClsbs($clsbs)
+        ->withExms($exms)
+        ->withExtp($extp)
+        ->withExtpclsbs($extpclsbs)
+        ->withCls($clsc->clss->name)
+        ->withSec($clsc->section->name)
+        ->withClssec($clsc)
+        ;
+        // $ses = Session::whereStatus('CURRENT')->first();
+        // $sch = School::find(1);       
+
+        // $exms = Exam::all();
+        // $exts = Extype::whereSession_id($ses->id)->get()->sortBy('name');
+        // // ============================================================
+        // // $exts = Exmtypclssub::groupBy('extype_id')->pluck('extype_id');
+        // // $exts = Extype::whereIn('id', $exts->toArray())->get();
+        // // ============================================================
+        
+        // $clsc = Clssec::find($clssec_id);
+        // $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
+        // $stcr = Studentcr::find($studentcr_id);
+        
+        // $mrks = Marksentry::whereSession_id($ses->id)
+        //     ->whereStudentcr_id($studentcr_id)->get();
+        // $etcs = Exmtypclssub::all();
+        // // print_r($clsc);
+        // $grddescr = Gradedescription::all();
 
         
 
 
-        return view('results.ResultSheetHTML')
-        ->withSch($sch)        
-        ->withExms($exms)
-        ->withexts($exts)
-        ->withClsc($clsc)
-        ->withClsb($clsb)
-        ->withStcr($stcr)
-        ->withMrks($mrks)
-        ->withEtcs($etcs)
-        ->withGrddes($grddescr)
-        ;
+        // return view('results.ResultSheetHTML')
+        // ->withSch($sch)        
+        // ->withExms($exms)
+        // ->withexts($exts)
+        // ->withClsc($clsc)
+        // ->withClsb($clsb)
+        // ->withStcr($stcr)
+        // ->withMrks($mrks)
+        // ->withEtcs($etcs)
+        // ->withGrddes($grddescr)
+        // ;
     }
 
     public function ResultSheetPDF($clssec_id, $studentcr_id){
-        $ses = Session::whereStatus('CURRENT')->first();
-        $sch = School::find(1);       
+        // $ses = Session::whereStatus('CURRENT')->first();
+        // $sch = School::find(1);       
 
-        $exms = Exam::all();
-        $exts = Extype::whereSession_id($ses->id)->get()->sortBy('name');
-        // ============================================================
-        // $exts = Exmtypclssub::groupBy('extype_id')->pluck('extype_id');
-        // $exts = Extype::whereIn('id', $exts->toArray())->get();
-        // ============================================================
+        // $exms = Exam::all();
+        // $exts = Extype::whereSession_id($ses->id)->get()->sortBy('name');
         
+        // $clsc = Clssec::find($clssec_id);
+        // $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
+        // $stcr = Studentcr::find($studentcr_id);
+        
+        // $mrks = Marksentry::whereSession_id($ses->id)
+        //     ->whereStudentcr_id($studentcr_id)->get();
+        // $etcs = Exmtypclssub::all();
+        
+        // $grddescr = Gradedescription::all();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $sch = School::find(1);
+        $exms = Exam::whereSession_id($ses->id)->get();
+
         $clsc = Clssec::find($clssec_id);
-        $clsb = Clssub::whereClss_id($clsc->clss_id)->get();
+        $clsbs = Clssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)->get();
+
         $stcr = Studentcr::find($studentcr_id);
+        
+        $xx = Exmtypmodclssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->groupBy('extype_id')
+            ->pluck('extype_id');
+        $extp = Extype::whereSession_id($ses->id)
+                    ->whereIn('id', $xx)->get();
+        
+        $extpclsbs = Exmtypmodclssub::whereSession_id($ses->id)
+        ->whereClss_id($clsc->clss_id)        
+        ->get();
         
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
-        $etcs = Exmtypclssub::all();
-        // print_r($clsc);
-        $grddescr = Gradedescription::all();
-        
+
+
+
         $pdf = PDF::loadView('results.ResultSheetHTML', 
-            ['sch'=>$sch,   'exms'=>$exms, 'exts'=>$exts, 'clsc'=>$clsc, 
-             'clsb'=>$clsb, 'stcr'=>$stcr, 'mrks'=>$mrks, 'etcs'=>$etcs,
-             'grddes'=>$grddescr]);
+            [ 'ses'=>$ses,   'sch'=>$sch,  'exms'=>$exms, 'clsbs'=>$clsbs,
+              'stcr'=>$stcr, 'mrks'=>$mrks,'extp'=>$extp, 'extpclsbs'=>$extpclsbs
+            ]);
+            
         $pdf->setPaper("legal");        
         return $pdf->stream();//download('resultsheet.pdf');
 

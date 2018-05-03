@@ -28,4 +28,8 @@ class Exmtypmodclssub extends Model
         return $this->belongsTo('App\Subject');
     }
 
+    public function Marksentries(){
+        return $this->hasMany('App\Marksentry');
+    }
+
 }

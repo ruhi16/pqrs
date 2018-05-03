@@ -120,6 +120,8 @@ class MarksEntryController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $clsc = Clssec::find($clssec_id);
 
+        $exms = Exam::whereSession_id($ses->id)->get();
+        
         $clsbs = Clssub::whereSession_id($ses->id)
             ->whereClss_id($clsc->clss_id)->get();
         
@@ -127,15 +129,29 @@ class MarksEntryController extends Controller
             ->whereClss_id($clsc->clss_id)
             ->whereSection_id($clsc->section_id)
             ->get();
-        $exms = Exam::whereSession_id($ses->id)->get();
-        $extp = Extype::whereSession_id($ses->id)->get();
+        
+
+
+
+        $xx = Exmtypmodclssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->groupBy('extype_id')
+            ->pluck('extype_id');
+        $extp = Extype::whereSession_id($ses->id)
+                    ->whereIn('id', $xx)->get();
+
         $mode = Mode::whereSession_id($ses->id)->get();
+
         $extpclsbs = Exmtypmodclssub::whereSession_id($ses->id)
         ->whereClss_id($clsc->clss_id)        
         ->get();
         
         $grades = Grade::whereSession_id($ses->id)->get();
         $etclsbfm = Extclssubfmpm::all();
+
+
+        $mrks = Marksentry::whereSession_id($ses->id)->get();
+
 
         return view('clssecMarksRegister')
         ->withStdcrs($stdcrs)
@@ -148,6 +164,7 @@ class MarksEntryController extends Controller
         ->withSec($clsc->section->name)
         ->withClssec($clsc)
         ->withEtclsbfm($etclsbfm)
+        ->withMrks($mrks)
         ;
     }
 }

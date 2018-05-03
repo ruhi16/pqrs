@@ -6,13 +6,11 @@
 @endsection
 
 @section('content')
-<a href="{{url('/clssec-ResultSheetHTML',[$clsc->id, $stcr->id])}}">Download</a>
+{{--  <a href="{{url('/clssec-ResultSheetHTML',[$clsc->id, $stcr->id])}}">Download</a>  --}}
 <h1 class="text-center">{{$sch->name}}</h1>
 <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
 <h2 class="text-center">Progress Report for Session - <U>{{$ses->name}}</u></h2>
-
 <br>
-
 <table class="table table-bordered">
   <tr>
     <td><b>Name:    </B>{{$stcr->studentdb->name}}</td>
@@ -22,172 +20,144 @@
   </tr>
 </table>
 
-
 <table class="table table-bordered">
-  <thead>
-    <tr>
-      @foreach($exts as $ext)
-        <th class="text-center">{{$ext->name}}</th>
-      @endforeach
-    </tr>
-  </thead>
-  <tbody>
-    @php 
-      $forGTotal = 0;
-      $sumGTotal = 0;
-      $grTotal = [];
-    @endphp
-    <tr>
-      @foreach($exts as $ext)
-      @php  
-        $total = 0;       
-        $combSubjectCount = 0; 
-      @endphp
-      <td>
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>            
-            <th rowspan="2"  class="text-center">Sl</th>
-            <th rowspan="2" class="text-center">Subject</th>
-            @foreach($exms as $exm) 
-              <th colspan="2"><b><small>{{ $exm->name }}</small></b></th>
-            @endforeach
-            <th rowspan="2">Total</th>
-            <th rowspan="2">Grade</th>
-          </tr> 
-          <tr>
-            
-            @foreach($exms as $exm) 
-              <th>MO</th>
-              <th>FM</th>
-            @endforeach
-          
-          </tr>         
-        </thead>
-        <tbody>      
-          @php 
-            $flag = true;
-          @endphp
-          @foreach($clsb as $cls)
-            @if($cls->subject->extype_id == $ext->id)
-              <tr>
-                <td>{{$cls->id}}</td>
-                <td>{{$cls->subject->name}}</td>                
-                @php 
-                    $subTotal = 0;                     
-                @endphp
-                @foreach($exms as $exm)
-                  <td class="text-right">                  
-                    @php                    
-                    $etcs_id = $etcs->where('exam_id',$exm->id)
-                            ->where('subject_id',$cls->subject_id)
-                            ->where('clss_id',$cls->clss_id)->first()->id;
-                    $obmrks  = $mrks->where('exmtypclssub_id', $etcs_id)->pluck('marks')->first();
-                    $subTotal = $subTotal + ($obmrks == -99 ? 0 : $obmrks);
-                    @endphp
-                    <b>
-                    {{ $obmrks == -99 ? 'AB' : $obmrks }}
-                  </b>
-                  </td>
-                  <td  class="text-right">
-                      <small>
-                      {{ $etcs->where('exam_id', $exm->id)
-                            ->where('extype_id', $ext->id)                                
-                            ->where('subject_id', $cls->subject_id)
-                            ->first()->fm or ''          
-                      }}
-                      </small>
-                  </td>
-                @endforeach
-                <td class="text-right">{{$subTotal}}</td>
-
-                @php                      
-                    $total = $total + $subTotal; 
-                    $combSubjectCount++;
-                @endphp
+    <thead>
+        <tr>            
+            @foreach($extp as $et)
+                <th class="text-center text-danger">{{ $et->name }} Details</th>
+            @endforeach            
+        </tr>
+    </thead>
+    <tbody>     
+            <tr>                
+                @foreach($extp as $et)  {{-- for each exam category summative/formative --}}
                 
-                @if( $cls->combination_no == 0 ) 
-                    
-                    <td class="text-center">
-                        {{ findGrade($ext->id, $cls->clss_id, $cls->subject_id, $subTotal) }}                        
+                <td> 
+                  <table class="table table-condensed table-bordered">
+                    <thead>
+                      <tr>
                         
-                    </td>
-                
-                @else   {{--  for Grade Cell for Combined Subjects shows the Total & Grade cobinedly  --}}
-                    @if($flag == true)
-                        @php
-                            $flag = false;
-                            $combSubCount = $clsb->where('combination_no', $cls->combination_no)->count();
-
-                            $subIds = $clsb->where('combination_no', $cls->combination_no)->pluck('subject_id');
-                            
-                            $etcsIds = $etcs->whereIn('subject_id', $subIds->toArray())
-                                ->where('extype_id',$ext->id)->pluck('id');
-
-                            $etcsFMs = $etcs->whereIn('subject_id', $subIds->toArray())
-                                ->where('extype_id',$ext->id)->sum('fm');
-
-
-                            $fullMarks = $mrks->whereIn('exmtypclssub_id', $etcsIds->toArray())->pluck('marks');
-                            $fullObtMarks = 0;
-                            foreach($fullMarks as $mark){
-                                $fullObtMarks += ( $mark == -99 ? 0 : $mark );
-                            }
+                        <th>Subject</th>
+                        @php                             
+                            $typeTotal = 0;
                         @endphp
-                        
-                        <td class="text-center" rowspan="{{ $combSubCount }}">                            
+                        @foreach($exms as $ex)
+                            @php 
+                                $mdInTerm = $extpclsbs->where('exam_id', $ex->id)
+                                    ->where('extype_id', $et->id)
+                                    ->groupBy('mode_id')
+                                    ->count();
+                            @endphp
+                            <th colspan="{{ $mdInTerm }}" class="text-center">{{$mdInTerm}}={{$ex->name}}</th>                         
+                        @endforeach
+                        <th>Total/{{$typeTotal}}</th>
+                        <th>Grade</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        @php 
+                            $allSubjTotal = 0;
+                            $flag = TRUE;
+                        @endphp
+                        @foreach($clsbs as $clsb)
+                            @php 
+                                $subjTotal = 0;
+                                $combSubjectCount = 0;
+                            @endphp
+                            @if($et->id == $clsb->subject->extype_id )
+                            <tr>
+                                
+                                <td>{{ $clsb->subject->name }}</td>
+                                @foreach($exms as $ex)
+                                    @php 
+                                        $mdInTermObj = $extpclsbs->where('exam_id', $ex->id)
+                                            ->where('extype_id', $et->id)
+                                            ->groupBy('mode_id');
+                                    @endphp
+                                    @foreach($mdInTermObj as $modObj)                                    
+                                        <td class="text-right"> 
+                                        @foreach($stcr->marksentries as $record)
+                                            @if( $modObj->first()->mode_id == $record->exmtypmodclssub->mode_id )                                            
+                                            
+                                                @php
+                                                    $etmcs = $extpclsbs->where('exam_id', $ex->id)
+                                                        ->where('extype_id', $et->id)
+                                                        ->where('subject_id', $clsb->subject_id)
+                                                        ->where('mode_id', $record->exmtypmodclssub->mode_id )
+                                                        ->first();
+                                                @endphp
+
+                                                @if( $etmcs['id'] == $record->exmtypmodclssub_id )                                                    
+                                                    {{ $record->marks == -99 ? 'AB' : $record->marks }}
+                                                    @php 
+                                                        $subjTotal += ( $record->marks == -99 ? 0 : $record->marks );
+                                                    @endphp
+                                                @endif
+                                            
+                                            @endif
+                                        @endforeach
+                                        </td>                                    
+                                    @endforeach
+                                @endforeach
+                                <td class="text-right text-danger"><b>{{ $subjTotal }}</b></td>
+
+                                @php 
+                                    $allSubjTotal += $subjTotal;
+                                    $combSubjectCount++;
+                                @endphp
+                                @if( $clsb->combination_no == 0)
+                                    <td class="text-center text-danger">
+                                        {{ getGrade($et->id, $subjTotal, 80 ) }}
+                                    </td>
+                                @else
+                                    @if($flag == true)
+                                        @php
+                                            $flag = false;
+                                            $combSubCount = $clsbs->where('combination_no', $clsb->combination_no)->count();
+                                            $subIds = $clsbs->where('combination_no', $clsb->combination_no)->pluck('subject_id');
+                                            
+                                            $etcsIds = $extpclsbs->whereIn('subject_id', $subIds->toArray())
+                                                ->where('extype_id',$et->id)->pluck('id');
+                                            $etcsFMs = $extpclsbs->whereIn('subject_id', $subIds->toArray())
+                                                ->where('extype_id',$et->id)->sum('fm');
+
+                                            $fullMarks = $mrks->whereIn('exmtypclssub_id', $etcsIds->toArray())->pluck('marks');
+                                            $fullObtMarks = 0;
+                                            foreach($fullMarks as $mark){
+                                                $fullObtMarks += ( $mark == -99 ? 0 : $mark );
+                                            }
+                                        @endphp
+                                        
+                                        <td class="text-center" rowspan="{{ $combSubCount }}">                                    
+                                            {{ $fullObtMarks }}
+                                            <br>{{ getGrade($et->id, $fullObtMarks, $etcsFMs) }}                                    
+                                        </td>
+                                    @else
+                                        @if($combSubjectCount == $combSubCount)
+                                            @php $flag = true; @endphp
+                                        @endif
+                                    @endif
+
+                                @endif
+                            </tr>
+                            @endif
                             
-                            {{ $fullObtMarks }}
-
-                            <br>{{ getGrade($ext->id, $fullObtMarks, $etcsFMs) }}
-                            
-                        </td>
-                    @else
-                        @if($combSubjectCount == $combSubCount)
-                            @php $flag = true; @endphp
-                        @endif
-                    @endif
-
-
-                @endif
-                    
-
-              </tr>
-            @endif
-          @endforeach
-        </tbody>
-      </table>   
-            
-      @php  $grTotal[$ext->name] = $total; @endphp
-      
-      </td>
-      @endforeach
-    </tr>
-    <tr>
-      @foreach($exts as $ext)
-        <th>Total: {{ $grTotal[$ext->name] }}<br>
-                    
-        </th>
-      @endforeach      
-    </tr>
-    <tr>
-        @php
-            $str = '';
-        @endphp
-            @foreach($exts as $ext)
-                @if($loop->first)
-                    @php $str .=  $ext->name;   @endphp
-                @else
-                    @php $str .= " + ". $ext->name; @endphp
-                @endif
-            @endforeach
-        
-
-        <th colspan="2">Total ({{ $str }}): {{array_sum($grTotal)}}</th>
-    </tr>
-  </tbody>
+                        @endforeach
+                            <tr>
+                                <td class="text-left text-success bg-primary">
+                                    <b>Total: {{ $allSubjTotal }}</b>                                    
+                                </td>
+                            </tr>
+                    </tbody>
+                  </table>  
+                {{--  <b>Total Marks: {{$allSubTotal}}</b>  --}}
+                </td>                
+                @endforeach
+            {{--  <td><a href="{{url('/clssec-ResultSheet',[$clssec->id, $stdcr])}}" class="btn btn-success">Result</a></td>  --}}
+            </tr>
+    
+    </tbody>
 </table>
-
 
   {{--  <div class="row">
         <div class="col-sm-8">

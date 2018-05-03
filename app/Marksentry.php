@@ -12,6 +12,11 @@ class Marksentry extends Model
         return $this->belongsTo('App\Exmtypclssub');
     }
 
+
+    public function exmtypmodclssub(){
+        return $this->belongsTo('App\Exmtypmodclssub');
+    }
+
     public function clssub(){
         return $this->belongsTo('App\Clssub');
     }
