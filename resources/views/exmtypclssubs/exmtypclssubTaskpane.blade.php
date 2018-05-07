@@ -26,9 +26,10 @@
             <td class="text-center"><a href="{{ url('/exmtypmodcls-Assign', [$cls->id])}}">Assign Exam Mode {{ $cls->name }}</a></td>
             <td class="text-center">
                 {{-- <a href="{{ url('/exmtypclssubfmEntry', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a> --}}
-                <a href="{{ url('/exmtypmodclssubfmEntry', [$cls->id]) }}">{{$cls->name}} Class</a>
+                <a href="{{ url('/exmtypmodclssubfmEntry', [$cls->id]) }}">{{$cls->name}} Class FM Entry</a>
             </td>
             <td class="text-center">
+                    <a href="{{ url('/exmtypmodclssubfmEntry-View', [$cls->id]) }}">{{$cls->name}} Class FM View</a>
                 {{-- <a href="{{ url('/exmtypclssubfmView', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a> --}}
             </td>
         </tr>

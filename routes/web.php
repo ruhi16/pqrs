@@ -218,7 +218,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/exmtypmodclssubfmEntry/{clss_id}', 'ModefmController@exmtypmodclssubfmEntry');
         Route::post('/exmtypmodclssubfmEntry-Submit', 'ModefmController@exmtypmodclssubfmEntrySubmit');
-        
+        Route::get('/exmtypmodclssubfmEntry-View/{clss_id}', 'ModefmController@exmtypmodclssubfmEntryView');
         // Route::get('/test', 'BaseController@test');
         // Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
         // Route::post('/exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
