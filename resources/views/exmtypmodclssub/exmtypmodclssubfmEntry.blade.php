@@ -85,13 +85,23 @@
 
                     
                     @if($flag)
+                        @php
+                            $fm = $etmcsfm->where('exam_id', $exm->id)
+                                ->where('extype_id', $clsb->subject->extype_id)
+                                ->where('mode_id', $emd->id)
+                                ->where('subject_id', $clsb->subject_id)
+                                ->pluck('fm')->first()
+                                ;
+
+                        @endphp
+
                         <td>
                         <input type="hidden" class="form-control input-sm"
                                 value="{{$exm->id}}-{{$clsb->subject->extype_id}}-{{$emd->id}}-{{$cls->id}}-{{$clsb->subject_id}}"
                                 name="fmarksId[]">
 
                         <input  type="text"  
-                                value="" 
+                                value="{{ $fm }}" 
                                 class="form-control input-sm"
                                 name="fmarks[]">
                         </td> 

@@ -24,8 +24,13 @@
             <td>{{ $cls->id }}</td>
             <td>{{ $cls->name }}</td>
             <td class="text-center"><a href="{{ url('/exmtypmodcls-Assign', [$cls->id])}}">Assign Exam Mode {{ $cls->name }}</a></td>
-            <td class="text-center"><a href="{{ url('/exmtypclssubfmEntry', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a></td>
-            <td class="text-center"><a href="{{ url('/exmtypclssubfmView', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a></td>
+            <td class="text-center">
+                {{-- <a href="{{ url('/exmtypclssubfmEntry', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a> --}}
+                <a href="{{ url('/exmtypmodclssubfmEntry', [$cls->id]) }}">{{$cls->name}} Class</a>
+            </td>
+            <td class="text-center">
+                {{-- <a href="{{ url('/exmtypclssubfmView', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a> --}}
+            </td>
         </tr>
         @endforeach
     </tbody>

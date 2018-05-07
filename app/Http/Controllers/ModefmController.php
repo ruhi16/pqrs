@@ -40,7 +40,8 @@ class ModefmController extends Controller
         $etcss = Exmtypclssub::whereClss_id($clss_id)->whereSession_id($ses->id)->get();
 
         $flmrs = Subjfullmark::all();
-
+        $etmcsfm = Exmtypmodclssub::where('clss_id', $clss_id)
+            ->get();
 
         return view('exmtypmodclssub.exmtypmodclssubfmEntry')
         ->withCls($cls)
@@ -51,6 +52,7 @@ class ModefmController extends Controller
         ->withClsbs($clsbs)
         ->withEtmcs($etmcs)
         ->withFlmrs($flmrs)
+        ->withEtmcsfm($etmcsfm)
         ;
     }
 
@@ -62,9 +64,9 @@ class ModefmController extends Controller
                 // echo $request->fmarks[$i] . $request->fmarksId[$i] ."<Br>";
                 // exam > extype > mode > cls > subject
                 $arr = explode('-', $request->fmarksId[$i]);
-                echo ":";
-                print_r($arr);
-                echo ":";
+                // echo ":";
+                // print_r($arr);
+                // echo ":";
                 $etmcs = Exmtypmodclssub::firstOrNew([
                     'exam_id'   => $arr[0],
                     'extype_id' => $arr[1],
@@ -88,8 +90,8 @@ class ModefmController extends Controller
 
             }
         }
-
-        echo "Hello";
+        return back();
+        // echo "Hello";
     }
 
 
