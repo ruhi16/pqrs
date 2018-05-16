@@ -202,33 +202,24 @@ class ClsSecController extends Controller
         $stdb = Studentdb::whereStsession_id($ses->id)
         ->where('stclss_id', $clss_id)
         ->where('stsec_id', $section_id)->get();                
-        // echo "Students Details from  studentDB:<BR>";
-        // foreach($stdb as $abc){
-        //     echo "Name-DB: ".$abc->name."-".$abc->id;echo "<br>";
-        // }
-        
+               
 
         $stcr = Studentcr::whereSession_id($ses->id)            
             ->where('clss_id', $clss_id)
             ->where('section_id', $section_id)            
             ->get();            
-        // echo "Students Details from  studentCR:<BR>";
-        // foreach($stcr as $abc){
-        //     echo "Name-CR: ".$abc->studentdb_id;echo "<br>";
-        // }
+        
 
         $remRec = $stdb->whereNotIn('id', $stcr->pluck('studentdb_id'));        
-        // echo "Remaining Students Details from  studentDB:<BR>";
-        // foreach($remRec as $abc){
-        //     echo "Rem Name-CR: ".$abc->id;echo "<br>";
-        // }
-        // dd($remRec);
+        
 
 
         return view('clssecAdminPage')
         ->with('ses', $ses)        
         ->with('stcr', $stcr)
         ->with('remRec', $remRec)
+        ->with('cls', $cls)
+        ->with('sec', $sec)
         ;
     }
 

@@ -24,9 +24,17 @@
       @foreach($remRec as $std)
       <tr>
         <td>{{$std->id}}</td>
-        <td>{{$std->name}}</td>
-        <td>{{$std->stclss_id}}</td>
-        <td>{{$std->stsec_id}}</td>
+        <td>
+          {{ $std->name }}          
+        </td>
+        <td class="text-center">
+          {{--  {{$std->stclss_id}}          --}}
+          {{ $cls->name }}
+        </td>
+        <td class="text-center">
+          {{--  {{$std->stsec_id}}  --}}
+          {{ $sec->name }}
+        </td>
         <td></td>
         <td>          
             <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info">Issue Roll</a>          
@@ -40,7 +48,7 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>Session</th>
+      <th>Session/Sl No</th>
       <th>Name</th>
       <th>Class</th>
       <th>Section</th>
@@ -49,14 +57,18 @@
     </tr>
   </thead>
   <tbody>
+    @php $i = 0; @endphp
     @foreach($stcr as $stc)
+    @php $i++; @endphp
     <tr>
-      <td>{{ $stc->session_id }}</td>
+      <td>{{ $stc->session_id }}/{{ $i }}</td>
       <td>{{ $stc->studentdb->name }}</td>
-      <td>{{ $stc->clss_id }}</td>
-      <td>{{ $stc->section_id }}</td>
-      <td>{{ $stc->roll_no }}</td>
-      <td>{{ $stc->id }}</td>
+      <td class="text-center">{{ $stc->clss->name }}</td>
+      <td class="text-center">{{ $stc->section->name }}</td>
+      <td class="text-center">{{ $stc->roll_no }}</td>
+      <td>
+        <a href="{{url('/studentdbmultipage-edit',[$stc->studentdb_id])}}" class="btn btn-primary btn-sm">Edit Details</a>        
+      </td>
     </tr>
     @endforeach
   </tbody>

@@ -387,7 +387,7 @@
 <script  type="text/javascript" >
 $(document).ready(function() {
   //alert("hhh");
-  $('#sform').bootstrapValidator({
+  {{--  $('#sform').bootstrapValidator({
         message: 'This value is not valid',
         framework: 'bootstrap',
         feedbackIcons: {
@@ -626,7 +626,7 @@ $(document).ready(function() {
 
             
         }
-  });
+  });  --}}
 
 });
 

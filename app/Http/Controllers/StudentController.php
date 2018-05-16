@@ -352,7 +352,8 @@ class StudentController extends Controller
 
 
         $stddb->save();
-        return "Successfully";
+        // return "Successfully";
+        return back();
     }
 
     public function studentdbmultipageListToUpdateSection(){

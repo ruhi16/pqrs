@@ -7,16 +7,51 @@
 
 @section('content')
 
-<div class="well well-sm"><h1>Teachers Takpane ...</h1></div>
-
+{{--  <div class="container">
+<div class="row">
+  <div class="col-sm-3">
+    <img src="https://picsum.photos/150/150/?random" class="img-circle thumbnail" alt="Cinque Terre">    
+  </div>
+  <div class="col-lg-9">
+    <h4><b>Name:</b> {{ $teacher->name }} </h4>
+    <h5><b>Designation:</b> {{ $teacher->desig }} </h5>
+    <h5><b>Mobile No:</b> {{ $teacher->mob }} </h5>
+  </div>
+</div>
+</div>  --}}
 <ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
   <li role="presentation" class="active"><a href="#">Home</a></li>
   <li role="presentation"><a href="#">Profile</a></li>
   <li role="presentation"><a href="#">Messages</a></li>  
 
-</ul>
+</ul> 
 <div class="clearfix"></div>
-<h2><b>Name:</b> {{$teacher->name}}</h2>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <td width="15%">
+      <div class="thumbnail">
+        <img src="https://picsum.photos/150/150/?random" class="img-circle thumbnail" alt="Cinque Terre">
+        {{--  <div class="caption">  --}}
+              <a href="#" class="btn btn-info btn-sm" role="button">Change</a> 
+              {{--  <a href="#" class="btn btn-default btn-sm" role="button">Button</a>  --}}
+        {{--  </div>  --}}
+      </div>
+        
+      </td>
+      <td class="align-text-bottom">        
+        <h4><b>Name:</b> {{ $teacher->name }} </h4>
+        <h5><b>Designation:</b> {{ $teacher->desig }} </h5>
+        <h5><b>Mobile No:</b> {{ $teacher->mobno }} </h5>        
+      </td>
+    </tr>
+  </tbody>
+</table>
+{{--  <div class="well well-sm"><h1>Teachers Takpane ...</h1></div>  --}}
+
+
+{{--  <h2>Assigned Task</h2>  --}}
 
 <table class="table table-bordered">
   <thead>
@@ -51,12 +86,13 @@
         <td>{{$anscr->remark}}</td>
         <td>
           @php
-            $extpclsbs = $extpclsbs
+            $extpclsb = $extpclsbs
                   ->where('exam_id', $anscr->exam_id)
                   ->where('extype_id', $anscr->extype_id)
-                  ->where('clss_id', $anscr->clss_id)
+                  ->where('clss_id', $anscr->clss_id)                  
                   ->where('subject_id', $anscr->subject_id)
-                  ->first();
+                  ->first()
+                  ;
             $clsb = $clsbs->where('clss_id', $anscr->clss_id)
                   ->where('subject_id', $anscr->subject_id)
                   ->first();
@@ -65,8 +101,10 @@
                   ->where('section_id', $anscr->section_id)
                   ->first();
           @endphp
+
+          {{--  {{ $extpclsb }}  --}}
           {{--  {{$extpclsbs->id}}:{{$clsb->id}}:{{$clsc->id}}  --}}
-          <a href="{{url('/Clssecstd-MarksEntry', [$extpclsbs->id,$clsb->id,$clsc->id])}}">Marks Entry</a>
+          <a href="{{url('/clssecstd-MarksEntry', [$extpclsb->id,$clsb->id,$clsc->id])}}">Marks Entry </a>
           {{--  /Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}  --}}
         </td>
       </tr>

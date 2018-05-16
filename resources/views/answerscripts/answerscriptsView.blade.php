@@ -21,17 +21,18 @@
   </thead>
   <tbody>    
     @foreach($clsubjs as $clsb)
+    @if($clsb->subject->extype->name != 'Formative')
       <tr>
         <td>{{$clsb->subject->id}}</td>
         <td>{{$clsb->subject->name}}</td>
         <td>
-          @foreach($subjs as $subj)
+          {{--  @foreach($subjs as $subj)
             @if($subj->id == $clsb->subject->id)
               @foreach($subj->teachers as $teacher)
                 <small>{{$teacher->name}},</small><br>
               @endforeach
             @endif
-          @endforeach
+          @endforeach  --}}
         </td>
         @foreach($clsecns as $clsc)
           <td>
@@ -45,7 +46,7 @@
                     ->where('subject_id', $clsb->subject->id)->pluck('teacher_id')->first()
                 @endphp
                 <small>{{ $teachers->where('id', $teacher_id)->pluck('name')->first()}}</small>
-                <br>
+                
 
                 <a href="#" class="btn-addTeacher" data-toggle="modal" data-target="#myModal" 
                 data-exam_nm="{{$exm->name}}"
@@ -53,12 +54,13 @@
                 data-secn_nm="{{$clsc->section->name}}"
                 data-subj_nm="{{$clsb->subject->name}}"
                 data-subj_id="{{$clsb->subject->id  }}">                
-                <span class="glyphicon glyphicon-cutlery"></span>                
+                <span class="glyphicon glyphicon-sort"></span>                
                 </a>
             {{--  <button type="button" class="btn btn-info btn-lg" >Open Modal</button>  --}}
-          </td>
+          </td>        
         @endforeach
       </tr>
+      @endif
     @endforeach
   </tbody>
 </table>

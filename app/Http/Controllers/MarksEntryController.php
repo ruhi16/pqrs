@@ -70,7 +70,7 @@ class MarksEntryController extends Controller
             ->whereClssec_id($clsc_id)
             ->whereClssub_id($clsb_id)//->whereStudentcr_id($sid)
             ->get();
-
+        
         return view ('clssecMrkentryPage')
         ->withExtpcls($extpcls)
         ->withClsc($clsc)
