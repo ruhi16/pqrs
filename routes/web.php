@@ -27,10 +27,28 @@ Route::get('/start', function () {
     $stdcrs = App\Studentcr::where('session_id', $ses->id)->get();
     $clss = App\Clss::where('session_id', $ses->id)->get();
 
+
+
+$controllers = [];
+foreach (Route::getRoutes()->getRoutes() as $route){
+    $action = $route->getAction();
+    if (array_key_exists('controller', $action)){
+        // You can also use explode('@', $action['controller']); here
+        // to separate the class name from the method
+        
+        $controllers[] = $action['controller'];
+        $controllers = array_map(function ($controller) {
+            return str_replace('App\Http\Controllers\\', '', $controller);
+        }, $controllers);
+    }
+}
+
+
     return view('start')
         ->with('clssecs', $clssecs)
         ->with('stdcrs', $stdcrs)    
-        ->with('clss', $clss)    
+        ->with('clss', $clss)
+        ->with('controllers',$controllers)
         ; //homepage
 });
 

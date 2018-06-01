@@ -15,7 +15,8 @@
             <th class="text-center">Class</th>
             <th class="text-center">Exam Mode Selection</th>
             <th class="text-center">Assign Full Marks</th>
-            <th class="text-center">Remarks</th>
+            <th class="text-center">View Full Marks</th>
+            <th class="text-center">Promotional Rules</th>
         </tr>
     </thead>
     <tbody>
@@ -30,8 +31,9 @@
             </td>
             <td class="text-center">
                     <a href="{{ url('/exmtypmodclssubfmEntry-View', [$cls->id]) }}">{{$cls->name}} Class FM View</a>
-                {{-- <a href="{{ url('/exmtypclssubfmView', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a> --}}
+                {{--  <a href="{{ url('/exmtypclssubfmView', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a>  --}}
             </td>
+            <td></td>
         </tr>
         @endforeach
     </tbody>

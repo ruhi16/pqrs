@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use DB;
 use App\Session;
 use App\Exam;
@@ -37,9 +35,9 @@ class ModefmController extends Controller
         $exmds = Mode::all();
 
         $etmcs = Exmtypmodcls::whereClss_id($clss_id)->whereSession_id($ses->id)->get();
-        $etcss = Exmtypclssub::whereClss_id($clss_id)->whereSession_id($ses->id)->get();
+        $etcss = Exmtypmodclssub::whereClss_id($clss_id)->whereSession_id($ses->id)->get();
 
-        $flmrs = Subjfullmark::all();
+        // $flmrs = Subjfullmark::all();
         $etmcsfm = Exmtypmodclssub::where('clss_id', $clss_id)
             ->get();
 
@@ -51,7 +49,7 @@ class ModefmController extends Controller
         ->withEtcss($etcss)
         ->withClsbs($clsbs)
         ->withEtmcs($etmcs)
-        ->withFlmrs($flmrs)
+        // ->withFlmrs($flmrs)
         ->withEtmcsfm($etmcsfm)
         ;
     }
@@ -104,9 +102,9 @@ class ModefmController extends Controller
         $exmds = Mode::all();
 
         $etmcs = Exmtypmodcls::whereClss_id($clss_id)->whereSession_id($ses->id)->get();
-        $etcss = Exmtypclssub::whereClss_id($clss_id)->whereSession_id($ses->id)->get();
+        $etcss = Exmtypmodclssub::whereClss_id($clss_id)->whereSession_id($ses->id)->get();
 
-        $flmrs = Subjfullmark::all();
+        // $flmrs = Subjfullmark::all();
 
         $etmcsfm = Exmtypmodclssub::where('clss_id', $clss_id)
             ->get();
@@ -120,7 +118,7 @@ class ModefmController extends Controller
         ->withEtcss($etcss)
         ->withClsbs($clsbs)
         ->withEtmcs($etmcs)
-        ->withFlmrs($flmrs)
+        // ->withFlmrs($flmrs)
         ->with('etmcsfm', $etmcsfm);
     }
 }

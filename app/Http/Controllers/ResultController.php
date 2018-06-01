@@ -26,6 +26,7 @@ use App\Grade;
 
 
 use App\Exmtypclssub;
+use App\Exmtypmodcls;
 use App\Exmtypmodclssub;
 use App\Marksentry;
 use App\Gradedescription;
@@ -50,7 +51,7 @@ class ResultController extends Controller
         $extp = Extype::whereSession_id($ses->id)->get();
 
        
-        $extpclsbs = Exmtypclssub::whereSession_id($ses->id)
+        $extpclsbs = Exmtypmodclssub::whereSession_id($ses->id)
         ->whereClss_id($clsc->clss_id)        
         ->get();
         
@@ -100,6 +101,7 @@ class ResultController extends Controller
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
 
+        // dd($mrks);
         return view('results.ResultSheet')
         ->withSes($ses)
         ->withSch($sch)
@@ -273,7 +275,7 @@ class ResultController extends Controller
         
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
-        $etcs = Exmtypclssub::all();
+        $etcs = Exmtypmodclssub::all();
         // print_r($clsc);
         $grddescr = Gradedescription::all();
         

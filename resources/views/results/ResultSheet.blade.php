@@ -110,6 +110,7 @@
                                         {{ getGrade($et->id, $subjTotal, 80 ) }}
                                     </td>
                                 @else
+                                    
                                     @if($flag == true)
                                         @php
                                             $flag = false;
@@ -118,13 +119,15 @@
                                             
                                             $etcsIds = $extpclsbs->whereIn('subject_id', $subIds->toArray())
                                                 ->where('extype_id',$et->id)->pluck('id');
+
                                             $etcsFMs = $extpclsbs->whereIn('subject_id', $subIds->toArray())
                                                 ->where('extype_id',$et->id)->sum('fm');
 
-                                            $fullMarks = $mrks->whereIn('exmtypclssub_id', $etcsIds->toArray())->pluck('marks');
+                                            $fullMarks = $mrks->whereIn('exmtypmodclssub_id', $etcsIds->toArray())->pluck('marks');
+                                            
                                             $fullObtMarks = 0;
                                             foreach($fullMarks as $mark){
-                                                $fullObtMarks += ( $mark == -99 ? 0 : $mark );
+                                                $fullObtMarks += (int)( $mark == -99 ? 0 : $mark );
                                             }
                                         @endphp
                                         

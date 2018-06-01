@@ -7,7 +7,7 @@ use DB;
 use App\Session;
 use App\Exam;
 use App\Extype;
-use App\Clss;
+use App\Clss; 
 use App\Subject;
 use App\Section;
 

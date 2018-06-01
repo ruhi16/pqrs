@@ -10,13 +10,13 @@
 
 @section('content')
 
+
 <div class="row">
-
-
 <div class="dropdown">
-    
-
 <div class="container">
+
+
+{{--  start of Class-Section Students Details  --}}
 <div class="panel panel-default">
     <div class="panel-heading text-center"><b>Class-Section wise Total Students Detail</b></div>        
     <div class="panel-body">
@@ -76,17 +76,15 @@
             </tr>
         </tbody>
         </table>
-        
-            
-
-        
     </div>
 </div>
+{{--  end of Class-Section Students Details  --}}
 
 
-
-
-
+{{--  show the name of methods with corresponding methods name  --}}
+{{--  @foreach($controllers as $c)
+    {{ $c }}<br>
+@endforeach  --}}
 
 
 

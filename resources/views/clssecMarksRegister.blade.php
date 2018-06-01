@@ -121,7 +121,7 @@
                                                 ->where('extype_id',$et->id)->sum('fm');
 
                                             $fullMarks = $mrks->where('studentcr_id', $stdcr->id)
-                                                ->whereIn('exmtypclssub_id', $etcsIds->toArray())->pluck('marks');
+                                                ->whereIn('exmtypmodclssub_id', $etcsIds->toArray())->pluck('marks');
                                             $fullObtMarks = 0;
                                             foreach($fullMarks as $mark){
                                                 $fullObtMarks += ( $mark == -99 ? 0 : $mark );
