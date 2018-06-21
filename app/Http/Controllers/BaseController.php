@@ -19,7 +19,7 @@ use App\Clssub;
 use App\Clssec;
 
 use App\Subjfullmark;
-use App\Exmtypclssub;
+use App\Exmtypmodclssub;
 use App\Marksentry;
 
 class BaseController extends Controller
@@ -116,7 +116,16 @@ class BaseController extends Controller
         ;
     }
 
-    
+    public function test(){
+        $stdcrs = Studentcr::all();
+        $mrks  = Marksentry::all();
+
+
+        return view('test')
+        ->with('stdcrs', $stdcrs)
+        ->with('mrks', $mrks)
+        ;
+    }    
 
 
 // old methods

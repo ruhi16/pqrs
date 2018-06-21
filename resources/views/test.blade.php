@@ -7,16 +7,17 @@
 
 @section('content')
 
-<h1>Test...</h1>
+@foreach($mrks as $mrk)
 
-
+	{{ $mrk->exmtypmodclssub }} <br>
+@endforeach
 
 
 
 <script type="text/javascript">
-  $(document).ready(function(e){
-    
-  });  
+	$(document).ready(function(e){
+		
+	});  
 </script>
 
 @endsection

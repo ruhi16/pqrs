@@ -16,9 +16,11 @@
     <th>Class</th>
     <th>Section</th>
     <th>Roll</th>
-    <th>Total Marks Obt</th>
-    <th>Full Marks</th>
-    <th>Nos of Ds</th>
+    @foreach($extp as $ex)
+      <th>Total Marks Obt<br><small>{{ $ex->name }}</small></th>
+      <th>Full Marks<br><small>{{ $ex->name }}</small></th>
+      <th>Nos of Ds<br><small>{{ $ex->name }}</small></th>
+    @endforeach
     <th>Result Status</th>
     <th>Action</th>
   </tr>
@@ -31,9 +33,11 @@
     <td>{{$stdcr->clss->name}}</td>
     <td>{{$stdcr->section->name}}</td>
     <td>{{$stdcr->roll_no}}</td>
-    <td></td>
-    <td></td>
-    <td></td>
+    @foreach($extp as $ex)
+      <td></td>
+      <td></td>
+      <td></td>
+    @endforeach
     <td></td>
     <td><a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a></td>
   </tr>

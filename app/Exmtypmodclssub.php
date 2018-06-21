@@ -32,4 +32,7 @@ class Exmtypmodclssub extends Model
         return $this->hasMany('App\Marksentry');
     }
 
+
+   
+
 }
