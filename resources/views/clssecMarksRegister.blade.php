@@ -30,6 +30,7 @@
                 </td>
                 @foreach($extp as $et)  {{-- for each exam category summative/formative --}}
                 
+                @php $totalDs = 0; @endphp
                 <td> 
                   <table class="table table-condensed table-bordered">
                     <thead>
@@ -106,8 +107,16 @@
 
                                 @if( $clsb->combination_no == 0)
                                     <td class="text-center text-danger">
-                                        {{ getGrade($et->id, $subjTotal, 80 ) }}
-                                    </td>
+                                        @php
+
+                                            $grd = getGrade($et->id, $subjTotal, 80 );
+                                            if($grd == 'D'){
+                                                $totalDs++;
+                                            }
+                                        @endphp                                    
+                                        <br> {{ $grd }}
+                                        {{--  {{ getGrade($et->id, $subjTotal, 80 ) }}  --}}
+                                 </td>
                                 @else
                                     @if($flag == true)
                                         @php
@@ -130,7 +139,14 @@
                                         
                                         <td class="text-center" rowspan="{{ $combSubCount }}">                                    
                                             {{ $fullObtMarks }}
-                                            <br>{{ getGrade($et->id, $fullObtMarks, $etcsFMs) }}                                    
+                                            
+                                            @php 
+                                                $grd = getGrade($et->id, $fullObtMarks, $etcsFMs);
+                                                if($grd == 'D'){
+                                                    $totalDs++;
+                                                }
+                                            @endphp                                    
+                                            <br> ({{ $grd }})
                                         </td>
                                     @else
                                         @if($combSubjectCount == $combSubCount)
@@ -149,7 +165,7 @@
                         @endforeach
                             <tr>
                                 <td class="text-left text-success bg-primary">
-                                    <b>Total: {{ $allSubjTotal }}</b>                                    
+                                    <b>Total: {{ $allSubjTotal }}</b>  total Obt Ds{{ $totalDs }}                                  
                                 </td>
                             </tr>
 

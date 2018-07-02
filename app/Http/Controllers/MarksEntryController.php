@@ -130,7 +130,7 @@ class MarksEntryController extends Controller
             ->whereSection_id($clsc->section_id)
             ->get();
         
-
+ 
 
 
         $xx = Exmtypmodclssub::whereSession_id($ses->id)
