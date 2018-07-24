@@ -27,7 +27,7 @@
     <body>
         <center>
         <h2>{{ $school->name }}</h2>
-        <h3>Student Marks List for Subject: _________________________ Session: {{ $session->name }}</h3>
+        <h3>Student List for _________________________________________ Session: {{ $session->name }}</h3>
         <h4>Class: <b>{{ $clss->name }} Section: {{ $section->name }}</b></h4>
         </center>
         <table border="1" width="100%">
@@ -36,9 +36,11 @@
                 <th>SL</th>
                 <th>Name</th>
                 <th>Roll</th>
-                @foreach($exms as $ex)
+                {{-- @foreach($exms as $ex)
                     <th>{{ $ex->name }}</th>
-                @endforeach
+                @endforeach --}}
+                <th>Signature</th>
+                <th>Remarks</th>
             </tr>
             </thead>
             <tbody>
@@ -48,9 +50,11 @@
                     <td>{{ $i }}</td>
                     <td>{{ $std->name }}</td>
                     <td>{{ $i++ }}</td>
-                    @foreach($exms as $ex)
+                    {{-- @foreach($exms as $ex)
                         <td></td>
-                    @endforeach
+                    @endforeach --}}
+                    <td></td>
+                    <td></td>
                 </tr>
                 @endforeach
             </tbody>

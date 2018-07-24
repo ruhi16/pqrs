@@ -82,8 +82,9 @@
             <div class="content">
                 
                 <div class="title m-b-md">
-                    Welcome, <b><small>Result Automation System</small></b>
+                    Welcome, <b><small>Result Automation System.</small></b>
                 </div>
+                <a href="#">Know your Login Credencial</a>
                 
                 
             </div>
