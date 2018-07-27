@@ -20,12 +20,15 @@ class MatchUserMiddleware
             return $next($request);    
         }else{
             if( Auth::user()->id == $request->route('teacher_id') ){
+                
                 // echo "User: ". Auth::user()->name;
+                return $next($request);
             }else{
                 // echo "User not found";
                 return redirect()->to('/');
             }
         }
-        return $next($request);
+
+        
     }
 }
