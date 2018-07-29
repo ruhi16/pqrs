@@ -7,11 +7,36 @@
 
 @section('content')
 <h1>Marks Entry Page...</h1>
-<br>For the Exam: {{ $extpcls->exam->name }}
+
+<table class = "table table-bordered">
+    <tr>
+        <th>Exam / Type</th>
+        <td>{{ $extpcls->exam->name }} / {{ $extpcls->extype->name }}</td>
+        <td></td>        
+        <th>Subject</th>
+        <td>{{ $clsb->subject->name }}</td>
+        <td></td>
+        <th>Full Marks</th>
+        <td>{{ $extpcls->fm }}</td>
+        <td></td>
+    </tr>
+    <tr>
+        <th>Class</th>
+        <td>{{ $extpcls->clss->name }}</td>
+        <td></td>
+        <th>Section</th>
+        <td>{{ $clsc->section->name }}</td>
+        <td></td>
+        <th>Teacher</th>
+        <th>{{ $teacher->teacher->name or 'N/A' }}</th>
+        <td></td>
+    </tr>
+</table>
+{{--  <br>For the Exam: {{ $extpcls->exam->name }}
 <br>For the Exam Type: {{ $extpcls->extype->name }}
 <br>For the Class: {{ $extpcls->clss->name }}
 <br>For the Section: {{ $clsc->section->name }}
-<br>For the Section: {{ $clsb->subject->name }}
+<br>For the Section: {{ $clsb->subject->name }}  --}}
 
 
 <table class="table table-bordered">

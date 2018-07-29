@@ -24,6 +24,7 @@ use App\Exmtypclssub;
 use App\Marksentry;
 use App\Extclssubfmpm;
 use App\Exmtypmodclssub;
+use App\Answerscriptdistribution;
 
 class MarksEntryController extends Controller
 {
@@ -60,7 +61,7 @@ class MarksEntryController extends Controller
         $extpcls = Exmtypmodclssub::find($extpcl_id);
         $clsc = Clssec::find($clsc_id);
         $clsb = Clssub::find($clsb_id);
-
+        
         $stdcrs = Studentcr::whereSession_id($ses->id)
         ->whereClss_id(Clssec::find($clsc_id)->clss->id)
         ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
@@ -70,13 +71,23 @@ class MarksEntryController extends Controller
             ->whereClssec_id($clsc_id)
             ->whereClssub_id($clsb_id)//->whereStudentcr_id($sid)
             ->get();
-        
+        // echo $extpcls;
+
+        $teacher = Answerscriptdistribution::where('session_id', $extpcls->session_id)
+            ->where('exam_id', $extpcls->exam_id)
+            ->where('extype_id', $extpcls->extype_id)
+            ->where('clss_id', $extpcls->clss_id)
+            ->where('section_id', $clsc->section->id)
+            ->where('subject_id', $extpcls->subject_id)
+            ->first();
+        // echo $teacher;
         return view ('clssecMrkentryPage')
         ->withExtpcls($extpcls)
         ->withClsc($clsc)
         ->withClsb($clsb)
         ->withStdcrs($stdcrs)
         ->withStdmrks($stdmrks)
+        ->withTeacher($teacher)
         ;
 
     }
