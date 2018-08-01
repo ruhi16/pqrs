@@ -42,8 +42,8 @@ class HomeController extends Controller
     }
 
     public function user(){
-
-        return redirect()->to('/teachers'); //user.blad.php
+        $id = Auth::user()->id;        
+        return redirect()->to('/teachers-takspan/'.$id); //user.blad.php
     }
 
 
