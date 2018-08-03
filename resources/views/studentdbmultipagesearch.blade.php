@@ -22,7 +22,7 @@
       @foreach($stddb as $sdb)
         <tr>
           <th>{{$sdb->name}}</th>
-          <th>{{$sdb->clss->name}}</th>
+          <th>{{$sdb}}</th>
           <th>{{$sdb->section->name}}</th>
         </tr>
       @endforeach      
