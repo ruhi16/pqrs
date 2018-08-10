@@ -79,9 +79,10 @@
 <script type="text/javascript">
   $(document).ready(function(e){
     $(document).on('click', '.issue-roll',function(e) {
-        //alert('Button click');        
-        e.preventDefault();
-        $(this).off(e);
+        //alert('Button click');      
+        ('.issue-roll').attr("disabled", false);  
+        //e.preventDefault();
+        //$(this).off(e);
     });
   });  
 </script>
