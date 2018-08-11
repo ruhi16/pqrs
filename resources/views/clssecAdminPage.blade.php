@@ -37,7 +37,7 @@
         </td>
         <td></td>
         <td>          
-            <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info issue-roll">Issue Roll</a>          
+            <a href="{{url('/issueRoll',[$std->id])}}" class="btn btn-info issue-roll" id="btnSubmit">Issue Roll</a>          
         </td>
       </tr>
       @endforeach
@@ -78,12 +78,10 @@
 
 <script type="text/javascript">
   $(document).ready(function(e){
-    $(document).on('click', '.issue-roll',function(e) {
-        //alert('Button click');      
-        ('.issue-roll').attr("disabled", false);  
-        //e.preventDefault();
-        //$(this).off(e);
+    $(document).one('click', '.issue-roll',function(e) {
+      //alert('clicked');        
     });
+    
   });  
 </script>
 
