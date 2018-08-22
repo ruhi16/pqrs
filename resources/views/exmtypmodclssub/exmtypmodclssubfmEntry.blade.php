@@ -104,7 +104,8 @@
                                 value="{{ $fm }}" 
                                 class="form-control input-sm"
                                 name="fmarks[]">
-                        </td> 
+                        </td>
+                        @php $subTotal += $fm ; @endphp
                     @else
                         <td></td>
                     @endif
@@ -112,7 +113,7 @@
                 @endforeach
             @endforeach
             
-            <td>{{ $subTotal }}</td>
+            <td><b>{{ $subTotal }}</b></td>
         </tr>
         @endif
     @endforeach

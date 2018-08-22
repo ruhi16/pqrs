@@ -210,14 +210,28 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     @foreach($clss as $cls)
-                        <li><a href="{{ url('/exmtypmodclssubfmEntry', [$cls->id]) }}">{{$cls->name}} Class</a></li>
+                        <li><a href="{{ url('/exmtypmodclssubfmEntry', [$cls->id]) }}"> {{ $cls->name}} Class</a></li>
                         
 
                     @endforeach
-
-                    
-                    
                     </div>
+                    
+                    <div class="dropdown">
+                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Class wise Full Marks View
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    @foreach($clss as $cls)
+                        <li><a href="{{ url('/exmtypmodclssubfmEntry-View', [$cls->id]) }}"> {{ $cls->name}} Class</a></li>
+                        
+
+                    @endforeach
+                    </div>
+                    
+
+
+
 
                     <button type="button" class="btn btn-primary btnModal" data-toggle="modal" data-target="#exampleModalLong">
                             Launch demo modal
