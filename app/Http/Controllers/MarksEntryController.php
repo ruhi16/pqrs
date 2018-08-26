@@ -51,7 +51,9 @@ class MarksEntryController extends Controller
         ->withClsc($clssec)        
         ->withExm($exm) 
         ->withModes($modes) 
-        ->withStdmrk($stdmrk)       
+        ->withStdmrk($stdmrk) 
+        ->withCls($clssec->clss->name)
+        ->withSec($clssec->section->name)
         ;
     }
 
@@ -178,4 +180,9 @@ class MarksEntryController extends Controller
         ->withMrks($mrks)
         ;
     }
+
+
+
+
+
 }

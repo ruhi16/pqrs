@@ -28,6 +28,47 @@ use App\Answerscriptdistribution;
 
 class TeacherController extends Controller
 {
+    public function teachersTakspan($teacher_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $teacher = Teacher::find($teacher_id);
+        $anscrdists = Answerscriptdistribution::where('teacher_id',$teacher_id)
+                        ->where('session_id', $ses->id)->get();
+
+        $extpclsbs = Exmtypmodclssub::where('session_id', $ses->id)->get();
+        $clscs = Clssec::where('session_id', $ses->id)->get();
+        $clsbs = Clssub::where('session_id', $ses->id)->get();
+
+        
+        return view('teachers.teacherTaskpane')
+            ->withTeacher($teacher)
+            ->withAnscrdists($anscrdists)            
+            ->withExtpclsbs($extpclsbs)
+            ->withClscs($clscs)
+            ->withClsbs($clsbs)
+        ;
+    }
+    public function teachersImage(Request $request, $teacher_id){
+        echo 'welcome:'. $teacher_id;
+        $photo = '';
+        if($request->hasFile('photo')){            
+            $dpath = "teachersImage";
+            $file = $request->photo;
+            $extn = $request->file('photo')->extension();
+            // $extn = $request->file->getClientOriginalExtension();
+            // $fname = rand(111,999).".".$extn;
+            $fname = $teacher_id.".jpg";
+            $file->move($dpath, $fname);
+            echo 'file selected'.$fname;
+        }else{
+            echo 'no file selected';
+        }
+            
+        return back();
+
+    }
+
+
+
     public function teachers(){
         $ses = Session::whereStatus('CURRENT')->first();
         $teachers = Teacher::whereSession_id($ses->id)->get();
@@ -144,23 +185,5 @@ class TeacherController extends Controller
 
 
 
-    public function teachersTakspan($teacher_id){
-        $ses = Session::whereStatus('CURRENT')->first();
-        $teacher = Teacher::find($teacher_id);
-        $anscrdists = Answerscriptdistribution::where('teacher_id',$teacher_id)
-                        ->where('session_id', $ses->id)->get();
-
-        $extpclsbs = Exmtypmodclssub::where('session_id', $ses->id)->get();
-        $clscs = Clssec::where('session_id', $ses->id)->get();
-        $clsbs = Clssub::where('session_id', $ses->id)->get();
-
-        
-        return view('teachers.teacherTaskpane')
-            ->withTeacher($teacher)
-            ->withAnscrdists($anscrdists)            
-            ->withExtpclsbs($extpclsbs)
-            ->withClscs($clscs)
-            ->withClsbs($clsbs)
-        ;
-    }
+    
 }

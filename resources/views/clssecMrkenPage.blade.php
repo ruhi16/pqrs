@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<h1>Class Section Marks Entry Page</h1>
+<h1>Class: <b>{{$cls}}</b> Section: <b>{{$sec}}</b>  -- Marks Entry Page</h1>
 
 <table class="table table-bordered">
   <thead>

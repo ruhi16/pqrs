@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<h1>Class-Section wise Marks Register...</h1>
+<h1>Class: <b>{{$cls}}</b> Section: <b>{{$sec}}</b> , Marks Register...</h1>
 
 <table class="table table-bordered">
     <thead>
@@ -25,7 +25,8 @@
                 <td>
                   Name: {{ $stdcr->studentdb->name }}<br>
                   Class: {{ $cls }}<br>
-                  Section: {{ $sec }}
+                  Section: {{ $sec }}<br>
+                  Roll No: {{ $stdcr->roll_no }}
                   
                 </td>
                 @foreach($extp as $et)  {{-- for each exam category summative/formative --}}
@@ -47,7 +48,7 @@
                                     ->groupBy('mode_id')
                                     ->count();
                             @endphp
-                            <th colspan="{{ $mdInTerm }}" class="text-center">{{$mdInTerm}}={{$ex->name}}</th>                         
+                            <th colspan="{{ $mdInTerm }}" class="text-center">{{$ex->name}}</th>                         
                         @endforeach
                         <th>Total/{{$typeTotal}}</th>
                         <th>Grade</th>

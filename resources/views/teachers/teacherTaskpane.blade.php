@@ -32,11 +32,16 @@
     <tr>
       <td width="15%">
       <div class="thumbnail">
-        <img src="https://picsum.photos/150/150/?random" class="img-circle thumbnail" alt="Cinque Terre">
-        {{--  <div class="caption">  --}}
-              <a href="#" class="btn btn-info btn-sm" role="button">Change</a> 
-              {{--  <a href="#" class="btn btn-default btn-sm" role="button">Button</a>  --}}
-        {{--  </div>  --}}
+      @php
+        $imgUrl = "teachersImage/".$teacher->id.".jpg";
+      @endphp
+        <img src="{{url($imgUrl)}}" class="img-circle thumbnail" alt="Image Not Found!!" width="300px" >
+
+        <form action="{{ route('teachers.image', [$teacher->id]) }}" method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
+              {!! Form::file('photo',['id'=>$teacher->id]) !!}        
+              <button type='submit' class="btn btn-success btn-sm">Change DP</button>
+        {!! Form::close() !!}        
       </div>
         
       </td>
