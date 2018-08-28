@@ -135,6 +135,7 @@ class ClsSecController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $clss = Clss::find($clss_id);
         $secs = Section::find($section_id);
+        $subjs = Subject::where('extype_id', 1)->get();
 
         $stds = Studentdb::where('stsession_id',$ses->id)
                 ->where('stclss_id', $clss_id)
@@ -146,13 +147,13 @@ class ClsSecController extends Controller
 
         $pdf = PDF::loadView('clssecs.reports.reportsstdlistHTML', 
             ['stdList'=>$stds, 'exms'=>$exms,'clss'=>$clss, 'section'=>$secs, 'session'=>$ses, 
-             'school' =>$school
+             'school' =>$school, 'subjs'=>$subjs
             ]);
 
-        $pdf->setPaper("legal");        
+        $pdf->setPaper("a4");        
         // return $pdf->stream(); //only to show in browser
 
-        $nameStr = $ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
+        $nameStr ="FormativeMarksSheet".$ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
         return $pdf->download($nameStr);
 
     }
@@ -161,7 +162,8 @@ class ClsSecController extends Controller
     
     public function clssecTaskPage(){
         $ses = Session::whereStatus('CURRENT')->first();
-        $clssecs = Clssec::whereSession_id($ses->id)->get();
+        $clssecs = Clssec::whereSession_id($ses->id)
+                ->orderBy('clss_id')->orderBy('section_id')->get();
         $teachers = Teacher::all();
         $clssteachers = Clssteacher::all();
         // foreach($clssecs as $cs){
