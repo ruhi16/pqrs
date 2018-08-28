@@ -153,12 +153,64 @@ class ClsSecController extends Controller
         $pdf->setPaper("a4");        
         // return $pdf->stream(); //only to show in browser
 
-        $nameStr ="FormativeMarksSheet".$ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
+        $nameStr ="StudMasterRolls".$ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
         return $pdf->download($nameStr);
 
     }
 
+    public function reportsStdListSummativePdf($clss_id, $section_id){
+        $school = School::all()->first();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clss = Clss::find($clss_id);
+        $secs = Section::find($section_id);
+        $subjs = Subject::where('extype_id', 1)->get();
 
+        $stds = Studentdb::where('stsession_id',$ses->id)
+                ->where('stclss_id', $clss_id)
+                ->where('stsec_id', $section_id)
+                ->get();
+
+        $exms = Exam::where('session_id', $ses->id)->get();
+        
+
+        $pdf = PDF::loadView('clssecs.reports.reportsstdlistSummativeHTML', 
+            ['stdList'=>$stds, 'exms'=>$exms,'clss'=>$clss, 'section'=>$secs, 'session'=>$ses, 
+             'school' =>$school, 'subjs'=>$subjs
+            ]);
+
+        $pdf->setPaper("a4");        
+        // return $pdf->stream(); //only to show in browser
+
+        $nameStr ="SummativeMarksSheet".$ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
+        return $pdf->download($nameStr);
+    }
+
+    public function reportsStdListFormativePdf($clss_id, $section_id){
+        $school = School::all()->first();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clss = Clss::find($clss_id);
+        $secs = Section::find($section_id);
+        $subjs = Subject::where('extype_id', 1)->get();
+
+        $stds = Studentdb::where('stsession_id',$ses->id)
+                ->where('stclss_id', $clss_id)
+                ->where('stsec_id', $section_id)
+                ->get();
+
+        $exms = Exam::where('session_id', $ses->id)->get();
+        
+
+        $pdf = PDF::loadView('clssecs.reports.reportsstdlistFormativeHTML', 
+            ['stdList'=>$stds, 'exms'=>$exms,'clss'=>$clss, 'section'=>$secs, 'session'=>$ses, 
+             'school' =>$school, 'subjs'=>$subjs
+            ]);
+
+        $pdf->setPaper("a4");        
+        // return $pdf->stream(); //only to show in browser
+
+        $nameStr ="FormativeMarksSheet".$ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
+        return $pdf->download($nameStr);
+    }
     
     public function clssecTaskPage(){
         $ses = Session::whereStatus('CURRENT')->first();

@@ -27,8 +27,8 @@
     <body>
         <center>
         <h2>{{ $school->name }}</h2>
-        <h3>Studets Master Roll for ___________________________________, Session: {{ $session->name }}</h3>
-        <h4>Class: <b>{{ $clss->name }}, Section: {{ $section->name }}, Teacher: ______________________________, Date: ________</b></h4>
+        <h3>Summative Marks for Subject: _________________, Session: {{ $session->name }}</h3>
+        <h4>Class: <b>{{ $clss->name }}, Section: {{ $section->name }}, Teacher: ________________________________, Date: ________</b></h4>
         </center>
         <table border="1" width="100%">
             <thead>
@@ -36,14 +36,14 @@
                 <th>SL</th>
                 <th>Name</th>
                 <th>Roll</th>
-                {{-- @foreach($exms as $ex)
+                @foreach($exms as $ex)
                     <th>{{ $ex->name }}</th>
-                @endforeach --}}
+                @endforeach
                 {{--  @foreach($subjs as $subj)
                     <th>{{ $subj->code }}</th>
                 @endforeach  --}}
-                <th>Signature</th>
-                <th>Remarks</th>
+                {{--  <th>Signature</th>
+                <th>Remarks</th>  --}}
             </tr>
             </thead>
             <tbody>
@@ -53,14 +53,14 @@
                     <td>{{ $i }}</td>
                     <td>{{ $std->name }}</td>
                     <td>{{ $i++ }}</td>
-                    {{-- @foreach($exms as $ex)
+                    @foreach($exms as $ex)
                         <td></td>
-                    @endforeach --}}
+                    @endforeach
                     {{--  @foreach($subjs as $subj)
                         <th></th>
                     @endforeach  --}}
-                    <td></td>
-                    <td></td>
+                    {{--  <td></td>
+                    <td></td>  --}}
                 </tr>
                 @endforeach
             </tbody>

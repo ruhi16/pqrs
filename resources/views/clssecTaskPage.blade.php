@@ -46,8 +46,10 @@
     <td><a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Mark Register</a></td>
     <td><a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Individual Result</a></td>
     <td>
-        <a href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List</a><br>
-        <a href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a>
+        <a href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List HTML</a><br>
+        <a href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a><br>
+        <a href="{{ url('/clssecsreport-stdListSummativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Summ. PDF</a><br>
+        <a href="{{ url('/clssecsreport-stdListFromativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Form. PDF</a>
     </td>
     </tr>
 @endforeach

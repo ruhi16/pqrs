@@ -205,6 +205,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/clssecsreport-stdList/{clss_id}/{section_id}', 'ClsSecController@reportStdList');
         Route::get('/clssecsreport-stdListPdf/{clss_id}/{section_id}', 'ClsSecController@reportsStdListPdf');
+        Route::get('/clssecsreport-stdListSummativePdf/{clss_id}/{section_id}', 'ClsSecController@reportsStdListSummativePdf');
+        Route::get('/clssecsreport-stdListFromativePdf/{clss_id}/{section_id}', 'ClsSecController@reportsStdListFormativePdf');
 
 
 
