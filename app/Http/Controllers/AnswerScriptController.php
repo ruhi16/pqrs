@@ -143,9 +143,12 @@ class AnswerScriptController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $teachers = Teacher::all();
         $clss = Clss::all();
-        $ansscdist = Answerscriptdistribution::all();
+        $ansscdist = Answerscriptdistribution::where('session_id', $ses->id)
+                        ->where('exam_id', $exam_id)->where('extype_id',$extype_id)->get();
         $stdcrs = Studentcr::where('session_id', $ses->id)->get();
-
+        
+        $exam = Exam::find($exam_id);
+        $extype = Extype::find($extype_id);
 
 
         return view('answerscripts.answerscriptTeacherAllotment')
@@ -153,6 +156,8 @@ class AnswerScriptController extends Controller
             ->with('clss', $clss)
             ->with('ansscdist', $ansscdist)
             ->with('stdcrs', $stdcrs)
+            ->with('exam', $exam)
+            ->with('extype', $extype)
             ;
     }
 

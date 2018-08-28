@@ -6,7 +6,8 @@
 @endsection
 
 @section('content')
-<h1>Exam: , Type: , <b>Teacher</b> wise Answer Script Disbursment </h1>
+<h1><b>Teacher</b> wise Answer Script Disbursment </h1>
+<h2>Exam: {{ $exam->name }}, Type: {{ $extype->name }}</h2> 
 
 <table class="table table-striped table-bordered">
 <thead>

@@ -39,7 +39,7 @@
 <br>For the Section: {{ $clsb->subject->name }}  --}}
 
 
-<table class="table table-bordered">
+<table class="table table-bordered" id="dataTable"> 
 <thead>
     <tr>
         <th>#</th>
@@ -47,11 +47,12 @@
         <th>Roll No</th>
         <th>Marks Details</th>
         <th>Action</th>
+        <th>Remarks</th>
     </tr>
 </thead>
 <tbody>
     @foreach($stdcrs as $stdcr)
-    <tr>
+    <tr id="dataRow">
         <td>{{ $stdcr->id }}</td>
         <td>{{ $stdcr->studentdb->name }}</td>
         <td>{{ $stdcr->roll_no }}</td>
@@ -67,13 +68,14 @@
         </div>
         </td>
 
-        <td><button class="btn btn-primary" 
+        <td><button class="btn btn-primary btnSave" 
                 data-sid="{{$stdcr->id}}"
                 data-etc="{{$extpcls->id}}"
                 data-csc="{{$clsc->id}}"
-                data-csb="{{$clsb->id}}">Save</button>
+                data-csb="{{$clsb->id}}" >Save</button>
 
         </td>
+        <td id="{{$stdcr->id}}"></td>
     </tr>
     @endforeach
 
@@ -90,25 +92,25 @@
         
         
         var mrk = $('.marks'+sid).val();
-    var u = '{{url("/updateMarks")}}';//'{{url("/updateRoll")}}';
-    var t = '{{ csrf_token() }}';
-    $.ajax({
-        method: 'post',
-        url: u,
-        data:{etc:etc, csc:csc, csb:csb, sid:sid, mrk:mrk,  _token:t},
-        success: function(msg){
-          console.log("Successful: sid="+msg['sid']+", etc="+msg['etc']+", cl-sc="+msg['csc']+", cl-sb="+msg['csb']+", mrk="+msg['mrk']);
-          $.bootstrapGrowl(msg['sid']+"'s Record Updated Successfully!",{
-            type: 'info', // success, error, info, warning
-            delay: 1000,
-          });
-        },
-        error: function(data){
-          console.log(data);
-        }
-    });   
+        var u = '{{url("/updateMarks")}}';//'{{url("/updateRoll")}}';
+        var t = '{{ csrf_token() }}';
+        $.ajax({
+            method: 'post',
+            url: u,
+            data:{etc:etc, csc:csc, csb:csb, sid:sid, mrk:mrk,  _token:t},
+            success: function(msg){
+            console.log("Successful: sid="+msg['sid']+", etc="+msg['etc']+", cl-sc="+msg['csc']+", cl-sb="+msg['csb']+", mrk="+msg['mrk']);
+            $.bootstrapGrowl(msg['sid']+"'s Record Updated Successfully!",{
+                type: 'info', // success, error, info, warning
+                delay: 1000,
+            });
+            },
+            error: function(data){
+            console.log(data);
+            }
+        });   
 
-    });
+        });
 
 
 
@@ -131,6 +133,15 @@
         }
          
     });
+
+    $('.btnSave').click(function(){
+        var ss = $(this).data('sid');        
+        //var xx = $('#dataTable #dataRow #'+ss).text();
+        
+        $('#dataTable #dataRow #'+ss).text("Updated!!");
+    });
+
+
   });  
 </script>
 
