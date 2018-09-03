@@ -23,6 +23,7 @@ use App\Grade;
 use App\Exmtypclssub;
 use App\Marksentry;
 use App\Extclssubfmpm;
+use App\Exmtypmodcls;
 use App\Exmtypmodclssub;
 use App\Answerscriptdistribution;
 
@@ -35,9 +36,8 @@ class MarksEntryController extends Controller
         $extpcls = Exmtypmodclssub::whereSession_id($ses->id)
                    ->whereClss_id($clssec->clss_id)->get();
 
-                // Exmtypclssub::whereSession_id($ses->id)
-                // ->whereClss_id($clssec->clss_id)->get();
-
+        $extpmdcls = Exmtypmodcls::whereSession_id($ses->id)
+                   ->whereClss_id($clssec->clss_id)->get();
         
         $exm = Exam::all();
         $modes = Mode::all();
@@ -46,7 +46,8 @@ class MarksEntryController extends Controller
         $stdmrk = Marksentry::whereSession_id($ses->id)->get();
         
         return view('clssecMrkenPage')
-        ->withExtpcls($extpcls)
+        ->withExtpcls($extpcls) 
+        ->withExtpmdcls($extpmdcls)
         ->withClsb($clsb)
         ->withClsc($clssec)        
         ->withExm($exm) 
@@ -91,7 +92,6 @@ class MarksEntryController extends Controller
         ->withStdmrks($stdmrks)
         ->withTeacher($teacher)
         ;
-
     }
 
     //Ajax Function
@@ -181,6 +181,51 @@ class MarksEntryController extends Controller
         ;
     }
 
+
+
+    public function clssecstdMarksEntryForAllSubj($extpmdcl_id, $clsc_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $extpmdcl = Exmtypmodcls::find($extpmdcl_id);
+        $clsc = Clssec::find($clsc_id);
+        
+        $subj = Subject::where('extype_id', 1)->get();
+        
+        $clsb = Clssub::where('clss_id', $clsc->clss_id)->get();
+        
+        $clsb = $subj->intersect($clsb);
+        
+        $stdcrs = Studentcr::whereSession_id($ses->id)
+        ->whereClss_id(Clssec::find($clsc_id)->clss->id)
+        ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
+        
+        // $stdmrks = Marksentry::whereSession_id($ses->id)
+        //     ->whereExmtypmodclssub_id($extpcl_id)
+        //     ->whereClssec_id($clsc_id)
+        //     ->whereClssub_id($clsb_id)//->whereStudentcr_id($sid)
+        //     ->get();
+        // // echo $extpcls;
+
+        // $teacher = Answerscriptdistribution::where('session_id', $extpcls->session_id)
+        //     ->where('exam_id', $extpcls->exam_id)
+        //     ->where('extype_id', $extpcls->extype_id)
+        //     ->where('clss_id', $extpcls->clss_id)
+        //     ->where('section_id', $clsc->section->id)
+        //     ->where('subject_id', $extpcls->subject_id)
+        //     ->first();
+        // // echo $teacher;
+
+        return view('clssecMarksEntry.clssecMrkentryForAllSubj')
+        ->withExtpmdcl($extpmdcl)
+        ->withClsc($clsc)
+        ->withClsb($clsb)
+        ->withStdcrs($stdcrs)
+        // ->withStdmrks($stdmrks)
+        // ->withTeacher($teacher)
+        ;
+
+        // return $extpmdcl_id ." - ". $clsc_id ;
+        
+    }
 
 
 
