@@ -231,7 +231,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         //for All Formative Subject Simultanious Marks Entry and Ajax Save
         Route::get('/clssecstd-MarksEntryForAllSubj/{extpmdcl_id}/{clsc_id}', 'MarksEntryController@clssecstdMarksEntryForAllSubj');
-
+        //Ajax Update
+        Route::post('/updateForAllSubjMarks', 'MarksEntryController@updateForAllSubjMarks');
 
 
 

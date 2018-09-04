@@ -227,7 +227,16 @@ class MarksEntryController extends Controller
         
     }
 
-
+    //Ajux Formative All Subject Marks Entry
+    public function updateForAllSubjMarks(Request $request){
+        $value = "";
+        foreach($request['mrk'] as $v){
+            // $value += $v;
+            // echo $v;
+        }
+        
+        return response()->json(['data'=>$request['mrk']]);
+    }
 
 
 }

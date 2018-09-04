@@ -47,13 +47,14 @@
                 <div class="input-group-addon">
                     <input type="checkbox" aria-label="Checkbox for following text input" class="chkbox" name="{{$stdcr->id}}-{{$cs->id}}">                
                 </div>    
-                <input  type="text" class="form-control marks{{$stdcr->id}}-{{$cs->id}}"  aria-label="Text input with checkbox"               
-                    value="">        
+                <input  type="text" class="form-control marks{{$stdcr->id}}-{{$cs->id}}"  aria-label="Text input with checkbox" id="{{$cs->id}}" name="m{{$stdcr->id}}[]"
+                    value="" >        
             </div> 
             </td>
         @endforeach
 
         <td><button class="btn btn-primary btnSave"
+                    data-id ="{{$stdcr->id}}"
                     data-sid="{{$stdcr->id}}-{{$cs->id}}">Save</button>
         
         </td>
@@ -89,11 +90,23 @@
         
     $('.btn').click(function(){
         var sid = $(this).data('sid');
-        var a = 'marks'+sid;
+
+        var  id = $(this).data('id');
+
+        var a = 'm'+id+'[]';
+        var info = [];
+        $("input[name='"+a+"'").each(function(index){
+            //console.log($(this).val()+", Id:"+$(this).attr('id'));
+            info.push({subid:$(this).attr('id'),marks:$(this).val()})
+        });
+
+        //for(i=0; i<info.length; i++){
+        //    console.log("Sub Id: "+info[i].subid+", Marks: "+info[i].marks);
+        //}
 
         //var values = $("input[name='marks22[]']")
         //      .map(function(){return $(this).val();}).get();
-        alert(a);
+        //alert(a);
         //$.each(values, function(in, vl){
         //    alert(in+":"+vl);
         //});
@@ -104,23 +117,24 @@
         
         
         //var mrk = $('.marks'+sid).val();
-        //var u = '{{url("/updateMarks")}}';//'{{url("/updateRoll")}}';
-        //var t = '{{ csrf_token() }}';
-        {{--  $.ajax({
+        var u = '{{url("/updateForAllSubjMarks")}}';//'{{url("/updateRoll")}}';
+        var t = '{{ csrf_token() }}';
+        $.ajax({
             method: 'post',
             url: u,
-            data:{etc:etc, csc:csc, csb:csb, sid:sid, mrk:mrk,  _token:t},
+            data:{mrk:info,  _token:t},
             success: function(msg){
-            console.log("Successful: sid="+msg['sid']+", etc="+msg['etc']+", cl-sc="+msg['csc']+", cl-sb="+msg['csb']+", mrk="+msg['mrk']);
-            $.bootstrapGrowl(msg['sid']+"'s Record Updated Successfully!",{
-                type: 'info', // success, error, info, warning
-                delay: 1000,
-            });
+                console.log("Hello: "+msg['data']);
+                //console.log("Successful: sid="+msg['sid']+", etc="+msg['etc']+", cl-sc="+msg['csc']+", cl-sb="+msg['csb']+", mrk="+msg['mrk']);
+                //$.bootstrapGrowl(msg['sid']+"'s Record Updated Successfully!",{
+                //    type: 'info', // success, error, info, warning
+                //    delay: 1000,
+                //});
             },
             error: function(data){
-            console.log(data);
+                console.log(data);
             } 
-        });  --}} 
+        });
 
         });  
 
