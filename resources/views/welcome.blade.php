@@ -50,9 +50,9 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: #6a6b6f;
                 padding: 0 25px;
-                font-size: 12px;
+                font-size: 15px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
@@ -82,12 +82,15 @@
             <div class="content">
                 
                 <div class="title m-b-md">
-                    Welcome, <b><small>Result Automation System.</small></b>
+                    Welcome, <b><small>School Result Automation System.</small></b>
                 </div>
-                <a href="#">Know your Login Credencial</a>
-                
-                
+                {{--  <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Know your Login Credencial</button  --}}
+                {{--  <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+                    Find User Credencial
+                </button>  --}}
             </div>
         </div>
     </body>
 </html>
+
+

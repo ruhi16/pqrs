@@ -49,13 +49,15 @@
                         </div>
 
                         <div class="form-group">
-                            {{--  <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
+                            <div class="col-md-6 col-md-offset-4">
+                                {{--  <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                                     </label>
-                                </div>
-                            </div>  --}}
+                                </div>  --}}                            
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Find Your Credencials !!!
+                                </button>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -67,6 +69,8 @@
                                 {{--  <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>  --}}
+                                
+                                
                             </div>
                             <div class="col-md-6 ">
                                 <button type="reset" class="btn btn-default">
@@ -85,6 +89,39 @@
 
 
 {{--  @endsection  --}}
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Teachers Credencials</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+
+
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
 
 
 
