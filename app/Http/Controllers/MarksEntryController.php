@@ -195,18 +195,6 @@ class MarksEntryController extends Controller
                     ->whereIn('subject_id', $subj->pluck('id'))
                     ->get();
         
-        // $abcd = $subj->intersect($clsb);
-        foreach($subj as $c){
-            echo $c ."<br>";
-        }echo "<br>";
-        foreach($clsb as $c){
-            echo $c."<br>";
-        }
-        echo "<BR><br>";
-        // foreach($abcd as $c){
-        //     echo $c ."<br>";
-        // }
-        // dd($clsb);
         $stdcrs = Studentcr::whereSession_id($ses->id)
             ->whereClss_id(Clssec::find($clsc_id)->clss->id)
             ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
@@ -229,26 +217,7 @@ class MarksEntryController extends Controller
                 ->whereIn('clssub_id', $clsbids->pluck('id'))
                 ->whereIn('exmtypmodclssub_id', $extpmdclsbs->pluck('id'))
                 ->where('clssec_id', $clsc_id)                
-                ->get();
-        
-        // dd($extpmdclsbs);
-        // dd($stdcrs);
-        // dd($clsbids);
-        // dd($stdmrks);
-        // dd($clsb->pluck('id'));
-        // foreach($stdmrks as $ghy){
-        //     echo $ghy;
-        // }
-        
-
-        // $teacher = Answerscriptdistribution::where('session_id', $extpcls->session_id)
-        //     ->where('exam_id', $extpcls->exam_id)
-        //     ->where('extype_id', $extpcls->extype_id)
-        //     ->where('clss_id', $extpcls->clss_id)
-        //     ->where('section_id', $clsc->section->id)
-        //     ->where('subject_id', $extpcls->subject_id)
-        //     ->first();
-        // // echo $teacher;
+                ->get();       
 
         return view('clssecMarksEntry.clssecMrkentryForAllSubj')
         ->withExtpmdcl($extpmdcl)
@@ -256,7 +225,7 @@ class MarksEntryController extends Controller
         ->withClsb($clsb)
         ->withStdcrs($stdcrs)
         ->withStdmrks($stdmrks)
-        // ->withTeacher($teacher)
+        ->withExtpmdclsbs($extpmdclsbs)
         ;
 
     }
@@ -270,24 +239,31 @@ class MarksEntryController extends Controller
             $arr[$abc['subid']] = $abc['marks'];
         }
 
-        $value = "";
-        foreach($arr as  $k => $v){
-            $value .= $k . "=" . $v . "\n";
-        }
         
+        
+        
+
+
         $stdcr_id = $request['id'];
         $etmc_id  = $request['etc'];
         $clsc_id  = $request['csc'];
 
         $extpmdcl = Exmtypmodcls::find($etmc_id);
-        $extpmdclsb = Exmtypmodclssub::where('exam_id',$extpmdcl->exam_id)
-                        ->where('extype_id', $extpmdcl->extype_id)
-                        ->where('mode_id', $extpmdcl->mode_id)
-                        ->where('clss_id', $extpmdcl->clss_id)->get();
+        $extpmdclsb = Exmtypmodclssub::whereSession_id($ses->id)
+                        ->where('exam_id',  $extpmdcl->exam_id)
+                        ->where('extype_id',$extpmdcl->extype_id)
+                        ->where('mode_id',  $extpmdcl->mode_id)
+                        ->where('clss_id',  $extpmdcl->clss_id)
+                        ->get();
+        $value = "";
+        // foreach($arr as  $k => $v){
+        //     $value .= $k . "=" . $v . "\n";
+        // }
+        
 
 
         $test='';
-        foreach($arr as $key => $mrk){
+        foreach($arr as $key => $mrk){      //$key=>clssub_id       &       $mrk=> obtained marks
 
             if(strtoupper($mrk) == 'AB' or $mrk == ''){
                 $mrk = -99;
@@ -295,15 +271,17 @@ class MarksEntryController extends Controller
                 $mrk = $mrk; //Marks
             }
 
-            $etmcs = $extpmdclsb->where('subject_id', $key)->first();
-            $clsb  = Clssub::where('clss_id',  $etmcs->clss_id)
-                            ->where('subject_id', $etmcs->subject_id)->first();
+            // $value .= $key.':' .$mrk .'; ';
+
+            $etmcs = $extpmdclsb->where('subject_id', Clssub::find($key)->subject_id)->first();
+            // $clsb  = Clssub::where('clss_id',  $etmcs->clss_id)
+            //                 ->where('subject_id', $etmcs->subject_id)->first();
 
             $stdmarks = Marksentry::firstOrNew([
                 'session_id' => $ses->id,
                 'exmtypmodclssub_id' =>$etmcs->id,
                 'clssec_id' => $clsc_id,
-                'clssub_id' => $clsb->id,
+                'clssub_id' => $key,
                 'studentcr_id' => $stdcr_id
             ]);
             
@@ -311,7 +289,7 @@ class MarksEntryController extends Controller
 
             $stdmarks->clssec_id = $clsc_id;
             $stdmarks->exmtypmodclssub_id = $etmcs->id;
-            $stdmarks->clssub_id = $clsb->id;
+            $stdmarks->clssub_id = $key;
             $stdmarks->studentcr_id = $stdcr_id;
             $stdmarks->session_id = $ses->id;
             $stdmarks->marks = $mrk;
@@ -320,6 +298,7 @@ class MarksEntryController extends Controller
             $test .= $stdmarks->id.'->'.$mrk.'/';
         }
         // return response()->json(['data'=>'abcd']);
+        // return response()->json(['sid'=>$stdcr_id,'data'=>$test]);
         return response()->json(['sid'=>$stdcr_id, 'data'=> $value.'-'.$stdcr_id.'-'.$etmc_id.'-'.$clsc_id.'-'.$test]);
     }
 

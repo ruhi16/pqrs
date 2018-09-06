@@ -49,24 +49,30 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            {{--  <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                                     </label>
                                 </div>
-                            </div>
+                            </div>  --}}
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
+                            <div class="col-md-2 col-md-offset-4">
+                                <button type="submit" class="btn btn-success">
+                                    Login !!!
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                {{--  <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
-                                </a>
+                                </a>  --}}
+                            </div>
+                            <div class="col-md-6 ">
+                                <button type="reset" class="btn btn-default">
+                                    Reset
+                                </button>
+
                             </div>
                         </div>
                     </form>
