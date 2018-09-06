@@ -188,22 +188,58 @@ class MarksEntryController extends Controller
         $extpmdcl = Exmtypmodcls::find($extpmdcl_id);
         $clsc = Clssec::find($clsc_id);
         
-        $subj = Subject::where('extype_id', 1)->get();
+        $subj = Subject::where('extype_id', 1)->get();//Formative Only
+
         
-        $clsb = Clssub::where('clss_id', $clsc->clss_id)->get();
+        $clsb = Clssub::where('clss_id', $clsc->clss_id)
+                    ->whereIn('subject_id', $subj->pluck('id'))
+                    ->get();
         
-        $clsb = $subj->intersect($clsb);
-        
+        // $abcd = $subj->intersect($clsb);
+        foreach($subj as $c){
+            echo $c ."<br>";
+        }echo "<br>";
+        foreach($clsb as $c){
+            echo $c."<br>";
+        }
+        echo "<BR><br>";
+        // foreach($abcd as $c){
+        //     echo $c ."<br>";
+        // }
+        // dd($clsb);
         $stdcrs = Studentcr::whereSession_id($ses->id)
-        ->whereClss_id(Clssec::find($clsc_id)->clss->id)
-        ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
+            ->whereClss_id(Clssec::find($clsc_id)->clss->id)
+            ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
         
-        // $stdmrks = Marksentry::whereSession_id($ses->id)
-        //     ->whereExmtypmodclssub_id($extpcl_id)
-        //     ->whereClssec_id($clsc_id)
-        //     ->whereClssub_id($clsb_id)//->whereStudentcr_id($sid)
-        //     ->get();
-        // // echo $extpcls;
+        $extpmdclsbs = Exmtypmodclssub::whereSession_id($ses->id)
+                        ->where('exam_id', $extpmdcl->exam_id)
+                        ->where('extype_id', $extpmdcl->extype_id)
+                        ->where('mode_id', $extpmdcl->mode_id)
+                        ->where('clss_id', $extpmdcl->clss_id)
+                        ->whereIn('subject_id', $clsb->pluck('subject_id'))
+                        ->get();       
+
+
+        $clsbids = Clssub::where('clss_id', $clsc->clss->id)
+                    ->whereIn('subject_id', $clsb->pluck('subject_id'))->get();
+        
+
+        $stdmrks = Marksentry::whereSession_id($ses->id)
+                ->whereIn('studentcr_id', $stdcrs->pluck('id'))
+                ->whereIn('clssub_id', $clsbids->pluck('id'))
+                ->whereIn('exmtypmodclssub_id', $extpmdclsbs->pluck('id'))
+                ->where('clssec_id', $clsc_id)                
+                ->get();
+        
+        // dd($extpmdclsbs);
+        // dd($stdcrs);
+        // dd($clsbids);
+        // dd($stdmrks);
+        // dd($clsb->pluck('id'));
+        // foreach($stdmrks as $ghy){
+        //     echo $ghy;
+        // }
+        
 
         // $teacher = Answerscriptdistribution::where('session_id', $extpcls->session_id)
         //     ->where('exam_id', $extpcls->exam_id)
@@ -219,23 +255,72 @@ class MarksEntryController extends Controller
         ->withClsc($clsc)
         ->withClsb($clsb)
         ->withStdcrs($stdcrs)
-        // ->withStdmrks($stdmrks)
+        ->withStdmrks($stdmrks)
         // ->withTeacher($teacher)
         ;
 
-        // return $extpmdcl_id ." - ". $clsc_id ;
-        
     }
 
     //Ajux Formative All Subject Marks Entry
     public function updateForAllSubjMarks(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+
+        $arr = [];
+        foreach($request['mrk'] as $abc){
+            $arr[$abc['subid']] = $abc['marks'];
+        }
+
         $value = "";
-        foreach($request['mrk'] as $v){
-            // $value += $v;
-            // echo $v;
+        foreach($arr as  $k => $v){
+            $value .= $k . "=" . $v . "\n";
         }
         
-        return response()->json(['data'=>$request['mrk']]);
+        $stdcr_id = $request['id'];
+        $etmc_id  = $request['etc'];
+        $clsc_id  = $request['csc'];
+
+        $extpmdcl = Exmtypmodcls::find($etmc_id);
+        $extpmdclsb = Exmtypmodclssub::where('exam_id',$extpmdcl->exam_id)
+                        ->where('extype_id', $extpmdcl->extype_id)
+                        ->where('mode_id', $extpmdcl->mode_id)
+                        ->where('clss_id', $extpmdcl->clss_id)->get();
+
+
+        $test='';
+        foreach($arr as $key => $mrk){
+
+            if(strtoupper($mrk) == 'AB' or $mrk == ''){
+                $mrk = -99;
+            }else{
+                $mrk = $mrk; //Marks
+            }
+
+            $etmcs = $extpmdclsb->where('subject_id', $key)->first();
+            $clsb  = Clssub::where('clss_id',  $etmcs->clss_id)
+                            ->where('subject_id', $etmcs->subject_id)->first();
+
+            $stdmarks = Marksentry::firstOrNew([
+                'session_id' => $ses->id,
+                'exmtypmodclssub_id' =>$etmcs->id,
+                'clssec_id' => $clsc_id,
+                'clssub_id' => $clsb->id,
+                'studentcr_id' => $stdcr_id
+            ]);
+            
+            
+
+            $stdmarks->clssec_id = $clsc_id;
+            $stdmarks->exmtypmodclssub_id = $etmcs->id;
+            $stdmarks->clssub_id = $clsb->id;
+            $stdmarks->studentcr_id = $stdcr_id;
+            $stdmarks->session_id = $ses->id;
+            $stdmarks->marks = $mrk;
+            $stdmarks->status = "Correct";
+            $stdmarks->save();
+            $test .= $stdmarks->id.'->'.$mrk.'/';
+        }
+        // return response()->json(['data'=>'abcd']);
+        return response()->json(['sid'=>$stdcr_id, 'data'=> $value.'-'.$stdcr_id.'-'.$etmc_id.'-'.$clsc_id.'-'.$test]);
     }
 
 
