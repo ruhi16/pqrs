@@ -1,6 +1,6 @@
 {{--  @extends('layouts.app')  --}}
 {{--  @section('content')  --}}
-@extends('layouts.baselayout')  --}}
+@extends('layouts.baselayout')
 @section('title','Home')
 
 @section('header')

@@ -1,5 +1,6 @@
     <nav class="navbar navbar-default">
       <div class="container">
+        @if (Auth::check()) 
         <div class="navbar-header">
           <a class="navbar-brand" href="{!! url('/start') !!}">Dashboard</a>
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -10,7 +11,7 @@
         </div>
 
         <div class="collapse navbar-collapse" id="myNavbar">          
-          @if (Auth::check()) 
+          
               <ul class="nav navbar-nav">
                 <li><a href="{{url('/studentdbmultipage-search')}}">Home Page</a></li>
 

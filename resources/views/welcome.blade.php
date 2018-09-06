@@ -84,10 +84,7 @@
                 <div class="title m-b-md">
                     Welcome, <b><small>School Result Automation System.</small></b>
                 </div>
-                {{--  <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Know your Login Credencial</button  --}}
-                {{--  <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
-                    Find User Credencial
-                </button>  --}}
+                
             </div>
         </div>
     </body>
