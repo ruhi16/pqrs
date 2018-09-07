@@ -161,7 +161,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/teachers-editsubmit', 'TeacherController@teachersEditSubmit');
         // Route::post('/teachers-deltsubmit', 'TeacherController@teachersDeltSubmit');
         Route::get('/teachers-takspan/{teacher_id}', 'TeacherController@teachersTakspan')->middleware('matchUser');
-
+        Route::get('/teachers-CStakspan/{teacher_id}', 'TeacherController@teachersCSTakspan')->middleware('matchUser');
         //for Teacher's Image Upload
         Route::post('/teachers-image/{teacher_id}', 'TeacherController@teachersImage')->name('teachers.image');
 

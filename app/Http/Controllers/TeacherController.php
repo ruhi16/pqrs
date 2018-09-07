@@ -10,11 +10,13 @@ use App\Extype;
 use App\Clss; 
 use App\Subject;
 use App\Section;
+use App\Mode;
 
 use App\Studentdb;
 use App\Studentcr;
 
 use App\Teacher;
+use App\Clssteacher;
 
 use App\Clssub;
 use App\Clssec;
@@ -22,6 +24,7 @@ use App\Clssec;
 use App\Exmtypclssub;
 use App\Marksentry;
 use App\Miscoption;
+use App\Exmtypmodcls;
 use App\Exmtypmodclssub;
 
 use App\Answerscriptdistribution;
@@ -31,6 +34,9 @@ class TeacherController extends Controller
     public function teachersTakspan($teacher_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $teacher = Teacher::find($teacher_id);
+        $clteacher = Clssteacher::where('session_id', $ses->id)
+            ->where('teacher_id', $teacher->id)->first();
+
         $anscrdists = Answerscriptdistribution::where('teacher_id',$teacher_id)
                         ->where('session_id', $ses->id)->get();
 
@@ -41,12 +47,57 @@ class TeacherController extends Controller
         
         return view('teachers.teacherTaskpane')
             ->withTeacher($teacher)
+            ->withClteacher($clteacher)
             ->withAnscrdists($anscrdists)            
             ->withExtpclsbs($extpclsbs)
             ->withClscs($clscs)
             ->withClsbs($clsbs)
         ;
     }
+
+    public function teachersCSTakspan($teacher_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $teacher = Teacher::find($teacher_id);
+        $clteacher = Clssteacher::where('session_id', $ses->id)
+            ->where('teacher_id', $teacher->id)->first();
+
+        $clssec = Clssec::where('session_id', $ses->id)
+            ->where('clss_id', $clteacher->clss_id)
+            ->where('section_id', $clteacher->section_id)
+            ->first();
+
+        //==========================================================
+        $extpcls = Exmtypmodclssub::whereSession_id($ses->id)
+                   ->whereClss_id($clssec->clss_id)->get();
+
+        $extpmdcls = Exmtypmodcls::whereSession_id($ses->id)
+                   ->whereClss_id($clssec->clss_id)->get();
+        
+        $exm = Exam::all();
+        $modes = Mode::all();
+        $clsb = Clssub::whereClss_id($clssec->clss_id)->get();
+
+        $stdmrk = Marksentry::whereSession_id($ses->id)->get();
+        //==========================================================
+        // dd($clssec);
+        // dd($clteacher);
+
+        return view('teachers.teacherCSTaskpane')
+            ->withTeacher($teacher)
+            ->withClteacher($clteacher)
+            ->withExtpcls($extpcls) 
+            ->withExtpmdcls($extpmdcls)
+            ->withClsb($clsb)
+            ->withClsc($clssec)        
+            ->withExm($exm) 
+            ->withModes($modes) 
+            ->withStdmrk($stdmrk) 
+            ->withCls($clssec->clss->name)
+            ->withSec($clssec->section->name)
+            ;
+    }
+
+
     public function teachersImage(Request $request, $teacher_id){
         echo 'welcome:'. $teacher_id;
         $photo = '';

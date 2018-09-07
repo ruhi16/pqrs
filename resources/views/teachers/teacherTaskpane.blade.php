@@ -21,12 +21,15 @@
 </div>  --}}
 <ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
   <li role="presentation" class="active"><a href="#">Home</a></li>
+  @if($clteacher != NULL)
+    <li role="presentation"><a href="{{ url('/teachers-CStakspan', [$teacher->id])}}">T-CS Task Pane</a></li>
+  @endif
   <li role="presentation"><a href="#">Profile</a></li>
   <li role="presentation"><a href="#">Messages</a></li>  
 
 </ul> 
 <div class="clearfix"></div>
-
+<hr>
 <table class="table">
   <tbody>
     <tr>
