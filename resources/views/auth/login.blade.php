@@ -55,8 +55,7 @@
                                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                                     </label>
                                 </div>                              --}}
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Find Your Credencials !!!
-                                </button>
+                                {{--  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Find Your Credencials !!!</button>  --}}
                             </div>
                         </div>
 

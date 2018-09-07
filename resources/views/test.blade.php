@@ -27,7 +27,7 @@
 <table class="table table-bordered">
 <thead>
 <tr>
-<th>Sl</th>
+<th>Roll</th>
 <th>Student Name</th>
 @foreach($subjs as $subj)	
 	@if( $subj->subject->extype_id == 2)		
@@ -43,7 +43,7 @@
 @foreach($stdcrs as $stdcr)
 	<tr>
 		@php $totalNoDs = 0; @endphp
-		<td>{{ $stdcr->id }}</td>
+		<td>{{ $stdcr->roll_no }}</td>
 		<td>{{ $stdcr->studentdb->name }}</td>
 
 		@php $grandTotal = 0; @endphp

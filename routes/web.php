@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 
-
+Route::get('/loginCredencial', 'Auth\LoginController@loginCredencial');
 
             
         Route::get('/start', function () {

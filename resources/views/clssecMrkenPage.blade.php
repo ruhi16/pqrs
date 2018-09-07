@@ -33,7 +33,7 @@
                   $extpcl->extype_id == 1 &&                  
                   $extpcl->mode_id == $mode->id )
                   {{--  {{ $extpcl->id }}  --}}
-                  <a href="{{ url('/clssecstd-MarksEntryForAllSubj', [$extpcl->id, $clsc->id]) }}">adssf</a> Enter Marks
+                  <a href="{{ url('/clssecstd-MarksEntryForAllSubj', [$extpcl->id, $clsc->id]) }}"><span class="glyphicon glyphicon-floppy-saved"></span></a> Enter Marks
             @endif
           @endforeach
           </td>
@@ -71,7 +71,7 @@
                   $extpcl->subject_id == $cl->subject_id  &&
                   $extpcl->mode_id == $mode->id )
 
-               <a href="{{url('/clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}"><span class="glyphicon glyphicon-floppy-saved"></span></span></a>
+               <a href="{{url('/clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}"><span class="glyphicon glyphicon-floppy-saved"></span></a>
                 @if($stdmrk
                     ->where('exmtypmodclssub_id', $extpcl->id)
                     ->where('clssec_id', $clsc->id)

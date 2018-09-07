@@ -7,6 +7,32 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Http\Request;
+use DB;
+use App\Session;
+use App\Exam;
+use App\Extype;
+use App\Clss;
+use App\Subject;
+use App\Section;
+use App\Mode;
+
+use App\Studentdb;
+use App\Studentcr;
+
+use App\Clssub;
+use App\Clssec;
+use App\Grade;
+
+use App\User;
+use App\Teacher;
+use App\Exmtypclssub;
+use App\Marksentry;
+use App\Extclssubfmpm;
+use App\Exmtypmodcls;
+use App\Exmtypmodclssub;
+use App\Answerscriptdistribution;
+
 class LoginController extends Controller
 {
     /*
@@ -55,6 +81,16 @@ class LoginController extends Controller
     //         session(['key'=> auth()->user()->name]);
     //     }
     // }
+    public function loginCredencial(){
 
+        $teachers = Teacher::all();
+        $users = User::all();
+
+
+        return view('login.loginCredencial')
+            ->with('teachers', $teachers)
+            ->with('users', $users)
+            ;
+    }
 
 }
