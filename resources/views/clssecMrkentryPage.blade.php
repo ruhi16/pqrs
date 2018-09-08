@@ -6,6 +6,19 @@
 @endsection
 
 @section('content')
+<ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
+  <li role="presentation"><a href="{{ url('/teachers-takspan', [$teacher->id])}}">Home</a></li>
+  @if($clteacher != NULL)
+    <li role="presentation" class="active"><a href="{{ url('/teachers-CStakspan', [$teacher->id])}}">T-CS Task Pane</a></li>
+  @endif
+  <li role="presentation"><a href="#">Profile</a></li>
+  <li role="presentation"><a href="#">Messages</a></li>  
+
+</ul> 
+<div class="clearfix"></div>
+<hr>
+
+
 <h1>Marks Entry Page...</h1>
 
 <table class = "table table-bordered">
@@ -42,12 +55,12 @@
 <table class="table table-bordered" id="dataTable"> 
 <thead>
     <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Roll No</th>
-        <th>Marks Details</th>
-        <th>Action</th>
-        <th>Remarks</th>
+        <th class="text-center">#</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Roll No</th>
+        <th class="text-center">Marks Details</th>
+        <th class="text-center">Action</th>
+        <th class="text-center">Remarks</th>
     </tr>
 </thead>
 <tbody>
@@ -55,26 +68,37 @@
     <tr id="dataRow">
         <td>{{ $stdcr->id }}</td>
         <td>{{ $stdcr->studentdb->name }}</td>
-        <td>{{ $stdcr->roll_no }}</td>
+        <td class="text-center">{{ $stdcr->roll_no }}</td>
+        
+        @php 
+            $marks = ($stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first());
 
-        <td>         
-        <div class="input-group">
-            <div class="input-group-addon">
-                <input type="checkbox" aria-label="Checkbox for following text input" class="chkbox" name="{{$stdcr->id}}">                
-            </div>
-            <input  type="text" class="form-control marks{{$stdcr->id}}"  aria-label="Text input with checkbox"               
-                value="{{ ($stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() < 0 ? 'AB' : 
-                                            $stdmrks->where('studentcr_id', $stdcr->id)->pluck('marks')->first() ) }}">        
-        </div>
-        </td>
+        @endphp
 
-        <td><button class="btn btn-primary btnSave" 
-                data-sid="{{$stdcr->id}}"
-                data-etc="{{$extpcls->id}}"
-                data-csc="{{$clsc->id}}"
-                data-csb="{{$clsb->id}}" >Save</button>
+        @if( $teacher->teacher->id == Auth::user()->id || Auth::user()->role->name == "Admin")
+            <td>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <input type="checkbox" aria-label="Checkbox for following text input" class="chkbox" name="{{$stdcr->id}}">                
+                </div>
+                <input  type="text" class="form-control marks{{$stdcr->id}}"  aria-label="Text input with checkbox"               
+                    value="{{ $marks < 0 ? 'AB' : $marks  }}">        
+            </div>  
 
-        </td>
+
+            
+            </td>
+            <td><button class="btn btn-primary btnSave" 
+                    data-sid="{{$stdcr->id}}"
+                    data-etc="{{$extpcls->id}}"
+                    data-csc="{{$clsc->id}}"
+                    data-csb="{{$clsb->id}}" >Save</button>
+
+            </td>
+        @else
+            <td class="text-center">{{ $marks < 0 ? 'AB' : $marks }} </td>
+            <td class="text-center"></td>
+        @endif
         <td id="{{$stdcr->id}}"></td>
     </tr>
     @endforeach

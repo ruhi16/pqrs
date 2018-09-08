@@ -18,6 +18,8 @@ use App\Studentcr;
 use App\Clssub;
 use App\Clssec;
 use App\Grade;
+use App\Teacher;
+use App\Clssteacher;
 
 
 use App\Exmtypclssub;
@@ -83,6 +85,14 @@ class MarksEntryController extends Controller
             ->where('section_id', $clsc->section->id)
             ->where('subject_id', $extpcls->subject_id)
             ->first();
+// dd($teacher);
+            if($teacher == null){
+                $clteacher = Null;
+            }else{
+                $clteacher = Clssteacher::where('session_id', $ses->id)
+                    ->where('teacher_id', $teacher->id)
+                    ->first();
+            }
         // echo $teacher;
         return view ('clssecMrkentryPage')
         ->withExtpcls($extpcls)
@@ -91,6 +101,7 @@ class MarksEntryController extends Controller
         ->withStdcrs($stdcrs)
         ->withStdmrks($stdmrks)
         ->withTeacher($teacher)
+        ->withClteacher($clteacher)
         ;
     }
 
