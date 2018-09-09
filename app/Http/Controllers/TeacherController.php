@@ -79,7 +79,8 @@ class TeacherController extends Controller
 
         $stdmrk = Marksentry::whereSession_id($ses->id)->get();
         //==========================================================
-        // dd($clssec);
+        // dd($teacher);
+        // echo $teacher;
         // dd($clteacher);
 
         return view('teachers.teacherCSTaskpane')

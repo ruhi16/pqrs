@@ -7,9 +7,9 @@
 
 @section('content')
 <ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
-  <li role="presentation"><a href="{{ url('/teachers-takspan', [$teacher->id])}}">Home</a></li>
+  <li role="presentation"><a href="{{ url('/teachers-takspan', [$loginteacher->id])}}">Home</a></li>
   @if($clteacher != NULL)
-    <li role="presentation" class="active"><a href="{{ url('/teachers-CStakspan', [$teacher->id])}}">T-CS Task Pane</a></li>
+    <li role="presentation" class="active"><a href="{{ url('/teachers-CStakspan', [$loginteacher->id])}}">T-CS Task Pane</a></li>
   @endif
   <li role="presentation"><a href="#">Profile</a></li>
   <li role="presentation"><a href="#">Messages</a></li>  
@@ -41,7 +41,7 @@
         <td>{{ $clsc->section->name }}</td>
         <td></td>
         <th>Teacher</th>
-        <th>{{ $teacher->teacher->name or 'N/A' }}</th>
+        <th>{{ $ansdistteacher->teacher->name or 'N/A' }}</th>
         <td></td>
     </tr>
 </table>
@@ -66,7 +66,7 @@
 <tbody>
     @foreach($stdcrs as $stdcr)
     <tr id="dataRow">
-        <td>{{ $stdcr->id }}</td>
+        <td>{{ $stdcr->id }}={{$loginteacher->id}}</td>
         <td>{{ $stdcr->studentdb->name }}</td>
         <td class="text-center">{{ $stdcr->roll_no }}</td>
         
@@ -75,8 +75,9 @@
 
         @endphp
 
-        @if( $teacher->teacher->id == Auth::user()->id || Auth::user()->role->name == "Admin")
+        @if( Auth::user()->role->name == "Admin"  || ($ansdistteacher != Null && $loginteacher->id == $ansdistteacher->teacher_id ) )
             <td>
+            
             <div class="input-group">
                 <div class="input-group-addon">
                     <input type="checkbox" aria-label="Checkbox for following text input" class="chkbox" name="{{$stdcr->id}}">                

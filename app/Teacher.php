@@ -20,4 +20,8 @@ class Teacher extends Model
     public function clssteacher(){
         return $this->hasOne('App\Clssteacher');
     }
+
+    public function users(){
+        return $this->hasOne('App\User');
+    }
 }

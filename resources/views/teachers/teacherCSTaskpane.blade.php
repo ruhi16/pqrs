@@ -6,10 +6,10 @@
 @endsection
 
 @section('content')
-
+{{--  {{ dd($teacher) }}  --}}
 
 <ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
-  <li role="presentation"><a href="{{ url('/teachers-takspan', [$teacher->id])}}">Home</a></li>
+  <li role="presentation"><a href="{{ url('/teachers-takspan', [$teacher->id]) }}">Home</a></li>
   @if($clteacher != NULL)
     <li role="presentation" class="active"><a href="{{ url('/teachers-CStakspan', [$teacher->id])}}">T-CS Task Pane</a></li>
   @endif
@@ -91,7 +91,7 @@
   </thead>
   <tbody>
     @foreach($clsb as $cl)
-      @if($cl->subject->extype_id == 2)
+      @if($cl->subject->extype_id == 2) {{-- for formative subject only --}}
         <td>{{ $cl->subject->extype->name }}</td> 
         <td>{{ $cl->subject->name }}</td>
         @foreach($exm as $ex)
@@ -102,8 +102,9 @@
                     $extpcl->extype_id == $cl->subject->extype->id && 
                     $extpcl->subject_id == $cl->subject_id  &&
                     $extpcl->mode_id == $mode->id )
-
-                <a href="{{url('/clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}"><span class="glyphicon glyphicon-floppy-saved"></span></a>
+                  
+                  <a href="{{url('/clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}"><span class="glyphicon glyphicon-floppy-saved"></span></a>
+                  
                   @if($stdmrk
                       ->where('exmtypmodclssub_id', $extpcl->id)
                       ->where('clssec_id', $clsc->id)

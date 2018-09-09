@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use DB;
 use App\Session;
 use App\Exam;
@@ -78,29 +80,29 @@ class MarksEntryController extends Controller
             ->get();
         // echo $extpcls;
 
-        $teacher = Answerscriptdistribution::where('session_id', $extpcls->session_id)
-            ->where('exam_id', $extpcls->exam_id)
+        $ansdistteacher = Answerscriptdistribution::where('session_id', $extpcls->session_id)
+            ->where('exam_id',   $extpcls->exam_id)
             ->where('extype_id', $extpcls->extype_id)
-            ->where('clss_id', $extpcls->clss_id)
-            ->where('section_id', $clsc->section->id)
-            ->where('subject_id', $extpcls->subject_id)
+            ->where('clss_id',   $extpcls->clss_id)
+            ->where('section_id',$clsc->section->id)
+            ->where('subject_id',$extpcls->subject_id)
             ->first();
-// dd($teacher);
-            if($teacher == null){
-                $clteacher = Null;
-            }else{
-                $clteacher = Clssteacher::where('session_id', $ses->id)
-                    ->where('teacher_id', $teacher->id)
-                    ->first();
-            }
-        // echo $teacher;
+        
+        $loginteacher = Teacher::find(Auth::user()->teacher_id);
+        
+        $clteacher = Clssteacher::where('session_id', $ses->id)
+            ->where('teacher_id', $loginteacher->id)
+            ->first();
+        // dd($ansdistteacher);
+
         return view ('clssecMrkentryPage')
         ->withExtpcls($extpcls)
         ->withClsc($clsc)
         ->withClsb($clsb)
         ->withStdcrs($stdcrs)
         ->withStdmrks($stdmrks)
-        ->withTeacher($teacher)
+        ->withAnsdistteacher($ansdistteacher)
+        ->withLoginteacher($loginteacher)
         ->withClteacher($clteacher)
         ;
     }
