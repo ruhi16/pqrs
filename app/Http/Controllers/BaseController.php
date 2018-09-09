@@ -8,19 +8,27 @@ use DB;
 use App\Session;
 use App\Exam;
 use App\Extype;
-use App\Clss;
+use App\Clss; 
 use App\Subject;
 use App\Section;
+use App\Mode;
 
 use App\Studentdb;
 use App\Studentcr;
 
+use App\Teacher;
+use App\Clssteacher;
+
 use App\Clssub;
 use App\Clssec;
 
-use App\Subjfullmark;
-use App\Exmtypmodclssub;
+use App\Exmtypclssub;
 use App\Marksentry;
+use App\Miscoption;
+use App\Exmtypmodcls;
+use App\Exmtypmodclssub;
+
+use App\Answerscriptdistribution;
 
 class BaseController extends Controller
 {
@@ -131,7 +139,38 @@ class BaseController extends Controller
         ;
     }    
 
+    public function testRoute($etmcs_id, $csec_id, $teacher_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        
+        $etmcs = Exmtypmodclssub::find($etmcs_id);
+        $clsc  = Clssec::find($csec_id);
+        $teacher = Teacher::find($teacher_id);
+        
+        $anscdistTeacher = Answerscriptdistribution::where('session_id', $ses->id)
+            ->where('clss_id',    $clsc->clss_id)
+            ->where('section_id', $clsc->section_id)
+            ->where('exam_id',    $etmcs->exam_id)
+            ->where('extype_id',  $etmcs->extype_id)
+            ->where('subject_id', $etmcs->subject_id)
+            ->where('teacher_id', $teacher_id)
+            ->first()
+            ;
 
+
+            $anscdistTeacher->finlz_dt = date('Y-m-d');
+            $anscdistTeacher->save();
+        // dd($anscdistTeacher);
+        // return back();
+        // echo "session_id:".  $anscdistTeacher ->session_id   ."<br>";
+        // echo "clss_id   :".     $anscdistTeacher ->clss_id  ."<br>";
+        // echo "section_id:".  $anscdistTeacher ->section_id."<br>";
+        // echo "exam_id   :".     $anscdistTeacher ->exam_id."<br>";
+        // echo "extype_id :".   $anscdistTeacher ->extype_id."<br>";
+        // echo "teacher_id:".  $anscdistTeacher ->teacher_id."<br>";
+        // echo "fnlz_dt:".  $anscdistTeacher ->finlz_dt."<br>";
+        return back();
+        // return $teacher_id."=".$etmcs."<br>".$clsc->clss->id."<br>".$teacher."<br>".$anscdistTeacher;
+    }
 // old methods
     // public function exmtypclssub(){
     //     $exams = Exam::all();

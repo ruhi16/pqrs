@@ -45,12 +45,6 @@
         <td></td>
     </tr>
 </table>
-{{--  <br>For the Exam: {{ $extpcls->exam->name }}
-<br>For the Exam Type: {{ $extpcls->extype->name }}
-<br>For the Class: {{ $extpcls->clss->name }}
-<br>For the Section: {{ $clsc->section->name }}
-<br>For the Section: {{ $clsb->subject->name }}  --}}
-
 
 <table class="table table-bordered" id="dataTable"> 
 <thead>
@@ -66,7 +60,7 @@
 <tbody>
     @foreach($stdcrs as $stdcr)
     <tr id="dataRow">
-        <td>{{ $stdcr->id }}={{$loginteacher->id}}</td>
+        <td>{{ $stdcr->id }}=LT:{{$loginteacher->id}}=AnT{{$ansdistteacher->teacher_id}}</td>
         <td>{{ $stdcr->studentdb->name }}</td>
         <td class="text-center">{{ $stdcr->roll_no }}</td>
         
@@ -75,7 +69,8 @@
 
         @endphp
 
-        @if( Auth::user()->role->name == "Admin"  || ($ansdistteacher != Null && $loginteacher->id == $ansdistteacher->teacher_id ) )
+        @if( Auth::user()->role->name == "Admin"  || 
+             ($ansdistteacher != Null && $loginteacher->id == $ansdistteacher->teacher_id  && $ansdistteacher->finlz_dt == '') )
             <td>
             
             <div class="input-group">
@@ -106,6 +101,28 @@
 
 </tbody>
 </table>
+@if( Auth::user()->role->name == "Admin"  || 
+            ($ansdistteacher != Null && $loginteacher->id == $ansdistteacher->teacher_id))
+    @if($ansdistteacher->finlz_dt != '')
+        <a class="btn btn-danger btn-lg" href="{{ route('testRoute',[$extpcls->id, $clsc->id, $ansdistteacher->teacher_id]) }}">
+            Already Marks Entry Finalized !!!{{ $ansdistteacher->fnlz_dt }}
+        </a>
+        <hr>
+    @else
+        <a class="btn btn-success btn-lg" href="{{ route('testRoute',[$extpcls->id, $clsc->id, $ansdistteacher->teacher_id]) }}">
+            Finalize Marks Entry !!! {{ $ansdistteacher->fnlz_dt or 'NA'}}
+        </a>
+    @endif
+@endif
+{{--  <br>session {{ $ansdistteacher->session_id }}
+<br>clss    {{ $ansdistteacher->clss_id }}
+<br>section {{ $ansdistteacher->section_id }}
+<br>exam    {{ $ansdistteacher->exam_id }}
+<br>extype  {{ $ansdistteacher->extype_id }}
+<br>teacher {{ $ansdistteacher->teacher_id }}
+<br>fnlz_dt {{ $ansdistteacher->finlz_dt }}  --}}
+
+
 <script type="text/javascript" src="{{url('bs337/js/jquery.bootstrap-grow.min.js')}}" integrity=""></script>
 <script type="text/javascript">
   $(document).ready(function(e){
@@ -124,14 +141,16 @@
             url: u,
             data:{etc:etc, csc:csc, csb:csb, sid:sid, mrk:mrk,  _token:t},
             success: function(msg){
-            console.log("Successful: sid="+msg['sid']+", etc="+msg['etc']+", cl-sc="+msg['csc']+", cl-sb="+msg['csb']+", mrk="+msg['mrk']);
-            $.bootstrapGrowl(msg['sid']+"'s Record Updated Successfully!",{
-                type: 'info', // success, error, info, warning
-                delay: 1000,
-            });
+                console.log("Successful: sid="+msg['sid']+", etc="+msg['etc']+", cl-sc="+msg['csc']+", cl-sb="+msg['csb']+", mrk="+msg['mrk']);
+                $.bootstrapGrowl(msg['sid']+"'s Record Updated Successfully!",{
+                    type: 'info', // success, error, info, warning
+                    delay: 1000,
+                });                
+                $('#dataTable #dataRow #'+sid).text("Updated!!");
             },
             error: function(data){
-            console.log(data);
+                $('#dataTable #dataRow #'+sid).text("Not Updated!!");
+                console.log(data);
             }
         });   
 
@@ -160,10 +179,11 @@
     });
 
     $('.btnSave').click(function(){
-        var ss = $(this).data('sid');        
+        //var ss = $(this).data('sid');   
+        //$('#dataTable #dataRow #'+ss).text("Updated!!");     
         //var xx = $('#dataTable #dataRow #'+ss).text();
         
-        $('#dataTable #dataRow #'+ss).text("Updated!!");
+        //$('#dataTable #dataRow #'+ss).text("Updated!!");
     });
 
 

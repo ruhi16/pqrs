@@ -27,25 +27,44 @@ Route::get('/loginCredencial', 'Auth\LoginController@loginCredencial');
             
         Route::get('/start', function () {
             $ses = App\Session::whereStatus('CURRENT')->first();
-            $clssecs = App\Clssec::whereSession_id($ses->id)->get();
-            $stdcrs = App\Studentcr::where('session_id', $ses->id)->get();
+            $clssecs = App\Clssec::whereSession_id($ses->id)->get();            
             $clss = App\Clss::where('session_id', $ses->id)->get();
 
+            $stdcrs = App\Studentcr::where('session_id', $ses->id)
+                        //->where('clss_id',1)
+                        //->where('section_id', 1)
+                        ->get();
+            $stddbs = App\Studentdb::all();
 
 
-        $controllers = [];
-        foreach (Route::getRoutes()->getRoutes() as $route){
-            $action = $route->getAction();
-            if (array_key_exists('controller', $action)){
-                // You can also use explode('@', $action['controller']); here
-                // to separate the class name from the method
-                
-                $controllers[] = $action['controller'];
-                $controllers = array_map(function ($controller) {
-                    return str_replace('App\Http\Controllers\\', '', $controller);
-                }, $controllers);
+            $stdcrsClsSecMF = [];
+
+            foreach($stdcrs as $std){
+                $str = $std->clss_id.'-'.$std->section_id.'-'.$std->studentdb->ssex;
+                $stdcrsClsSecMF[$std->studentdb->id] = strtoupper($str);
             }
-        }
+
+            // print_r(array_count_values($stdcrsClsSecMF));
+            $stdcrsClsSecMF = array_count_values($stdcrsClsSecMF);
+            // echo "<br><br>";
+            // foreach($stdcrsClsSecMF as $key => $abc){
+                // echo $key . ' -> ' . $abc . "<br>";                
+            // }
+
+
+            $controllers = [];
+            foreach (Route::getRoutes()->getRoutes() as $route){
+                $action = $route->getAction();
+                if (array_key_exists('controller', $action)){
+                    // You can also use explode('@', $action['controller']); here
+                    // to separate the class name from the method
+                    
+                    $controllers[] = $action['controller'];
+                    $controllers = array_map(function ($controller) {
+                        return str_replace('App\Http\Controllers\\', '', $controller);
+                    }, $controllers);
+                }
+            }
 
 
             return view('start')
@@ -53,6 +72,7 @@ Route::get('/loginCredencial', 'Auth\LoginController@loginCredencial');
                 ->with('stdcrs', $stdcrs)    
                 ->with('clss', $clss)
                 ->with('controllers',$controllers)
+                ->with('stdcrsClsSecMF', $stdcrsClsSecMF)
                 ; //homepage
         });
 
@@ -254,6 +274,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/exmtypmodclssubfmEntry-Submit', 'ModefmController@exmtypmodclssubfmEntrySubmit');
         Route::get('/exmtypmodclssubfmEntry-View/{clss_id}', 'ModefmController@exmtypmodclssubfmEntryView');
         Route::get('/test', 'BaseController@test');
+        Route::get('/testRoute/{etmcs_id}/{csec_id}/{teacher_id}', 'BaseController@testRoute')->name('testRoute');
         // Route::get('/exmtypclssub', 'BaseController@exmtypclssub');
         // Route::post('/exmtypclssub-submit', 'BaseController@exmtypclssubSubmit');
         // Route::get('/exmtypclssub-view', 'BaseController@exmtypclssubView');

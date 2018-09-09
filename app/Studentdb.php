@@ -8,7 +8,7 @@ class Studentdb extends Model
 {
     protected $guarded = ['id'];
     
-    public function studentcr(){
+    public function studentcrs(){
         return $this->hasMany('App\Studentcr');
     }
 

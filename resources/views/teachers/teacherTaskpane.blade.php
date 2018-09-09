@@ -7,18 +7,7 @@
 
 @section('content')
 
-{{--  <div class="container">
-<div class="row">
-  <div class="col-sm-3">
-    <img src="https://picsum.photos/150/150/?random" class="img-circle thumbnail" alt="Cinque Terre">    
-  </div>
-  <div class="col-lg-9">
-    <h4><b>Name:</b> {{ $teacher->name }} </h4>
-    <h5><b>Designation:</b> {{ $teacher->desig }} </h5>
-    <h5><b>Mobile No:</b> {{ $teacher->mob }} </h5>
-  </div>
-</div>
-</div>  --}}
+
 <ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
   <li role="presentation" class="active"><a href="#">Home</a></li>
   @if($clteacher != NULL)

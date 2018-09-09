@@ -26,8 +26,7 @@
                 <th>Particulars</th>
                 @foreach($clssecs->unique('clss_id')  as $clssec )
                     <th class="text-center" colspan="{{ $clssecs->where('clss_id', $clssec->clss->id)->count() }}">
-                        {{ $clssec->clss->name }}                        
-                        
+                        {{ $clssec->clss->name }} 
                     </th>
                 @endforeach
                 <th>Total</th>
@@ -44,7 +43,7 @@
                             {{--  :{{ $stdcrs->where('clss_id',$clsc->clss->id)
                                     ->where('section_id', $clsc->section->id)
                                     ->count()
-                              }},   --}}
+                              }}  --}}
                         </th>
                         @endif                    
                     @endforeach                    
@@ -52,6 +51,69 @@
                 @endforeach
                 <td></td>
             </tr>
+            {{--  //============================  --}}
+            
+            <tr>
+                <th>Boys </th>
+                @php $total = 0;  @endphp
+                @foreach($clssecs->unique('clss_id')  as $clssec )                
+                    @foreach($clssecs as $clsc)                    
+                        @if($clsc->clss_id == $clssec->clss->id)
+                        @php $boys = 0; @endphp
+                        <td class="text-center">                            
+                            @php    
+                                
+                                foreach($stdcrsClsSecMF as $key => $abc){
+                                    $arr = explode('-', $key);                                   
+
+                                    if( $arr[0] == $clsc->clss_id && 
+                                        $arr[1] == $clsc->section_id && 
+                                        $arr[2] == 'MALE'){
+                                            $boys = $abc;
+                                            
+                                    }
+                                }
+                                $total += $boys;
+                            @endphp
+                            {{ $boys }}
+                        </td>
+                        @endif                    
+                    @endforeach                    
+                
+                @endforeach
+                <th class="text-center">{{ $total }}</th>
+            </tr>
+            <tr>
+                <th>Girls </th>
+                @php $total = 0; @endphp
+                @foreach($clssecs->unique('clss_id')  as $clssec )                
+                    @foreach($clssecs as $clsc)                    
+                        @if($clsc->clss_id == $clssec->clss->id)
+                        @php $girls = 0; @endphp
+                        <td class="text-center">                            
+                            @php    
+                                
+                                foreach($stdcrsClsSecMF as $key => $abc){
+                                    $arr = explode('-', $key);                                   
+
+                                    if( $arr[0] == $clsc->clss_id && 
+                                        $arr[1] == $clsc->section_id && 
+                                        $arr[2] == 'FEMALE'){
+                                            $girls = $abc;
+                                            
+                                    }
+                                }
+                                $total += $girls;
+                            @endphp
+                            {{ $girls }}
+                        </td>
+                        @endif                    
+                    @endforeach                    
+                
+                @endforeach
+                <th class="text-center">{{ $total }}</th>
+            </tr>
+            {{--  //============================  --}}
             <tr>
                 <th>Total Students </th>
                 @php $total = 0; @endphp
