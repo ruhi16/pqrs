@@ -36,7 +36,7 @@
 
 
 
-<h2>Class: {{ $clteacher->clss->name }},  Section:{{ $clteacher->section->name }}</h2>
+<h2>Class: {{ $clteacher->clss->name }},  Section:{{ $clteacher->section->name }}, Class Teacher:{{ $clteacher->teacher->name }}</h2>
 
 <table class="table table-bordered">
   <thead>
