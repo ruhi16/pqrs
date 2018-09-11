@@ -20,7 +20,7 @@
 <div class="panel panel-default">
     <div class="panel-heading text-center"><b>Class-Section wise Total Students Detail</b></div>        
     <div class="panel-body">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th>Particulars</th>

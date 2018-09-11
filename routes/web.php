@@ -237,11 +237,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
         Route::post('/clssecTaskPage-teacherSubmit', 'ClsSecController@clssecTaskPageTeacherSubmit');
 
+
         Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');
         Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 
-
+        Route::get('/clssec-CompactMarkRegister/{clssec_id}', 'compactMarkRegisterController@clssecCompactMarkRegister');
 
 
 

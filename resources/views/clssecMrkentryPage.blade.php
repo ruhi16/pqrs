@@ -60,7 +60,7 @@
 <tbody>
     @foreach($stdcrs as $stdcr)
     <tr id="dataRow">
-        <td>{{ $stdcr->id }}=LT:{{$loginteacher->id}}=AnT{{$ansdistteacher->teacher_id}}</td>
+        <td>{{ $stdcr->id }}</td>
         <td>{{ $stdcr->studentdb->name }}</td>
         <td class="text-center">{{ $stdcr->roll_no }}</td>
         
