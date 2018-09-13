@@ -81,14 +81,14 @@
         <td>{{$anscr->submt_dt}}</td>
         <td>{{$anscr->finlz_dt}}</td>
         <td>{{$anscr->remark}}</td>
-        <td>
+        <td width="20%">
           @php
             $extpclsb = $extpclsbs
                   ->where('exam_id', $anscr->exam_id)
                   ->where('extype_id', $anscr->extype_id)
                   ->where('clss_id', $anscr->clss_id)                  
                   ->where('subject_id', $anscr->subject_id)
-                  ->first()
+                  
                   ;
             $clsb = $clsbs->where('clss_id', $anscr->clss_id)
                   ->where('subject_id', $anscr->subject_id)
@@ -101,7 +101,9 @@
 
           {{--  {{ $extpclsb }}  --}}
           {{--  {{$extpclsbs->id}}:{{$clsb->id}}:{{$clsc->id}}  --}}
-          <a href="{{url('/clssecstd-MarksEntry', [$extpclsb->id,$clsb->id,$clsc->id])}}">Marks Entry </a>
+          @foreach($extpclsb as $abc)
+          <a href="{{url('/clssecstd-MarksEntry', [$abc->id,$clsb->id,$clsc->id])}}"><small>Marks Entry-{{ $abc->mode->name}} </small></a><br>
+          @endforeach
           {{--  /Clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}  --}}
         </td>
       </tr>

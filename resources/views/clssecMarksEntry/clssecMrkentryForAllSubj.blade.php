@@ -69,7 +69,7 @@
                                                             >Save</button>
         
         </td>
-        <td></td>
+        <td id="{{$stdcr->id}}"></td>
         
     </tr>
     @endforeach
@@ -105,8 +105,10 @@
                     type: 'info', // success, error, info, warning
                     delay: 1000,
                 });
+                $('#dataTable #dataRow #'+id).text("Updated!!");
             },
             error: function(data){
+                $('#dataTable #dataRow #'+id).text("Not Updated!!");
                 console.log(data);
             } 
         });

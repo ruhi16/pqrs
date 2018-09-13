@@ -103,16 +103,22 @@
 </table>
 @if( Auth::user()->role->name == "Admin"  || 
             ($ansdistteacher != Null && $loginteacher->id == $ansdistteacher->teacher_id))
-    @if($ansdistteacher->finlz_dt != '')
-        <a class="btn btn-danger btn-lg" href="{{ route('testRoute',[$extpcls->id, $clsc->id, $ansdistteacher->teacher_id]) }}">
-            Already Marks Entry Finalized !!!{{ $ansdistteacher->fnlz_dt }}
-        </a>
-        <hr>
-    @else
-        <a class="btn btn-success btn-lg" href="{{ route('testRoute',[$extpcls->id, $clsc->id, $ansdistteacher->teacher_id]) }}">
-            Finalize Marks Entry !!! {{ $ansdistteacher->fnlz_dt or 'NA'}}
-        </a>
+
+    @if( $ansdistteacher )
+        
+        @if($ansdistteacher->finlz_dt != '')
+            <a class="btn btn-danger btn-lg" href="{{ route('testRoute',[$extpcls->id, $clsc->id, $ansdistteacher->teacher_id]) }}">
+                Already Marks Entry Finalized !!!{{ $ansdistteacher->fnlz_dt }}
+            </a>
+            <hr>
+        @else
+            <a class="btn btn-success btn-lg" href="{{ route('testRoute',[$extpcls->id, $clsc->id, $ansdistteacher->teacher_id]) }}">
+                Finalize Marks Entry !!! {{ $ansdistteacher->fnlz_dt or 'NA'}}
+            </a>
+        @endif
+
     @endif
+
 @endif
 {{--  <br>session {{ $ansdistteacher->session_id }}
 <br>clss    {{ $ansdistteacher->clss_id }}
