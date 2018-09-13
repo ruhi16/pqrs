@@ -9,8 +9,9 @@
 <h2>Class:    {{ $clssec->clss->name }} , 
     Section:  {{ $clssec->section->name }}, 
     Class Teacher: , Session: ,    Compact Mark Register</h2>
-<h3>Class wise Total Subject Details</h3>
 
+
+{{--  <h3>Class wise Total Subject Details</h3>
 
 <table class="table table-bordered">
   <thead class="thead-light">
@@ -33,22 +34,165 @@
           <td class="text-center">{{ $clssub->combination_no }}</td>
           <td>{{ $clssub->subject->name }}</td>
           
-          @foreach($exams as $exam)
-            <td class="text-center">{{ $extpmdclsbs->where('extype_id', $clssub->subject->extype_id)
-                    ->where('subject_id', $clssub->subject_id)
-                    ->where('exam_id', $exam->id)
-                    ->first()->fm }}</td>
+          @foreach($exams as $exam)            
+            <td class="text-center">
+              @foreach($modes as $mode)
+                
+                @if( $extpmdclsbs->where('extype_id', $clssub->subject->extype_id)
+                      ->where('subject_id', $clssub->subject_id)
+                      ->where('exam_id', $exam->id)
+                      ->where('mode_id', $mode->id)
+                      ->first() != NULL )
+                
+                    {{ $mode->name }}: <b>{{ $extpmdclsbs->where('extype_id', $clssub->subject->extype_id)
+                      ->where('subject_id', $clssub->subject_id)
+                      ->where('exam_id', $exam->id)
+                      ->where('mode_id', $mode->id)
+                      ->pluck('fm')->first() }}</b>
+                @endif
+              @endforeach
+            </td>
           @endforeach
           <td class="text-center"><b>
             {{ $extpmdclsbs->where('extype_id', $clssub->subject->extype_id)
-                    ->where('subject_id', $clssub->subject_id)
-                    
+                    ->where('subject_id', $clssub->subject_id)                    
                     ->sum('fm') }}</b>
           </td>
         </tr>
       @endforeach      
 </tbody>
+</table>  --}}
+
+
+
+<h3>Class wise Compact Subject Details</h3>
+
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th>Sl</th>
+      <th>Class</th>
+      @foreach($extps as $extp)
+          <th>{{ $extp->name }} - Total Subjects Count</th>          
+          <th>Full Marks</th>
+      @endforeach
+      <th>Total Subjects</th>
+    </tr>
+  </thead>
+  <tbody>                 
+          @php
+            $clssubexts = $clssubexts->groupBy('clss_id');
+          @endphp          
+          @foreach($clssubexts as $val)
+          @if( $val->unique('clss_id')->first()->clss_id == $clssubs->first()->clss_id )
+            <tr>
+              <td>1/{{$clssubs->first()->clss_id}}={{$val->unique('clss_id')->first()->clss_id}}</td>
+              <td>Class_id: {{ $val->unique('clss_id')->first()->clss_id }}</td>
+              @php $count = 0; @endphp
+              @foreach($val->groupBy('extype_id') as $v)
+                  @php ++$count; @endphp
+                  <td>
+                    {{  {{-- $v  --}}
+                        $v->where('combination_no','=',0)->count('extype_id') +
+                        $v->where('combination_no','>',0)->groupBy('combination_no')->count('extype_id') 
+                    }}                  
+                  </td>
+                  <td>
+                    fm: {{ 
+                          $extpmdclsbs->where('extype_id', $v->unique('extype_id')->first()->extype_id )
+                            ->where('clss_id', $val->unique('clss_id')->first()->clss_id )
+                            ->whereIn('subject_id', $clssubs->where('combination_no','>=',0)->pluck('subject_id') )
+                            ->sum('fm')                             
+                        }}
+                  </td>
+              @endforeach
+      
+              @if( $count < count($extps) )
+                @for( $i = $count; $i < count($extps); $i++ )
+                  <td></td>
+                  <td></td>
+                @endfor
+              @endif
+              <td></td>
+            </tr>
+          @endif
+          @endforeach
+          
+    </tr>    
+  </tbody>
 </table>
+
+        
+  
+
+<h3>Class wise Compact Subject Details</h3>
+
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th>Sl</th>
+      <th>Class-Sec-Roll</th>
+      <th>Students Name</th>
+      @foreach($extps as $extp)
+          {{--  <th>{{ $extp->name }} - Subjects</th>      --}}
+          <th>{{ $extp->name }} Total Obtain Marks</th>      
+          <th>D acured</th>
+      @endforeach      
+    </tr>
+  </thead>
+  <tbody> 
+    @foreach($stdcrs as $stdcr)
+      <tr>
+          <td>{{ $stdcr->id }}</td>
+          <td>{{ $stdcr->clss->name }}-{{ $stdcr->section->name }}-{{ $stdcr->roll_no }}</td>
+          <td>{{ $stdcr->studentdb->name }}</td>
+          @foreach($extps as $extp)
+              @php
+                  $test = $stdmarks->where('studentcr_id', $stdcr->id) 
+                    ->whereIn('exmtypmodclssub_id', $etmcss->where('extype_id', $extp->id)->pluck('id') )
+                    ->groupBy('clssub_id');                  
+                  
+              @endphp
+              {{--  test{{ dd($test) }}  --}}
+              <td>              
+                  @foreach($test as $t)                    
+                    @php
+                      //$per = ($t->marks*100)/($etmcss->where('id', $t->exmtypmodclssub_id)->first()->fm);
+                      //$per = $per < 0 ? 0 : $per;
+
+                      //$grd = $grades->where('extype_id', '=', $extp->id)
+                      //              ->where('stpercentage', '<=', $per)
+                      //              ->where('enpercentage', '>=', $per)
+                      //              ->first();
+                    @endphp
+                    {{ $t->first()->clssub_id }}:{{ $t->sum('marks') < 0 ? 'AB' : $t->sum('marks') }}/
+                                {{--  {{ $etmcss->where('id', $t->exmtypmodclssub_id)->first()->fm }}  --}}
+
+                    {{--  ({{ $per < 0 ? 0 : $per }}%-{{ $grdparts->where('id', $grd['gradeparticular_id'])->first()['name'] }})  --}}
+                    + 
+
+                  @endforeach                  
+                   = 
+                  {{
+                      $test->where('marks', '>=', 0)
+                        ->sum('marks')
+                  }}
+              </td>
+              <td></td>
+          @endforeach 
+      </tr>
+    @endforeach
+  </tbody>
+
+</table>
+
+
+
+
+
+
+
+
 
 
 
