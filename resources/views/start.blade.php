@@ -128,7 +128,7 @@
 
                             $total += $clscStd;
                             @endphp
-                            {{ $clscStd }}
+                            <b>{{ $clscStd }}</b>
                         </td>
                         @endif                    
                     @endforeach                    
@@ -143,7 +143,7 @@
                 @foreach($clssecs->unique('clss_id')  as $clssec )                
                     @foreach($clssecs as $clsc)                    
                         @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
+                        <td class="text-center text-primary">                            
                             @php
                             $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
                                     ->where('section_id', $clsc->section->id)
@@ -166,7 +166,7 @@
                 @foreach($clssecs->unique('clss_id')  as $clssec )                
                     @foreach($clssecs as $clsc)                    
                         @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
+                        <td class="text-center text-info">                            
                             @php
                             $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
                                     ->where('section_id', $clsc->section->id)
@@ -189,7 +189,7 @@
                 @foreach($clssecs->unique('clss_id')  as $clssec )                
                     @foreach($clssecs as $clsc)                    
                         @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
+                        <td class="text-center text-warning">                            
                             @php
                             $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
                                     ->where('section_id', $clsc->section->id)
@@ -212,7 +212,7 @@
                 @foreach($clssecs->unique('clss_id')  as $clssec )                
                     @foreach($clssecs as $clsc)                    
                         @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
+                        <td class="text-center text-primary">                            
                             @php
                             $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
                                     ->where('section_id', $clsc->section->id)
@@ -235,7 +235,7 @@
                 @foreach($clssecs->unique('clss_id')  as $clssec )                
                     @foreach($clssecs as $clsc)                    
                         @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
+                        <td class="text-center text-info">                            
                             @php
                             $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
                                     ->where('section_id', $clsc->section->id)
@@ -258,7 +258,7 @@
                 @foreach($clssecs->unique('clss_id')  as $clssec )                
                     @foreach($clssecs as $clsc)                    
                         @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
+                        <td class="text-center text-danger">                            
                             @php
                             $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
                                     ->where('section_id', $clsc->section->id)
@@ -281,7 +281,7 @@
                 @foreach($clssecs->unique('clss_id')  as $clssec )                
                     @foreach($clssecs as $clsc)                    
                         @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
+                        <td class="text-center text-warning">                            
                             @php
                             $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
                                     ->where('section_id', $clsc->section->id)
