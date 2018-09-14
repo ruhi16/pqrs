@@ -154,26 +154,39 @@
                     ;                  
                   $countD = 0;
               @endphp
-              <td>              
-                  @foreach($test->groupBy('clssub_id') as $t)                    
-                    @php
-                      $per = ($t->where('marks', '>=', 0)->sum('marks')*100)/($etmcss->where('subject_id', $t->first()->clssub->subject_id)->sum('fm') ) ;
-                      
+              <td>
+                  {{--  for Regular Subject (combination_no = 0)  --}}
+                  @foreach($test->groupBy('clssub_id') as $t)
+                      @if($t->first()->combination_no == 0)
+                            @php
+                              $per = ($t->where('marks', '>=', 0)->sum('marks')*100)/
+                                                  ($etmcss->where('subject_id', $t->first()->clssub->subject_id)->sum('fm') ) ;
 
-                      $grd = $grades->where('extype_id', '=', $extp->id)
-                                    ->where('stpercentage', '<=', $per)
-                                    ->where('enpercentage', '>=', $per)
-                                    ->first()->gradeparticular->name;
-                      if( strtoupper($grd) == 'D'){
+                              $grd = $grades->where('extype_id', '=', $extp->id)
+                                            ->where('stpercentage', '<=', $per)
+                                            ->where('enpercentage', '>=', $per)
+                                            ->first()->gradeparticular->name;                              
+                              if( strtoupper($grd) == 'D'){
+                                  $countD++;
+                              }
+                            @endphp                      
+                              {{ $t->first()->clssub->subject->code }}:{{ $t->where('marks', '>=', 0)->sum('marks')  }}/                                
+                                          {{ $etmcss->where('subject_id', $t->first()->clssub->subject_id)->sum('fm') }} 
+                                          ({{$per}}%-{{$grd}}) +                       
+                      @endif
+                  @endforeach  
 
-                        $countD++;
-                      }
-                    @endphp
-                    {{ $t->first()->clssub->subject->code }}:{{ $t->where('marks', '>=', 0)->sum('marks')  }}/                                
-                                {{ $etmcss->where('subject_id', $t->first()->clssub->subject_id)->sum('fm') }} ({{$per}}%-{{$grd}})
-                    + 
+                  {{--  for Combined Subject (combination_no > 0)  --}}
+                  @foreach($test->where('combination_no', '>', 0)->groupBy('combination_no') as $t)
+                    {{ $t->sum('marks') }}
+                  @endforeach
+                  {{--  for Regular Subject (combination_no = 0)  --}}
+                  @foreach($test->where('combination_no', '<', 0)->groupBy('combination_no') as $t)
+                    {{ $t->sum('marks') }}
+                  @endforeach
 
-                  @endforeach                  
+
+                  {{--  for All Subject (combination_no = 0)  --}}
                    = 
                   {{ $test->where('marks', '>=', 0)->sum('marks') }}/
                         {{ $etmcss->where('extype_id', $extp->id)->sum('fm') -   
