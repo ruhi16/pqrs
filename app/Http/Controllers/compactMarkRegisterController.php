@@ -68,7 +68,7 @@ class compactMarkRegisterController extends Controller
         $stdmarks = Marksentry::where('marksentries.session_id', $ses->id)
                     ->where('clssec_id', $clssec_id)
                     ->join('clssubs', 'marksentries.clssub_id', '=', 'clssubs.id')
-                    ->select('marksentries.*', 'clssubs.combination_no')
+                    ->select('marksentries.*', 'clssubs.combination_no', 'clssubs.subject_id')
                     ->orderBy('studentcr_id')
                     ->get();
 
