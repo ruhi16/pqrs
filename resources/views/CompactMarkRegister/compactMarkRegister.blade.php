@@ -177,33 +177,72 @@
                   @endforeach  
 
                   {{--  for Combined Subject (combination_no > 0)  --}}                  
+                  **{{ $test->where('combination_no', '>', 0)->groupBy('combination_no')->where('marks', '>=',0)->sum('marks') }}**
+
+
                   @foreach($test->where('combination_no', '>', 0)->groupBy('combination_no') as $t)
-                    {{ $clssubs->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id') ) }}:
+                  <kbd>
+                  @php
+                      $perComb = ($t->where('marks', '>=', 0)->sum('marks') * 100)/
+                                      $etmcss->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id') )->sum('fm');
+                      $grdComb = $grades->where('extype_id', '=', $extp->id)
+                                          ->where('stpercentage', '<=', $perComb)
+                                          ->where('enpercentage', '>=', $perComb)
+                                          ->first()->gradeparticular->name;                              
+                      
+                      if( strtoupper($grdComb) == 'D'){
+                          $countD++;
+                      }
+                  @endphp
+                    (
+                    @foreach( $clssubs->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id')) as $xx)
+                        {{ $xx->subject->code }}
+                        @if (!$loop->last)
+                            +
+                        @endif
+                    @endforeach
+                    )
                     {{ $t->where('marks', '>=', 0)->sum('marks') }}/fm:
                     {{ $etmcss->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id') )->sum('fm') }}
-                    @php
-                        $perComb = ($t->where('marks', '>=', 0)->sum('marks') * 100)/
-                                        $etmcss->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id') )->sum('fm');
-                        $grdComb = $grades->where('extype_id', '=', $extp->id)
-                                            ->where('stpercentage', '<=', $perComb)
-                                            ->where('enpercentage', '>=', $perComb)
-                                            ->first()->gradeparticular->name;                              
-                        
-                        if( strtoupper($grdComb) == 'D'){
-                            $countD++;
-                        }
-                    @endphp
+                    
                     ({{ $perComb }}% - {{ $grdComb }})
-                  @endforeach
-
-                  {{--  for Additional Subject (combination_no < 0)  --}}
-
-                  @foreach($test->where('combination_no', '<', 0)->groupBy('combination_no') as $t)
-                    {{ $t->where('marks', '>=', 0)->sum('marks') }}
+                  </kbd>
                   @endforeach
                   
 
 
+
+                  {{--  for Additional Subject (combination_no < 0)  --}}
+                  
+                  @foreach($test->where('combination_no', '<', 0)->groupBy('combination_no') as $t)
+                  <kbd>
+                  @php
+                      $perAddl = ($t->where('marks', '>=', 0)->sum('marks') * 100)/
+                                      $etmcss->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id') )->sum('fm');
+                      $grdAddl = $grades->where('extype_id', '=', $extp->id)
+                                          ->where('stpercentage', '<=', $perComb)
+                                          ->where('enpercentage', '>=', $perComb)
+                                          ->first()->gradeparticular->name;                              
+                      
+                      if( strtoupper($grdAddl) == 'D'){
+                          $countD++;
+                      }
+                  @endphp
+                    (
+                    @foreach( $clssubs->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id')) as $xx)
+                        {{ $xx->subject->code }}
+                        @if (!$loop->last)
+                            +
+                        @endif
+                    @endforeach
+                    )
+                    {{ $t->where('marks', '>=', 0)->sum('marks') }}/fm:
+                    {{ $etmcss->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id') )->sum('fm') }}
+                    
+                    ({{ $perAddl }}% - {{ $grdAddl }})
+                  </kbd>
+                  @endforeach
+                  
 
 
                    = 
