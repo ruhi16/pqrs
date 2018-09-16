@@ -78,9 +78,9 @@ class compactMarkRegisterController extends Controller
                     ->get();
         
         $grades = Grade::whereSession_id($ses->id)->get();
-        $grdparts = Gradeparticular::whereSession_id($ses->id)->get();
+        //$grdparts = Gradeparticular::whereSession_id($ses->id)->get();
 
-
+            
         return view('CompactMarkRegister.compactMarkRegister')
             ->with('clssec', $clssec)
             ->with('clssubs', $clssubs)
@@ -93,7 +93,7 @@ class compactMarkRegisterController extends Controller
             ->with('etmcss', $etmcss)
             ->with('clssubexts', $clssubexts)
             ->with('grades', $grades)
-            ->with('grdparts',$grdparts)
+            //->with('grdparts',$grdparts)
             ;
     }
 }

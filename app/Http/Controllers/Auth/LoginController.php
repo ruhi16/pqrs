@@ -85,11 +85,13 @@ class LoginController extends Controller
 
         $teachers = Teacher::all();
         $users = User::all();
+        $ansscdists = Answerscriptdistribution::all();
 
 
         return view('login.loginCredencial')
             ->with('teachers', $teachers)
             ->with('users', $users)
+            ->with('ansscdists', $ansscdists)
             ;
     }
 
