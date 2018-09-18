@@ -135,20 +135,35 @@
       <th>Students Name</th>
       @foreach($extps as $extp)
           <th>{{ $extp->name }} Total Obtain Marks</th>      
-          <th>Tota Ds accquire</th>
+          <th>Total Ds accquire</th>
           <th>Status</th>
       @endforeach      
       <th>Refrash Status</th>
     </tr>
   </thead>
   <tbody> 
+    @php
+      $stdcrCompactRecord = [];
+    @endphp
     @foreach($stdcrs as $stdcr)
-      <tr>
+      @php
+        $stdcrDetails = [];
+        $stdcrDetails['studentcr_id'] = $stdcr->id;
+        $stdcrDetails['studentcr_name'] = $stdcr->studentdb->name;
+        $stdcrDetails['studentcr_clss'] = $stdcr->clss->name;
+        $stdcrDetails['studentcr_section'] = $stdcr->section->name;
+        $stdcrDetails['studentcr_roll'] = $stdcr->roll_no;
+        
+        $stdcrCompactRecord['stdcr'] = $stdcrDetails ;
+      @endphp
+        <tr>
           <td>{{ $stdcr->id }}</td>
           <td>{{ $stdcr->clss->name }}-{{ $stdcr->section->name }}-{{ $stdcr->roll_no }}</td>
           <td>{{ $stdcr->studentdb->name }}({{ $stdcr->id }})</td>
           @foreach($extps as $extp)
               @php
+                  
+                  $arrExtpRecods = [];
                   $test = $stdmarks->where('studentcr_id', $stdcr->id) 
                     ->whereIn('exmtypmodclssub_id', $etmcss->where('extype_id', $extp->id)->pluck('id') )
                     //->groupBy('clssub_id')
@@ -281,24 +296,53 @@
                                                   ->whereIn('subject_id', $clssubs->where('combination_no', '<', 0)->pluck('subject_id') )
                                                   ->sum('fm');
                       //$totalPrMarks = round( ($totalObMarks * 100) / $totalFlMarks , 0 );
-
+                    
+                    $arrExtpRecods['om'] = $totalObMarks;
+                    $arrExtpRecods['fm'] = $totalFlMarks;
+                    $arrExtpRecods['ds'] = $countD;
+                    $arrExtpRecods['rs'] = "Not Assigned";
                    @endphp
                   {{ $totalObMarks }} / fm: {{ $totalFlMarks }} 
-                        
+                  
                   </b></p>
               </td>
               <td class="text-center">{{ $countD }}</td>
-              <td class="text-center"></td>
+              <td class="text-center">
+                @foreach($arrExtpRecods as $key => $val)
+                {{ $key }}=>{{ $val }} <br>
+                @endforeach
+              </td>
+              @php
+                  $stdcrCompactRecord[$extp->id] = $arrExtpRecods;
+              @endphp
           @endforeach 
           <td>
-          <form class="form-horizontal" action="{!! url('/clssecStdcr-MarkRefresh',[$stdcr->id]) !!}" method="post" value="{{ csrf_token() }}">
-            {{ csrf_field() }}
-            @php
-            $arr = [2,3,4,5];
-            @endphp            
-            <input type="submit" class="btn btn-primary" value="Submit">
-          </form>
-           <a href="{{ url('/clssecStdcr-MarkRefresh',[$stdcr->id]) }}" class="btn btn-success">Refresh !!!</a> </td>
+              <form class="form-horizontal" action="{!! url('/clssecStdcr-MarkRefresh',[$stdcr->id]) !!}" method="post" value="{{ csrf_token() }}">
+                {{ csrf_field() }}
+                @php
+                  $arr = [2,3,4,5];
+                @endphp 
+
+                {{-- <input type="text" name="extype_id[]" value="">
+                <input type="text" name="fullmarks[]" value="{{ $totalFlMarks }}">
+                <input type="text" name="obtmarks[]"  value="">
+                <input type="text" name="nosofds[]"   value="">
+                <input type="text" name="results[]"   value=""> --}}
+
+                <input type="submit" class="btn btn-primary" value="Submit">
+              </form>
+              
+           <a href="{{ url('/clssecStdcr-MarkRefresh',[$stdcr->id]) }}" class="btn btn-success">Refresh !!!</a> 
+              
+              
+           @foreach($stdcrCompactRecord as $key => $value)
+              {{ $key }} :  
+              @foreach($value as $k => $val)
+                {{$k }}: {{ $val }}
+              @endforeach
+              <br>
+           @endforeach
+          </td>
       </tr>
     @endforeach
   </tbody>
