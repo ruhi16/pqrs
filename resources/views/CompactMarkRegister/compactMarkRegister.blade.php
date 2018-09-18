@@ -147,14 +147,16 @@
     @endphp
     @foreach($stdcrs as $stdcr)
       @php
+        $refreshFlag = false;
+
         $stdcrDetails = [];
-        $stdcrDetails['studentcr_id'] = $stdcr->id;
-        $stdcrDetails['studentcr_name'] = $stdcr->studentdb->name;
-        $stdcrDetails['studentcr_clss'] = $stdcr->clss->name;
-        $stdcrDetails['studentcr_section'] = $stdcr->section->name;
-        $stdcrDetails['studentcr_roll'] = $stdcr->roll_no;
+        $stdcrDetails['id'] = $stdcr->id;
+        $stdcrDetails['name'] = $stdcr->studentdb->name;
+        $stdcrDetails['clss'] = $stdcr->clss_id;
+        $stdcrDetails['section'] = $stdcr->section_id;
+        $stdcrDetails['roll'] = $stdcr->roll_no;
         
-        $stdcrCompactRecord['stdcr'] = $stdcrDetails ;
+        //$stdcrCompactRecord['studentcr'] = $stdcrDetails ;
       @endphp
         <tr>
           <td>{{ $stdcr->id }}</td>
@@ -264,7 +266,7 @@
                             @endphp
                             {{ $t->where('marks', '>', 0)->sum('marks') }}/fm:
                                   {{ $etmcss->whereIn('subject_id', $t->unique('clssub_id')->pluck('subject_id') )->sum('fm') }}                       
-                            ({{ $per }}% -{{ $grd }} )                      
+                            ({{ $per }}% -{{ $grd }} ) 
                         @endforeach
 
 
@@ -302,46 +304,52 @@
                     $arrExtpRecods['ds'] = $countD;
                     $arrExtpRecods['rs'] = "Not Assigned";
                    @endphp
-                  {{ $totalObMarks }} / fm: {{ $totalFlMarks }} 
+                  {{ $totalObMarks }} / fm: {{ $totalFlMarks }}
                   
+                  @if( $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first() )                      
+                      @if($resultcr->where('studentcr_id', $stdcr->id)
+                                  ->where('extype_id', $extp->id)->first()->obtnmarks != $totalObMarks )
+                          
+                          @php $refreshFlag = true; @endphp
+                          
+                      @endif
+                  @endif
                   </b></p>
               </td>
               <td class="text-center">{{ $countD }}</td>
               <td class="text-center">
-                @foreach($arrExtpRecods as $key => $val)
-                {{ $key }}=>{{ $val }} <br>
-                @endforeach
+                
               </td>
               @php
                   $stdcrCompactRecord[$extp->id] = $arrExtpRecods;
               @endphp
           @endforeach 
           <td>
-              <form class="form-horizontal" action="{!! url('/clssecStdcr-MarkRefresh',[$stdcr->id]) !!}" method="post" value="{{ csrf_token() }}">
+              <form class="form-horizontal" action="{!! url('/clssecStdcr-MarkRefresh',[$stdcr->id, $stdcr->clss_id, $stdcr->section_id]) !!}" method="post" value="{{ csrf_token() }}">
                 {{ csrf_field() }}
-                @php
-                  $arr = [2,3,4,5];
-                @endphp 
+                      
+                  @foreach($stdcrCompactRecord as $key => $value)                      
+                      <input type="hidden" name="extype_id[]" value="{{ $key }}">
+                      @foreach($value as $k => $val)                        
+                        <input type="hidden" name="{{$k}}{{$key}}[]" value="{{ $val }}">                        
+                      @endforeach                    
+                  @endforeach
+                  
+                  
+                  @if( $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first() )
+                      @if( !$refreshFlag ) 
+                          <input type="submit" class="btn btn-success" value="Refreshed !!!">
+                      @else
+                          <input type="submit" class="btn btn-info" value="Updated !!!">  
+                      @endif
+                  @else    
+                        <input type="submit" class="btn btn-danger" value="Not Refreshed !!!">
+                  @endif
 
-                {{-- <input type="text" name="extype_id[]" value="">
-                <input type="text" name="fullmarks[]" value="{{ $totalFlMarks }}">
-                <input type="text" name="obtmarks[]"  value="">
-                <input type="text" name="nosofds[]"   value="">
-                <input type="text" name="results[]"   value=""> --}}
-
-                <input type="submit" class="btn btn-primary" value="Submit">
               </form>
+
+{{--    --}}
               
-           <a href="{{ url('/clssecStdcr-MarkRefresh',[$stdcr->id]) }}" class="btn btn-success">Refresh !!!</a> 
-              
-              
-           @foreach($stdcrCompactRecord as $key => $value)
-              {{ $key }} :  
-              @foreach($value as $k => $val)
-                {{$k }}: {{ $val }}
-              @endforeach
-              <br>
-           @endforeach
           </td>
       </tr>
     @endforeach

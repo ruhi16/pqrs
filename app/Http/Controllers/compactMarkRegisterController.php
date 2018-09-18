@@ -22,6 +22,7 @@ use App\Grade;
 use App\Teacher;
 use App\Clssteacher;
 use App\Gradeparticular;
+use App\Resultcr;
 
 
 use App\Exmtypclssub;
@@ -79,7 +80,11 @@ class compactMarkRegisterController extends Controller
         
         $grades = Grade::whereSession_id($ses->id)->get();
         //$grdparts = Gradeparticular::whereSession_id($ses->id)->get();
-
+        
+        $resultcr = Resultcr::whereSession_id($ses->id)
+                        ->where('clss_id', $clssec->clss_id)
+                        ->where('section_id', $clssec->section_id)
+                        ->get();
             
         return view('CompactMarkRegister.compactMarkRegister')
             ->with('clssec', $clssec)
@@ -93,6 +98,7 @@ class compactMarkRegisterController extends Controller
             ->with('etmcss', $etmcss)
             ->with('clssubexts', $clssubexts)
             ->with('grades', $grades)
+            ->with('resultcr',$resultcr)
             //->with('grdparts',$grdparts)
             ;
     }

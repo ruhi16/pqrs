@@ -15,6 +15,7 @@ use App\Mode;
 
 use App\Studentdb;
 use App\Studentcr;
+use App\Resultcr;
 
 use App\Clssub;
 use App\Clssec;
@@ -33,7 +34,7 @@ use App\Answerscriptdistribution;
 
 class StdcrmarkregisterController extends Controller
 {
-    public function clssecStdcrMarkRefreshget(Request $request, $studentcr_id){
+    public function clssecStdcrMarkRefreshget(Request $request, $studentcr_id, $clss_id, $section_id){
 
         echo $studentcr_id;
 
@@ -41,12 +42,58 @@ class StdcrmarkregisterController extends Controller
     }
 
 
-    public function clssecStdcrMarkRefreshpost(Request $request, $studentcr_id){
+    public function clssecStdcrMarkRefreshpost(Request $request, $studentcr_id, $clss_id, $section_id){
+        $ses = Session::whereStatus('CURRENT')->first();
 
         echo $studentcr_id;
         
         echo $request->arr;
+        //dd($request);
 
-        return " Hello Post";
+        print_r($request['extype_id']);
+        // print_r($request['om']);
+        // print_r($request['fm']);
+        // print_r($request['ds']);
+        // print_r($request['rs']);
+        foreach($request['extype_id'] as $k => $extp_id){
+            // echo "extp_id:" .$extp_id;
+            echo $k;
+            $obtMark = 'om'.$extp_id;
+            echo "OM: ".$request[$obtMark][0] ."<br>";
+            // foreach($request[$obtMark] as $om){
+            //     echo "OM: ". $om;
+            // }
+
+
+        }
+
+        foreach($request['extype_id'] as $k => $extp_id){
+        
+            $resultcr = Resultcr::firstOrNew([
+                'session_id'    =>  $ses->id,
+                'clss_id'       =>  $clss_id,
+                'section_id'    =>  $section_id,
+                'studentcr_id'  =>  $studentcr_id,
+                'extype_id'     =>  $extp_id,
+            ]);
+            //dd($resultcr);
+            //$resultcr->extype_id = $extp_id;
+            
+            $fulMark = 'fm'.$extp_id;
+            $resultcr->fullmarks    =   $request[$fulMark][0];
+
+            $obtMark = 'om'.$extp_id;
+            $resultcr->obtnmarks    =   $request[$obtMark][0];
+
+            $noofds = 'ds'.$extp_id;
+            $resultcr->noofds    =   $request[$noofds][0];
+            
+            $result = 'rs'.$extp_id;
+            $resultcr->results    =   $request[$result][0];
+
+            $resultcr->save();
+        }
+
+        return back();
     }
 }
