@@ -29,4 +29,10 @@ class Studentcr extends Model
     public function marksentries(){
         return $this->hasMany('App\Marksentry');
     }
+
+
+
+    public function resultcr(){
+        return $this->belongsTo('App\Resultcr');
+    }
 }

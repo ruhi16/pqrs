@@ -250,6 +250,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-MrkenPage/{clssec_id}', 'MarksEntryController@clssecMrkenPage');
         Route::get('/clssecstd-MarksEntry/{extpcl_id}/{clsb_id}/{clsc_id}', 'MarksEntryController@clssecstdMarksEntry');
         Route::get('/clssec-MarksRegister/{clssec_id}',  'MarksEntryController@clssecMarksRegister');
+        Route::get ('/clssecStdcr-MarkRefresh/{studentcr_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshget');
+        Route::post('/clssecStdcr-MarkRefresh/{studentcr_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshpost');
         //Ajax Update
         Route::post('/updateMarks', 'MarksEntryController@updateMarks');
         

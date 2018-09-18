@@ -163,6 +163,7 @@ class MarksEntryController extends Controller
             ->whereClss_id($clsc->clss_id)
             ->groupBy('extype_id')
             ->pluck('extype_id');
+        
         $extp = Extype::whereSession_id($ses->id)
                     ->whereIn('id', $xx)->get();
 
@@ -173,7 +174,7 @@ class MarksEntryController extends Controller
         ->get();
         
         $grades = Grade::whereSession_id($ses->id)->get();
-        $etclsbfm = Extclssubfmpm::all();
+        //$etclsbfm = Extclssubfmpm::all();
 
 
         $mrks = Marksentry::whereSession_id($ses->id)->get();
@@ -189,7 +190,7 @@ class MarksEntryController extends Controller
         ->withCls($clsc->clss->name)
         ->withSec($clsc->section->name)
         ->withClssec($clsc)
-        ->withEtclsbfm($etclsbfm)
+        //->withEtclsbfm($etclsbfm)
         ->withMrks($mrks)
         ;
     }

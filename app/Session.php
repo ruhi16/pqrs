@@ -47,4 +47,10 @@ class Session extends Model
         return $this->hasMany('App\Answerscriptdistribution');
     }
 
+
+
+    public function resultcrs(){
+        return $this->hasMany('App\Resultcr');
+    }
+
 }

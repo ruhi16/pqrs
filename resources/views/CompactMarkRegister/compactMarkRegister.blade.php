@@ -136,7 +136,9 @@
       @foreach($extps as $extp)
           <th>{{ $extp->name }} Total Obtain Marks</th>      
           <th>Tota Ds accquire</th>
+          <th>Status</th>
       @endforeach      
+      <th>Refrash Status</th>
     </tr>
   </thead>
   <tbody> 
@@ -144,7 +146,7 @@
       <tr>
           <td>{{ $stdcr->id }}</td>
           <td>{{ $stdcr->clss->name }}-{{ $stdcr->section->name }}-{{ $stdcr->roll_no }}</td>
-          <td>{{ $stdcr->studentdb->name }}</td>
+          <td>{{ $stdcr->studentdb->name }}({{ $stdcr->id }})</td>
           @foreach($extps as $extp)
               @php
                   $test = $stdmarks->where('studentcr_id', $stdcr->id) 
@@ -286,7 +288,17 @@
                   </b></p>
               </td>
               <td class="text-center">{{ $countD }}</td>
+              <td class="text-center"></td>
           @endforeach 
+          <td>
+          <form class="form-horizontal" action="{!! url('/clssecStdcr-MarkRefresh',[$stdcr->id]) !!}" method="post" value="{{ csrf_token() }}">
+            {{ csrf_field() }}
+            @php
+            $arr = [2,3,4,5];
+            @endphp            
+            <input type="submit" class="btn btn-primary" value="Submit">
+          </form>
+           <a href="{{ url('/clssecStdcr-MarkRefresh',[$stdcr->id]) }}" class="btn btn-success">Refresh !!!</a> </td>
       </tr>
     @endforeach
   </tbody>

@@ -34,4 +34,10 @@ class Section extends Model
     public function clssteacher(){
         return $this->hasOne('App\Clssteacher');
     }
+
+
+
+    public function resultcrs(){
+        return $this->hasMany('App\Resultcr');
+    }
 }

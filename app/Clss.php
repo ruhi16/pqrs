@@ -64,4 +64,11 @@ class Clss extends Model
     public function exmtypmodclssubs(){
         return $this->hasMany('App\Exmtypmodclssub');
     }
+
+
+
+
+    public function resultcrs(){
+        return $this->hasMany('App\Resultcr');
+    }
 }
