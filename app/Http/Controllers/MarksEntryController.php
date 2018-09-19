@@ -203,9 +203,7 @@ class MarksEntryController extends Controller
             ->get();
 
         $exams = Exam::whereSession_id($ses->id)->get();
-        
-        
-        
+
         $stdcrs = Studentcr::whereSession_id($ses->id)
             ->whereClss_id($clsc->clss_id)
             ->whereSection_id($clsc->section_id)
@@ -214,25 +212,47 @@ class MarksEntryController extends Controller
         $stdmarks = Marksentry::where('session_id', $ses->id)
                     ->where('clssec_id', $clsc->id)
                     ->get();
-        
-
 
         $extpmdclsbs = Exmtypmodclssub::whereSession_id($ses->id)
                             ->whereClss_id($clsc->clss_id)        
                             ->get();
 
-
-
         echo "Marks Entry Register " . "<br>";
         echo "class: ".$clsc->clss->name .", section: ".$clsc->section->name . "<br>";
-        foreach($stdcrs as $stdcr){
-            echo "Name: ". $stdcr->studentdb->name ;            
-            $stdmarks = $stdmarks->where('studentcr_id', $stdcr->id);
 
+        $clssecDetails = [];
+        foreach($stdcrs as $stdcr){
+            //echo "Name: ". $stdcr->studentdb->name ;            
+            $stdmarks = $stdmarks->where('studentcr_id', $stdcr->id);
+            
+            $clssecStdcr = [];
+
+            $stdDetails = [];
+            $stdDetails['id']   = $stdcr->id;
+            $stdDetails['name'] = $stdcr->studentdb->name;
+            $stdDetails['clss'] = $stdcr->clss->name;
+            $stdDetails['sect'] = $stdcr->section->name;
+            $stdDetails['roll'] = $stdcr->roll_no;
+            //array_push($clssecDetails, $stdDetails);
+            $clssecStdcr['stdcr'] = $stdDetails;
+
+            $clssubDetails = [];
             foreach($clsbs as $clsb){
-                echo " ". $clsb->subject->code ;
+                //echo " ". $clsb->subject->code ;                
+
+                $clssub = [];
+                $clssub['subid'] = $clsb->subject->id; 
+                $clssub['subname'] = $clsb->subject->name; 
+                $clssub['subcode'] = $clsb->subject->code; 
+                $clssub['subtype'] = $clsb->subject->extype->name; 
+                
+                array_push($clssubDetails, $clssub);
+                
+                
+                $marksDetails = [];
                 foreach($exams as $exam){
-                    echo " ". $exam->id . ":" ;
+                    $marks = [];
+                    //echo " ". $exam->id . ":" ;
                     $extpmdclsb = $extpmdclsbs
                             ->where('subject_id', $clsb->subject_id)
                             ->where('exam_id', $exam->id)
@@ -247,17 +267,41 @@ class MarksEntryController extends Controller
                     
                     $obmark = $stdmark == NULL ? 'NA' : $stdmark->marks ;
                     $flmark   = $extpmdclsb == NULL ? 'NA' : $extpmdclsb->fm ;
-                    echo $obmark ."/";
-                    echo $flmark;
+                    //echo $obmark ."/";
+                    //echo $flmark;
+                    $marks['exam'] = $exam->name;
+                    $marks['obtm'] = $obmark;
+                    $marks['fulm'] = $flmark;
+                    array_push($marksDetails, $marks);
                 }
+
+                array_push($clssubDetails, $marksDetails);
             }
 
-            echo  "<br>";
-
+            //array_push($clssecDetails, $clssubDetails);
+            $clssecStdcr['subj'] = $clssubDetails;
+            //echo  "<br>";
+            array_push($clssecDetails, $clssecStdcr);
         }
+
+        //dd($clssecDetails);
         
         //return "hello";
-        return view('clssecMarksRegister.clssecMarksRegisterv2');
+        // foreach($clssecDetails as $clssecDetail){
+        //     //echo print_r($clssecDetail) ."<br>";
+        //     //echo $clssecDetails['stdcr']['name'] ;
+        //     foreach($clssecDetail as $clssec){
+        //         print_r($clssec); echo "<br>";
+
+        //         // echo implode(',', $clssec);
+        //     }
+        // }
+        
+        
+        
+        
+        return view('clssecMarksRegister.clssecMarksRegisterv2')
+            ->with('clssecDetails', $clssecDetails);
 
     }
 

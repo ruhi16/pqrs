@@ -8,11 +8,12 @@
 @section('content')
 <h1>Class Section Marks Register V-2</h1>
 
+	@foreach($clssecDetails as $clssecDetail)
+		@if($loop->first )
+			{{ dd($clssecDetail) }}
+		@endif
 
-
-
-
-
+	@endforeach
 
 
 
