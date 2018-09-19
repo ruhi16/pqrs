@@ -50,7 +50,7 @@
                             @endphp
                             <th colspan="{{ $mdInTerm }}" class="text-center">{{$ex->name}}</th>                         
                         @endforeach
-                        <th>Total/{{$typeTotal}}</th>
+                        <th>Total</th>
                         <th>Grade</th>
                       </tr>
                     </thead>

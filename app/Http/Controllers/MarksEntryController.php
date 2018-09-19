@@ -198,10 +198,63 @@ class MarksEntryController extends Controller
     public function clssecMarksRegisterv2($clssec_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $clsc = Clssec::find($clssec_id);
+        $clsbs = Clssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->get();
+
+        $exams = Exam::whereSession_id($ses->id)->get();
+        
+        
+        
+        $stdcrs = Studentcr::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->whereSection_id($clsc->section_id)
+            ->get();
+
+        $stdmarks = Marksentry::where('session_id', $ses->id)
+                    ->where('clssec_id', $clsc->id)
+                    ->get();
+        
+
+
+        $extpmdclsbs = Exmtypmodclssub::whereSession_id($ses->id)
+                            ->whereClss_id($clsc->clss_id)        
+                            ->get();
 
 
 
-        return "hello";
+        echo "Marks Entry Register " . "<br>";
+        echo "class: ".$clsc->clss->name .", section: ".$clsc->section->name . "<br>";
+        foreach($stdcrs as $stdcr){
+            echo "Name: ". $stdcr->studentdb->name ;            
+            foreach($clsbs as $clsb){
+                echo " ". $clsb->subject->code ;
+                foreach($exams as $exam){
+                    echo " ". $exam->id . ":" ;
+                    $extpmdclsb = $extpmdclsbs
+                            ->where('subject_id', $clsb->subject_id)
+                            ->where('exam_id', $exam->id)
+                            ->first()
+                            ;
+                    
+                    $stdmark = $stdmarks->where('studentcr_id', $stdcr->id)
+                                ->where('clssub_id', $clsb->id)
+                                ->where('exmtypmodclssub_id', $extpmdclsb->id)
+                                ->first()
+                                ;
+                    
+                    $obmark = $stdmark == NULL ? 'NA' : $stdmark->marks ;
+                    $flmark   = $extpmdclsb == NULL ? 'NA' : $extpmdclsb->fm ;
+                    echo $obmark ."/";
+                    echo $flmark;
+                }
+            }
+
+            echo  "<br>";
+
+        }
+        
+        //return "hello";
 
     }
 
