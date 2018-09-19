@@ -195,7 +195,15 @@ class MarksEntryController extends Controller
         ;
     }
 
+    public function clssecMarksRegisterv2($clssec_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clsc = Clssec::find($clssec_id);
 
+
+
+        return "hello";
+
+    }
 
     public function clssecstdMarksEntryForAllSubj($extpmdcl_id, $clsc_id){
         $ses = Session::whereStatus('CURRENT')->first();
