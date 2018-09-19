@@ -86,7 +86,7 @@ class compactMarkRegisterController extends Controller
                         ->where('section_id', $clssec->section_id)
                         ->get();
             
-        return view('CompactMarkRegister.compactMarkRegister')
+        return view('clssecCompactMarkRegister.compactMarkRegister')
             ->with('clssec', $clssec)
             ->with('clssubs', $clssubs)
             ->with('exams', $exams)

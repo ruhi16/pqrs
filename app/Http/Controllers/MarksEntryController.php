@@ -227,6 +227,8 @@ class MarksEntryController extends Controller
         echo "class: ".$clsc->clss->name .", section: ".$clsc->section->name . "<br>";
         foreach($stdcrs as $stdcr){
             echo "Name: ". $stdcr->studentdb->name ;            
+            $stdmarks = $stdmarks->where('studentcr_id', $stdcr->id);
+
             foreach($clsbs as $clsb){
                 echo " ". $clsb->subject->code ;
                 foreach($exams as $exam){
@@ -237,7 +239,7 @@ class MarksEntryController extends Controller
                             ->first()
                             ;
                     
-                    $stdmark = $stdmarks->where('studentcr_id', $stdcr->id)
+                    $stdmark = $stdmarks
                                 ->where('clssub_id', $clsb->id)
                                 ->where('exmtypmodclssub_id', $extpmdclsb->id)
                                 ->first()
@@ -255,6 +257,7 @@ class MarksEntryController extends Controller
         }
         
         //return "hello";
+        return view('clssecMarksRegister.clssecMarksRegisterv2');
 
     }
 
