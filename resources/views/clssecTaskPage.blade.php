@@ -45,8 +45,11 @@
     <td><a href="{{url('/clssec-MrkenPage',[$clssec->id])}}">Mark Entry Status</a></td>
     {{--  <td><a href="{{url('/exmtypclssubfmEntry',[$clssec->clss_id])}}">Full Mark Entry</a></td>  --}}
     <td>
-        <a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Mark Register</a><br>
-        <a href="{{url('/clssec-MarksRegisterv2',[$clssec->id])}}">Mark Register-V2</a>
+        <small>
+        <a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Mark Register-V1</a><br>
+        <a href="{{url('/clssec-MarksRegisterv2',[$clssec->id])}}">Mark Register-V2</a><br>
+        <a href="{{url('/clssec-MarksRegisterv3',[$clssec->id])}}">Mark Register-V3</a>
+        </small>
     </td>
     <td><a href="{{url('/clssec-CompactMarkRegister',[$clssec->id])}}">Comp Marks Register</a></td>
     <td><a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Individual Result</a></td>

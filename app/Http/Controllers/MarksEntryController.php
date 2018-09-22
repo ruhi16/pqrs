@@ -20,6 +20,7 @@ use App\Studentcr;
 use App\Clssub;
 use App\Clssec;
 use App\Grade;
+use App\Gradeparticular;
 use App\Teacher;
 use App\Clssteacher;
 
@@ -239,14 +240,15 @@ class MarksEntryController extends Controller
             $clssubDetails = [];
             foreach($clsbs as $clsb){
                 //echo " ". $clsb->subject->code ;                
+                $subjDetails = [];
 
                 $clssub = [];
-                $clssub['subid'] = $clsb->subject->id; 
-                $clssub['subname'] = $clsb->subject->name; 
-                $clssub['subcode'] = $clsb->subject->code; 
-                $clssub['subtype'] = $clsb->subject->extype->name; 
+                $clssub['subid']    = $clsb->subject->id; 
+                $clssub['subname']  = $clsb->subject->name; 
+                $clssub['subcode']  = $clsb->subject->code; 
+                $clssub['subtype']  = $clsb->subject->extype->name; 
                 
-                array_push($clssubDetails, $clssub);
+                //array_push($clssubDetails, $clssub);
                 
                 
                 $marksDetails = [];
@@ -275,11 +277,14 @@ class MarksEntryController extends Controller
                     array_push($marksDetails, $marks);
                 }
 
-                array_push($clssubDetails, $marksDetails);
+                array_push($subjDetails, $clssub);
+                array_push($subjDetails, $marksDetails);
+
+                array_push($clssubDetails, $subjDetails);
             }
 
             //array_push($clssecDetails, $clssubDetails);
-            $clssecStdcr['subj'] = $clssubDetails;
+            $clssecStdcr['subjs'] = $clssubDetails;
             //echo  "<br>";
             array_push($clssecDetails, $clssecStdcr);
         }
@@ -298,11 +303,52 @@ class MarksEntryController extends Controller
         // }
         
         
-        
+        // dd($clssecDetails);
         
         return view('clssecMarksRegister.clssecMarksRegisterv2')
-            ->with('clssecDetails', $clssecDetails);
+            ->with('clssecDetails', $clssecDetails)
+            ;
 
+    }
+
+    public function clssecMarksRegisterv3($clssec_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clsc = Clssec::find($clssec_id);
+        $clsbs = Clssub::whereSession_id($ses->id)
+            ->whereClss_id($clsc->clss_id)
+            ->get();
+
+        $studentcrs = Studentcr::whereSession_id($ses->id)
+                        ->where('clss_id', $clsc->clss_id)
+                        ->where('section_id', $clsc->section_id)
+                        ->get();
+
+        $marks = Marksentry::whereSession_id($ses->id)
+                    ->whereIn('studentcr_id', $studentcrs->pluck('id'))
+                    ->orderBy('studentcr_id')
+                    ->get();
+
+                    
+        $exams = Exam::whereSession_id($ses->id)->get();
+        $extypes = Extype::whereSession_id($ses->id)->get();
+        $extpmdclsbs = Exmtypmodclssub::whereSession_id($ses->id)
+                        ->where('clss_id', $clsc->clss_id)
+                        ->get();
+        $grades = Grade::whereSession_id($ses->id)->get();
+        $gradeparticular = Gradeparticular::whereSession_id($ses->id)->get();
+        $modes = Mode::whereSession_id($ses->id)->get();
+
+    return view('clssecMarksRegister.clssecMarksRegisterv3')
+            ->with('clssecMarks', $marks->sortBy('studentcr_id'))
+            ->with('studentcrs', $studentcrs->sortBy('studentdb_id'))
+            ->with('clssubs',$clsbs)
+            ->with('exams',$exams)
+            ->with('extypes',$extypes)
+            ->with('extpmdclsbs', $extpmdclsbs)
+            ->with('grades', $grades)
+            ->with('gradeparticular', $gradeparticular)
+            ->with('modes', $modes)
+            ;
     }
 
     public function clssecstdMarksEntryForAllSubj($extpmdcl_id, $clsc_id){
