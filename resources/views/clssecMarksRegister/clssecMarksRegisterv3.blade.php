@@ -65,32 +65,31 @@
 														
 													@endphp
 													@foreach($exams as $exam)
-														@php
-															//$mode_count = $extpmdclsb->where('exam_id', $exam->id)->count('mode_id');
-															$etmcs = $extpmdclsb->where('exam_id', $exam->id)->first();
-
-															$obtmark = $marks->where('exmtypmodclssub_id', $etmcs->id);															
+														@php															
+															//$etmcs = $extpmdclsb->where('exam_id', $exam->id);
+															//$obtmark = $marks->where('exmtypmodclssub_id', $etmcs->id);
 														@endphp
 														@if( $mode_count > 1 )
 															@foreach($modes as $mode)
 																@php
-																	$obmrk   = $obtmark->pluck('mode_id');
+																	//$obmrk   = $obtmark->where('mode_id', $mode->id)
 																	//$mark = $obmrk == NULL ? '' : ($obmrk->marks < 0 ? 'AB' : $obmrk->marks);
 																@endphp
 																<td class="text-center">
-																{{ $obmrk }}
+																{{--  {{ $obmrk }}  --}}
 																</td>
 															@endforeach
 														@else
 															@php
+																$etmcs = $extpmdclsb->where('exam_id', $exam->id)->first();
+																$obtmark = $marks->where('exmtypmodclssub_id', $etmcs->id);
+
 																$obtmark = $obtmark->first();
 																$obtmark = $obtmark == NULL ? '' : ($obtmark->marks < 0 ? 'AB' : $obtmark->marks);
 
 															@endphp
-															<td class="text-center">
-																{{--  Mode Count: {{ $mode_count }}  --}}
-																{{ $obtmark }}
-																{{--  /<small>{{ $etmcs->fm }}</small>  --}}
+															<td class="text-center">																
+																{{ $obtmark }}																
 															</td>
 														@endif
 													@endforeach
