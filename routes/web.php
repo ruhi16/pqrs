@@ -212,9 +212,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/clssub-submit', 'ClsSubController@clssubSubmit');
         Route::get('/clssubs-view', 'ClsSubController@clssubView');
         
-        Route::post('/clssubsView-ModalSubmit', 'ClsSubController@viewModalSubmit');
+        
+        //Ajax
         Route::post('/clssubsView-combineSubject', 'ClsSubController@viewModalSubmitAjax');
+        Route::post('/clssubsView-ModalSubmit', 'ClsSubController@viewModalSubmit');
 
+        
+        //Ajax
+        Route::post('/clssubsView-additionalSubject', 'ClsSubController@viewModalSubmitAjaxAddl');
+        Route::post('/clssubsView-ModalSubmitAddl', 'ClsSubController@viewModalSubmitAddl');
 
 
 

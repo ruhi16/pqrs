@@ -170,4 +170,72 @@ class ClsSubController extends Controller
         
         //return response()->json( ['sid'=> 'Ex:'. $str ]);
     }
+
+
+    public function viewModalSubmitAddl(Request $request){
+        $clsbids = explode('-', $request->clssAddl);
+        // $xx = Clssub::find($clsbids)->update(['combination_no', 0]);
+        print_r($clsbids);
+        foreach($clsbids as $clsbid){
+            $clsb = Clssub::find($clsbid);
+            $clsb->combination_no = 0;
+            //$clsb->save();
+            //echo "xx". $clsbid ;
+        }
+
+        if($request->subjAddl){            
+            $maxCombNo = Clssub::max('combination_no');//orderBy('combination_no', 'DESC')->first()->combination_no;
+            $minCombNo = Clssub::min('combination_no');
+            echo "MAX ID:". $maxCombNo;
+            echo "MIN ID:". $minCombNo;
+            foreach($request->subjAddl as $reqSubj){                
+                $subject = Clssub::find($reqSubj);
+                $subject->combination_no = ( $subject->combination_no == 0 ? ( $minCombNo - 1 ) : 
+                                                    ($subject->combination_no > 0 ? $subject->combination_no * (-1) : $subject->combination_no ) );
+                $subject->save();
+                echo "Hello";
+            }
+        }   
+        //return back();
+    }
+
+
+
+
+    public function viewModalSubmitAjaxAddl(Request $request){
+        //$subj = Subject::find($request['sid']);
+        $subject = Subject::find($request['sid']);
+        $subjects = Subject::where('extype_id', $subject->extype_id)
+            ->select('id')->get();
+
+
+        $clssub = Clssub::where('clss_id', $request['cid'])
+            ->where('subject_id', $request['sid'])
+            ->first();
+        $clssubs = Clssub::where('clss_id', $request['cid'])
+            ->where('combination_no', $clssub->combination_no)            
+            ->whereIn('subject_id', $subjects)
+            ->get();
+
+                
+        $status = False;
+        if($clssub->combination_no != 0){
+            $status = True;
+        }
+        foreach($clssubs as &$clssub){
+            $clssub['name'] = $clssub->subject->name;
+        
+            if($clssub->combination_no != 0){
+                $clssub['status'] = 'checked';
+            }else{
+                $clssub['status'] = '';
+            }
+            
+        }
+                
+        $jsonclssubs = json_encode($clssubs);
+        return response()->json($jsonclssubs);
+        
+        //return response()->json( ['sid'=> 'Ex:'. $str ]);
+    }
 }

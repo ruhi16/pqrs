@@ -16,323 +16,367 @@
 <div class="container">
 
 
-{{--  start of Class-Section Students Details  --}}
-<div class="panel panel-default">
-    <div class="panel-heading text-center"><b>Class-Section wise Total Students Detail</b></div>        
-    <div class="panel-body">
-        <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Particulars</th>
-                @foreach($clssecs->unique('clss_id')  as $clssec )
-                    <th class="text-center" colspan="{{ $clssecs->where('clss_id', $clssec->clss->id)->count() }}">
-                        {{ $clssec->clss->name }} 
-                    </th>
-                @endforeach
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Sections</th>
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <th class="text-center">
-                            {{ $clsc->section->name }}
-                            {{--  :{{ $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count()
-                              }}  --}}
-                        </th>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <td></td>
-            </tr>
-            {{--  //============================  --}}
-            
-            <tr>
-                <th>Boys </th>
-                @php $total = 0;  @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        @php $boys = 0; @endphp
-                        <td class="text-center">                            
-                            @php    
+
+
+<div class="panel-group" id="accordion">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">V - X Students Details </a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse"> {{-- class="in": it will open panel by default--}}
+        <div class="panel-body">
+        
+        
+        
+
+                    {{--  start of Class-Section Students Details  --}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center"><b>Class-Section wise Total Students Detail</b></div>        
+                        <div class="panel-body">
+                            <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Particulars</th>
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )
+                                        <th class="text-center" colspan="{{ $clssecs->where('clss_id', $clssec->clss->id)->count() }}">
+                                            {{ $clssec->clss->name }} 
+                                        </th>
+                                    @endforeach
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Sections</th>
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <th class="text-center">
+                                                {{ $clsc->section->name }}
+                                                {{--  :{{ $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count()
+                                                }}  --}}
+                                            </th>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <td></td>
+                                </tr>
+                                {{--  //============================  --}}
                                 
-                                foreach($stdcrsClsSecMF as $key => $abc){
-                                    $arr = explode('-', $key);                                   
+                                <tr>
+                                    <th>Boys </th>
+                                    @php $total = 0;  @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            @php $boys = 0; @endphp
+                                            <td class="text-center">                            
+                                                @php    
+                                                    
+                                                    foreach($stdcrsClsSecMF as $key => $abc){
+                                                        $arr = explode('-', $key);                                   
 
-                                    if( $arr[0] == $clsc->clss_id && 
-                                        $arr[1] == $clsc->section_id && 
-                                        $arr[2] == 'MALE'){
-                                            $boys = $abc;
-                                            
-                                    }
-                                }
-                                $total += $boys;
-                            @endphp
-                            {{ $boys }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-            <tr>
-                <th>Girls </th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        @php $girls = 0; @endphp
-                        <td class="text-center">                            
-                            @php    
-                                
-                                foreach($stdcrsClsSecMF as $key => $abc){
-                                    $arr = explode('-', $key);                                   
+                                                        if( $arr[0] == $clsc->clss_id && 
+                                                            $arr[1] == $clsc->section_id && 
+                                                            $arr[2] == 'MALE'){
+                                                                $boys = $abc;
+                                                                
+                                                        }
+                                                    }
+                                                    $total += $boys;
+                                                @endphp
+                                                {{ $boys }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Girls </th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            @php $girls = 0; @endphp
+                                            <td class="text-center">                            
+                                                @php    
+                                                    
+                                                    foreach($stdcrsClsSecMF as $key => $abc){
+                                                        $arr = explode('-', $key);                                   
 
-                                    if( $arr[0] == $clsc->clss_id && 
-                                        $arr[1] == $clsc->section_id && 
-                                        $arr[2] == 'FEMALE'){
-                                            $girls = $abc;
-                                            
-                                    }
-                                }
-                                $total += $girls;
-                            @endphp
-                            {{ $girls }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-            {{--  //============================  --}}
-            <tr>
-                <th>Total Students </th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                        if( $arr[0] == $clsc->clss_id && 
+                                                            $arr[1] == $clsc->section_id && 
+                                                            $arr[2] == 'FEMALE'){
+                                                                $girls = $abc;
+                                                                
+                                                        }
+                                                    }
+                                                    $total += $girls;
+                                                @endphp
+                                                {{ $girls }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>Total Students </th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            <b>{{ $clscStd }}</b>
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-             {{--  //============================  --}}
-            <tr>
-                <th>General </th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center text-primary">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                $total += $clscStd;
+                                                @endphp
+                                                <b>{{ $clscStd }}</b>
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>General </th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center text-primary">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            {{ $clscStd }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-             {{--  //============================  --}}
-            <tr>
-                <th>SC</th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center text-info">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>SC</th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center text-info">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            {{ $clscStd }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-             {{--  //============================  --}}
-            <tr>
-                <th>ST </th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center text-warning">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>ST </th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center text-warning">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            {{ $clscStd }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-            {{--  //============================  --}}
-            <tr>
-                <th>OBC-A(Muslim) </th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center text-primary">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>OBC-A(Muslim) </th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center text-primary">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            {{ $clscStd }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-             {{--  //============================  --}}
-            <tr>
-                <th>OBC-B(Hindu)</th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center text-info">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>OBC-B(Hindu)</th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center text-info">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            {{ $clscStd }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-             {{--  //============================  --}}
-            <tr>
-                <th>Hindu </th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center text-danger">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>Hindu </th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center text-danger">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            {{ $clscStd }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-             {{--  //============================  --}}
-            <tr>
-                <th>Muslim </th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center text-warning">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>Muslim </th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center text-warning">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            {{ $clscStd }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-             {{--  //============================  --}}
-            <tr>
-                <th>Other </th>
-                @php $total = 0; @endphp
-                @foreach($clssecs->unique('clss_id')  as $clssec )                
-                    @foreach($clssecs as $clsc)                    
-                        @if($clsc->clss_id == $clssec->clss->id)
-                        <td class="text-center">                            
-                            @php
-                            $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
-                                    ->where('section_id', $clsc->section->id)
-                                    ->count();
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>Other </th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
 
-                            $total += $clscStd;
-                            @endphp
-                            {{ $clscStd }}
-                        </td>
-                        @endif                    
-                    @endforeach                    
-                
-                @endforeach
-                <th class="text-center">{{ $total }}</th>
-            </tr>
-        </tbody>
-        </table>
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {{--  end of Class-Section Students Details  --}}
+
+
+                    {{--  show the name of methods with corresponding methods name  --}}
+                    {{--  @foreach($controllers as $c)
+                        {{ $c }}<br>
+                    @endforeach  --}}
+
+
+        </div>
+      </div>
     </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Admin Settings</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body"></div>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Admin Task Pane</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body"></div>
+      </div>
+    </div>
+  </div> 
+
 </div>
-{{--  end of Class-Section Students Details  --}}
-
-
-{{--  show the name of methods with corresponding methods name  --}}
-{{--  @foreach($controllers as $c)
-    {{ $c }}<br>
-@endforeach  --}}
-
-
 
 
 
@@ -389,8 +433,8 @@
                     <a class="btn btn-success" href="{{url('/exmtypclssub-view')}}">Exam - Type - Class - Subject View (X)</a>                      --}}
                     {{--  <a class="btn btn-primary" href="{{url('/gradedescription')}}">Grade Description Entry</a>                    
                     <a class="btn btn-primary" href="{{url('/gradedescription-view')}}">Grade Description View</a>  --}}
-                    <a class="btn btn-primary" href="{{url('/studentdb')}}">Students Detail View</a>                    
-                    <a class="btn btn-primary" href="{{url('/studentdbmultipage-listToUpdateSection')}}">New Adm Student List for Section</a>
+                    {{--**  <a class="btn btn-primary" href="{{url('/studentdb')}}">Students Detail View</a>                      --}}
+                    {{--**  <a class="btn btn-primary" href="{{url('/studentdbmultipage-listToUpdateSection')}}">New Adm Student List for Section</a>  --}}
                     {{--  
                     <a class="btn btn-primary" href="{{url('/clssec-TaskPage')}}">Students Info Entry View</a>                    
                     <a class="btn btn-primary" href="{{url('/clssecs')}}">New Admission Students Details Entry</a>
@@ -413,7 +457,7 @@
                     
 
 
-                    <br>
+                    {{--  <br>  --}}
                     <a class="btn btn-default" href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
 
                     {{--  //first: exam_id, second: extype_id (summative=2)  --}}
@@ -456,7 +500,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     @foreach($clss as $cls)
-                        <li><a href="{{ url('/exmtypmodclssubfmEntry', [$cls->id]) }}"> {{ $cls->name}} Class</a></li>
+                        <li><a href="{{ url('/exmtypmodclssubfmEntry', [$cls->id]) }}"> {{ $cls->name }} Class</a></li>
                         
 
                     @endforeach
@@ -479,9 +523,9 @@
 
 
 
-                    <button type="button" class="btn btn-primary btnModal" data-toggle="modal" data-target="#exampleModalLong">
+                    {{--  <button type="button" class="btn btn-primary btnModal" data-toggle="modal" data-target="#exampleModalLong">
                             Launch demo modal
-                    </button>
+                    </button>  --}}
             </div>
         </div>
     </div>
