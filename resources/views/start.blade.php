@@ -490,9 +490,8 @@
                     </ul>
                     </div>
 
-                    <a class="btn btn-warning" href="{{ url('/exmtypmodcls-Taskpane') }}" >Exam Mode Selection</a>
+                    <!-- <a class="btn btn-warning" href="{{ url('/exmtypmodcls-Taskpane') }}" >Exam Mode Selection</a> -->
                     
-                    <br>
                     <div class="dropdown">
                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Class wise Full Marks Assignment
