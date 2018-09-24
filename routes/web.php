@@ -193,8 +193,8 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/clssubjfm-view/{clss_id}', 'SubjectFMController@clssubjfmView');
 
         //all class mode selected data simultaniously
-        Route::get('/exmtypmodcls-Taskpane', 'ModeController@Taskpane');
-        Route::post('/exmtypmodcls-taskpaneSubmit','ModeController@taskpaneSubmit');
+        //Route::get('/exmtypmodcls-Taskpane', 'ModeController@Taskpane');
+        //Route::post('/exmtypmodcls-taskpaneSubmit','ModeController@taskpaneSubmit');
 
         //for each class class individually
         Route::get('/exmtypmodcls-Assign/{clss_id}', 'ModeController@exmtypmodclsAssign');
