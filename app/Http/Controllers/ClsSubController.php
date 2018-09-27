@@ -102,7 +102,7 @@ class ClsSubController extends Controller
         $extps = Extype::all();
 
 
-        return view('clssubView')
+        return view('clssub.clssubView')
         ->with('sessions', $sessions) 
         ->with('clssubs', $clssubs) 
         ->with('clss', $clss) 
@@ -195,8 +195,8 @@ class ClsSubController extends Controller
                 $subject->save();
                 echo "Hello";
             }
-        }   
-        //return back();
+        }
+        return back();
     }
 
 
@@ -237,5 +237,14 @@ class ClsSubController extends Controller
         return response()->json($jsonclssubs);
         
         //return response()->json( ['sid'=> 'Ex:'. $str ]);
+    }
+
+
+
+    public function clssubViewRefresh(Request $request, $clss_id){
+        Clssub::where('clss_id', $clss_id)->update(['combination_no'=>0]);
+
+
+        return back();
     }
 }

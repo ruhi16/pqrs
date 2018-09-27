@@ -222,7 +222,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/clssubsView-additionalSubject', 'ClsSubController@viewModalSubmitAjaxAddl');
         Route::post('/clssubsView-ModalSubmitAddl', 'ClsSubController@viewModalSubmitAddl');
 
-
+        Route::get('/clssubsView-ModalSubmitRefresh/{clss_id}', 'ClsSubController@clssubViewRefresh');
 
         
         Route::get('/clssecs', 'ClsSecController@clssec')->middleware('FinMidware:clssecs-clsses-sections');
