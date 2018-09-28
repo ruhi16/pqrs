@@ -8,8 +8,6 @@
 @section('content')
 <h1>Class Section Marks Register V-2</h1>
 
-	{{--  {{ print_r($clssecDetails) }}  --}}
-
 <table class="table table-bordered">
 	<thead>
 		<tr>
@@ -23,45 +21,44 @@
 	
 	@foreach($clssecDetails as $clssecDetail)
 		<tr>
-			{{--  {{ print_r($clssecDetail) }}<br><br>  --}}
 			@foreach($clssecDetail as $clssec)				
 				@if($loop->first)
 				<td>
-					{{--  @php $stdDetails = $clssec; @endphp  --}}					 
-					{{--  @foreach($clssec as $k => $v)
-						{{ $k }} => {{ $v }}, 
-					@endforeach  --}}
-					{{--  {{ $clssec->id }}  --}}
-					{{ print_r($clssec) }}
+					<table class='table table-bordered'>						
+						<tr>
+							@foreach($clssec as $cs)
+								<td>{{ $cs }}</td>
+							@endforeach
+						</tr>
+					</table>
 				</td>
 				@else 
 				<td>
+					<table class='table table-bordered'>
 					@foreach($clssec as $subject)
-
+					<tr>
 						@foreach($subject as $subjDetail)
 							@if($loop->first)
-								{{ print_r($subjDetail) }}
+								@foreach($subjDetail as $sDet)
+									<td>{{ $sDet }}</td>
+								@endforeach
 							@endif
-							{{--  <br>  --}}
 							@if($loop->last)
-								{{ print_r($subjDetail) }}
-								{{--  @foreach($subjDetail as $exam)
-									<br>{{ print_r($exam) }}
-								@endforeach  --}}
+								@foreach($subjDetail as $exam)							
+										@foreach($exam as $ex)
+											<td>{{ $ex }}</td>
+										@endforeach									
+								@endforeach
 							@endif
-							<br>
 						@endforeach
-						<br><br>
+						</tr>
 					@endforeach
+					</table>
 				</td>
-				@endif
-				
-			@endforeach
-			
+				@endif				
+			@endforeach			
 			</tr>
 	@endforeach
-
-
 	</tbody
 </table>
 

@@ -257,24 +257,40 @@ class MarksEntryController extends Controller
                     //echo " ". $exam->id . ":" ;
                     $extpmdclsb = $extpmdclsbs
                             ->where('subject_id', $clsb->subject_id)
-                            ->where('exam_id', $exam->id)
-                            ->first()
+                            ->where('exam_id', $exam->id)                            
                             ;
                     
                     $stdmark = $stdmarks
                                 ->where('clssub_id', $clsb->id)
-                                ->where('exmtypmodclssub_id', $extpmdclsb->id)
-                                ->first()
+                                ->where('exmtypmodclssub_id', $extpmdclsb->first()->id)                                
                                 ;
                     
-                    $obmark = $stdmark == NULL ? 'NA' : $stdmark->marks ;
-                    $flmark   = $extpmdclsb == NULL ? 'NA' : $extpmdclsb->fm ;
-                    //echo $obmark ."/";
-                    //echo $flmark;
-                    $marks['exam'] = $exam->name;
-                    $marks['obtm'] = $obmark;
-                    $marks['fulm'] = $flmark;
-                    array_push($marksDetails, $marks);
+                    if($extpmdclsb->count() > 1){
+                        $obmark = $stdmark;//->first() == NULL ? 'NA' : $stdmark->first()->marks ;
+                        $flmark   = $extpmdclsb;//->first() == NULL ? 'NA' : $extpmdclsb->first()->fm ;
+                        
+                        $marks['exam'] = $exam->name;
+                        foreach($extpmdclsb as $extpmdclsbmode){
+                            $i = $extpmdclsbmode->mode_id;
+
+                            $marks['obtm'.$i] = $obmark->where('exmtypmodclssub_id', $extpmdclsbmode->id)->first() == NULL ? 'NA' 
+                                        : $obmark->where('exmtypmodclssub_id', $extpmdclsbmode->id)->first()->marks;
+
+                            $marks['fulm'.$i] = $flmark->where('id', $extpmdclsbmode->id)->first() == NULL ? 'NA'
+                                        : $flmark->where('id', $extpmdclsbmode->id)->first()->fm;
+                            
+                        }
+
+                        array_push($marksDetails, $marks);
+                    }else{
+                        $obmark = $stdmark->first() == NULL ? 'NA' : $stdmark->first()->marks ;
+                        $flmark   = $extpmdclsb->first() == NULL ? 'NA' : $extpmdclsb->first()->fm ;
+
+                        $marks['exam'] = $exam->name;
+                        $marks['obtm'] = $obmark;
+                        $marks['fulm'] = $flmark;
+                        array_push($marksDetails, $marks);
+                    }
                 }
 
                 array_push($subjDetails, $clssub);
@@ -283,28 +299,12 @@ class MarksEntryController extends Controller
                 array_push($clssubDetails, $subjDetails);
             }
 
-            //array_push($clssecDetails, $clssubDetails);
+            
             $clssecStdcr['subjs'] = $clssubDetails;
-            //echo  "<br>";
+            
             array_push($clssecDetails, $clssecStdcr);
         }
-
-        //dd($clssecDetails);
-        
-        //return "hello";
-        // foreach($clssecDetails as $clssecDetail){
-        //     //echo print_r($clssecDetail) ."<br>";
-        //     //echo $clssecDetails['stdcr']['name'] ;
-        //     foreach($clssecDetail as $clssec){
-        //         print_r($clssec); echo "<br>";
-
-        //         // echo implode(',', $clssec);
-        //     }
-        // }
-        
-        
-        // dd($clssecDetails);
-        
+      
         return view('clssecMarksRegister.clssecMarksRegisterv2')
             ->with('clssecDetails', $clssecDetails)
             ;
