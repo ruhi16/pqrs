@@ -33,7 +33,9 @@
                     <a href="{{ url('/exmtypmodclssubfmEntry-View', [$cls->id]) }}">{{$cls->name}} Class FM View</a>
                 {{--  <a href="{{ url('/exmtypclssubfmView', [$cls->id])}}">Assign Full Marks for class {{ $cls->name }}</a>  --}}
             </td>
-            <td></td>
+            <td class='text-center'>
+                <a href="{{ url('/classPromotionalRulesEntry', [$cls->id]) }}">{{$cls->name}} Class Promotional Rules Update</a>
+            </td>
         </tr>
         @endforeach
     </tbody>

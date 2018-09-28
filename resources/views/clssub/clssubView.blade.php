@@ -8,95 +8,17 @@
 @section('content')
 <h1>Class Subject View...</h1>
 
-<div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">V - X Students Subject Detaisl and Define Combined / Additional Subjects </a>
-        </h4>
-      </div>
-      <div id="collapse1" class="panel-collapse collapse"> {{-- class="in": it will open panel by default--}}
-        <div class="panel-body">
-
-
-
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                
-                                @foreach($clss as $cls)
-                                    <th>
-                                        <a href="{!! url('/clssubsView-ModalSubmitRefresh',[$cls->id]) !!}" class="btn btn-primary btn-xs">Refresh</a>
-                                        <br>{{ $cls->name }}                   
-                                        = Subjects: {{ $clssubs->where('clss_id', ($cls->id))->count() }}
-                                    </th>
-                                @endforeach
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($extps as $extp)
-                                <tr>
-                                    <td>{{ $extp->name }}</td>
-                                    @foreach($clss as $cls)
-                                        <td>                        
-                                            <ul>
-                                                @foreach($clssubs as $clssub)
-                                                    @if( $clssub->clss_id == $cls->id && $extp->id == $clssub->subject->extype_id)
-                                                        <li>
-                                                            {{ $clssub->subject->name }}{{ $clssub->subject->combination_id }} 
-                                                            <a  href="#" class="btn-comb" data-toggle="modal" data-target="#exampleModal" 
-                                                                data-sbid="{{ $clssub->subject->id }}"
-                                                                data-clid="{{ $clssub->clss->id }}">Comb</a>
-                                                            /
-                                                            <a  href="#" class="btn-addl" data-toggle="modal" data-target="#exampleModalAddl" 
-                                                                data-sbid="{{ $clssub->subject->id }}"
-                                                                data-clid="{{ $clssub->clss->id }}">Addl</a>
-                                                            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                                Launch demo modal
-                                                            </button> --}}
-                                                            {{-- <button class="btn btn-primary btn-sm">C</button> --}}
-                                                        </li>
-                                                        
-                                                    @endif
-                                                @endforeach
-                                            </ul>
-                                            
-                                        </td>
-                                    @endforeach
-                                </tr>
-                            @endforeach
-                            {{--  @foreach($clssubs as $clssub)
-                            <tr>
-                                <td>{{$clssub->id}}</td>
-                                <td>{{ $clss->where('id', ($clssub->clss_id))->first()->name }}</td>
-                                <td>{{ $subjects->where('id', ($clssub->subject_id))->first()->name }}</td>
-                                @foreach($clss as $cls)
-                                    <td>{{ $cls->name }}</td>
-                                @endforeach
-                            </tr>
-                            @endforeach  --}}
-                        </tbody>
-                    </table>
-
-
-        </div>
-      </div>
-    </div>
- 
-
-
-
-
-
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Exam Type</th>
-            <th></th>
+            <th>#</th>
+            
             @foreach($clss as $cls)
-                <th class='text-center'>                    
-                    {{ $cls->name }}: Subjects
+                <th>
+                    <a href="{!! url('/clssubsView-ModalSubmitRefresh',[$cls->id]) !!}" class="btn btn-primary btn-xs">Refresh</a>
+                    <br>{{ $cls->name }}                   
+                    = Subjects: {{ $clssubs->where('clss_id', ($cls->id))->count() }}
                 </th>
             @endforeach
         </tr>
@@ -104,8 +26,68 @@
     <tbody>
         @foreach($extps as $extp)
             <tr>
-                <td rowspan='3'>{{ $extp->name }}</td>
-                <td>Regular</td>
+                <td>{{ $extp->name }}</td>
+                @foreach($clss as $cls)
+                    <td>                        
+                        <ul>
+                            @foreach($clssubs as $clssub)
+                                @if( $clssub->clss_id == $cls->id && $extp->id == $clssub->subject->extype_id)
+                                    <li>
+                                        {{ $clssub->subject->name }}{{ $clssub->subject->combination_id }} 
+                                        <a  href="#" class="btn-comb" data-toggle="modal" data-target="#exampleModal" 
+                                            data-sbid="{{ $clssub->subject->id }}"
+                                            data-clid="{{ $clssub->clss->id }}">Comb</a>
+                                        /
+                                        <a  href="#" class="btn-addl" data-toggle="modal" data-target="#exampleModalAddl" 
+                                            data-sbid="{{ $clssub->subject->id }}"
+                                            data-clid="{{ $clssub->clss->id }}">Addl</a>
+                                        {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                            Launch demo modal
+                                        </button> --}}
+                                        {{-- <button class="btn btn-primary btn-sm">C</button> --}}
+                                    </li>
+                                    
+                                @endif
+                            @endforeach
+                        </ul>
+                        
+                    </td>
+                @endforeach
+            </tr>
+        @endforeach
+        {{--  @foreach($clssubs as $clssub)
+        <tr>
+            <td>{{$clssub->id}}</td>
+            <td>{{ $clss->where('id', ($clssub->clss_id))->first()->name }}</td>
+            <td>{{ $subjects->where('id', ($clssub->subject_id))->first()->name }}</td>
+            @foreach($clss as $cls)
+                <td>{{ $cls->name }}</td>
+            @endforeach
+        </tr>
+        @endforeach  --}}
+    </tbody>
+</table>
+
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            
+            @foreach($clss as $cls)
+                <th class='text-center'>                    
+                    <br>{{ $cls->name }}                   
+                    Subjects
+                </th>
+            @endforeach
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($extps as $extp)
+            <tr>
+                <td>{{ $extp->name }}</td>
                 @foreach($clss as $cls)
                     <td>                        
                         <ul>
@@ -119,41 +101,15 @@
                         </ul>                        
                     </td>
                     
-                @endforeach                
-            </tr>
-            <tr>
-                <td>Combined</td>
-                @foreach($clss as $cls)
-                    <td>
-                    <ul>
-                    @foreach($clssubs as $clssub)
-                        @if( $clssub->clss_id == $cls->id && $extp->id == $clssub->subject->extype_id && $clssub->combination_no > 0)
-                            <li>{{ $clssub->subject->name }},</li>
-                        @endif
-                    @endforeach
-                    </ul>
-                    </td>
                 @endforeach
+                
             </tr>
-            <tr>
-                <td>Additional</td>
-                @foreach($clss as $cls)
-                    <td>
-                    <ul>
-                    @foreach($clssubs as $clssub)
-                        @if( $clssub->clss_id == $cls->id && $extp->id == $clssub->subject->extype_id && $clssub->combination_no < 0)
-                            <li>{{ $clssub->subject->name }},</li>
-                        @endif
-                    @endforeach
-                    </ul>
-                    </td>
-                @endforeach
-            </tr>
+
         @endforeach
                 
     </tbody>
 </table>
-<p>N.B.: Atmost One Comination Subject(may be combination of 2 or 3 or more subjects) and Atmost One Additional Subject could be taken.</p>
+
 
 
 <!-- Modal Combine Subject -->

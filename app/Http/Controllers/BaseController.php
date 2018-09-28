@@ -171,6 +171,24 @@ class BaseController extends Controller
         return back();
         // return $teacher_id."=".$etmcs."<br>".$clsc->clss->id."<br>".$teacher."<br>".$anscdistTeacher;
     }
+
+
+    public function classPromotionalRulesEntry(Request $request, $clss_id){
+        $ses = Session::whereStatus('CURRENT')->first();     
+        
+        $clss  = Clss::find($clss_id);
+        
+        return view('exmtypclssubs.classPromotionalRulesEntry')
+            ->with('clss', $clss)
+        ;
+    }
+
+
+
+
+
+
+
 // old methods
     // public function exmtypclssub(){
     //     $exams = Exam::all();
