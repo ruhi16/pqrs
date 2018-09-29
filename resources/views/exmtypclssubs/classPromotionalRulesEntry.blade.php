@@ -63,7 +63,7 @@
                             ->sum('fm');
                         @endphp
                         {{
-                          $extp_fm
+                          $extp_fm or 'NA'
                         }}
                         <input type='hidden' name='{{ $extp_name }}sfm' value='{{ $extp_fm }}'>
                   </td>
@@ -77,7 +77,7 @@
               @endif
               <td class="text-center">
                 @foreach($extps as $extp)
-                    {{ $extp->name }} - {{ $clspromdetails->where('extype_id', $extp->id)->first()->allowableds }}, 
+                    {{ $extp->name }} - {{ $clspromdetails->where('extype_id', $extp->id)->first()->allowableds or 'NA'}}, 
                 @endforeach
               </td>
             </tr>
