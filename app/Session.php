@@ -53,4 +53,8 @@ class Session extends Model
         return $this->hasMany('App\Resultcr');
     }
 
+    public function promotionalrules(){
+        return $this->hasMany('App\Promotionalrule');
+    }
+
 }

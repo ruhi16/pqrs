@@ -282,7 +282,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/exmtypclssubfmView/{clss_id}', 'BaseController@exmtypclssubfmView');
         Route::post('/exmtypclssubfmEntry-submit', 'BaseController@exmtypclssubfmEntrySubmit');
 
-        Route::get('/classPromotionalRulesEntry/{clss_id}', 'BaseController@classPromotionalRulesEntry');
+        Route::get ('/classPromotionalRulesEntry/{clss_id}', 'BaseController@classPromotionalRulesEntry');
+        Route::post('/classPromotionalRulesEntry-Submit', 'BaseController@classPromotionalRulesEntrySubmit');
         
 
         Route::get('/exmtypmodclssubfmEntry/{clss_id}', 'ModefmController@exmtypmodclssubfmEntry');

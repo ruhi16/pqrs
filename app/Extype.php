@@ -39,4 +39,8 @@ class Extype extends Model
     public function resultcrs(){
         return $this->hasMany('App\Resultcr');
     }
+
+    public function promotionalrule(){
+        return $this->belongsTo('App\Promotionalrule');
+    }
 }

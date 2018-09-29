@@ -71,4 +71,8 @@ class Clss extends Model
     public function resultcrs(){
         return $this->hasMany('App\Resultcr');
     }
+
+    public function promotionalrules(){
+        return $this->hasMany('App\Promotionalrule');
+    }
 }

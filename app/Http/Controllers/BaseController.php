@@ -15,6 +15,8 @@ use App\Mode;
 
 use App\Studentdb;
 use App\Studentcr;
+use App\Resultcr;
+use App\Promotionalrule;
 
 use App\Teacher;
 use App\Clssteacher;
@@ -174,14 +176,66 @@ class BaseController extends Controller
 
 
     public function classPromotionalRulesEntry(Request $request, $clss_id){
-        $ses = Session::whereStatus('CURRENT')->first();     
-        
+        $ses = Session::whereStatus('CURRENT')->first();        
         $clss  = Clss::find($clss_id);
-        
+
+        $extps = Extype::where('session_id', $ses->id)->get();
+
+
+        $clssubs = Clssub::whereClss_id($clss_id)->get();
+
+        $clssubexts = Clssub::select('clssubs.id','clssubs.clss_id','clssubs.subject_id','clssubs.combination_no','subjects.extype_id')
+                ->join('subjects', 'clssubs.subject_id','=','subjects.id')
+                ->where('clssubs.session_id', $ses->id)
+                ->get();
+
+        $extpmdclsbs = Exmtypmodclssub::whereSession_id($ses->id)
+                   ->whereClss_id($clss_id)->get();
+
+        $extpmdcls = Exmtypmodcls::whereSession_id($ses->id)
+                   ->whereClss_id($clss_id)->get();
+
+
         return view('exmtypclssubs.classPromotionalRulesEntry')
             ->with('clss', $clss)
+            ->with('extps', $extps)
+            ->with('clssubs', $clssubs)            
+            ->with('clssubexts', $clssubexts)
+            ->with('extpmdclsbs', $extpmdclsbs)
         ;
     }
+
+    public function classPromotionalRulesEntrySubmit(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();   
+        $extps = Extype::where('session_id', $ses->id)->get();
+
+        $clss = Clss::find($request->clss_id);
+        foreach($extps as $extp){
+            $clspromrule = Promotionalrule::firstOrNew(['session_id' => $ses->id,
+                                    'clss_id' => $clss->id,
+                                    'extype_id' => $extp->id]);
+            $clspromrule->extype_id = $extp->id;
+            
+            $strS = $extp->name.'sno';
+            $clspromrule->noofsubjs = $request->$strS;
+
+            $strD = $extp->name.'Ds';
+            $clspromrule->allowableds = $request->$strD;
+
+            $strF = $extp->name.'sfm';
+            $clspromrule->fullmarks = $request->$strF;
+            
+            $clspromrule->description = '';
+            $clspromrule->status = '';
+            $clspromrule->remarks = '';
+
+            $clspromrule->save();
+       
+        }
+
+
+       return back();
+    }   
 
 
 
