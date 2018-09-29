@@ -195,6 +195,8 @@ class BaseController extends Controller
         $extpmdcls = Exmtypmodcls::whereSession_id($ses->id)
                    ->whereClss_id($clss_id)->get();
 
+        $clspromdetails = Promotionalrule::where('session_id', $ses->id)
+                            ->where('clss_id', $clss_id)->get();
 
         return view('exmtypclssubs.classPromotionalRulesEntry')
             ->with('clss', $clss)
@@ -202,6 +204,7 @@ class BaseController extends Controller
             ->with('clssubs', $clssubs)            
             ->with('clssubexts', $clssubexts)
             ->with('extpmdclsbs', $extpmdclsbs)
+            ->with('clspromdetails', $clspromdetails)
         ;
     }
 

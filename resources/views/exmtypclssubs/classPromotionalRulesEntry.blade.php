@@ -24,7 +24,7 @@
           <th class="text-center">{{ $extp->name }} - Total Subjects</th>          
           <th class="text-center">Full Marks</th>
       @endforeach
-      <th class="text-center">Total Subjects</th>
+      <th class="text-center">Allowabel Ds</th>
     </tr>
   </thead>
   <tbody>                 
@@ -75,7 +75,11 @@
                   <td class="text-center"></td>
                 @endfor
               @endif
-              <td class="text-center"></td>
+              <td class="text-center">
+                @foreach($extps as $extp)
+                    {{ $extp->name }} - {{ $clspromdetails->where('extype_id', $extp->id)->first()->allowableds }}, 
+                @endforeach
+              </td>
             </tr>
           @endif
           @endforeach
