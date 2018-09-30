@@ -183,14 +183,21 @@ class BaseController extends Controller
 
 
         $clssubs = Clssub::whereClss_id($clss_id)->get();
-
-        $clssubexts = Clssub::select('clssubs.id','clssubs.clss_id','clssubs.subject_id','clssubs.combination_no','subjects.extype_id')
-                ->join('subjects', 'clssubs.subject_id','=','subjects.id')
-                ->where('clssubs.session_id', $ses->id)
-                ->get();
-
-        $extpmdclsbs = Exmtypmodclssub::whereSession_id($ses->id)
-                   ->whereClss_id($clss_id)->get();
+        //echo $clssubs->first()->clss_id;
+        $clssubexts = Clssub::where('clssubs.session_id', $ses->id)
+                        ->where('clss_id', $clss_id)
+                        ->join('subjects', 'clssubs.subject_id','=','subjects.id')
+                        ->select('clssubs.id','clssubs.clss_id',
+                        'clssubs.subject_id','clssubs.combination_no',
+                        'subjects.extype_id')                       
+                        ->get();
+        
+        $extpmdclsbs = Exmtypmodclssub::where('exmtypmodclssubs.session_id', $ses->id)
+                            ->where('exmtypmodclssubs.clss_id', $clss_id)
+                            ->join('clssubs', 'exmtypmodclssubs.subject_id', '=', 'clssubs.subject_id')
+                            ->where('clssubs.clss_id', '=', $clss_id)
+                            ->get();
+       
 
         $extpmdcls = Exmtypmodcls::whereSession_id($ses->id)
                    ->whereClss_id($clss_id)->get();
@@ -222,16 +229,17 @@ class BaseController extends Controller
             $strS = $extp->name.'sno';
             $clspromrule->noofsubjs = $request->$strS;
 
-            $strD = $extp->name.'Ds';
-            $clspromrule->allowableds = $request->$strD;
-
             $strF = $extp->name.'sfm';
             $clspromrule->fullmarks = $request->$strF;
+
+            $strD = $extp->name.'Ds';
+            $clspromrule->allowableds = $request->$strD;            
             
             $clspromrule->description = '';
             $clspromrule->status = '';
             $clspromrule->remarks = '';
 
+            //echo $clspromrule;
             $clspromrule->save();
        
         }

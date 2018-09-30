@@ -57,9 +57,9 @@ class compactMarkRegisterController extends Controller
         //     echo $xxx ."<br>";
         // }
 
-        $exams = Exam::all();
-        $extps = Extype::all();
-        $modes = Mode::all();
+        $exams = Exam::whereSession_id($ses->id)->get();
+        $extps = Extype::whereSession_id($ses->id)->get();
+        $modes = Mode::whereSession_id($ses->id)->get();
         
         $etmcss = Exmtypmodclssub::whereSession_id($ses->id)
                     ->where('clss_id', $clssec->clss_id)                                        
@@ -72,7 +72,7 @@ class compactMarkRegisterController extends Controller
                     ->select('marksentries.*', 'clssubs.combination_no', 'clssubs.subject_id')
                     ->orderBy('studentcr_id')
                     ->get();
-
+        //dd($stdmarks);
         $stdcrs = Studentcr::whereSession_id($ses->id)
                     ->where('clss_id', $clssec->clss_id)
                     ->where('section_id', $clssec->section_id)

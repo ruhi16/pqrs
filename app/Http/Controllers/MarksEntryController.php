@@ -44,11 +44,13 @@ class MarksEntryController extends Controller
         $extpmdcls = Exmtypmodcls::whereSession_id($ses->id)
                    ->whereClss_id($clssec->clss_id)->get();
         
-        $exm = Exam::all();
-        $modes = Mode::all();
+        $exm = Exam::whereSession_id($ses->id)->get();
+        $modes = Mode::whereSession_id($ses->id)->get();
         $clsb = Clssub::whereClss_id($clssec->clss_id)->get();
 
-        $stdmrk = Marksentry::whereSession_id($ses->id)->get();
+        $stdmrk = Marksentry::whereSession_id($ses->id)
+                    ->where('clssec_id', $clssec->id)
+                    ->get();
         
         return view('clssecMrkenPage')
         ->withExtpcls($extpcls) 
@@ -178,8 +180,10 @@ class MarksEntryController extends Controller
         //$etclsbfm = Extclssubfmpm::all();
 
 
-        $mrks = Marksentry::whereSession_id($ses->id)->get();
-
+        $mrks = Marksentry::whereSession_id($ses->id)
+                    ->where('clssec_id', $clsc->id)
+                    ->get();
+        //dd($mrks);
 
         return view('clssecMarksRegister')
         ->withStdcrs($stdcrs)

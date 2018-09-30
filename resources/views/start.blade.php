@@ -220,6 +220,29 @@
                                     
                                     @endforeach
                                     <th class="text-center">{{ $total }}</th>
+                                </tr>                                
+                                {{--  //============================  --}}
+                                <tr>
+                                    <th>PH (Phy Ch)</th>
+                                    @php $total = 0; @endphp
+                                    @foreach($clssecs->unique('clss_id')  as $clssec )                
+                                        @foreach($clssecs as $clsc)                    
+                                            @if($clsc->clss_id == $clssec->clss->id)
+                                            <td class="text-center text-warning">                            
+                                                @php
+                                                $clscStd = $stdcrs->where('clss_id',$clsc->clss->id)
+                                                        ->where('section_id', $clsc->section->id)
+                                                        ->count();
+
+                                                $total += $clscStd;
+                                                @endphp
+                                                {{ $clscStd }}
+                                            </td>
+                                            @endif                    
+                                        @endforeach                    
+                                    
+                                    @endforeach
+                                    <th class="text-center">{{ $total }}</th>
                                 </tr>
                                 {{--  //============================  --}}
                                 <tr>

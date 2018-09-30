@@ -125,20 +125,21 @@
         
   
 
-<h3>Class wise Compact Subject Details</h3>
+<h3>Class wise Students Compact Marks Details</h3>
 
 <table class="table table-bordered">
   <thead class="thead-light">
     <tr>
       <th>Sl</th>
-      <th>Class-Sec-Roll</th>
-      <th>Students Name</th>
+      <th>Name Class-Sec-Roll</th>
+      {{--  <th>Students Name</th>  --}}
       @foreach($extps as $extp)
           <th>{{ $extp->name }} Total Obtain Marks</th>      
           <th>Total Ds accquire</th>
           <th>Status</th>
       @endforeach      
       <th>Refrash Status</th>
+      <th>Finalize Status</th>
     </tr>
   </thead>
   <tbody> 
@@ -160,11 +161,12 @@
       @endphp
         <tr>
           <td>{{ $stdcr->id }}</td>
-          <td>{{ $stdcr->clss->name }}-{{ $stdcr->section->name }}-{{ $stdcr->roll_no }}</td>
-          <td>{{ $stdcr->studentdb->name }}({{ $stdcr->id }})</td>
+          <td>
+              {{ $stdcr->studentdb->name }}
+              Class: {{ $stdcr->clss->name }}<br>Section: {{ $stdcr->section->name }}<br>Roll No: {{ $stdcr->roll_no }}
+          </td>
           @foreach($extps as $extp)
-              @php
-                  
+              @php                  
                   $arrExtpRecods = [];
                   $test = $stdmarks->where('studentcr_id', $stdcr->id) 
                     ->whereIn('exmtypmodclssub_id', $etmcss->where('extype_id', $extp->id)->pluck('id') )
@@ -179,7 +181,8 @@
                             @php
                               $per = round( ($t->where('marks', '>=', 0)->sum('marks')*100)/
                                                   ($etmcss->where('subject_id', $t->first()->clssub->subject_id)->sum('fm') ), 0) ;
-
+                              
+                              $grd = '';
                               $grd = $grades->where('extype_id', '=', $extp->id)
                                             ->where('stpercentage', '<=', $per)
                                             ->where('enpercentage', '>=', $per)
@@ -225,11 +228,13 @@
                                 $grd = $grades->where('extype_id', '=', $extp->id)
                                                   ->where('stpercentage', '<=', $per)
                                                   ->where('enpercentage', '>=', $per)
-                                                  ->first()->gradeparticular->name;  
-                                                                              
-                                if( strtoupper($grd) == 'D'){
-                                    $countD++;
-                                }
+                                                  //->first()->pluck('id')//->gradeparticular//->name
+                                                  ;  
+                                
+                                //if( strtoupper($grd->gradeparticular->name) == 'D'){
+                                //    $countD++;
+                                //}
+                                
 
                             @endphp
                             {{ $t->where('marks', '>', 0)->sum('marks') }}/fm:
@@ -259,7 +264,7 @@
                                                   ->where('stpercentage', '<=', $per)
                                                   ->where('enpercentage', '>=', $per)
                                                   ->first()->gradeparticular->name;  
-                                                                              
+                                $grd = '';                                                                              
                                 if( strtoupper($grd) == 'D'){
                                     $countD++;
                                 }
@@ -347,8 +352,6 @@
                   @endif
 
               </form>
-
-{{--    --}}
               
           </td>
       </tr>
