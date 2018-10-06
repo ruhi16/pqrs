@@ -1,6 +1,6 @@
 <?php
 //use Fpdf;
-use App\Extclssubfmpm;
+//use App\Extclssubfmpm;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,59 +22,15 @@ Route::get('/', function () {
 });
 
 
-Route::get('/loginCredencial', 'Auth\LoginController@loginCredencial');
+Route::get('/loginCredencial', 'Auth\LoginController@loginCredencial');            
+Route::get('/start', 'StartController@start');
 
-            
-        Route::get('/start', function () {
-            $ses = App\Session::whereStatus('CURRENT')->first();
-            $clssecs = App\Clssec::whereSession_id($ses->id)->get();            
-            $clss = App\Clss::where('session_id', $ses->id)->get();
-
-            $stdcrs = App\Studentcr::where('session_id', $ses->id)
-                        //->where('clss_id',1)
-                        //->where('section_id', 1)
-                        ->get();
-            $stddbs = App\Studentdb::all();
+Route::get('/start2', 'StartController@start2');
 
 
-            $stdcrsClsSecMF = [];
-
-            foreach($stdcrs as $std){
-                $str = $std->clss_id.'-'.$std->section_id.'-'.$std->studentdb->ssex;
-                $stdcrsClsSecMF[$std->studentdb->id] = strtoupper($str);
-            }
-
-            // print_r(array_count_values($stdcrsClsSecMF));
-            $stdcrsClsSecMF = array_count_values($stdcrsClsSecMF);
-            // echo "<br><br>";
-            // foreach($stdcrsClsSecMF as $key => $abc){
-                // echo $key . ' -> ' . $abc . "<br>";                
-            // }
 
 
-            $controllers = [];
-            foreach (Route::getRoutes()->getRoutes() as $route){
-                $action = $route->getAction();
-                if (array_key_exists('controller', $action)){
-                    // You can also use explode('@', $action['controller']); here
-                    // to separate the class name from the method
-                    
-                    $controllers[] = $action['controller'];
-                    $controllers = array_map(function ($controller) {
-                        return str_replace('App\Http\Controllers\\', '', $controller);
-                    }, $controllers);
-                }
-            }
 
-
-            return view('start')
-                ->with('clssecs', $clssecs)
-                ->with('stdcrs', $stdcrs)    
-                ->with('clss', $clss)
-                ->with('controllers',$controllers)
-                ->with('stdcrsClsSecMF', $stdcrsClsSecMF)
-                ; //homepage
-        });
 
 Route::group(['middleware' => ['auth']], function () {
         Route::get('/home', 'HomeController@index')->name('home');
@@ -88,9 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/user', 'HomeController@user');
 
         });
-        
-        
-        
+
         
         Route::get('/schools', 'SchoolController@school')->middleware('FinMidware:schools');//->name('xyz');
         Route::post('/schools-submit', 'SchoolController@schoolSubmit');
@@ -260,7 +214,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-MarksRegisterv2/{clssec_id}',  'MarksEntryController@clssecMarksRegisterv2');
         Route::get('/clssec-MarksRegisterv3/{clssec_id}',  'MarksEntryController@clssecMarksRegisterv3');
         
-        Route::get ('/clssecStdcr-MarkRefresh/{studentcr_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshget');
+        //Route::get ('/clssecStdcr-MarkRefresh/{studentcr_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshget');
         Route::post('/clssecStdcr-MarkRefresh/{studentcr_id}/{clss_id}/{section_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshpost');
         //Ajax Update
         Route::post('/updateMarks', 'MarksEntryController@updateMarks');

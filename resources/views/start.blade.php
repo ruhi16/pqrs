@@ -11,6 +11,20 @@
 @section('content')
 
 
+<div class="container">
+  
+  <div class="row">
+    <div class="col-md-2">
+      
+      
+    </div>
+  </div>
+    
+</div>
+
+
+
+
 <div class="row">
 <div class="dropdown">
 <div class="container">
@@ -406,12 +420,6 @@
 
 
 
-
-
-
-
-
-
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -555,7 +563,7 @@
 
 
 
-<div id="Modal" class="modal" tabindex="-1" role="dialog">
+{{--  <div id="Modal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -573,7 +581,7 @@
         </div>
         </div>
     </div>
-</div>
+</div>  --}}
 
 
 

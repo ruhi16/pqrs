@@ -15,6 +15,8 @@ use App\Mode;
 
 use App\Studentdb;
 use App\Studentcr;
+use App\Miscoption;
+use App\Promotionalrule;
 
 use App\Clssub;
 use App\Clssec;
@@ -51,12 +53,8 @@ class compactMarkRegisterController extends Controller
         $clssubexts = Clssub::select('clssubs.id','clssubs.clss_id','clssubs.subject_id','clssubs.combination_no','subjects.extype_id')
                         ->join('subjects', 'clssubs.subject_id','=','subjects.id')
                         ->where('clssubs.session_id', $ses->id)
-                        ->get();
+                        ->get();        
         
-        // foreach($clssubexts as $xxx){
-        //     echo $xxx ."<br>";
-        // }
-
         $exams = Exam::whereSession_id($ses->id)->get();
         $extps = Extype::whereSession_id($ses->id)->get();
         $modes = Mode::whereSession_id($ses->id)->get();
@@ -65,27 +63,38 @@ class compactMarkRegisterController extends Controller
                     ->where('clss_id', $clssec->clss_id)                                        
                     ->get();
 
-
         $stdmarks = Marksentry::where('marksentries.session_id', $ses->id)
                     ->where('clssec_id', $clssec_id)
                     ->join('clssubs', 'marksentries.clssub_id', '=', 'clssubs.id')
                     ->select('marksentries.*', 'clssubs.combination_no', 'clssubs.subject_id')
                     ->orderBy('studentcr_id')
                     ->get();
-        //dd($stdmarks);
+        
         $stdcrs = Studentcr::whereSession_id($ses->id)
                     ->where('clss_id', $clssec->clss_id)
                     ->where('section_id', $clssec->section_id)
                     ->get();
         
-        $grades = Grade::whereSession_id($ses->id)->get();
-        //$grdparts = Gradeparticular::whereSession_id($ses->id)->get();
+        $grades = Grade::whereSession_id($ses->id)->get();        
         
         $resultcr = Resultcr::whereSession_id($ses->id)
                         ->where('clss_id', $clssec->clss_id)
                         ->where('section_id', $clssec->section_id)
                         ->get();
-            
+        
+        $promrules = Promotionalrule::whereSession_id($ses->id)
+                        ->where('clss_id', $clssec->clss_id)
+                        ->get();
+        
+
+        $miscoprsltcr = Miscoption::where('tabName', 'resultcrs')
+                            ->where('fieldName', 'status')
+                            ->get();
+        
+        $miscopstdncr = Miscoption::where('tabName', 'studentcrs')
+                            ->where('fieldName', 'result')
+                            ->get();
+
         return view('clssecCompactMarkRegister.compactMarkRegister')
             ->with('clssec', $clssec)
             ->with('clssubs', $clssubs)
@@ -98,8 +107,10 @@ class compactMarkRegisterController extends Controller
             ->with('etmcss', $etmcss)
             ->with('clssubexts', $clssubexts)
             ->with('grades', $grades)
-            ->with('resultcr',$resultcr)
-            //->with('grdparts',$grdparts)
+            ->with('resultcr',$resultcr)            
+            ->with('promrules', $promrules)
+            ->with('miscoprsltcr', $miscoprsltcr)
+            ->with('miscopstdncr', $miscopstdncr)            
             ;
     }
 }

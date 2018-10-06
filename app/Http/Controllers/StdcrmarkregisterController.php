@@ -34,39 +34,17 @@ use App\Answerscriptdistribution;
 
 class StdcrmarkregisterController extends Controller
 {
-    public function clssecStdcrMarkRefreshget(Request $request, $studentcr_id, $clss_id, $section_id){
+    // public function clssecStdcrMarkRefreshget(Request $request, $studentcr_id, $clss_id, $section_id){
 
-        echo $studentcr_id;
+    //     echo $studentcr_id;
 
-        return " Hello get";
-    }
+    //     return " Hello get";
+    // }
 
 
     public function clssecStdcrMarkRefreshpost(Request $request, $studentcr_id, $clss_id, $section_id){
         $ses = Session::whereStatus('CURRENT')->first();
-
-        echo $studentcr_id;
         
-        echo $request->arr;
-        //dd($request);
-
-        print_r($request['extype_id']);
-        // print_r($request['om']);
-        // print_r($request['fm']);
-        // print_r($request['ds']);
-        // print_r($request['rs']);
-        foreach($request['extype_id'] as $k => $extp_id){
-            // echo "extp_id:" .$extp_id;
-            echo $k;
-            $obtMark = 'om'.$extp_id;
-            echo "OM: ".$request[$obtMark][0] ."<br>";
-            // foreach($request[$obtMark] as $om){
-            //     echo "OM: ". $om;
-            // }
-
-
-        }
-
         foreach($request['extype_id'] as $k => $extp_id){
         
             $resultcr = Resultcr::firstOrNew([
@@ -91,9 +69,26 @@ class StdcrmarkregisterController extends Controller
             $result = 'rs'.$extp_id;
             $resultcr->results    =   $request[$result][0];
 
+            $status = 'rs'.$extp_id;
+            $resultcr->status = $request[$status][0];
+            
+            
             $resultcr->save();
+            //echo "resultcr Done";
         }
 
+
+        $stdcr = Studentcr::findOrFail($studentcr_id);
+        
+        $strFnPrOp = "fnprop".$studentcr_id;
+        $stdcr->result = $request->$strFnPrOp ;
+
+        $strDescrip = "descrip".$studentcr_id;
+        $stdcr->description = $request->$strDescrip;
+
+        $stdcr->save();
+
+        //echo ", studentcr done";
         return back();
     }
 }
