@@ -393,11 +393,37 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Admin Settings</a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Answer Script Finalize Status</a>
         </h4>
       </div>
       <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body"></div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>                        
+                        <th class="text-center">Particulars</th>
+                        @foreach($exams as $exam)
+                            <th class="text-center">{{ $exam->name }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>                        
+                        <td>All Classes</td>
+                        @foreach($exams as $exam)
+                            <td class="text-center"><a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2]) }}">All Class Answer Scripts Finalize Status</a></td>
+                        @endforeach
+                    </tr>  
+                    <tr>                        
+                        <td>All Teachers</td>
+                        @foreach($exams as $exam)
+                            <td class="text-center"><a href="{{ url('/answerScript-teacherAllotment', [$exam->id, 2]) }}">All Teachers Allotment</a></td>
+                        @endforeach
+                    </tr>    
+                </tbody>
+
+            </table>
+        </div>
       </div>
     </div>
     
@@ -433,8 +459,8 @@
                     @endif
 
                     {{--  <button type="button" class="btn btn-primary" onclick="location.class="btn btn-primary" href='{{route('xyz')}}'">Test123</button>  --}}
-                    You are logged in!!!!!!!
-                    <br>
+                    {{--  You are logged in!!!!!!!
+                    <br>  --}}
                     <a class="btn btn-primary" href="{{url('/finalizeParticulars')}}">Finalize Particulars</a>                    
                     <a class="btn btn-warning" href="{{url('/finalizeSessions')}}">Finalize Sessions</a>   
                     <a class="btn btn-info"    href="{{url('/schools')}}">School Details</a> 
@@ -484,15 +510,16 @@
                     <a class="btn btn-primary" href="{{url('/teachers-view')}}">Teachers Details View Point</a>
                     
                     <a class="btn btn-info" href="{{url('/clssec-TaskPage')}}">Class-Section Task-Pane</a>
+                    <a class="btn btn-warning" href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
                     <a class="btn btn-success" href="{{ url('/ExStudentDb') }}" >Excel HTML</a>
                     
 
 
                     {{--  <br>  --}}
-                    <a class="btn btn-default" href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
+                    
 
                     {{--  //first: exam_id, second: extype_id (summative=2)  --}}
-                    <div class="dropdown">
+                    {{--  <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Ans Sc Disburshment Class-Section Wise
                         <span class="caret"></span>
@@ -503,12 +530,12 @@
                         <li><a href="{{ url('/answerScript-clss-sectionAllotment/3/2') }}">Third Terminal</a></li>
                         
                     </ul>
-                    </div>
+                    </div>  --}}
 
 
                     
                     {{--  //first: exam_id, second: extype_id (summative=2)  --}}                    
-                    <div class="dropdown">
+                    {{--  <div class="dropdown">
                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Ans Sc Disburshment Teacher Wise
                         <span class="caret"></span>
@@ -519,11 +546,11 @@
                         <li><a href="{{ url('/answerScript-teacherAllotment/3/2') }}">Third Terminal</a></li>
                         
                     </ul>
-                    </div>
+                    </div>  --}}
 
                     <!-- <a class="btn btn-warning" href="{{ url('/exmtypmodcls-Taskpane') }}" >Exam Mode Selection</a> -->
                     
-                    <div class="dropdown">
+                    {{--  <div class="dropdown">
                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Class wise Full Marks Assignment
                         <span class="caret"></span>
@@ -534,9 +561,9 @@
                         
 
                     @endforeach
-                    </div>
+                    </div>  --}}
                     
-                    <div class="dropdown">
+                    {{--  <div class="dropdown">
                     <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Class wise Full Marks View
                         <span class="caret"></span>
@@ -547,7 +574,7 @@
                         
 
                     @endforeach
-                    </div>
+                    </div>  --}}
                     
 
 

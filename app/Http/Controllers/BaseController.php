@@ -36,11 +36,11 @@ class BaseController extends Controller
 {
     public function exmtypclssubTaskpane(){
         $ses = Session::whereStatus('CURRENT')->first();
-        $clss  = Clss::whereSession_id($ses->id)->get();
+        $clss  = Clss::whereSession_id($ses->id)->get();       
 
 
         return view('exmtypclssubs.exmtypclssubTaskpane')
-            ->withClss($clss)
+            ->withClss($clss)            
             ;
     }
 

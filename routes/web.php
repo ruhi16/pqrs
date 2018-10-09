@@ -322,6 +322,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/answerScript-clss-sectionAllotment/{exam_id}/{extype_id}', 'AnswerScriptController@answerscriptClssSectionAllotment');
         Route::get('/answerScript-teacherAllotment/{exam_id}/{extype_id}', 'AnswerScriptController@answerscriptTeacherAllotment');
 
+
+        Route::get('/answerScript-clss-sectionStatus/{exam_id}/{extype_id}', 'AnswerScriptController@answerscriptClssSectionStatus');
 });
   
 Route::get('/get-logout', function(){

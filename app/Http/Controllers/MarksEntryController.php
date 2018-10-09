@@ -222,8 +222,8 @@ class MarksEntryController extends Controller
                             ->whereClss_id($clsc->clss_id)        
                             ->get();
 
-        echo "Marks Entry Register " . "<br>";
-        echo "class: ".$clsc->clss->name .", section: ".$clsc->section->name . "<br>";
+        //echo "Marks Entry Register " . "<br>";
+        //echo "class: ".$clsc->clss->name .", section: ".$clsc->section->name . "<br>";
 
         $clssecDetails = [];
         foreach($stdcrs as $stdcr){
@@ -233,7 +233,7 @@ class MarksEntryController extends Controller
             $clssecStdcr = [];
 
             $stdDetails = [];
-            $stdDetails['id']   = $stdcr->id;
+            //$stdDetails['id']   = $stdcr->id;
             $stdDetails['name'] = $stdcr->studentdb->name;
             $stdDetails['clss'] = $stdcr->clss->name;
             $stdDetails['sect'] = $stdcr->section->name;
@@ -247,9 +247,9 @@ class MarksEntryController extends Controller
                 $subjDetails = [];
 
                 $clssub = [];
-                $clssub['subid']    = $clsb->subject->id; 
+                //$clssub['subid']    = $clsb->subject->id; 
                 $clssub['subname']  = $clsb->subject->name; 
-                $clssub['subcode']  = $clsb->subject->code; 
+                //$clssub['subcode']  = $clsb->subject->code; 
                 $clssub['subtype']  = $clsb->subject->extype->name; 
                 
                 //array_push($clssubDetails, $clssub);
@@ -263,30 +263,34 @@ class MarksEntryController extends Controller
                             ->where('subject_id', $clsb->subject_id)
                             ->where('exam_id', $exam->id)                            
                             ;
-                    
+                    // dd($extpmdclsb);
                     $stdmark = $stdmarks
                                 ->where('clssub_id', $clsb->id)
                                 ->where('exmtypmodclssub_id', $extpmdclsb->first()->id)                                
                                 ;
                     
+                    
                     if($extpmdclsb->count() > 1){
+                        //for class V & X only, each subject have 1 exam for exam-extype combination(oral or written)
                         $obmark = $stdmark;//->first() == NULL ? 'NA' : $stdmark->first()->marks ;
                         $flmark   = $extpmdclsb;//->first() == NULL ? 'NA' : $extpmdclsb->first()->fm ;
                         
                         $marks['exam'] = $exam->name;
                         foreach($extpmdclsb as $extpmdclsbmode){
                             $i = $extpmdclsbmode->mode_id;
-
+                            //echo $extpmdclsbmode->id ."xxx";
                             $marks['obtm'.$i] = $obmark->where('exmtypmodclssub_id', $extpmdclsbmode->id)->first() == NULL ? 'NA' 
                                         : $obmark->where('exmtypmodclssub_id', $extpmdclsbmode->id)->first()->marks;
 
                             $marks['fulm'.$i] = $flmark->where('id', $extpmdclsbmode->id)->first() == NULL ? 'NA'
                                         : $flmark->where('id', $extpmdclsbmode->id)->first()->fm;
-                            
+                        
+                            //dd($obmark->where('exmtypmodclssub_id', 184));
                         }
-
+                        
                         array_push($marksDetails, $marks);
                     }else{
+                        //for class IX & X only, each subject have 2 exam for exam-extype combination(oral or written)
                         $obmark = $stdmark->first() == NULL ? 'NA' : $stdmark->first()->marks ;
                         $flmark   = $extpmdclsb->first() == NULL ? 'NA' : $extpmdclsb->first()->fm ;
 
@@ -308,9 +312,12 @@ class MarksEntryController extends Controller
             
             array_push($clssecDetails, $clssecStdcr);
         }
-      
+        //dd($clssecDetails);
+        $extypes = Extype::where('session_id', $ses->id)->get();
         return view('clssecMarksRegister.clssecMarksRegisterv2')
             ->with('clssecDetails', $clssecDetails)
+            ->with('exams', $exams)
+            ->with('extypes', $extypes)
             ;
 
     }

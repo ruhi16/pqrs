@@ -76,7 +76,7 @@
           <th class="text-center">{{ $extp->name }} - Total Subjects Count</th>          
           <th class="text-center">Full Marks</th>
       @endforeach
-      <th class="text-center">Total Subjects</th>
+      <th class="text-center">Allowabel Ds to Promote</th>
     </tr>
   </thead>
   <tbody>                 
@@ -113,7 +113,11 @@
                   <td class="text-center"></td>
                 @endfor
               @endif
-              <td class="text-center"></td>
+              <td class="text-center">
+                @foreach($extps as $extp)
+                    {{ $extp->name }}: {{$promrules->where('extype_id', $extp->id)->first()->allowableds }}, 
+                @endforeach
+              </td>
             </tr>
           @endif
           @endforeach
@@ -323,18 +327,22 @@
                   </b></p>
               </td>
               <td class="text-center">{{ $countD }}<br><br>
-
-                @if( $countD < $promrules->where('extype_id', $extp->id )->first()->allowableds )
-
-                    @php $arrExtpRecods['rs'] =  $miscoprsltcr->where('status', 'true')->first()->options; @endphp                  
-                    <p class='bg-success text-uppercase'><b>{{ $arrExtpRecods['rs']  }}</b></p>
-
-                @else
-
-                    @php $arrExtpRecods['rs'] =  $miscoprsltcr->where('status', 'false')->first()->options; @endphp                    
-                    <p class='bg-danger text-uppercase'><b>{{ $arrExtpRecods['rs']  }}</b></p>
+                {{--  {{ $promrules->where('extype_id', $extp->id )->first()->allowableds }}  --}}
                 
+                @if( $countD <= $promrules->where('extype_id', $extp->id )->first()->allowableds )
+                    @php $arrExtpRecods['rs'] =  $miscoprsltcr->where('status', 'true')->first()->options; @endphp                  
+                    <p class='bg-success text-uppercase'>
+                        <b>{{ $miscoprsltcr->where('status', 'true')->first()->options }}</b>
+                    </p>
+                    
+                @else
+                    @php $arrExtpRecods['rs'] =  $miscoprsltcr->where('status', 'false')->first()->options; @endphp                  
+                    <p class='bg-danger text-uppercase'>
+                        <b>{{ $miscoprsltcr->where('status', 'false')->first()->options }}</b>
+                    </p>
                 @endif
+
+                
               
               </td>
               @php
@@ -343,23 +351,30 @@
           @endforeach 
           <td width='20%'>
                 <h4>Result: <span class="label label-primary label-center">{{ $stdcr->result or 'Not Assigned!!!'}}</span></h4>
-                
+                {{--  {{ dd($stdcrCompactRecord) }}  --}}
+                @php $flag = TRUE; @endphp
+                @foreach( $stdcrCompactRecord as $key => $val )
+                    {{--  {{ $val['rs'] }}  --}}
+                    @if( strtoupper($val['rs']) == 'FAILED')
+                        @php $flag = FALSE; @endphp
+                    @endif
+                @endforeach
                 <form class="form-horizontal" action="{!! url('/clssecStdcr-MarkRefresh',[$stdcr->id, $stdcr->clss_id, $stdcr->section_id]) !!}" method="post" value="{{ csrf_token() }}">
                 {{ csrf_field() }}
-                
-                    {{--  <div class="form-group">                  --}}
-
-                        <select class="form-control" id="promOption" name="fnprop{{$stdcr->id}}">                        
-                            <option value="Not Assigned"></option>
-
-                            @foreach($miscopstdncr as $stdncrop)
+                  
+                    <select class="form-control" id="promOption" name="fnprop{{$stdcr->id}}">                            
+                        <option value="Not Assigned"></option>
+                        @foreach($miscopstdncr as $stdncrop)
+                            @if( $flag && $loop->first )
+                                <option value="{{ $stdncrop->options }}" selected>{{ $stdncrop->options }}</option>
+                                @php break; @endphp
+                            @else
                                 <option value="{{ $stdncrop->options }}">{{ $stdncrop->options }}</option>
-                            @endforeach
-                        </select>
-                        <br>
-                        <textarea class="form-control" rows="3" name="descrip{{$stdcr->id}}" placeholder='Descriptions, if any!!'></textarea>
-                    {{--  </div>                --}}
-                            
+                            @endif
+                        @endforeach
+                    </select>
+                    <br>
+                    <textarea class="form-control" rows="3" name="descrip{{$stdcr->id}}" placeholder='Descriptions, if any!!'></textarea>
                 
 
                     @foreach($stdcrCompactRecord as $key => $value)                      

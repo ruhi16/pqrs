@@ -75,7 +75,9 @@ class StartController extends Controller
                     }, $controllers);
                 }
             }
+            
 
+            $exams = Exam::whereSession_id($ses->id)->get();
 
             return view('start')
                 ->with('clssecs', $clssecs)
@@ -83,6 +85,7 @@ class StartController extends Controller
                 ->with('clss', $clss)
                 ->with('controllers',$controllers)
                 ->with('stdcrsClsSecMF', $stdcrsClsSecMF)
+                ->with('exams', $exams)
                 ; //homepage
     
     }

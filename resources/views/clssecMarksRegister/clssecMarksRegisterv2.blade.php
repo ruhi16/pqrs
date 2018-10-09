@@ -12,9 +12,10 @@
 	<thead>
 		<tr>
 			<th>Name & Class Details</th>
-			<th>Formative Details</th>
-			<th>Summative Details</th>
-			<th>Go to Results</th>
+			@foreach($extypes as $extp)
+				<th class='text-center'>{{ $extp->name }} Details</th>
+			@endforeach
+			<th>Results</th>
 		</tr>	
 	</thead>
 	<tbody>
@@ -23,38 +24,85 @@
 		<tr>
 			@foreach($clssecDetail as $clssec)				
 				@if($loop->first)
-				<td>
-					<table class='table table-bordered'>						
-						<tr>
+					<td>
+						<table class='table table-bordered'>						
 							@foreach($clssec as $cs)
+								@if( $loop->first )
+									<tr> <td colspan='3'><b>{{ $cs }}</b></td>	</tr>
+									<tr>
+								@endif
+								@continue( $loop->first )
 								<td>{{ $cs }}</td>
 							@endforeach
-						</tr>
-					</table>
-				</td>
+								</tr>
+						</table>
+					</td>
+
 				@else 
-				<td>
-					<table class='table table-bordered'>
-					@foreach($clssec as $subject)
-					<tr>
-						@foreach($subject as $subjDetail)
-							@if($loop->first)
-								@foreach($subjDetail as $sDet)
-									<td>{{ $sDet }}</td>
+
+					@foreach($extypes as $extp)
+						<td>
+							<table class='table table-bordered'>
+								<tr>
+									<th>Subjects</th>									
+									@foreach($exams as $exam)
+										<th class='text-center'>{{ $exam->name }}</th>
+									@endforeach
+									<th>Total</th>
+									<th>Grade</th>
+								</tr>
+								@foreach($clssec as $subject)
+								
+								
+									@foreach($subject as $k => $subjDetail)
+										@if($loop->first)
+										@foreach($subjDetail as $sDet)
+											@if($loop->last)
+												@php
+													$flag = $sDet;
+												@endphp
+											@endif
+										@endforeach
+										@endif
+									@endforeach
+								
+									@if( $extp->name == $flag )
+									<tr>
+
+										@php $subjTotal = 0; @endphp
+										@foreach($subject as $k => $subjDetail)
+										
+											@if($loop->first)	{{-- Subject Details --}}
+												@foreach($subjDetail as $sDet)
+													@continue( $loop->last)
+													<td>{{ $sDet }}</td>
+												@endforeach
+											@endif
+
+											
+											@if($loop->last)	{{-- Subject Marks Details --}}
+												@foreach($subjDetail as $exam)
+													
+
+													@foreach($exam as $ex)
+														@continue($loop->first)
+														{{--  @if( $loop->index % 2 == 1)  --}}
+															<td>{{ $ex == -99 ? 'AB' : $ex }}</td>
+															{{--  @php $subjTotal += ($ex == 'NA' || $ex == -99 ? 0 : $ex ); @endphp  --}}
+														{{--  @endif  --}}
+													@endforeach									
+												@endforeach
+											@endif
+											
+										@endforeach
+										<td>{{ $subjTotal }}</td>
+									</tr>
+									@endif
 								@endforeach
-							@endif
-							@if($loop->last)
-								@foreach($subjDetail as $exam)							
-										@foreach($exam as $ex)
-											<td>{{ $ex }}</td>
-										@endforeach									
-								@endforeach
-							@endif
-						@endforeach
-						</tr>
+							</table>
+						</td>
 					@endforeach
-					</table>
-				</td>
+
 				@endif				
 			@endforeach			
 			</tr>

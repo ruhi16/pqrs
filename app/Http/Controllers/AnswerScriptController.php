@@ -161,4 +161,38 @@ class AnswerScriptController extends Controller
             ;
     }
 
+
+
+
+    public function answerscriptClssSectionStatus(Request $request, $exam_id, $extype_id){
+        $ses = Session::whereStatus('CURRENT')->first();        
+        $clss = Clss::all();
+        $exam = Exam::find($exam_id);
+        $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
+            ->where('exam_id', $exam_id)
+            ->where('extype_id', $extype_id)
+            // ->where('clss_id', 1)
+            // ->where('section_id', 1)
+            ->get()
+            ;
+
+        $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
+                        ->where('exam_id', $exam_id)
+                        ->where('extype_id', $extype_id)
+                        ->get();
+
+        $teacher = Teacher::all();
+
+        $stdcrs = Studentcr::where('session_id', $ses->id)->get();
+
+
+        return view('answerscripts.answerscriptClssSectionStatus')
+        ->with('clss', $clss)
+        ->with('exam', $exam)
+        ->with('ansscdists', $ansscdists)
+        ->with('teacher', $teacher)
+        ->with('stdcrs', $stdcrs)
+        ;
+    }
+
 }
