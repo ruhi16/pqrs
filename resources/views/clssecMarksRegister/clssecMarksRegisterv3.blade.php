@@ -65,8 +65,11 @@
 										<tbody>
 											@foreach($clssubs as $clssub)
 												@if($clssub->subject->extype_id == $extype->id)
+													@php
+														//$count = $clssubs->groupBy('combination_no')->count();
+													@endphp
 													<tr>											
-														<td>{{ $clssub->subject->name }}</td>
+														<td>{{ $clssub->subject->name }}:{{ $clssub->combination_no }}</td>
 														@php
 															$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
 																			->where('subject_id', $clssub->subject_id);

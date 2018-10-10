@@ -314,6 +314,13 @@ class MarksEntryController extends Controller
         }
         //dd($clssecDetails);
         $extypes = Extype::where('session_id', $ses->id)->get();
+        
+        $modes = Exmtypmodcls::where('session_id', $ses->id)
+                    ->where('clss_id', $clsc->clss_id)
+                    ->groupBy(['extype_id','mode_id'])
+                    ->get();
+        //dd($modes);
+
         return view('clssecMarksRegister.clssecMarksRegisterv2')
             ->with('clssecDetails', $clssecDetails)
             ->with('exams', $exams)

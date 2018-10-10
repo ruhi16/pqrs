@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+
 use App\Http;
 use DB;
+use PDF;
+
 use App\Session;
 use App\Exam;
 use App\Extype;
@@ -164,18 +166,12 @@ class AnswerScriptController extends Controller
 
 
 
-    public function answerscriptClssSectionStatus(Request $request, $exam_id, $extype_id){
+    public function answerscriptClssSectionStatus(Request $request, $exam_id, $extype_id, $is_pdf){
+        $school = School::all()->first();
         $ses = Session::whereStatus('CURRENT')->first();        
         $clss = Clss::all();
         $exam = Exam::find($exam_id);
-        $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
-            ->where('exam_id', $exam_id)
-            ->where('extype_id', $extype_id)
-            // ->where('clss_id', 1)
-            // ->where('section_id', 1)
-            ->get()
-            ;
-
+        
         $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
                         ->where('exam_id', $exam_id)
                         ->where('extype_id', $extype_id)
@@ -186,6 +182,19 @@ class AnswerScriptController extends Controller
         $stdcrs = Studentcr::where('session_id', $ses->id)->get();
 
 
+
+        if( $is_pdf == 1 ){
+            $pdf = PDF::loadView('answerscripts.answerscriptClssSectionStatusPDF', 
+                ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'clss'=>$clss,
+                'ansscdists'=>$ansscdists, 'teachers'=>$teacher, 'stdcrs'=>$stdcrs
+                ]);
+
+            $pdf->setPaper("a4");        
+            return $pdf->stream();
+        }
+
+
+
         return view('answerscripts.answerscriptClssSectionStatus')
         ->with('clss', $clss)
         ->with('exam', $exam)
@@ -194,5 +203,4 @@ class AnswerScriptController extends Controller
         ->with('stdcrs', $stdcrs)
         ;
     }
-
 }

@@ -87,8 +87,13 @@
 
 				<div class="form-group">
         	<label class="control-label col-sm-1" for="teacherName">Name:</label>
-					<div class="col-sm-7">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="teacherName" name="teacherName" placeholder="">
+					</div> 
+
+          <label class="control-label col-sm-1" for="teacherNickName">Short:</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="teacherNickName" name="teacherNickName" placeholder="">
 					</div>         
         
         	<label class="control-label col-sm-1" for="teacherMob">Mobile:</label>

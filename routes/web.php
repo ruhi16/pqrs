@@ -191,7 +191,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssecsreport-stdListFromativePdf/{clss_id}/{section_id}', 'ClsSecController@reportsStdListFormativePdf');
 
 
-
+        
 
 
         Route::get('/clssec-TaskPage', 'ClsSecController@clssecTaskPage');
@@ -323,7 +323,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/answerScript-teacherAllotment/{exam_id}/{extype_id}', 'AnswerScriptController@answerscriptTeacherAllotment');
 
 
-        Route::get('/answerScript-clss-sectionStatus/{exam_id}/{extype_id}', 'AnswerScriptController@answerscriptClssSectionStatus');
+        Route::get('/answerScript-clss-sectionStatus/{exam_id}/{extype_id}/{is_pdf}', 'AnswerScriptController@answerscriptClssSectionStatus');
+
+
+
+
 });
   
 Route::get('/get-logout', function(){

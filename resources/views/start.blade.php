@@ -411,7 +411,11 @@
                     <tr>                        
                         <td>All Classes</td>
                         @foreach($exams as $exam)
-                            <td class="text-center"><a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2]) }}">All Class Answer Scripts Finalize Status</a></td>
+                            <td class="text-center">
+                                <a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2, 0]) }}">All Class Answer Scripts Finalize Status</a> /
+                                <a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2, 1]) }}">in PDF</a>
+                                
+                            </td>
                         @endforeach
                     </tr>  
                     <tr>                        
@@ -587,6 +591,59 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">Dashboard</div>
+            
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#1a" data-toggle="tab">Home</a></li>
+                    <li role="presentation"><a href="#2a" data-toggle="tab">Profile</a></li>
+                    <li role="presentation"><a href="#3a" data-toggle="tab">Messages</a></li>
+                </ul>
+                
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="1a">
+                            <h3>Contents background color is the same for the tab</h3>
+                        </div>
+                        <div class="tab-pane" id="2a">
+                            <h3>We uses the class nav-pills instead of nav-tabs which automatically creates a background color for the tab</h3>
+                        </div>
+                        <div class="tab-pane" id="3a">
+                            <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
+                        </div>
+                        <div class="tab-pane" id="4a">
+                            <h3>We uses css to change the background color of the content to be equal to the tab</h3>
+                        </div>
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
