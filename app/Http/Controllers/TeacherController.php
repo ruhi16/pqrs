@@ -153,6 +153,7 @@ class TeacherController extends Controller
         //for New Teacher's Data Entry
         $teacher = new Teacher;        
         $teacher->name  = $request->teacherName; 
+        $teacher->ncname = $request->teacherNickName;
         $teacher->mobno   = $request->teacherMob;        
         $teacher->desig = $request->teacherDesig;
         $teacher->hqual = $request->teacherHQual;

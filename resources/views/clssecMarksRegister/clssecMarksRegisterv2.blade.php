@@ -46,10 +46,29 @@
 								<tr>
 									<th>Subjects</th>									
 									@foreach($exams as $exam)
-										<th class='text-center'>{{ $exam->name }}</th>
+										<th class='text-center' colspan='4'>{{ $exam->name }}</th>
 									@endforeach
 									<th>Total</th>
 									<th>Grade</th>
+								</tr>
+								<tr>
+									<th></th>
+									<th>OM</th>
+									<th>FM</th>
+									<th>OM</th>
+									<th>FM</th>
+
+									<th>OM</th>
+									<th>FM</th>
+									<th>OM</th>
+									<th>FM</th>
+
+									<th>OM</th>
+									<th>FM</th>
+									<th>OM</th>
+									<th>FM</th>
+
+									<th></th>
 								</tr>
 								@foreach($clssec as $subject)
 								
