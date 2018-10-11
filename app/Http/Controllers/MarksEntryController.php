@@ -332,9 +332,12 @@ class MarksEntryController extends Controller
     public function clssecMarksRegisterv3($clssec_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $clsc = Clssec::find($clssec_id);
-        $clsbs = Clssub::whereSession_id($ses->id)
-            ->whereClss_id($clsc->clss_id)
+        $clssubs = DB::table('clssubs')->where('clssubs.session_id', $ses->id)
+            ->where('clss_id', $clsc->clss_id)
+            ->join('subjects', 'subjects.id', '=', 'clssubs.subject_id')
+            //->select()
             ->get();
+        //dd($clssubs);
 
         $studentcrs = Studentcr::whereSession_id($ses->id)
                         ->where('clss_id', $clsc->clss_id)
@@ -359,7 +362,7 @@ class MarksEntryController extends Controller
     return view('clssecMarksRegister.clssecMarksRegisterv3')
             ->with('clssecMarks', $marks->sortBy('studentcr_id'))
             ->with('studentcrs', $studentcrs->sortBy('studentdb_id'))
-            ->with('clssubs',$clsbs)
+            ->with('clssubs',$clssubs)
             ->with('exams',$exams)
             ->with('extypes',$extypes)
             ->with('extpmdclsbs', $extpmdclsbs)
