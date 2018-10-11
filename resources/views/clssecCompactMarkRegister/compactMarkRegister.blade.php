@@ -191,7 +191,13 @@
                                 $grd = $grades->where('extype_id', '=', $extp->id)
                                                 ->where('stpercentage', '<=', $per)
                                                 ->where('enpercentage', '>=', $per)
-                                                ->first()->gradeparticular->name;
+                                                ->first();//->gradeparticular->name;
+                                if( $grd == NULL ){
+                                    $grd = 'Mistaken';
+                                }else{
+                                    $grd = $grd->gradeparticular->name;
+                                }
+                                
                                 if( strtoupper($grd) == 'D'){
                                     $countD++;
                                 }

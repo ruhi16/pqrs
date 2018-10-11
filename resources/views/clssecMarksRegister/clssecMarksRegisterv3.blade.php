@@ -80,7 +80,18 @@
 											</tr>
 										</thead>
 										<tbody>
-											@foreach($clssubs->where('combination_no', 0)->sortBy('combination_no') as $clssub)
+											@php
+												$clssubs = $clssubs->sortBy('combination_no');
+												//$abc = $clssubs->test(function($e){
+												//	return $e;
+												//});
+												//dd($abc);
+												//$flights = $flights->reject(function ($flight) {
+    											//	return $flight->cancelled;
+												//});
+											@endphp
+
+											@foreach($clssubs as $clssub)
 												@if( $clssub->extype_id == $extype->id )
 													<tr>
 														<td>{{ $clssub->name }}</td>
@@ -119,20 +130,22 @@
 														@endif
 
 													@endforeach
+
 													@php
 														$totalObtMarks = $marks->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id') )
 																	->where('marks', '>', 0)->sum('marks');
 														$totalFulMarks = $extpmdclsb->where('fm', '>', 0)->sum('fm');				
 														
 														$percentage = round( ( $totalObtMarks * 100 ) / $totalFulMarks , 0);
+
 														$grade = $grades->where('extype_id', $extype->id)
 																	->where('stpercentage', '<=', $percentage)
-																	->where('enpercentage', '>', $percentage)
+																	->where('enpercentage', '>=', $percentage)
 																	->first();
 														if( $grade ){
 															$grd = $grade->gradeparticular->name; 
 														}else{
-															$grd = '';
+															$grd = 'MISTAKEN';
 														}
 
 													@endphp
@@ -143,9 +156,37 @@
 																								
 												@endif
 											@endforeach
+										</tbody>
+									</table>
+								</td>
+							@endif   {{--  end of isExits --}}
+				@endforeach
+				<td></td>
+				</tr>
+			@endforeach
+		</tbody>
+	</table>
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(e){
+		
+	});  
+</script>
+
+@endsection
+
+@section('footer')
+	@include('layouts.footer')
+@endsection
+
+
 
 											
-												@php
+											<!-- @php
 													$ex_clssubs = $clssubs->where('extype_id', $extype->id)->where('combination_no', '!=', 0)->groupBy('combination_no');												
 													
 													$subName ='';
@@ -180,7 +221,8 @@
 															//dd($extpmdclsb->pluck('id'));
 															
 															$combSubObtMarks = $totalObtMarks = $marks
-																		->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id'))->sum('marks');
+																		->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id'))
+																		->where('marks','>',0)->sum('marks');
 															//if(!$loop->first){
 															//dd($combSubObtMarks);
 															//}
@@ -192,30 +234,5 @@
 
 														@endforeach
 													</tr>
-											@endforeach
-										</tbody>						
-									</table>
-								</td>
-							@endif   {{--  end of isExits --}}
-				@endforeach
-				<td></td>
-				</tr>
-			@endforeach
-		</tbody>
-	</table>
-
-
-
-
-
-<script type="text/javascript">
-	$(document).ready(function(e){
-		
-	});  
-</script>
-
-@endsection
-
-@section('footer')
-	@include('layouts.footer')
-@endsection
+											@endforeach 
+										</tbody>  -->
