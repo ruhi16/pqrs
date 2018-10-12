@@ -72,7 +72,8 @@
                                 }                            
                             @endphp
                             
-                            {{ $obMark }}
+                            <!-- {{ $obMark }} -->
+                            {{ $stdMarksArray[$stdcr->id][$etmcs_id] or ''}}
                             </td>
                         @endforeach
                         </tr>

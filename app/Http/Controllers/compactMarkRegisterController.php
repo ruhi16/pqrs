@@ -138,23 +138,25 @@ class compactMarkRegisterController extends Controller
         $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
                         ->where('clss_id', $clssec->clss_id)->get();
         // dd($extpmdclsbs);
-        
+        dd( $stdmarks->where('studentcr_id', 5) );
         
         $stdMarksArray = [];
         foreach($stdcrs as  $stdcr){
-            // echo $stdcr;
-            // echo '<br>';
             $stdmarks = $stdmarks->where('studentcr_id', $stdcr->id);
+            echo "==========>". $stdcr->id . '<br>';
+            //dd($stdmarks);
             $marks = [];
             foreach($extpmdclsbs as $extpmdclsb){
-                $mark = $stdmarks->where('exmtypmodclssub_id', $extpmdclsb->id)->first();
-
-                if($mark != NULL) {
-                    $marks[$extpmdclsb->id] = $mark->marks;                 
+                $obmark = $stdmarks->where('exmtypmodclssub_id', $extpmdclsb->id)->first();
+                echo $obmark;
+                if($obmark != NULL) {
+                    $marks[$extpmdclsb->id] = $obmark->marks;                 
                 }
             }
             $stdMarksArray[$stdcr->id] = $marks;
-            // dd($stdMarksArray);
+          
+            //dd($stdMarksArray);
+          
         }
         // dd($stdMarksArray);
         
@@ -166,7 +168,8 @@ class compactMarkRegisterController extends Controller
                     'extpmdclsbs'=>$extpmdclsbs
                     ]);
 
-            $pdf->setPaper("a4");        
+            $pdf->setPaper("a4");    
+            //$pdf = PDF::loadHtml("<h1>Hello<h1>");
             return $pdf->stream();
         }else{
             return view('clssecCompactMarkRegister.compactMarkRegisterPDF')
