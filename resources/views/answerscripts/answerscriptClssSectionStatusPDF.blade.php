@@ -32,7 +32,7 @@
         </center>
 
         @foreach($clss as $cls)
-        <h3>For Class: {{ $cls->name }}</h3>   
+        <h3>For Class: {{ $cls->name }}</h3>
             <table border="1" width="100%">
             <thead>
             <tr>
