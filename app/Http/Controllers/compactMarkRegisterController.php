@@ -137,30 +137,24 @@ class compactMarkRegisterController extends Controller
                     ->get();
         $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
                         ->where('clss_id', $clssec->clss_id)->get();
-        //dd($extpmdclsbs);
+        // dd($extpmdclsbs);
         
         
-        $stdRecords  = [];  //stores related records of 'exmtypmodclssubs' table for this class      
-        foreach($extpmdclsbs as $extpmdclsb){
-            array_push($stdRecords, $extpmdclsb->id);
-        }
-        //dd($stdRecords);
-
-
         $stdMarksArray = [];
         foreach($stdcrs as  $stdcr){
             // echo $stdcr;
             // echo '<br>';
+            $stdmarks = $stdmarks->where('studentcr_id', $stdcr->id);
             $marks = [];
-            foreach($stdRecords as $stdRecord){
-                $mark = $stdmarks->where('studentcr_id', $stdcr->id)
-                        ->where('exmtypmodclssub_id', $stdRecord)->first();
+            foreach($extpmdclsbs as $extpmdclsb){
+                $mark = $stdmarks->where('exmtypmodclssub_id', $extpmdclsb->id)->first();
 
                 if($mark != NULL) {
-                    $marks[$stdRecord] = $mark->marks;                 
+                    $marks[$extpmdclsb->id] = $mark->marks;                 
                 }
             }
             $stdMarksArray[$stdcr->id] = $marks;
+            // dd($stdMarksArray);
         }
         // dd($stdMarksArray);
         
