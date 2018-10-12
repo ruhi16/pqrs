@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+use PDF;
+
+use App\School;
 use App\Session;
 use App\Exam;
 use App\Extype;
@@ -112,5 +115,76 @@ class compactMarkRegisterController extends Controller
             ->with('miscoprsltcr', $miscoprsltcr)
             ->with('miscopstdncr', $miscopstdncr)            
             ;
+    }
+
+    public function clssecCompactMarkRegisterPDF(Request $request, $clssec_id){
+        $school = School::all()->first();
+        $session = Session::whereStatus('CURRENT')->first();
+
+        $clssec  = Clssec::find($clssec_id);
+        $clssubs = Clssub::where('clss_id', $clssec->clss_id)->get();
+
+        $stdcrs = Studentcr::where('session_id', $session->id)
+                    ->where('clss_id', $clssec->clss_id)
+                    ->where('section_id', $clssec->section_id)
+                    ->get();
+
+        $exams = Exam::where('session_id', $session->id)->get();
+        
+        $stdmarks = Marksentry::where('session_id', $session->id)
+                    ->where('clssec_id', $clssec->id)
+                    //->whereIn('clssub_id', $clssubs->pluck('id'))
+                    ->get();
+        $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
+                        ->where('clss_id', $clssec->clss_id)->get();
+        //dd($extpmdclsbs);
+        
+        
+        $stdRecords  = [];  //stores related records of 'exmtypmodclssubs' table for this class      
+        foreach($extpmdclsbs as $extpmdclsb){
+            array_push($stdRecords, $extpmdclsb->id);
+        }
+        //dd($stdRecords);
+
+
+        $stdMarksArray = [];
+        foreach($stdcrs as  $stdcr){
+            // echo $stdcr;
+            // echo '<br>';
+            $marks = [];
+            foreach($stdRecords as $stdRecord){
+                $mark = $stdmarks->where('studentcr_id', $stdcr->id)
+                        ->where('exmtypmodclssub_id', $stdRecord)->first();
+
+                if($mark != NULL) {
+                    $marks[$stdRecord] = $mark->marks;                 
+                }
+            }
+            $stdMarksArray[$stdcr->id] = $marks;
+        }
+        // dd($stdMarksArray);
+        
+        $is_pdf = 0;
+        if($is_pdf == 1 ){
+            $pdf = PDF::loadView('clssecCompactMarkRegister.compactMarkRegisterPDF', 
+                    ['school' =>$school, 'session'=>$session, 'clssec'=>$clssec, 'clssubs'=>$clssubs,
+                    'stdcrs' =>$stdcrs, 'exams' =>$exams, 'stdMarksArray'=>$stdMarksArray,
+                    'extpmdclsbs'=>$extpmdclsbs
+                    ]);
+
+            $pdf->setPaper("a4");        
+            return $pdf->stream();
+        }else{
+            return view('clssecCompactMarkRegister.compactMarkRegisterPDF')
+            ->with('school', $school)        
+            ->with('session', $session)
+            ->with('clssec', $clssec)
+            ->with('clssubs', $clssubs)
+            ->with('stdcrs', $stdcrs)
+            ->with('exams', $exams)
+            ->with('stdMarksArray', $stdMarksArray)
+            ->with('extpmdclsbs', $extpmdclsbs)
+            ;
+        }
     }
 }

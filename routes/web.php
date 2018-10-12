@@ -203,7 +203,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::get('/clssec-CompactMarkRegister/{clssec_id}', 'compactMarkRegisterController@clssecCompactMarkRegister');
-
+        Route::get('/clssec-CompactMarkRegisterPDF/{clssec_id}', 'compactMarkRegisterController@clssecCompactMarkRegisterPDF');
 
 
 

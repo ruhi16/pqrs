@@ -51,7 +51,10 @@
         <a href="{{url('/clssec-MarksRegisterv3',[$clssec->id])}}">Mark Register-V3</a>
         </small>
     </td>
-    <td><a href="{{url('/clssec-CompactMarkRegister',[$clssec->id])}}">Comp Marks Register</a></td>
+    <td>
+        <a href="{{url('/clssec-CompactMarkRegister',[$clssec->id])}}">Comp Marks Register</a><br>
+        <a href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id])}}">Comp Marks Register PDF</a>
+    </td>
     <td><a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Individual Result</a></td>
     <td>
         <a href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List HTML</a><br>

@@ -81,7 +81,10 @@
 										</thead>
 										<tbody>
 											@php
-												$clssubs = $clssubs->sortBy('combination_no');
+												$clssubs = $clssubs->sortBy(function($query){
+
+													return $query->combination_no < 0 ? -$query->combination_no  : $query->combination_no ;
+												});
 												//$abc = $clssubs->test(function($e){
 												//	return $e;
 												//});
@@ -142,6 +145,16 @@
 																	->where('stpercentage', '<=', $percentage)
 																	->where('enpercentage', '>=', $percentage)
 																	->first();
+														//to find all commbined and additonal subjects
+														$xx = $clssubs->where('combination_no', '!=', 0)->pluck('id'); //fm er janya only combined, om er janya all comb+addl
+
+														//to find all extpmdclsb_ids to get obtained marks
+														$yy = $extpmdclsbs->where('extype_id', $extype->id)->whereIn('subject_id', $xx)->pluck('id');
+														
+														if($loop->last){
+															//dd($marks->whereIn('exmtypmodclssub_id',$yy)->where('marks', '>', 0)->sum('marks'));		//total om
+															//dd($extpmdclsbs->where('extype_id', $extype->id)->whereIn('subject_id', $xx)->sum('fm')); //total fm															
+														}
 														if( $grade ){
 															$grd = $grade->gradeparticular->name; 
 														}else{
@@ -152,16 +165,21 @@
 													<td class="text-center">{{ $totalObtMarks }}/{{ $totalFulMarks }}</td>
 													<td class="text-center">{{ $percentage }}({{ $grd }}) </td>
 
-													</tr>
-																								
-												@endif
+													</tr>																							
+												@endif												
 											@endforeach
+
+											{{--  <tr>
+												<td colspan='6'>
+													<strong>Total</strong>
+												</td>
+											</tr>	  --}}
 										</tbody>
 									</table>
 								</td>
 							@endif   {{--  end of isExits --}}
 				@endforeach
-				<td></td>
+				<td>pp</td>
 				</tr>
 			@endforeach
 		</tbody>
@@ -186,53 +204,53 @@
 
 
 											
-											<!-- @php
-													$ex_clssubs = $clssubs->where('extype_id', $extype->id)->where('combination_no', '!=', 0)->groupBy('combination_no');												
-													
-													$subName ='';
-													//foreach($ex_clssubs as $ex_clssub){
-													//	$subName .= $ex_clssub ."==="; 
-													//}
-												@endphp
-												@foreach( $ex_clssubs as $ex_clssub )
-														<tr>
-														@php		
-															$subName ='';		
-															$combSubIds = [];									
-															foreach($ex_clssub as $ex_cs){
-																$subName .= $ex_cs->name ; 
-																array_push($combSubIds,$ex_cs->id);
-																if( !$loop->last ){
-																	$subName .= ' + '; 
-																}
-															}
-															//$subName .= ' or ';
-															//dd($combSubIds);
+		{{--  <!-- @php
+				$ex_clssubs = $clssubs->where('extype_id', $extype->id)->where('combination_no', '!=', 0)->groupBy('combination_no');												
+				
+				$subName ='';
+				//foreach($ex_clssubs as $ex_clssub){
+				//	$subName .= $ex_clssub ."==="; 
+				//}
+			@endphp
+			@foreach( $ex_clssubs as $ex_clssub )
+					<tr>
+					@php		
+						$subName ='';		
+						$combSubIds = [];									
+						foreach($ex_clssub as $ex_cs){
+							$subName .= $ex_cs->name ; 
+							array_push($combSubIds,$ex_cs->id);
+							if( !$loop->last ){
+								$subName .= ' + '; 
+							}
+						}
+						//$subName .= ' or ';
+						//dd($combSubIds);
 
-														@endphp
-														<td>{{ $subName }}</td>
+					@endphp
+					<td>{{ $subName }}</td>
 
-														@foreach($exams as $exam)
-														@php
-															$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
-																				->where('exam_id', $exam->id)
-																				->whereIn('subject_id', $combSubIds)
-																				;	
-															//dd($extpmdclsb->pluck('id'));
-															
-															$combSubObtMarks = $totalObtMarks = $marks
-																		->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id'))
-																		->where('marks','>',0)->sum('marks');
-															//if(!$loop->first){
-															//dd($combSubObtMarks);
-															//}
-															$combSubFulMarks = $extpmdclsb->where('exam_id', $exam->id)->sum('fm');
-															
-														@endphp
-														
-														<td>om{{ $combSubObtMarks  }}:fm{{ $combSubFulMarks }}</td>
+					@foreach($exams as $exam)
+					@php
+						$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
+											->where('exam_id', $exam->id)
+											->whereIn('subject_id', $combSubIds)
+											;	
+						//dd($extpmdclsb->pluck('id'));
+						
+						$combSubObtMarks = $totalObtMarks = $marks
+									->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id'))
+									->where('marks','>',0)->sum('marks');
+						//if(!$loop->first){
+						//dd($combSubObtMarks);
+						//}
+						$combSubFulMarks = $extpmdclsb->where('exam_id', $exam->id)->sum('fm');
+						
+					@endphp
+					
+					<td>om{{ $combSubObtMarks  }}:fm{{ $combSubFulMarks }}</td>
 
-														@endforeach
-													</tr>
-											@endforeach 
-										</tbody>  -->
+					@endforeach
+				</tr>
+		@endforeach 
+	</tbody>  -->  --}}
