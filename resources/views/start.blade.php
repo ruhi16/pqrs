@@ -516,6 +516,7 @@
                     <a class="btn btn-info" href="{{url('/clssec-TaskPage')}}">Class-Section Task-Pane</a>
                     <a class="btn btn-warning" href="{{url('/answerScript-taskpane')}}">Answer Script Distribution Point</a>
                     <a class="btn btn-success" href="{{ url('/ExStudentDb') }}" >Excel HTML</a>
+                    <a class="btn btn-primary" href="{{ url('/classTeacherInfo') }}" >Class Teacher Info</a>
                     
 
 

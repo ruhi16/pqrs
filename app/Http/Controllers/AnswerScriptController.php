@@ -171,9 +171,10 @@ class AnswerScriptController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();        
         $clss = Clss::all();
         $exam = Exam::find($exam_id);
+        $exams = Exam::where('session_id', $ses->id)->get();
         
         $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
-                        ->where('exam_id', $exam_id)
+                        //->where('exam_id', $exam_id)
                         ->where('extype_id', $extype_id)
                         ->get();
 
@@ -185,8 +186,8 @@ class AnswerScriptController extends Controller
 
         if( $is_pdf == 1 ){
             $pdf = PDF::loadView('answerscripts.answerscriptClssSectionStatusPDF', 
-                ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'clss'=>$clss,
-                'ansscdists'=>$ansscdists, 'teachers'=>$teacher, 'stdcrs'=>$stdcrs
+                ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'exams'=>$exams, 'clss'=>$clss,
+                'ansscdists'=>$ansscdists, 'teacher'=>$teacher, 'stdcrs'=>$stdcrs
                 ]);
 
             $pdf->setPaper("a4");        
@@ -198,6 +199,7 @@ class AnswerScriptController extends Controller
         return view('answerscripts.answerscriptClssSectionStatus')
         ->with('clss', $clss)
         ->with('exam', $exam)
+        ->with('exams', $exams)
         ->with('ansscdists', $ansscdists)
         ->with('teacher', $teacher)
         ->with('stdcrs', $stdcrs)

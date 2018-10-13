@@ -137,30 +137,24 @@ class compactMarkRegisterController extends Controller
                     ->get();
         $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
                         ->where('clss_id', $clssec->clss_id)->get();
-        // dd($extpmdclsbs);
-        dd( $stdmarks->where('studentcr_id', 5) );
         
         $stdMarksArray = [];
         foreach($stdcrs as  $stdcr){
-            $stdmarks = $stdmarks->where('studentcr_id', $stdcr->id);
-            echo "==========>". $stdcr->id . '<br>';
-            //dd($stdmarks);
+            $crstdmarks = $stdmarks->where('studentcr_id', $stdcr->id);
+            
             $marks = [];
             foreach($extpmdclsbs as $extpmdclsb){
-                $obmark = $stdmarks->where('exmtypmodclssub_id', $extpmdclsb->id)->first();
-                echo $obmark;
+                $obmark = $crstdmarks->where('exmtypmodclssub_id', $extpmdclsb->id)->first();
                 if($obmark != NULL) {
                     $marks[$extpmdclsb->id] = $obmark->marks;                 
                 }
             }
-            $stdMarksArray[$stdcr->id] = $marks;
-          
+            $stdMarksArray[$stdcr->id] = $marks;          
             //dd($stdMarksArray);
-          
         }
         // dd($stdMarksArray);
         
-        $is_pdf = 0;
+        $is_pdf = 1;
         if($is_pdf == 1 ){
             $pdf = PDF::loadView('clssecCompactMarkRegister.compactMarkRegisterPDF', 
                     ['school' =>$school, 'session'=>$session, 'clssec'=>$clssec, 'clssubs'=>$clssubs,

@@ -8,9 +8,9 @@
     table,th,td {
         border: 1px solid black;
         border-spacing: 0px;
-        {{--  width: 100%;  --}}
-        font-size: 12px;
-        {{--  border-collapse: collapse;  --}}
+        width: 100%;
+        font-size: 11px;
+        border-collapse: collapse;
         
     }
     th, td {
@@ -20,6 +20,7 @@
     </style>
     <style>
     .page-break {
+        {{--  page-break-inside:avoid;  --}}
         page-break-after: always;
     }
     </style>
@@ -27,7 +28,7 @@
         <center>
         <h2>{{ $school->name }}</h2>
         <h3>Marks Entry Verificaton Sheet for Session: {{ $session->name }}</h3>
-        <h4>For Class: {{ $clssec->clss->name }}, Section: {{ $clssec->section->name }}</h4>
+        <h5>For Class: {{ $clssec->clss->name }}, Section: {{ $clssec->section->name }}</h5>
         </center>
 
         <table border='1'>
@@ -68,18 +69,21 @@
                                 if( isset($stdMarksArray[$stdcr->id][$etmcs_id]) ){
                                     $obMark = $stdMarksArray[$stdcr->id][$etmcs_id] < 0 ? 'AB' : $stdMarksArray[$stdcr->id][$etmcs_id];
                                 }else{
-                                    $obMark = 'NA';
+                                    $obMark = '';
                                 }                            
                             @endphp
                             
-                            <!-- {{ $obMark }} -->
-                            {{ $stdMarksArray[$stdcr->id][$etmcs_id] or ''}}
+                            {{ $obMark }}
+                            {{--  {{ $stdMarksArray[$stdcr->id][$etmcs_id] or ''}}  --}}
                             </td>
                         @endforeach
                         </tr>
                     @endforeach                    
 
                 </tr>
+                {{--  @if( ($loop->index+1 ) % 15 == 0)
+                    <div class='page-break'></div>
+                @endif  --}}
                 @endforeach            
             </tbody>
         </table>

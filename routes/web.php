@@ -325,7 +325,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/answerScript-clss-sectionStatus/{exam_id}/{extype_id}/{is_pdf}', 'AnswerScriptController@answerscriptClssSectionStatus');
 
-
+        Route::get('/classTeacherInfo', 'ClassTeacherController@ClassTeacherInfo');
 
 
 });

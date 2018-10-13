@@ -17,12 +17,13 @@ class CreateTeachersTable extends Migration
             $table->increments('id');
             $table->integer('session_id');
             $table->string('name');
-            $table->string('mobno');
-            $table->string('desig');
-            $table->string('hqual');
-            $table->string('mnsub_id');
-            $table->string('status');
-            $table->string('notes');
+            $table->string('nickName')->nullable();
+            $table->string('mobno')->nullable();
+            $table->string('desig')->nullable();
+            $table->string('hqual')->nullable();
+            $table->string('mnsub_id')->nullable();
+            $table->string('status')->nullable();
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }
