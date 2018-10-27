@@ -9,13 +9,14 @@
         border: 1px solid black;
         border-spacing: 0px;
         {{--  width: 100%;  --}}
-        font-size: 12px;
+        font-size: 11px;
         border-collapse: collapse;
         
     }
     th, td {
     padding: 2px;
     }
+    
     </style>
     <style>
     .page-break {
@@ -26,7 +27,7 @@
 
     <body>
         <center>
-        <h2>{{ $school->name }}</h2>
+        <h3>{{ $school->name }}</h3>
         <h5>Answer Script Finalize Status for Session: <u>{{ $session->name }}</u></h5>
         
         </center>

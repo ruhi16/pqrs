@@ -8,13 +8,13 @@
     table,th,td {
         border: 1px solid black;
         border-spacing: 0px;
-        width: 100%;
+        width: 80%;
         font-size: 11px;
         border-collapse: collapse;
         
     }
     th, td {
-    padding: 2px;
+    padding: 1px;
     {{--  text-align: center;  --}}
     }
     </style>
