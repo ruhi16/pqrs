@@ -48,7 +48,7 @@
                     <td rowspan='{{ $exams->count() }}'>{{ $stdcr->id }}</td>
                     <td rowspan='{{ $exams->count() }}'>
                         {{ $stdcr->studentdb->name }}<br>
-                        {{ $stdcr->clss->name }} - {{ $stdcr->section->name }}: {{ $stdcr->roll_no }} 
+                        {{ $stdcr->clss->name }} - {{ $stdcr->section->name }}: {{ $stdcr->roll_no }}
                         {{--  {{dd($stdMarksArray)}}  --}}
                     </td>
                     
@@ -92,5 +92,16 @@
                 {{ $key }}:{{ $smark }}
             @endforeach   --}}
             {{--  {{$stdMarksArray[5][20]}}  --}}
+
+    <a href="javascript:void(0);"
+    NAME="My Window Name"  title=" My title here "
+    onClick=window.open("https://google.co.in","Ratting","width=800,height=400,0,status=0,");>Click here to open the child window</a>
+
+    <input type=button onClick=window.open("window-child.html","Ratting","width=550,
+        height=170,left=150,top=200,toolbar=0,status=0,"); value="Open Window">
+
+        <center><input type=button onClick="self.close();" value="Close this window"></center>
     </body>
 </html>
+
+

@@ -18,6 +18,7 @@ use App\Gradeparticular;
 use App\Grade;
 use App\Description;
 use App\Teacher;
+use App\ClssTeacher;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -25,6 +26,7 @@ use App\Clssub;
 use App\Clssec;
 
 use App\Exmtypclssub;
+use App\Exmtypmodclssub;
 use App\Marksentry;
 use App\Gradedescription;
 use App\Answerscriptdistribution;
@@ -203,6 +205,105 @@ class AnswerScriptController extends Controller
         ->with('ansscdists', $ansscdists)
         ->with('teacher', $teacher)
         ->with('stdcrs', $stdcrs)
+        ;
+    }
+
+
+    public function answerscriptClssSectionStatusForm(Request $request, $exam_id, $extype_id, $is_pdf){
+        $school = School::all()->first();
+        $ses = Session::whereStatus('CURRENT')->first();        
+        $clss = Clss::all();
+        $exam = Exam::find($exam_id);
+        $exams = Exam::where('session_id', $ses->id)->get();
+        
+        $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
+                        //->where('exam_id', $exam_id)
+                        ->where('extype_id', $extype_id)
+                        ->get();
+
+        $teacher = Teacher::all();
+        $classteachers = Clssteacher::where('session_id', $ses->id)
+                            ->get();
+
+        $stdcrs = Studentcr::where('session_id', $ses->id)->get();
+
+        // NEW ENTRY
+        $extpmdclsbs = Exmtypmodclssub::where('session_id', $ses->id)
+                        ->where('extype_id', 1) //formative : 1
+                        ->pluck('id');
+        $formarksdetails = MarksEntry::where('session_id', $ses->id)
+                ->whereIn('exmtypmodclssub_id', $extpmdclsbs)
+                ->get();
+        $clssecs = Clssec::where('session_id', $ses->id)->get();
+
+        $formsubjs = Subject::where('session_id', $ses->id)
+                ->where('extype_id', 1)->pluck('id');
+        
+        $formarkdetails = [];
+        foreach($clssecs as $clssec){
+            $formarkstatus = [];
+            $clssubs = Clssub::where('session_id', $ses->id)
+                    ->where('clss_id', $clssec->clss_id)
+                    ->whereIn('subject_id', $formsubjs)
+                    ->get();
+            foreach($clssubs as $clssub){
+                foreach($exams as $exam){
+                    $etmcs_id = Exmtypmodclssub::where('session_id', $ses->id)
+                                    ->where('exam_id', $exam->id)
+                                    //->where('extype_id', 1)     // formative 
+                                    //->where('mode_id', 1)       // oral
+                                    ->where('clss_id', $clssec->clss_id)
+                                    ->where('subject_id', $clssub->subject_id)
+                                    ->first()->id;
+
+                    
+                    
+                    // dd($etmcs_id);
+                    $mrksTotal = $formarksdetails->where('exmtypmodclssub_id', $etmcs_id)
+                                ->where('clssec_id', $clssec->id)
+                                ->where('clssub_id', $clssub->id)
+                                ->sum('marks')
+                                ;
+                    // dd($mrksTotal);
+                    //dd( $formarksdetails->where('clssec_id', $clssec->id) );
+
+                    $formarkstatus['clss_id']       = $clssec->clss_id;
+                    $formarkstatus['section_id']    = $clssec->section_id;
+                    $formarkstatus['exam_id']       = $exam->id;
+                    $formarkstatus['extyype_id']    = 1;
+                    $formarkstatus['mode_id']       = 1;
+                    $formarkstatus['subject_id']    = $clssub->subject_id;
+                    $formarkstatus['marks_total']    = $mrksTotal;
+                }
+            }
+            $formarkdetails[$clssec->id] = $formarkstatus;
+        }
+
+        // dd($formarkdetails);
+
+
+        if( $is_pdf == 1 ){
+            $pdf = PDF::loadView('answerscripts.answerscriptClssSectionStatusFormPDF', 
+                ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'exams'=>$exams, 'clss'=>$clss,
+                'ansscdists'=>$ansscdists, 'teacher'=>$teacher, 'stdcrs'=>$stdcrs
+                ]);
+
+            $pdf->setPaper("a4");        
+            return $pdf->stream();
+        }
+
+
+
+        return view('answerscripts.answerscriptClssSectionStatusForm')
+        ->with('session', $ses)
+        ->with('clss', $clss)
+        ->with('exam', $exam)
+        ->with('exams', $exams)
+        ->with('ansscdists', $ansscdists)
+        ->with('teacher', $teacher)
+        ->with('classteachers', $classteachers)
+        ->with('stdcrs', $stdcrs)
+        ->with('formarkdetails', $formarkdetails)
         ;
     }
 }

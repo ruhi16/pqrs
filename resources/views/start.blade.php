@@ -408,16 +408,30 @@
                     </tr>
                 </thead>
                 <tbody>
+                    //for Summative Exam......
                     <tr>                        
                         <td>All Classes</td>
                         @foreach($exams as $exam)
                             <td class="text-center">
-                                <a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2, 0]) }}">All Class Answer Scripts Finalize Status</a> /
+                                <a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2, 0]) }}">Summative Exam Status</a> /
                                 <a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2, 1]) }}">in PDF</a>
                                 
                             </td>
                         @endforeach
                     </tr>  
+
+                    //for Formative Exam......
+                    <tr>                        
+                        <td>All Classes</td>
+                        @foreach($exams as $exam)
+                            <td class="text-center">
+                                <a href="{{ url('/answerScript-clss-sectionStatusForm', [$exam->id, 2, 0]) }}">Formative Exam Status</a> /
+                                <a href="{{ url('/answerScript-clss-sectionStatusForm', [$exam->id, 2, 1]) }}">in PDF</a>
+                                
+                            </td>
+                        @endforeach
+                    </tr>  
+
                     <tr>                        
                         <td>All Teachers</td>
                         @foreach($exams as $exam)

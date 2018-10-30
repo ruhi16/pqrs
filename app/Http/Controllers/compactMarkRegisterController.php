@@ -154,7 +154,7 @@ class compactMarkRegisterController extends Controller
         }
         // dd($stdMarksArray);
         
-        $is_pdf = 1;
+        $is_pdf = 0;
         if($is_pdf == 1 ){
             $pdf = PDF::loadView('clssecCompactMarkRegister.compactMarkRegisterPDF', 
                     ['school' =>$school, 'session'=>$session, 'clssec'=>$clssec, 'clssubs'=>$clssubs,
