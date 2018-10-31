@@ -185,7 +185,7 @@
     </tbody>
 </table>
 </center>
-{{--  <table>
+<table>
     <tr>
         <th>Obtained Marks</th>
         <th>Full Marks</th>
@@ -247,7 +247,7 @@
                 <table>
                 @foreach($grddes as $gdes)
                     
-                    @if( $loop->iteration % 4 == 1 )    //no of grade in formative is 4
+                    @if( $loop->iteration % 4 == 1 )    {{--  no of grade in formative is 4  --}}
                         <tr>
                             <td colspan="2"><center><b>{{$gdes->subject->name}}</b></center></td></tr><tr>                        
                             <td>{{$gdes->grade->gradeparticular->name}}</td>
@@ -297,7 +297,7 @@
                     @endforeach
                 @endforeach
                 </tbody>
-            </table>   --}}
+            </table> 
 
     </body>
 </html>

@@ -101,7 +101,9 @@ class ResultController extends Controller
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
 
-        // dd($mrks);
+        $grddes = Gradedescription::whereSession_id($ses->id)->get();
+
+        // dd($grddes);
         return view('results.ResultSheet')
         ->withSes($ses)
         ->withSch($sch)
@@ -114,6 +116,8 @@ class ResultController extends Controller
         ->withCls($clsc->clss->name)
         ->withSec($clsc->section->name)
         ->withClssec($clsc)
+        ->with('grddes', $grddes)
+        ->with('exts', $extp)
         ;
     }
 
@@ -147,6 +151,8 @@ class ResultController extends Controller
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
 
+        $grddes = Gradedescription::whereSession_id($ses->id)->get();
+
         return view('results.ResultSheetHTML')
         ->withSes($ses)
         ->withSch($sch)
@@ -159,6 +165,8 @@ class ResultController extends Controller
         ->withCls($clsc->clss->name)
         ->withSec($clsc->section->name)
         ->withClssec($clsc)
+        ->with('grddes', $grddes)
+        ->with('exts', $extp)
         ;
         // $ses = Session::whereStatus('CURRENT')->first();
         // $sch = School::find(1);       
@@ -236,11 +244,12 @@ class ResultController extends Controller
         $mrks = Marksentry::whereSession_id($ses->id)
             ->whereStudentcr_id($studentcr_id)->get();
 
-
+        $grddes = Gradedescription::whereSession_id($ses->id)->get();
 
         $pdf = PDF::loadView('results.ResultSheetHTML', 
             [ 'ses'=>$ses,   'sch'=>$sch,  'exms'=>$exms, 'clsbs'=>$clsbs,
-              'stcr'=>$stcr, 'mrks'=>$mrks,'extp'=>$extp, 'extpclsbs'=>$extpclsbs
+              'stcr'=>$stcr, 'mrks'=>$mrks,'extp'=>$extp, 'extpclsbs'=>$extpclsbs,
+              'grddes' => $grddes, 'exts' => $extp
             ]);
             
         $pdf->setPaper("legal");        

@@ -162,30 +162,30 @@
     </tbody>
 </table>
 
-  {{--  <div class="row">
+  <div class="row">
         <div class="col-sm-8">
-        <table class="table table-bordered table-sm">
-            <thead>
-                <tr>
-                    <th>Subject</th>
-                    <th>Grade</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($grddes as $gdes)
-                <tr>
-                @if(($loop->iteration % 4) == 1 )
-                  <td rowspan="4">{{$gdes->subject->name}}</td>
-                @endif
-                <td>{{$gdes->grade->gradeparticular->name}}</td>
-                <td><small>{{$gdes->desc}}</small></td>
-                </tr>
-            @endforeach
-        </tbody>
-        </table>
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Grade</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($grddes as $gdes)
+                    <tr>
+                    @if(($loop->iteration % 4) == 1 )
+                        <td rowspan="4">{{$gdes->subject->name}}</td>
+                    @endif
+                        <td>{{$gdes->grade->gradeparticular->name}}</td>
+                        <td><small>{{$gdes->desc}}</small></td>
+                    </tr>
+                @endforeach
+            </tbody>
+            </table>
         </div>
-        
+        {{--  ======================================================================  --}}
         <div class="col-sm-4">
           <table class="table table-bordered">
             <thead>
@@ -253,7 +253,7 @@
         </div>
 
 
-    </div>  --}}
+    </div>
         
         
 
