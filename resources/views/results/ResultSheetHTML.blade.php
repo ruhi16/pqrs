@@ -3,6 +3,7 @@
     <head>
         <title>Html Result Format</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        {{--  <meta http-equiv="Content-Type" content="charset=utf-8" />  --}}
     </head>
     <style>
     table,th,td {
@@ -18,17 +19,28 @@
     }
     </style>
     <style>
-    .page-break {
-        page-break-after: always;
-    }
+		.page-break {
+    		page-break-after: always;
+		}
+	</style>
+
+    <style>
+    @font-face {
+  		font-family: 'Open Sans';
+  		font-style: normal;
+  		font-weight: normal;
+  		src: url(http://themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3aCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
+	}
+	body {
+    	font-family: "Robot";
+	}
+
     </style>
-
-
     <body>
         <center>
         <h1 class="text-center">{{$sch->name}}</h1>
         <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
-        <h2 class="text-center">Progress Report</h2>
+        <h2 class="text-center">Progress Report হালো</h2>
         
         <table width="55%">
         <tr>
