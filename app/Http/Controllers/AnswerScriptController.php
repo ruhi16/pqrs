@@ -234,10 +234,16 @@ class AnswerScriptController extends Controller
         $formarksdetails = MarksEntry::where('session_id', $ses->id)
                 ->whereIn('exmtypmodclssub_id', $extpmdclsbs)
                 ->get();
-        $clssecs = Clssec::where('session_id', $ses->id)->get();
-
         $formsubjs = Subject::where('session_id', $ses->id)
-                ->where('extype_id', 1)->pluck('id');
+                ->where('extype_id', 1)->pluck('id');           //formative subjects only
+        
+        $clssecs = Clssec::where('session_id', $ses->id)->get();
+        $clssubjs = Clssub::where('session_id', $ses->id)
+                    ->whereIn('subject_id', $formsubjs)
+                    ->get();
+        // dd($clssubs);
+        $formsubjs = Subject::where('session_id', $ses->id)
+                ->where('extype_id', 1)->pluck('id');           //formative subjects only
         
         $formarkdetails = [];
         foreach($clssecs as $clssec){
@@ -247,6 +253,7 @@ class AnswerScriptController extends Controller
                     ->whereIn('subject_id', $formsubjs)
                     ->get();
             foreach($clssubs as $clssub){
+                $formarksclsb = [];
                 foreach($exams as $exam){
                     $etmcs_id = Exmtypmodclssub::where('session_id', $ses->id)
                                     ->where('exam_id', $exam->id)
@@ -261,7 +268,7 @@ class AnswerScriptController extends Controller
                     // dd($etmcs_id);
                     $mrksTotal = $formarksdetails->where('exmtypmodclssub_id', $etmcs_id)
                                 ->where('clssec_id', $clssec->id)
-                                ->where('clssub_id', $clssub->id)
+                                //->where('clssub_id', $clssub->id)
                                 ->sum('marks')
                                 ;
                     // dd($mrksTotal);
@@ -273,10 +280,16 @@ class AnswerScriptController extends Controller
                     $formarkstatus['extyype_id']    = 1;
                     $formarkstatus['mode_id']       = 1;
                     $formarkstatus['subject_id']    = $clssub->subject_id;
+
                     $formarkstatus['marks_total']    = $mrksTotal;
+                    $str = $clssec->id .'-'. $clssub->id .'-'. $exam->id;
+
+                    $formarkdetails[$str] = $formarkstatus;
+                    $str2 = $clssec->clss->name .'-'. $clssec->section->name .'-'. $clssub->subject->code .'-'. $exam->name;
+                    //echo $str2 .'='. $mrksTotal. "<br>";
                 }
             }
-            $formarkdetails[$clssec->id] = $formarkstatus;
+            // $formarkdetails[$clssec->id] = $formarkstatus;
         }
 
         // dd($formarkdetails);
@@ -304,6 +317,7 @@ class AnswerScriptController extends Controller
         ->with('classteachers', $classteachers)
         ->with('stdcrs', $stdcrs)
         ->with('formarkdetails', $formarkdetails)
+        ->with('clssubs', $clssubjs)
         ;
     }
 }

@@ -51,8 +51,12 @@
                         @foreach($exams as $exam)
                             
                             <td>
-                                {{--  {{ $formarkdetails[$csec->id] }}  --}}
-                                {{--  {{ $formarkdetails[$csec->id]['marks_total'] }}  --}}
+                                @php
+                                    $clsb_id = $clssubs->where('clss_id', $cls->id)
+                                                ->where('subject_id', $csub->id)->first()->id;
+                                    $str = $csec->id.'-'.$clsb_id.'-'.$exam->id;
+                                @endphp
+                                {{ $formarkdetails[$str]['marks_total'] or 'NA'}}
                             </td> 
                         @endforeach   
                     @endforeach
