@@ -22,7 +22,7 @@ class TestController extends Controller
         $mpdf->WriteHTML($html);
 
 
-        // return view('mpdfBengaliTestpage');
+        return view('mpdfBengaliTestpage');
     }
     
 }
