@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http;
 use DB;
 use PDF;
+use mPDF;
 
 use App\Session;
 use App\Exam;
@@ -187,13 +188,16 @@ class AnswerScriptController extends Controller
 
 
         if( $is_pdf == 1 ){
-            $pdf = PDF::loadView('answerscripts.answerscriptClssSectionStatusPDF', 
+            $pdf = mPDF::loadView('answerscripts.answerscriptClssSectionStatusPDF', 
                 ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'exams'=>$exams, 'clss'=>$clss,
                 'ansscdists'=>$ansscdists, 'teacher'=>$teacher, 'stdcrs'=>$stdcrs
                 ]);
-
-            $pdf->setPaper("a4");        
+            // $strBNFont = TCPDF_FONTS::addTTFfont('./fonts/SolaimanLipi.ttf', 'TrueTypeUnicode', '', 32);
+            // $pdf->SetFont($strBNFont, '', 8, '', 'false');
+            //$pdf->setPaper("a4");        
             return $pdf->stream();
+
+
         }
 
 

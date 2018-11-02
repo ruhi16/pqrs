@@ -182,6 +182,7 @@ return [
         // Barryvdh\Snappy\ServiceProvider::class,
         
         Codedge\Fpdf\FpdfServiceProvider::class, //[1]
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,   //for mPdf
     ],
 
     /*
@@ -238,6 +239,7 @@ return [
         // 'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         // 'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class, // [2]
+        'mPDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,    // [3]
         
     ],
 

@@ -24,12 +24,25 @@
     }
     </style>
 
+	<style type="text/css">
+    @font-face
+    {
+        font-family: 'SolaimanLipi';
+        src: url('resources/fonts/SolaimanLipi.ttf');
+    }
+    * {
+        font-family:'SolaimanLipi', sans-serif;
+        font-size: 10pt;
+    }
+
+		
+	</style>
 
     <body>
         <center>
         <h3>{{ $school->name }}</h3>
         <h5>Answer Script Finalize Status for Session: <u>{{ $session->name }}</u></h5>
-        
+        হালো
         </center>
 
         @foreach($clss as $cls)

@@ -329,7 +329,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/classTeacherInfo', 'ClassTeacherController@ClassTeacherInfo');
 
-
+        Route::get('/mpdfBengaliTestpage', 'TestController@mpdfBengaliTestpage');
 });
   
 Route::get('/get-logout', function(){

@@ -252,7 +252,7 @@ class ResultController extends Controller
               'grddes' => $grddes, 'exts' => $extp
             ]);
             
-        $pdf->setPaper("legal");        
+        //$pdf->setPaper("legal");        
         return $pdf->stream();//download('resultsheet.pdf');
 
         // return view('results.ResultSheetHTML')

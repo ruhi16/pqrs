@@ -596,7 +596,7 @@
                     </div>  --}}
                     
 
-
+                    <a href="{{url('/mpdfBengaliTestpage') }}">Test Page using mPDF </a>
 
 
                     {{--  <button type="button" class="btn btn-primary btnModal" data-toggle="modal" data-target="#exampleModalLong">
