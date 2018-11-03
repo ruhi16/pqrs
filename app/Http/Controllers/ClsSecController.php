@@ -150,11 +150,11 @@ class ClsSecController extends Controller
              'school' =>$school, 'subjs'=>$subjs
             ]);
 
-        $pdf->setPaper("a4");        
+        // $pdf->setPaper("a4");        
         // return $pdf->stream(); //only to show in browser
 
         $nameStr ="StudMasterRolls".$ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
-        return $pdf->download($nameStr);
+        return $pdf->stream($nameStr);
 
     }
 
@@ -178,7 +178,7 @@ class ClsSecController extends Controller
              'school' =>$school, 'subjs'=>$subjs
             ]);
 
-        $pdf->setPaper("a4");        
+        // $pdf->setPaper("a4");        
         // return $pdf->stream(); //only to show in browser
 
         $nameStr ="SummativeMarksSheet".$ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
@@ -205,7 +205,7 @@ class ClsSecController extends Controller
              'school' =>$school, 'subjs'=>$subjs
             ]);
 
-        $pdf->setPaper("a4");        
+        // $pdf->setPaper("a4");        
         // return $pdf->stream(); //only to show in browser
 
         $nameStr ="FormativeMarksSheet".$ses->name . "-" . $clss->name ."-". $secs->name ."-StudentList.pdf" ;
