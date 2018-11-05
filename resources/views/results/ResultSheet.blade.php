@@ -104,10 +104,15 @@
                                 @php 
                                     $allSubjTotal += $subjTotal;
                                     $combSubjectCount++;
+                                    $etsubjtotal = $extpclsbs->where('extype_id', $et->id)->where('subject_id', $clsb->subject_id)->sum('fm');
                                 @endphp
                                 @if( $clsb->combination_no == 0)
+                                    @php
+                                        // $etsubjtotal = $extpclsbs->where('extype_id', $et->id)->where('subject_id', $clsb->subject_id)->sum('fm');
+                                    @endphp
                                     <td class="text-center text-danger">
-                                        {{ getGrade($et->id, $subjTotal, 80 ) }}
+                                        {{ $etsubjtotal }}
+                                        {{ getGrade($et->id, $subjTotal, $etsubjtotal ) }}
                                     </td>
                                 @else
                                     
@@ -133,7 +138,7 @@
                                         
                                         <td class="text-center" rowspan="{{ $combSubCount }}">                                    
                                             {{ $fullObtMarks }}
-                                            <br>{{ getGrade($et->id, $fullObtMarks, $etcsFMs) }}                                    
+                                            <br>{{ getGrade($et->id, $fullObtMarks, $etcsFMs) }} 
                                         </td>
                                     @else
                                         @if($combSubjectCount == $combSubCount)
@@ -248,11 +253,11 @@
             @endforeach
         </tbody>
         </table> 
-      
+        
         
         </div>
 
-
+    <img src="{{ url('rubindicator/rubricindicator.png') }}">
     </div>
         
         

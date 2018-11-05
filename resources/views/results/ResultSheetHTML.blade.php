@@ -24,25 +24,25 @@
 		}
 	</style>
 
-    <style>
+    <style> 
     @font-face {
-  		font-family: 'Open Sans';
-  		font-style: normal;
-  		font-weight: normal;
-  		src: url(http://themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3aCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
-	}
-	body {
-    	font-family: "Robot";
-	}
+        font-family: "SolaimanLipi";
+        font-style: normal;
+        font-weight: normal;
+        src: url(resources/fonts/SolaimanLipi.ttf) format('truetype');
+    }
+    * {
+        font-family: "SolaimanLipi";
+    }
 
-    </style>
+	</style>
     <body>
         <center>
         <h1 class="text-center">{{$sch->name}}</h1>
         <h4 class="text-center">{{$sch->po}} * {{$sch->ps}} * {{$sch->dist}} * {{$sch->pin}}</h4>
         <h2 class="text-center">Progress Report হালো</h2>
         
-        <table width="55%">
+        <table width="100%">
         <tr>
             <td><b>Name:    </B>{{$stcr->studentdb->name}}</td>
             <td><b>Class:   </B>{{$stcr->clss->name}}</td>
@@ -86,7 +86,7 @@
                                     ->groupBy('mode_id')
                                     ->count();
                             @endphp
-                            <th colspan="{{ $mdInTerm }}" class="text-center">{{$mdInTerm}}={{$ex->name}}</th>                         
+                            <th colspan="{{ $mdInTerm }}" class="text-center">{{$mdInTerm}}={{$ex->name}}</th>
                         @endforeach
                         <th>Total/{{$typeTotal}}</th>
                         <th>Grade</th>
@@ -113,7 +113,7 @@
                                             ->groupBy('mode_id');
                                     @endphp
                                     @foreach($mdInTermObj as $modObj)                                    
-                                        <td class="text-right"> 
+                                        <td class="text-right" align="center"> 
                                         @foreach($stcr->marksentries as $record)
                                             @if( $modObj->first()->mode_id == $record->exmtypmodclssub->mode_id )                                            
                                             
@@ -137,15 +137,16 @@
                                         </td>                                    
                                     @endforeach
                                 @endforeach
-                                <td class="text-right text-danger"><b>{{ $subjTotal }}</b></td>
+                                <td class="text-right text-danger" align="center"><b>{{ $subjTotal }}</b></td>
 
                                 @php 
                                     $allSubjTotal += $subjTotal;
                                     $combSubjectCount++;
+                                    $etsubjtotal = $extpclsbs->where('extype_id', $et->id)->where('subject_id', $clsb->subject_id)->sum('fm');
                                 @endphp
                                 @if( $clsb->combination_no == 0)
-                                    <td class="text-center text-danger">
-                                        {{ getGrade($et->id, $subjTotal, 80 ) }}
+                                    <td class="text-center text-danger" align="center">
+                                        {{ getGrade($et->id, $subjTotal, $etsubjtotal ) }}
                                     </td>
                                 @else
                                     @if($flag == true)
@@ -197,7 +198,10 @@
     </tbody>
 </table>
 </center>
-<table>
+
+<br>
+
+{{--  <table>
     <tr>
         <th>Obtained Marks</th>
         <th>Full Marks</th>
@@ -210,11 +214,11 @@
         <td></td>
         <td>xx</td>
     </tr>
-</table>
+</table>  --}}
 
 <br>
 
-<table class="table table-bordered">
+{{--  <table class="table table-bordered" width="100%">
     <thead>
         <tr>
             <th>Particulars</th>
@@ -249,17 +253,17 @@
             @endforeach
         </tr>
     </tbody>
-</table>
-<div class="page-break"></div>
+</table>  --}}
+{{--  <div class="page-break"></div>  --}}
 <br>
-<table>
+{{--  <table>
     <tbody>
         <tr><td>
             
                 <table>
                 @foreach($grddes as $gdes)
                     
-                    @if( $loop->iteration % 4 == 1 )    {{--  no of grade in formative is 4  --}}
+                    @if( $loop->iteration % 4 == 1 )    
                         <tr>
                             <td colspan="2"><center><b>{{$gdes->subject->name}}</b></center></td></tr><tr>                        
                             <td>{{$gdes->grade->gradeparticular->name}}</td>
@@ -283,33 +287,31 @@
             </td>
         </tr>  
     </tbody>
-</table>
+</table>  --}}
  
-
-        
-    <br>            
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Exam Type</th>
-                        <th>Grade </th>
-                        <th>From %</th>
-                        <th>To %</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($exts as $ext)
-                    @foreach($ext->grades as $grd)
-                    <tr>
-                    <td>{{ $ext->name }}</td>
-                    <td>{{ $grd->gradeparticular->name }}</td>
-                    <td>{{ $grd->stpercentage }}</td>
-                    <td>{{ $grd->stpercentage }}</td>
-                    </tr>
-                    @endforeach
+           
+        {{--  <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Exam Type</th>
+                    <th>Grade </th>
+                    <th>From %</th>
+                    <th>To %</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($exts as $ext)
+                @foreach($ext->grades as $grd)
+                <tr>
+                <td>{{ $ext->name }}</td>
+                <td>{{ $grd->gradeparticular->name }}</td>
+                <td>{{ $grd->stpercentage }}</td>
+                <td>{{ $grd->stpercentage }}</td>
+                </tr>
                 @endforeach
-                </tbody>
-            </table> 
-
+            @endforeach
+            </tbody>
+        </table>   --}}
+        <img src="{{ url('rubindicator/rubricindicator2.png') }}">
     </body>
 </html>
