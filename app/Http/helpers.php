@@ -27,7 +27,7 @@ function getGrade($extypeid, $data, $fullMarks){
     $extyps = Extype::whereSession_id($ses->id)
                 ->whereName($extypeid)->first();
      
-    $data = ( $data / $fullMarks ) * 100; // calculate %
+    $data = round(( ( $data / $fullMarks ) * 100), 0); // calculate %
   
     $grds = Grade::whereExtype_id($extypeid)
         ->where('stpercentage', '<=', $data)          
@@ -36,7 +36,7 @@ function getGrade($extypeid, $data, $fullMarks){
 
   
     if( !$grds ){ 
-        return 'AB';
+        return 'NA';
     }
     return ($grds->gradeparticular->name);
 }

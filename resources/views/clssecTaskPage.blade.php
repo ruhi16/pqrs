@@ -52,15 +52,16 @@
         </small>
     </td>
     <td>
-        <a href="{{url('/clssec-CompactMarkRegister',[$clssec->id])}}">Comp Marks Register</a><br>
-        <a href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id])}}">Comp Marks Register PDF</a>
+        <small><a href="{{url('/clssec-CompactMarkRegister',[$clssec->id])}}">Comp Marks Register</a></small><br>
+        <small><a href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id, 0])}}">Comp Marks Register</a></small><br>
+        <small><a href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id, 1])}}">Comp Marks Register PDF</a></small>
     </td>
     <td><a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Individual Result</a></td>
     <td>
-        <a href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List HTML</a><br>
-        <a href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a><br>
-        <a href="{{ url('/clssecsreport-stdListSummativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Summ. PDF</a><br>
-        <a href="{{ url('/clssecsreport-stdListFromativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Form. PDF</a>
+        <small><a href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List HTML</a></small><br>
+        <small><a href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a></small><br>
+        <small><a href="{{ url('/clssecsreport-stdListSummativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Summ. PDF</a></small><br>
+        <small><a href="{{ url('/clssecsreport-stdListFromativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Form. PDF</a></small>
     </td>
     </tr>
 @endforeach

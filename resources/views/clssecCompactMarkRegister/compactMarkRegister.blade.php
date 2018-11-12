@@ -393,12 +393,12 @@
                     <br>
                     @if( $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first() )
                         @if( !$refreshFlag ) 
-                            <input type="submit" class="btn btn-success pull-right" value="Refreshed !!!">
+                            <input type="submit" class="btn btn-success pull-right" value="Refresh !!!">
                         @else
-                            <input type="submit" class="btn btn-info" value="Updated !!!">  
+                            <input type="submit" class="btn btn-info" value="Please Update !!!">  
                         @endif
                     @else    
-                            <input type="submit" class="btn btn-danger" value="Not Refreshed !!!">
+                            <input type="submit" class="btn btn-danger" value="Please Submit Data !!!">
                     @endif
 
                 </form>

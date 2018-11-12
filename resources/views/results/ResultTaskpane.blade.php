@@ -23,6 +23,7 @@
     @endforeach
     <th>Result Status</th>
     <th>Action</th>
+    <th>Action</th>
   </tr>
 </thead>
 <tbody>
@@ -40,6 +41,7 @@
     @endforeach
     <td></td>
     <td><a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a></td>
+    <td><a href="{{url('/clssec-ResultSheetPDF',[$clssec_id, $stdcr->id])}}">Result Sheet PDF</a></td>
   </tr>
 @endforeach
 </tbody>

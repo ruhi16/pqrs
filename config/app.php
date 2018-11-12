@@ -179,10 +179,12 @@ return [
         App\Providers\RouteServiceProvider::class,        
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        
         // Barryvdh\Snappy\ServiceProvider::class,
         
         Codedge\Fpdf\FpdfServiceProvider::class, //[1]
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,   //for mPdf
+        
     ],
 
     /*
@@ -238,7 +240,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         // 'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         // 'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
-        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class, // [2]
+        'fPDF' => Codedge\Fpdf\Facades\Fpdf::class, // [2]
         'mPDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,    // [3]
         
     ],

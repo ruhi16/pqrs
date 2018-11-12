@@ -28,13 +28,15 @@
 			@foreach($clssecMarks->groupBy('studentcr_id') as $studentcr)
 				{{--  <small>{{ $studentcr }}</small>  --}}
 				<tr>
-					<td>{{ $studentcr->unique('studentcr_id')->first()->studentcr->studentdb->name }},
+					<td>
+						<strong>{{ $studentcr->unique('studentcr_id')->first()->studentcr->studentdb->name }}</strong>,<br>
 						{{ $studentcr->unique('studentcr_id')->first()->studentcr->clss->name }},
 						{{ $studentcr->unique('studentcr_id')->first()->studentcr->section->name }},
-						{{ $studentcr->unique('studentcr_id')->first()->studentcr->roll_no }}
+						Roll NO: {{ $studentcr->unique('studentcr_id')->first()->studentcr->roll_no }}
 					</td>
 					@foreach($extypes as $extype)
 							@php
+								// how many extype exists for current class, i.e. summative, formative or both
 								$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
 							@endphp
 							
@@ -48,8 +50,6 @@
 									{{--  {{ dd($marks) }}  --}}
 									<table class="table table-bordered">
 										<thead>
-
-
 											<tr>
 												<th class="text-center" rowspan='2'>Subject
 													{{--  {{ $mode_count }}-{{ $isExist }}  --}}
@@ -80,18 +80,10 @@
 											</tr>
 										</thead>
 										<tbody>
-											@php
-												$clssubs = $clssubs->sortBy(function($query){
-
-													return $query->combination_no < 0 ? -$query->combination_no  : $query->combination_no ;
-												});
-												//$abc = $clssubs->test(function($e){
-												//	return $e;
-												//});
-												//dd($abc);
-												//$flights = $flights->reject(function ($flight) {
-    											//	return $flight->cancelled;
-												//});
+											@php												
+												//dd($clssubs->pluck('combination_no'));
+												$combaddl_subj_state = false;
+												$combaddl_subj_count_const = 0;
 											@endphp
 
 											@foreach($clssubs as $clssub)
@@ -139,31 +131,45 @@
 																	->where('marks', '>', 0)->sum('marks');
 														$totalFulMarks = $extpmdclsb->where('fm', '>', 0)->sum('fm');				
 														
-														$percentage = round( ( $totalObtMarks * 100 ) / $totalFulMarks , 0);
+														$grade = getGrade($extype->id, $totalObtMarks, $totalFulMarks);
+														$percentage = round( ( $totalObtMarks * 100 ) / $totalFulMarks , 0); //optional
 
-														$grade = $grades->where('extype_id', $extype->id)
-																	->where('stpercentage', '<=', $percentage)
-																	->where('enpercentage', '>=', $percentage)
-																	->first();
-														//to find all commbined and additonal subjects
-														$xx = $clssubs->where('combination_no', '!=', 0)->pluck('id'); //fm er janya only combined, om er janya all comb+addl
+														// $grade = $grades->where('extype_id', $extype->id)
+														//			->where('stpercentage', '<=', $percentage)
+														//			->where('enpercentage', '>=', $percentage)
+														//			->first();
 
-														//to find all extpmdclsb_ids to get obtained marks
-														$yy = $extpmdclsbs->where('extype_id', $extype->id)->whereIn('subject_id', $xx)->pluck('id');
-														
-														if($loop->last){
-															//dd($marks->whereIn('exmtypmodclssub_id',$yy)->where('marks', '>', 0)->sum('marks'));		//total om
-															//dd($extpmdclsbs->where('extype_id', $extype->id)->whereIn('subject_id', $xx)->sum('fm')); //total fm															
-														}
-														if( $grade ){
-															$grd = $grade->gradeparticular->name; 
-														}else{
-															$grd = 'MISTAKEN';
-														}
+														//to find subject_ids of all commbined and additonal subjects
+														$curr_clssubs = $clssubs->where('combination_no', $clssub->combination_no);
+														$combaddl_subj_ids = $curr_clssubs->where('combination_no', '!=', 0)->pluck('id'); //fm er janya only combined, om er janya all comb+addl
+														$combaddl_subj_count = $curr_clssubs->where('combination_no', '!=', 0)->count('id');
+														// dd($combaddl_subj_count);
+														//to find extpmdclsb_ids of all combined & addl subjects to get obtained marks
+														$combaddl_etmcs_ids = $extpmdclsbs->where('extype_id', $extype->id)->whereIn('subject_id', $combaddl_subj_ids)->pluck('id');
+														if( $combaddl_subj_count > 0 && $comb_subj_state = false){
+															$combaddl_subj_state = true;
+															$combaddl_subj_count_const = $combaddl_subj_count;
+														}														
 
 													@endphp
-													<td class="text-center">{{ $totalObtMarks }}/{{ $totalFulMarks }}</td>
-													<td class="text-center">{{ $percentage }}({{ $grd }}) </td>
+
+													<td class="text-center">{{ $totalObtMarks }}/{{ $totalFulMarks }}:{{$combaddl_subj_state}}</td>
+
+													
+													@if( $combaddl_subj_state == true && $combaddl_subj_count_const > 0 )
+														<td class="text-center" rowspan="$combaddl_subj_count_const"><small>{{ $percentage }}% </small>{{$clssub->subject_id}}-{{$combaddl_subj_count}}({{ $grade }}) </td>
+														@php $combaddl_subj_count_const--; @endphp														
+													@endif
+
+													@if( $combaddl_subj_state == true && $combaddl_subj_count_const == 0 )
+														$combaddl_subj_state = false;
+													@endif
+
+
+
+													@if( $combaddl_subj_state == false && $combaddl_subj_count_const == 0)
+														<td class="text-center"><small>{{ $percentage }}% </small>{{$clssub->subject_id}}-{{$combaddl_subj_count}}({{ $grade }}) </td>
+													@endif
 
 													</tr>																							
 												@endif												
