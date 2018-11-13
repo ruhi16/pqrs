@@ -213,6 +213,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-MarksRegister/{clssec_id}',  'MarksEntryController@clssecMarksRegister');
         Route::get('/clssec-MarksRegisterv2/{clssec_id}',  'MarksEntryController@clssecMarksRegisterv2');
         Route::get('/clssec-MarksRegisterv3/{clssec_id}',  'MarksEntryController@clssecMarksRegisterv3');
+
+
+        Route::get('/clssec-ResultSheetv3/{clssec_id}/{studentcr_id}',  'ResultcrController@clssecResultSheetv3');
+
+
         
         //Route::get ('/clssecStdcr-MarkRefresh/{studentcr_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshget');
         Route::post('/clssecStdcr-MarkRefresh/{studentcr_id}/{clss_id}/{section_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshpost');

@@ -17,9 +17,9 @@
     <th>Section</th>
     <th>Roll</th>
     @foreach($extp as $ex)
-      <th>Total Marks Obt<br><small>{{ $ex->name }}</small></th>
+      {{--  <th>Total Marks Obt<br><small>{{ $ex->name }}</small></th>
       <th>Full Marks<br><small>{{ $ex->name }}</small></th>
-      <th>Nos of Ds<br><small>{{ $ex->name }}</small></th>
+      <th>Nos of Ds<br><small>{{ $ex->name }}</small></th>  --}}
     @endforeach
     <th>Result Status</th>
     <th>Action</th>
@@ -35,13 +35,19 @@
     <td>{{$stdcr->section->name}}</td>
     <td>{{$stdcr->roll_no}}</td>
     @foreach($extp as $ex)
+      {{--  <td></td>
       <td></td>
-      <td></td>
-      <td></td>
+      <td></td>  --}}
     @endforeach
     <td></td>
-    <td><a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a></td>
-    <td><a href="{{url('/clssec-ResultSheetPDF',[$clssec_id, $stdcr->id])}}">Result Sheet PDF</a></td>
+    <td>
+      <a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a><br>
+      <a href="{{url('/clssec-ResultSheetv3',[$clssec_id, $stdcr->id])}}">Result Sheet V-3</a>
+    </td>
+    <td>
+    <a href="{{url('/clssec-ResultSheetPDF',[$clssec_id, $stdcr->id])}}">Result Sheet PDF</a><br>
+    <a href="{{url('/clssec-ResultSheetv3PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-3 PDF</a>
+    </td>
   </tr>
 @endforeach
 </tbody>

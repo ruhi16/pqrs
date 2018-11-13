@@ -6,13 +6,27 @@
 @endsection
 
 @section('content')
-<h1>Class Section Marks Register V-3</h1>
+
+    <h1 class='text-center'>{{ $school->name }}</h1>
+    <h3 class='text-center'>{{ $school->vill }} * {{ $school->po }} * {{ $school->ps }}</h3>
+    <h2 class='text-center'>Progress Report for Session {{ $session->name }}</h2>
+
+    <table class="table table-bordered">
+		<thead>
+			<tr>
+                <td>Name: <strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
+                <td>Class: <strong>{{ $studentcrs->first()->clss->name }}</strong></td>
+                <td>Section: <strong>{{ $studentcrs->first()->section->name }}</strong></td>
+                <td>Roll No:<strong>{{ $studentcrs->first()->roll_no }}</strong></td>
+            </tr>
+        </thead>
+    </table>
+
 
 
 	<table class="table table-bordered">
 		<thead>
-			<tr>
-				<th class="text-center">Name</th>
+			<tr>				
 				@foreach($extypes as $extype)
 					@php
 						$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
@@ -21,19 +35,19 @@
 						<th class="text-center">{{ $extype->name }}</th>
 					@endif
 				@endforeach
-				<th class="text-center">Action</th>
+				{{--  <th class="text-center">Action</th>  --}}
 			</tr>		
 		</thead>
 		<tbody>
 			@foreach($clssecMarks->groupBy('studentcr_id') as $studentcr)
 				{{--  <small>{{ $studentcr }}</small>  --}}
 				<tr>
-					<td>
+					{{--  <td>
 						<strong>{{ $studentcr->unique('studentcr_id')->first()->studentcr->studentdb->name }}</strong>,<br>
 						{{ $studentcr->unique('studentcr_id')->first()->studentcr->clss->name }},
 						{{ $studentcr->unique('studentcr_id')->first()->studentcr->section->name }},
 						Roll NO: {{ $studentcr->unique('studentcr_id')->first()->studentcr->roll_no }}
-					</td>
+					</td>  --}}
 					@foreach($extypes as $extype)
 							@php
 								// how many extype exists for current class, i.e. summative, formative or both
@@ -195,25 +209,82 @@
 
 													</tr>																							
 												@endif												
-											@endforeach
-
-											{{--  <tr>
-												<td colspan='6'>
-													<strong>Total</strong>
-												</td>
-											</tr>	  --}}
+											@endforeach											
 										</tbody>
 									</table>
 								</td>
 							@endif   {{--  end of isExits --}}
 				@endforeach
-				<td>pp</td>
 				</tr>
+                <tr>
+                    @php
+                        $mode_count = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('mode_id')->count();
+                    @endphp
+                    @foreach($extypes as $extype)
+                        {{--  @foreach($modes as $mode)  --}}
+                            {{--  @if($extype->mode_id == $mode->id)  --}}
+                                <td><b>Total Obtained Marks: </b>
+                                @php
+                                    $etmcs = $extpmdclsbs->where('extype_id', $extype->id)->pluck('id');
+                                    $obtMarks = $marks->whereIn('exmtypmodclssub_id', $etmcs)
+                                                    ->where('studentcr_id', $studentcrs->first()->id)
+                                                    ->where('marks', '>', 0)
+                                                    ->sum('marks');
+
+                                @endphp
+                                {{ $obtMarks }} (In Word: )<br>
+                                <b>Total No of 'Ds' Obtained: </b>
+                                
+                                </td>
+                            {{--  @endif  --}}
+                        {{--  @endforeach  --}}
+                    @endforeach
+                
+                </tr>
 			@endforeach
 		</tbody>
 	</table>
 
 
+    <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Particulars</th>
+                    @foreach($exams as $exm)
+                        <th>{{$exm->name}}</th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Attendance of Students</td>
+                    @foreach($exams as $exm)
+                        <td></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>Signature of Class Teacer</td>
+                    @foreach($exams as $exm)
+                        <td></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>Signature of HM/TIC</td>
+                    @foreach($exams as $exm)
+                        <td></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>Signature of Gurdian</td>
+                    @foreach($exams as $exm)
+                        <td></td>
+                    @endforeach
+                </tr>
+            </tbody>
+        </table>
+
+
+    <img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" width="100%">
 
 
 
@@ -229,56 +300,3 @@
 	@include('layouts.footer')
 @endsection
 
-
-
-											
-		{{--  <!-- @php
-				$ex_clssubs = $clssubs->where('extype_id', $extype->id)->where('combination_no', '!=', 0)->groupBy('combination_no');												
-				
-				$subName ='';
-				//foreach($ex_clssubs as $ex_clssub){
-				//	$subName .= $ex_clssub ."==="; 
-				//}
-			@endphp
-			@foreach( $ex_clssubs as $ex_clssub )
-					<tr>
-					@php		
-						$subName ='';		
-						$combSubIds = [];									
-						foreach($ex_clssub as $ex_cs){
-							$subName .= $ex_cs->name ; 
-							array_push($combSubIds,$ex_cs->id);
-							if( !$loop->last ){
-								$subName .= ' + '; 
-							}
-						}
-						//$subName .= ' or ';
-						//dd($combSubIds);
-
-					@endphp
-					<td>{{ $subName }}</td>
-
-					@foreach($exams as $exam)
-					@php
-						$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
-											->where('exam_id', $exam->id)
-											->whereIn('subject_id', $combSubIds)
-											;	
-						//dd($extpmdclsb->pluck('id'));
-						
-						$combSubObtMarks = $totalObtMarks = $marks
-									->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id'))
-									->where('marks','>',0)->sum('marks');
-						//if(!$loop->first){
-						//dd($combSubObtMarks);
-						//}
-						$combSubFulMarks = $extpmdclsb->where('exam_id', $exam->id)->sum('fm');
-						
-					@endphp
-					
-					<td>om{{ $combSubObtMarks  }}:fm{{ $combSubFulMarks }}</td>
-
-					@endforeach
-				</tr>
-		@endforeach 
-	</tbody>  -->  --}}
