@@ -184,6 +184,7 @@ return [
         
         Codedge\Fpdf\FpdfServiceProvider::class, //[1]
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,   //for mPdf
+        Milon\Barcode\BarcodeServiceProvider::class,            //for barcode generator
         
     ],
 
@@ -242,6 +243,9 @@ return [
         // 'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         'fPDF' => Codedge\Fpdf\Facades\Fpdf::class, // [2]
         'mPDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,    // [3]
+        
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,        //barcode creater
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,        //barcode creater
         
     ],
 

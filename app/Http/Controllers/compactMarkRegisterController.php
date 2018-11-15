@@ -176,7 +176,14 @@ class compactMarkRegisterController extends Controller
             // $pdf->SetDisplayMode('fullpage');
             
             $pdf->SetProtection(['copy', 'print'], '', 'pass');
-            return $pdf->stream();
+            $pdffilename = 'MarkRegister'.'-';
+            $pdffilename .= $session->name.'-';
+            $pdffilename .= $clssec->clss->name.'-';
+            $pdffilename .= $clssec->section->name.'.pdf';
+            
+            //return $pdf->stream($pdffilename);
+            return $pdf->download($pdffilename);
+    
         }else{
             return view('clssecCompactMarkRegister.compactMarkRegisterPDF')
             ->with('school', $school)        

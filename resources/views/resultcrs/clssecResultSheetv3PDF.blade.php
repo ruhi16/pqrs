@@ -258,7 +258,7 @@
 														->sum('marks');
 
 									@endphp
-									{{ $obtMarks }} (In Word: )<br>
+									{{ $obtMarks }} ({{ convert($obtMarks) }})<br>
 									<b>Total No of 'Ds' Obtained: </b>
 									
 									</td>
