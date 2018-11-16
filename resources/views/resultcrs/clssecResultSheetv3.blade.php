@@ -214,15 +214,18 @@
 									</table>
 								</td>
 							@endif   {{--  end of isExits --}}
-				@endforeach
+					@endforeach
 				</tr>
                 <tr>
                     @php
                         $mode_count = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('mode_id')->count();
                     @endphp
                     @foreach($extypes as $extype)
-                        {{--  @foreach($modes as $mode)  --}}
-                            {{--  @if($extype->mode_id == $mode->id)  --}}
+						@php							
+							$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
+						@endphp     
+
+						@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
                                 <td><b>Total Obtained Marks: </b>
                                 @php
                                     $etmcs = $extpmdclsbs->where('extype_id', $extype->id)->pluck('id');
@@ -230,14 +233,12 @@
                                                     ->where('studentcr_id', $studentcrs->first()->id)
                                                     ->where('marks', '>', 0)
                                                     ->sum('marks');
-
                                 @endphp
-                                {{ $obtMarks }} (In Word: )<br>
-                                <b>Total No of 'Ds' Obtained: </b>
+                                {{ $obtMarks }} <br>(In Word:{{ convert($obtMarks) }} )<br>
+                                {{--  <b>Total No of 'Ds' Obtained: </b>  --}}
                                 
                                 </td>
-                            {{--  @endif  --}}
-                        {{--  @endforeach  --}}
+						@endif
                     @endforeach
                 
                 </tr>

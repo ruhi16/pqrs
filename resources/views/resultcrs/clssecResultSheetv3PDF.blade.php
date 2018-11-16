@@ -10,7 +10,7 @@
         border: 1px solid black;
         border-spacing: 0px;
         {{--  width: 100%;  --}}
-        font-size: 11px;
+        font-size: 13px;
         {{--  border-collapse: collapse;  --}}
 		vertical-align: top;
         
@@ -57,7 +57,7 @@
 		<br>
 
 
-		<table border="1" class="table table-bordered">
+		<table border="1" class="table table-bordered" width="100%">
 			<thead>
 				<tr>				
 					@foreach($extypes as $extype)
@@ -88,20 +88,20 @@
 									@endphp
 									<td>
 										{{--  {{ dd($marks) }}  --}}
-										<table border="1" class="table table-bordered">
+										<table border="1" class="table table-bordered" width="100%">
 											<thead>
 												<tr>
-													<th class="text-center" rowspan='2'>Subject
+													<th class="text-center" rowspan='2' width="25%">Subject <br>Details
 														{{--  {{ $mode_count }}-{{ $isExist }}  --}}
 													</th>
 													@foreach($exams as $exam)
 														@if($mode_count > 1)
-															<th class="text-center" colspan="2">{{ $exam->name }}</th>
+															<th class="text-center" colspan="3">{{ $exam->name }}</th>
 														@else
 															<th class="text-center">{{ $exam->name }}</th>
 														@endif
 													@endforeach
-													<th class="text-center" rowspan='2'>Total</th>
+													<th class="text-center" rowspan='2'>Grand Total</th>
 													<th class="text-center" rowspan='2'>Grade</th>
 												</tr>
 												<tr>
@@ -109,10 +109,11 @@
 													</th>
 													@foreach($exams as $exam)
 														@if($mode_count > 1)
-															<th class="text-center"><small>Form</small></th>
 															<th class="text-center"><small>Summ</small></th>
+															<th class="text-center"><small>Form</small></th>
+															<th class="text-center"><small>Total</small></th>
 														@else
-															<th class="text-center">Obm</th>
+															<th class="text-center">MO</th>
 														@endif
 													@endforeach
 													{{--  <th class="text-center">Total</th>  --}}
@@ -132,7 +133,7 @@
 												@foreach($clssubs as $clssub)
 													@if( $clssub->extype_id == $extype->id )
 														<tr>
-															<td>{{ $clssub->name }}</td>
+															<td style="vertical-align: middle;"  height="50">{{ $clssub->name }}</td>
 														
 														@php
 															$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
@@ -141,18 +142,24 @@
 														@foreach($exams as $exam)
 															
 															@if( $mode_count > 1 )
-																@foreach($modes as $mode)
+																@php $subj_total = 0; @endphp
+																@foreach($modes->sortByDesc('id') as $mode)
 																	@php
 																		$etmcs = $extpmdclsb->where('exam_id', $exam->id)
 																					->where('mode_id', $mode->id)->first();
 
 																		$obmrk = $marks->where('exmtypmodclssub_id', $etmcs->id)->first();
 																		$mark = $obmrk == NULL ? '' : ($obmrk->marks < 0 ? 'AB' : $obmrk->marks);
+																		$mark_num = $obmrk == NULL ? 0 : ($obmrk->marks < 0 ? 0 : $obmrk->marks);
 																	@endphp
-																	<td class="text-center" align="center">																
+																	<td align="center" style="vertical-align: middle;">																
 																		{{ $mark }}
 																	</td>
+																	@php $subj_total += $mark_num; @endphp
 																@endforeach
+																<td align="center" style="vertical-align: middle;">
+																	<b>{{ $mark_num }}</b>
+																</td>
 															@else
 																@php
 																	$etmcs = $extpmdclsb->where('exam_id', $exam->id)->first();
@@ -162,7 +169,7 @@
 																	$obtmark = $obtmark == NULL ? '' : ($obtmark->marks < 0 ? 'AB' : $obtmark->marks);
 
 																@endphp
-																<td align="center">																
+																<td  align="center" style="vertical-align: middle; font-size:18px;">
 																	{{ $obtmark }}
 																</td>
 															@endif
@@ -197,11 +204,11 @@
 
 														@endphp
 
-														<td class="text-center">{{ $totalObtMarks }}/{{ $totalFulMarks }}</td>
+														<td  align="center" style="vertical-align: middle; font-size:18px;"><b>{{ $totalObtMarks }}</b>/{{ $totalFulMarks }}</td>
 														
 
 														@if ( $combaddl_subj_state == false )													
-															<td class="text-center"><small>{{ $percentage }}% </small> ({{ $grade }}) </td>												
+															<td  align="center" style="vertical-align: middle; font-size:18px;"><small>{{ $percentage }}% </small> ({{ $grade }}) </td>												
 														@endif
 
 														@if( $combaddl_subj_state == true && $combaddl_subj_count_const == $combaddl_subj_count )
@@ -220,7 +227,7 @@
 																
 															@endphp
 															
-															<td class="text-center" rowspan="{{$combaddl_subj_count_const}}">
+															<td rowspan="{{$combaddl_subj_count_const}}"  align="center" style="vertical-align: middle; font-size:18px;">
 																<small>{{ $percentage }}% </small>({{ $grade }}) 
 															</td>
 														@endif
@@ -246,9 +253,12 @@
 						@php
 							$mode_count = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('mode_id')->count();
 						@endphp
-						@foreach($extypes as $extype)
-							{{--  @foreach($modes as $mode)  --}}
-								{{--  @if($extype->mode_id == $mode->id)  --}}
+						@foreach($extypes as $extype)							
+							@php							
+							$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
+						@endphp     
+
+						@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
 									<td><b>Total Obtained Marks: </b>
 									@php
 										$etmcs = $extpmdclsbs->where('extype_id', $extype->id)->pluck('id');
@@ -258,12 +268,11 @@
 														->sum('marks');
 
 									@endphp
-									{{ $obtMarks }} ({{ convert($obtMarks) }})<br>
-									<b>Total No of 'Ds' Obtained: </b>
+									{{ $obtMarks }} <br>({{ convert($obtMarks) }})<br>
+									{{--  <b>Total No of 'Ds' Obtained: </b>  --}}
 									
 									</td>
-								{{--  @endif  --}}
-							{{--  @endforeach  --}}
+						@endif
 						@endforeach
 					
 					</tr>
@@ -275,36 +284,44 @@
 		<table border="1" class="table table-bordered" width="100%">
 				<thead>
 					<tr>
-						<th>Particulars</th>
-						@foreach($exams as $exm)
+						
+						<th width="25%">Attendance of Students</th>
+						<th>Signature of Gurdian</th>
+						<th>Signature of Class Teacer</th>
+						<th>Signature of HM/TIC</th>
+						{{--  @foreach($exams as $exm)
 							<th>{{$exm->name}}</th>
-						@endforeach
+						@endforeach  --}}
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td width="25%">Attendance of Students</td>
-						@foreach($exams as $exm)
+						<td height="40"></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						
+						{{--  @foreach($exams as $exm)
 							<td></td>
-						@endforeach
+						@endforeach  --}}
 					</tr>
 					<tr>
-						<td>Signature of Class Teacer</td>
-						@foreach($exams as $exm)
+						
+						{{--  @foreach($exams as $exm)
 							<td></td>
-						@endforeach
+						@endforeach  --}}
 					</tr>
 					<tr>
-						<td>Signature of HM/TIC</td>
-						@foreach($exams as $exm)
+						
+						{{--  @foreach($exams as $exm)
 							<td></td>
-						@endforeach
+						@endforeach  --}}
 					</tr>
 					<tr>
-						<td>Signature of Gurdian</td>
-						@foreach($exams as $exm)
+						
+						{{--  @foreach($exams as $exm)
 							<td></td>
-						@endforeach
+						@endforeach  --}}
 					</tr>
 				</tbody>
 			</table>
