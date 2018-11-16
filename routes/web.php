@@ -339,7 +339,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::get('/clssec-gradeStatus/{clss_id}', 'ClssecGradeController@clssecGradeStatus');
-        //Route::get('/clssec-gradeStatus/{clss_id}', 'ClssecGradeController@clssecGradeStatus');
+        Route::get('/clssec-gradeStatusPDF/{clss_id}', 'ClssecGradeController@clssecGradeStatusPDF');
 });
   
 Route::get('/get-logout', function(){

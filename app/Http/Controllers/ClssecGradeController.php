@@ -57,7 +57,8 @@ class ClssecGradeController extends Controller
         // dd($extpmdclsbs);
         $clssubs = Clssub::where('session_id', $session->id)->get();
         $is_pdf = 0;
-        if($is_pdf == 1){            
+        if($is_pdf == 1){   
+            // ini_set("pcre.backtrack_limit", "5000000");         
             $pdf = mPDF::loadView('clssecGrade.clssecGradeStatusPDF', 
                 [ 
                 'school'    =>  $school,
@@ -66,7 +67,7 @@ class ClssecGradeController extends Controller
                 'exams'     =>   $exams,
                 'grades'    =>  $grades,
                 'stdcrs'    =>  $stdcrs,            
-                'extpmdclsbs'=> $extpmdclsbs,
+                'extpmdclsbs' => $extpmdclsbs,
                 'marks'     =>   $marks,
                 'clssubs'   => $clssubs
                 ]);
@@ -86,6 +87,44 @@ class ClssecGradeController extends Controller
                 ->with('clssubs', $clssubs)
                 ;
         }
+
+    }
+
+    public function clssecGradeStatusPDF(Request $request, $clss_id){
+        $school  = School::find(1);
+        $session = Session::whereStatus('CURRENT')->first();        
+        $clsses  = Clss::where('session_id', $session->id)
+                            ->where('id', $clss_id)->get();        /**************** */
+        $exams   = Exam::where('session_id', $session->id)->get();
+
+        $grades  = Grade:: where('session_id', $session->id)
+                            ->where('extype_id', 1)->get();         /***** 1: 4 pont Grade; 2: 7 point Grade */
+            // for 4 point Grade-Count, formative: extype = 1
+        $stdcrs = Studentcr::where('session_id', $session->id)->get();
+
+        $clssec_ids = Clssec::where('clss_id', $clsses->first()->id)->pluck('id');
+        //dd($clssec_ids);
+        $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
+                                ->where('clss_id', $clss_id)->get();   /********** */
+
+        $marks = Marksentry::where('session_id', $session->id)
+                                ->whereIn('clssec_id', $clssec_ids)
+                                ->get();
+        // dd($extpmdclsbs);
+        $clssubs = Clssub::where('session_id', $session->id)->get();
+
+
+        return view ('clssecGrade.clssecGradeStatusPDF')
+                ->with('school',  $school)
+                ->with('session', $session)
+                ->with('clsses',  $clsses)
+                ->with('exams',   $exams)
+                ->with('grades',  $grades)
+                ->with('stdcrs',  $stdcrs)            
+                ->with('extpmdclsbs', $extpmdclsbs)
+                ->with('marks',   $marks)
+                ->with('clssubs', $clssubs)
+                ;
 
     }
 }

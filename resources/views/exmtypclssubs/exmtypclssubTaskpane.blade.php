@@ -37,8 +37,9 @@
             <td class='text-center'>
                 <a href="{{ url('/classPromotionalRulesEntry', [$cls->id]) }}">{{$cls->name}} Class Promotional Rules Update</a>
             </td>
-            <td class='text-center'>
-                <a href="{{ url('/clssec-gradeStatus', [$cls->id]) }}">{{$cls->name}} Grade Count</a>
+            <td class='text-center'>{{$cls->name}} Grade Status Count
+                <a href="{{ url('/clssec-gradeStatus', [$cls->id]) }}">Normal</a> /
+                <a href="{{ url('/clssec-gradeStatusPDF', [$cls->id]) }}">PDF</a>
             </td>
         </tr>
         @endforeach

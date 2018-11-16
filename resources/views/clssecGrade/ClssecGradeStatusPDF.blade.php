@@ -7,7 +7,7 @@
     </head>
     <style>
     table,th,td {
-        border: .1px solid black;
+        border: 1px solid black;
         border-spacing: 0px;
         {{--  width: 100%;  --}}
         font-size: 11px;
@@ -49,7 +49,7 @@
 
 @foreach($clsses as $clss)
     <h2 align="center"><u>For Class: {{ $clss->name}}</u></h2>
-    <table class="table table-bordered" border="1">
+    <table class="table table-bordered" border="1" width="100%">
         <thead>
             <tr>
                 <th rowspan='2'>Subjects</th>  
