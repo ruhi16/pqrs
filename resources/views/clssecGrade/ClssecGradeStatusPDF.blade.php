@@ -89,6 +89,7 @@
                         $subj_fm = $extpmdclsbs->where('exam_id', $exam->id)
                                         ->where('extype_id', $clssub->extype_id )
                                         ->where('subject_id', $clssub->id)
+                                        ->where('mode_id', 2)   /****** ****/
                                         ->first()->fm
                                         ;
                     @endphp
@@ -99,8 +100,10 @@
                             $etmcs_id = $extpmdclsbs->where('exam_id', $exam->id)
                                             ->where('extype_id', $clssub->extype_id )
                                             ->where('subject_id', $clssub->id)
+                                            ->where('mode_id', 2)   /******* ****/
                                             ->first()->id
                                             ;
+                            // dd($etmcs_id);
                             $st_mark_flag = 0;
                         @endphp
                         @foreach($grades as $grade)
