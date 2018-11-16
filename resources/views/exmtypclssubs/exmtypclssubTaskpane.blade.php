@@ -17,6 +17,7 @@
             <th class="text-center">Assign Full Marks</th>
             <th class="text-center">View Full Marks</th>
             <th class="text-center">Promotional Rules</th>
+            <th class="text-center">Clas Sec Grade Count</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +36,9 @@
             </td>
             <td class='text-center'>
                 <a href="{{ url('/classPromotionalRulesEntry', [$cls->id]) }}">{{$cls->name}} Class Promotional Rules Update</a>
+            </td>
+            <td class='text-center'>
+                <a href="{{ url('/clssec-gradeStatus', [$cls->id]) }}">{{$cls->name}} Grade Count</a>
             </td>
         </tr>
         @endforeach

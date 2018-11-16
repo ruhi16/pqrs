@@ -335,6 +335,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/classTeacherInfo', 'ClassTeacherController@ClassTeacherInfo');
 
         Route::get('/mpdfBengaliTestpage', 'TestController@mpdfBengaliTestpage');
+
+
+
+        Route::get('/clssec-gradeStatus/{clss_id}', 'ClssecGradeController@clssecGradeStatus');
+        //Route::get('/clssec-gradeStatus/{clss_id}', 'ClssecGradeController@clssecGradeStatus');
 });
   
 Route::get('/get-logout', function(){

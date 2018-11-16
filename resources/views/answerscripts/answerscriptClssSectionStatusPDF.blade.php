@@ -71,7 +71,7 @@
                 </thead>
                 <tbody>
                 @foreach($cls->subjects as $csub)
-                @if($csub->extype_id == 2)
+                @if($csub->extype_id == 2)      {{-- for Formative Subject Only --}}
                     <tr>
                     <td>{{ $csub->name }}</td>
                     @foreach($cls->clssecs as $csec)
