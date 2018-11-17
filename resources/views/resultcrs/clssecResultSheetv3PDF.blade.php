@@ -263,9 +263,10 @@
 						@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
 									<td><b>Total Obtained Marks: </b>
 									@php
-										
+										$subj_et_regular_ids = $clssubs->where('combination_no', 0)->pluck('subject_id');
+										// dd($subj_et_regular_ids);
 										$etmcs = $extpmdclsbs->where('extype_id', $extype->id)
-													
+													->whereIn('subject_id', $subj_et_regular_ids)
 													->pluck('id');
 										$obtMarks = $marks->whereIn('exmtypmodclssub_id', $etmcs)
 														->where('studentcr_id', $studentcrs->first()->id)
