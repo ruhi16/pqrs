@@ -41,7 +41,7 @@
 	<body>
 
 		<h1 class='text-center' align="center">{{ $school->name }}</h1>
-		<h3 class='text-center' align="center">{{ $school->vill }} * {{ $school->po }} * {{ $school->ps }}</h3>
+		<h3 class='text-center' align="center">{{ $school->po }} * {{ $school->ps }} * {{ $school->dist }}</h3>
 		<h2 class='text-center' align="center">Progress Report for Session {{ $session->name }}</h2>
 
 		<table border="1" class="table table-bordered" width="100%">
@@ -158,7 +158,7 @@
 																	@php $subj_total += $mark_num; @endphp
 																@endforeach
 																<td align="center" style="vertical-align: middle;">
-																	<b>{{ $mark_num }}</b>
+																	<b>{{ $subj_total }}</b>
 																</td>
 															@else
 																@php
@@ -211,6 +211,8 @@
 															<td  align="center" style="vertical-align: middle; font-size:18px;"><small>{{ $percentage }}% </small> ({{ $grade }}) </td>												
 														@endif
 
+														
+
 														@if( $combaddl_subj_state == true && $combaddl_subj_count_const == $combaddl_subj_count )
 															@php
 																// obtain marks = total marks obtained in comb or addl subjects, if comb = 0, then goto addl
@@ -238,7 +240,7 @@
 															@php $combaddl_subj_state = false; @endphp
 														@endif
 
-
+														
 
 														</tr>																							
 													@endif												
@@ -267,8 +269,16 @@
 														->where('marks', '>', 0)
 														->sum('marks');
 
+										$subj_et_ids = $subjects->where('extype_id', $extype->id)->pluck('id');
+										$clssubs_reg = $clssubs->where('combination_no', '=', 0)
+														->whereIn('subject_id', $subj_et_ids)
+														->pluck('subject_id');
+										
+										$full_marks = $extpmdclsbs->whereIn('subject_id', $clssubs_reg)->sum('fm');
+										$obt_perc = round( (($obtMarks / $full_marks) * 100), 2 );
 									@endphp
-									{{ $obtMarks }} <br>({{ convert($obtMarks) }})<br>
+									{{ $obtMarks }} ({{$obt_perc}}%) [FM: {{$full_marks}}] 
+									<br>({{ convert($obtMarks) }})<br>
 									{{--  <b>Total No of 'Ds' Obtained: </b>  --}}
 									
 									</td>

@@ -68,6 +68,7 @@ class ResultcrController extends Controller
         $grades = Grade::whereSession_id($ses->id)->get();
         $gradeparticular = Gradeparticular::whereSession_id($ses->id)->get();
         $modes = Mode::whereSession_id($ses->id)->get();
+        $subjects = Subject::whereSession_id($ses->id)->get();
         // echo DNS1D::getBarcodeHTML("4445645656", "PHARMA2T");
         // echo DNS1D::getBarcodePNGPath("4445645656", "PHARMA2T");
         // echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG("20180504029", "C39+") . '" alt="barcode"   />';
@@ -88,6 +89,7 @@ class ResultcrController extends Controller
             ->with('grades', $grades)
             ->with('gradeparticular', $gradeparticular)
             ->with('modes', $modes)
+            ->with('subjects', $subjects)
             ;
     }
 
@@ -123,7 +125,7 @@ class ResultcrController extends Controller
         $grades = Grade::whereSession_id($ses->id)->get();
         $gradeparticular = Gradeparticular::whereSession_id($ses->id)->get();
         $modes = Mode::whereSession_id($ses->id)->get();
-
+        $subjects = Subject::whereSession_id($ses->id)->get();
 
 
         $pdf = PDF::loadView('resultcrs.clssecResultSheetv3PDF', 
@@ -139,6 +141,7 @@ class ResultcrController extends Controller
                 'grades' => $grades,
                 'gradeparticular' => $gradeparticular,
                 'modes' => $modes,
+                'subjects'=> $subjects,
             ], [], [ ]);
 
         $pdffilename = 'MarkSheet'.'-';
@@ -162,6 +165,7 @@ class ResultcrController extends Controller
         //     ->with('grades', $grades)
         //     ->with('gradeparticular', $gradeparticular)
         //     ->with('modes', $modes)
+        //     ->with('subjects', $subjects)
         //     ;
     }
 
