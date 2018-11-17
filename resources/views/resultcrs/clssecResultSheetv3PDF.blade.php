@@ -208,7 +208,7 @@
 														
 
 														@if ( $combaddl_subj_state == false )													
-															<td  align="center" style="vertical-align: middle; font-size:18px;"><small>{{ $percentage }}% </small> ({{ $grade }}) </td>												
+															<td  align="center" style="vertical-align: middle; font-size:18px;"><small>{{ $percentage }}% </small> <br>({{ $grade }}) </td>												
 														@endif
 
 														
@@ -230,7 +230,7 @@
 															@endphp
 															
 															<td rowspan="{{$combaddl_subj_count_const}}"  align="center" style="vertical-align: middle; font-size:18px;">
-																<small>{{ $percentage }}% </small>({{ $grade }}) 
+																<small>{{ $percentage }}% </small><br>({{ $grade }}) 
 															</td>
 														@endif
 
@@ -263,7 +263,10 @@
 						@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
 									<td><b>Total Obtained Marks: </b>
 									@php
-										$etmcs = $extpmdclsbs->where('extype_id', $extype->id)->pluck('id');
+										
+										$etmcs = $extpmdclsbs->where('extype_id', $extype->id)
+													
+													->pluck('id');
 										$obtMarks = $marks->whereIn('exmtypmodclssub_id', $etmcs)
 														->where('studentcr_id', $studentcrs->first()->id)
 														->where('marks', '>', 0)
