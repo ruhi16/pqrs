@@ -17,6 +17,9 @@ class CreateClssubsTable extends Migration
             $table->increments('id');
             $table->integer('clss_id');
             $table->integer('subject_id');
+            $table->integer('extype_id');
+            $table->integer('is_additional');
+            $table->integer('subject_order');
             $table->integer('combination_no')->default('0');
             $table->integer('session_id')->nullable();
             $table->timestamps();

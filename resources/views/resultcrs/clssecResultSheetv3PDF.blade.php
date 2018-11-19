@@ -48,6 +48,7 @@
 			<thead>
 				<tr>
 					<td>Name: <strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
+					<td>Student Id: ________________</td>
 					<td>Class: <strong>{{ $studentcrs->first()->clss->name }}</strong></td>
 					<td>Section: <strong>{{ $studentcrs->first()->section->name }}</strong></td>
 					<td>Roll No:<strong>{{ $studentcrs->first()->roll_no }}</strong></td>
@@ -55,8 +56,7 @@
 			</thead>
 		</table>
 		<br>
-
-
+		
 		<table border="1" class="table table-bordered" width="100%">
 			<thead>
 				<tr>				
@@ -65,10 +65,9 @@
 							$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
 						@endphp
 						@if( $isExist > 0 )
-							<th class="text-center">{{ $extype->name }}</th>
+							<th class="text-center">{{ $extype->name }}xx</th>
 						@endif
 					@endforeach
-					{{--  <th class="text-center">Action</th>  --}}
 				</tr>		
 			</thead>
 			<tbody>
@@ -91,7 +90,7 @@
 										<table border="1" class="table table-bordered" width="100%">
 											<thead>
 												<tr>
-													<th class="text-center" rowspan='2' width="25%">Subject <br>Details
+													<th class="text-center" rowspan='3' width="25%">Subject <br>Details
 														{{--  {{ $mode_count }}-{{ $isExist }}  --}}
 													</th>
 													@foreach($exams as $exam)
@@ -101,8 +100,9 @@
 															<th class="text-center">{{ $exam->name }}</th>
 														@endif
 													@endforeach
-													<th class="text-center" rowspan='2'>Grand Total</th>
-													<th class="text-center" rowspan='2'>Grade</th>
+													<th class="text-center" rowspan='3'>Grand Total</th>
+													<th class="text-center" rowspan='3'>Average</th>
+													<th class="text-center" rowspan='3'>Grade</th>
 												</tr>
 												<tr>
 													{{--  <th class="text-center">Subject													  --}}
@@ -116,8 +116,28 @@
 															<th class="text-center">MO</th>
 														@endif
 													@endforeach
-													{{--  <th class="text-center">Total</th>  --}}
-													{{--  <th class="text-center">Grade</th>  --}}
+													
+												</tr>
+												<tr>													
+													</th>
+													@foreach($exams as $exam)
+														@if($mode_count > 1)
+															@php $total = 0; @endphp
+															@foreach($modes->sortByDesc('id') as $mode)
+																@php																		
+																	$etmcs_fm =$extpmdclsbs->where('exam_id', $exam->id)
+																			->where('mode_id', $mode->id)->first()->fm;
+																	$total += $etmcs_fm;
+																@endphp
+																<th class="text-center"><small>{{ $etmcs_fm }}</small></th>
+															@endforeach
+															
+															<th class="text-center"><small>{{$total}}</small></th>
+														@else
+															{{--  <th class="text-center">MO</th>  --}}
+														@endif
+													@endforeach
+													
 												</tr>
 											</thead>
 											<tbody>
@@ -133,7 +153,7 @@
 												@foreach($clssubs as $clssub)
 													@if( $clssub->extype_id == $extype->id )
 														<tr>
-															<td style="vertical-align: middle;"  height="50">{{ $clssub->name }}</td>
+															<td style="vertical-align: middle;"  height="30">{{ $clssub->name }}</td>
 														
 														@php
 															$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
@@ -147,6 +167,8 @@
 																	@php
 																		$etmcs = $extpmdclsb->where('exam_id', $exam->id)
 																					->where('mode_id', $mode->id)->first();
+																		$etmcs_fm =$extpmdclsb->where('exam_id', $exam->id)
+																					->where('mode_id', $mode->id)->first()->fm;
 
 																		$obmrk = $marks->where('exmtypmodclssub_id', $etmcs->id)->first();
 																		$mark = $obmrk == NULL ? '' : ($obmrk->marks < 0 ? 'AB' : $obmrk->marks);
@@ -205,10 +227,12 @@
 														@endphp
 
 														<td  align="center" style="vertical-align: middle; font-size:18px;"><b>{{ $totalObtMarks }}</b>/{{ $totalFulMarks }}</td>
+
+														<td  align="center" style="vertical-align: middle; font-size:18px;"><b>{{ $percentage }}</b></td>
 														
 
 														@if ( $combaddl_subj_state == false )													
-															<td  align="center" style="vertical-align: middle; font-size:18px;"><small>{{ $percentage }}% </small> <br>({{ $grade }}) </td>												
+															<td  align="center" style="vertical-align: middle; font-size:18px;">{{ $grade }}</td>												
 														@endif
 
 														
@@ -261,34 +285,42 @@
 						@endphp     
 
 						@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
-									<td><b>Total Obtained Marks: </b>
-									@php
-										$subj_et_regular_ids = $clssubs->where('combination_no', 0)->pluck('subject_id');
-										// dd($subj_et_regular_ids);
-										$etmcs = $extpmdclsbs->where('extype_id', $extype->id)
-													->whereIn('subject_id', $subj_et_regular_ids)
-													->pluck('id');
-										$obtMarks = $marks->whereIn('exmtypmodclssub_id', $etmcs)
-														->where('studentcr_id', $studentcrs->first()->id)
-														->where('marks', '>', 0)
-														->sum('marks');
-
-										$subj_et_ids = $subjects->where('extype_id', $extype->id)->pluck('id');
-										$clssubs_reg = $clssubs->where('combination_no', '=', 0)
-														->whereIn('subject_id', $subj_et_ids)
-														->pluck('subject_id');
+									<td>
 										
-										$full_marks = $extpmdclsbs->whereIn('subject_id', $clssubs_reg)->sum('fm');
-										$obt_perc = round( (($obtMarks / $full_marks) * 100), 2 );
-									@endphp
-									{{ $obtMarks }} ({{$obt_perc}}%) [FM: {{$full_marks}}] 
-									<br>({{ convert($obtMarks) }})<br>
-									{{--  <b>Total No of 'Ds' Obtained: </b>  --}}
+										<b>Total Obtained Marks: </b>
+										@php
+											$subj_et_regular_ids = $clssubs->where('combination_no', 0)->pluck('subject_id');
+											// dd($subj_et_regular_ids);
+											$etmcs = $extpmdclsbs->where('extype_id', $extype->id)
+														->whereIn('subject_id', $subj_et_regular_ids)
+														->pluck('id');
+											$obtMarks = $marks->whereIn('exmtypmodclssub_id', $etmcs)
+															->where('studentcr_id', $studentcrs->first()->id)
+															->where('marks', '>', 0)
+															->sum('marks');
+
+											$subj_et_ids = $subjects->where('extype_id', $extype->id)->pluck('id');
+											$clssubs_reg = $clssubs->where('combination_no', '=', 0)
+															->whereIn('subject_id', $subj_et_ids)
+															->pluck('subject_id');
+											
+											$full_marks = $extpmdclsbs->whereIn('subject_id', $clssubs_reg)->sum('fm');
+											$obt_perc = round( (($obtMarks / $full_marks) * 100), 2 );
+										@endphp
+										{{ (int)($obtMarks/2) }} ({{ convert($obtMarks) }}), ({{$obt_perc}}%), [Full Marks: {{$full_marks/2}}] 
+										
+										{{--  <b>Total No of 'Ds' Obtained: </b>  --}}
+									
+									
 									
 									</td>
+									
 						@endif
 						@endforeach
 					
+					</tr>
+					<tr>
+						<td colspan="2">Result: </td>
 					</tr>
 				@endforeach
 			</tbody>
@@ -310,36 +342,62 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td height="40"></td>
+						<td height="35"></td>
 						<td></td>
 						<td></td>
-						<td></td>
-						
-						{{--  @foreach($exams as $exm)
-							<td></td>
-						@endforeach  --}}
+						<td></td>						
 					</tr>
-					<tr>
-						
-						{{--  @foreach($exams as $exm)
-							<td></td>
-						@endforeach  --}}
+					<tr>						
 					</tr>
-					<tr>
-						
-						{{--  @foreach($exams as $exm)
-							<td></td>
-						@endforeach  --}}
+					<tr>						
 					</tr>
-					<tr>
-						
-						{{--  @foreach($exams as $exm)
-							<td></td>
-						@endforeach  --}}
+					<tr>						
 					</tr>
 				</tbody>
 			</table>
-
+			{{--  {{dd($grades)}}  --}}
+			<br>
+			<table width="100%">
+			<tr>
+			<td>
+				<table width="100%">
+					<tr>
+						<th>Scale</th>
+						<th>Range</th>
+						<th>Description</th>					
+					</tr>
+					@foreach($grades->where('extype_id', 2) as $grade)
+					<tr>
+						<td>{{$grade->gradeparticular->name}}</td>
+						<td>{{$grade->stpercentage}}-{{$grade->enpercentage}}</td>
+						<td>{{$grade->descrp}}</td>
+					</tr>
+					@endforeach
+				</table>
+			</td>
+			<td>
+			<b>Condition for promotion:</b>
+			<P>For Class IX: On the basis of comprehensive continuous evalution, to be promoted when minimum scoring of Letter/Grade "C" obtained 
+			in Five/Seven compulsory subject out of Seven/Nine Compulsory Subjects.</p>
+			<p></p>
+			</P>N.B.: It is obligation for all student to attend classes and all evaluations(Arrangement to be made for further evalution for the students failing to attend the evalution on resonable grounds.)
+			{{--  <table width="100%">
+				<tr>
+					<th>Scale</th>
+					<th>Range</th>
+					<th>Description</th>					
+				</tr>
+				@foreach($grades->where('extype_id', 2) as $grade)
+				<tr>
+					<td>{{$grade->gradeparticular->name}}</td>
+					<td>{{$grade->stpercentage}}-{{$grade->enpercentage}}</td>
+					<td>{{$grade->descrp}}</td>
+				</tr>
+				@endforeach
+			</table>  --}}
+			</td>
+			</tr>
+			</table>
 
 		<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" width="100%">
 
