@@ -46,7 +46,8 @@
     </td>
     <td>
     <a href="{{url('/clssec-ResultSheetPDF',[$clssec_id, $stdcr->id])}}">Result Sheet PDF</a><br>
-    <a href="{{url('/clssec-ResultSheetv3PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-3 PDF</a>
+    <a href="{{url('/clssec-ResultSheetv3PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-3 PDF</a><br>
+    <a href="{{url('/clssec-ResultSheetv4PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-4 PDF</a>
     </td>
   </tr>
 @endforeach

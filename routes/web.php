@@ -217,6 +217,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/clssec-ResultSheetv3/{clssec_id}/{studentcr_id}',  'ResultcrController@clssecResultSheetv3');
         Route::get('/clssec-ResultSheetv3PDF/{clssec_id}/{studentcr_id}',  'ResultcrController@clssecResultSheetv3PDF');
+        Route::get('/clssec-ResultSheetv4PDF/{clssec_id}/{studentcr_id}',  'ResultcrController@clssecResultSheetv4PDF');
 
         
         //Route::get ('/clssecStdcr-MarkRefresh/{studentcr_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshget');
