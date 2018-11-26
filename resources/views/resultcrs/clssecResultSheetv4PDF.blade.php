@@ -72,82 +72,157 @@
 			</thead>
 			<tbody>
 				@foreach($clssecMarks->groupBy('studentcr_id') as $studentcr)
+					@php $extype_total_marks = 0; @endphp
 					<tr>
 						@foreach($extypes as $extype)
-								@php
-									// how many extype exists for current class, i.e. summative, formative or both
-									$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
-									
+							@php
+								// how many extype exists for current class, i.e. summative, formative or both
+								$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();									
+							@endphp
+							
+							@if( $isExist > 0 ) {{-- if any record exists for the specific extype !!! --}}
+								@php	
+									$marks = $clssecMarks->where('studentcr_id', $studentcr->unique('studentcr_id')->first()->studentcr->id);								
+									$mode_count = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('mode_id')->count();
 								@endphp
-								
-								@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
-									@php	
-										$marks = $clssecMarks->where('studentcr_id', $studentcr->unique('studentcr_id')->first()->studentcr->id);								
-										$mode_count = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('mode_id')->count();
-									@endphp
-									<td>										
-										<table border="1" class="table table-bordered" width="100%">
-											<thead>
-												<tr>
-													<th class="text-center" rowspan='3' width="25%">Subject <br>Details
-														{{--  {{ $mode_count }}-{{ $isExist }}  --}}
-													</th>
-													@foreach($exams as $exam)
-														@if($mode_count > 1)
-															<th class="text-center" colspan="3">{{ $exam->name }}</th>
-														@else
-															<th class="text-center">{{ $exam->name }}</th>
-														@endif
-													@endforeach
-													<th class="text-center" rowspan='3'>Grand Total<br>200</th>
-													@if($mode_count > 1)			{{-- if it is IX class only --}}
-														<th class="text-center" rowspan='3'>Average<br>100</th>
+								<td>										
+									<table border="1" class="table table-bordered" width="100%">
+										<thead>
+											<tr>
+												<th class="text-center" rowspan='3' width="25%">Subject <br>Details
+													{{--  {{ $mode_count }}-{{ $isExist }}  --}}
+												</th>
+												@foreach($exams as $exam)
+													@if($mode_count > 1)
+														<th class="text-center" colspan="3">{{ $exam->name }}</th>
+													@else
+														<th class="text-center">{{ $exam->name }}</th>
 													@endif
-													<th class="text-center" rowspan='3'>Grade</th>
-												</tr>
+												@endforeach
+												<th class="text-center" rowspan='3'>Grand Total<br></th>
+												@if($mode_count > 1)			{{-- if it is IX class only --}}
+													<th class="text-center" rowspan='3'>Average<br>100</th>
+												@endif
+												<th class="text-center" rowspan='3'>Grade</th>
+											</tr>
+											<tr>
+												{{--  <th class="text-center">Subject</th>  --}}
+												@foreach($exams as $exam)
+													@if($mode_count > 1)
+														<th class="text-center"><small>Summ</small></th>
+														<th class="text-center"><small>Form</small></th>
+														<th class="text-center"><small>Total</small></th>
+													@else
+														<th class="text-center">MO</th>
+													@endif
+												@endforeach
+												
+											</tr>
+											<tr>													
+												</th>
+												@foreach($exams as $exam)
+													@if($mode_count > 1)
+														@php $total = 0; @endphp
+														@foreach($modes->sortByDesc('id') as $mode)
+															@php																		
+																$etmcs_fm =$extpmdclsbs->where('exam_id', $exam->id)
+																		->where('mode_id', $mode->id)->first()->fm;
+																$total += $etmcs_fm;
+															@endphp
+															<th class="text-center"><small>{{ $etmcs_fm }}</small></th>
+														@endforeach
+														
+														<th class="text-center"><small>{{ $total }}</small></th>
+													@else
+														{{--  <th class="text-center">MO</th>  --}}
+													@endif
+														
+												@endforeach
+												
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($clssubs->where('extype_id', $extype->id)->sortBy('is_additional')->sortBy('subject_order') as  $clssub)
 												<tr>
-													{{--  <th class="text-center">Subject</th>  --}}
-													@foreach($exams as $exam)
-														@if($mode_count > 1)
-															<th class="text-center"><small>Summ</small></th>
-															<th class="text-center"><small>Form</small></th>
-															<th class="text-center"><small>Total</small></th>
-														@else
-															<th class="text-center">MO</th>
-														@endif
-													@endforeach
-													
-												</tr>
-												<tr>													
-													</th>
-													@foreach($exams as $exam)
-														@if($mode_count > 1)
-															@php $total = 0; @endphp
+													<td>{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
+													@php
+														$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
+																			->where('subject_id', $clssub->subject_id);
+														$extype_total_subj_marks = 0;
+														$extype_total_avg_marks = 0;
+													@endphp
+													@foreach($exams as $exam)															
+														@if( $mode_count > 1 )	{{-- for class IX --}}
+															@php $subj_total = 0; @endphp
 															@foreach($modes->sortByDesc('id') as $mode)
-																@php																		
-																	$etmcs_fm =$extpmdclsbs->where('exam_id', $exam->id)
-																			->where('mode_id', $mode->id)->first()->fm;
-																	$total += $etmcs_fm;
+																@php
+																	$etmcs = $extpmdclsb->where('exam_id', $exam->id)
+																				->where('mode_id', $mode->id)->first();
+																	$etmcs_fm =$extpmdclsb->where('exam_id', $exam->id)
+																				->where('mode_id', $mode->id)->first()->fm;
+
+																	$obmrk = $marks->where('exmtypmodclssub_id', $etmcs->id)->first();
+
+																	$mark = $obmrk == NULL ? '' : ($obmrk->marks < 0 ? 'AB' : $obmrk->marks);
+																	$mark_num = $obmrk == NULL ? 0 : ($obmrk->marks < 0 ? 0 : $obmrk->marks);
 																@endphp
-																<th class="text-center"><small>{{ $etmcs_fm }}</small></th>
+																<td align="center" style="vertical-align: middle;">																
+																	{{ $mark }}
+																</td>
+																@php																	
+																	$subj_total += $mark_num; 
+																@endphp
 															@endforeach
-															
-															<th class="text-center"><small>{{$total}}</small></th>
-														@else
-															{{--  <th class="text-center">MO</th>  --}}
+															<td align="center" style="vertical-align: middle;">
+																<b>{{ $subj_total }}xx</b>
+															</td>
+															@php
+																$extype_total_marks += $subj_total;
+
+																$extype_total_subj_marks += $subj_total; 
+															@endphp															
+														@else					{{-- for class V to VIII --}}
+															@php
+																$etmcs = $extpmdclsb->where('exam_id', $exam->id)->first();
+																$obtmark = $marks->where('exmtypmodclssub_id', $etmcs->id);
+
+																$obtmark = $obtmark->first();
+																$obtmark = $obtmark == NULL ? '' : ($obtmark->marks < 0 ? 'AB' : $obtmark->marks);
+
+															@endphp
+															<td  align="center" style="vertical-align: middle; font-size:18px;">
+																{{ $obtmark }}
+															</td>
 														@endif
-															
+														@php
+															// $extype_total_subj_marks += $subj_total;
+														@endphp
 													@endforeach
-													
-												</tr>
-											</thead>
-											<tbody>
-											
-											</tbody>
-										</table>										
-									</td>
-								@endif   {{--  end of isExits --}}
-					@endforeach
+													@php
+														$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
+																			->where('subject_id', $clssub->subject_id);
+														$totalObtMarks = $marks->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id') )
+																		->where('marks', '>', 0)->sum('marks');
+														$totalFulMarks = $extpmdclsb->where('fm', '>', 0)->sum('fm');	
+													@endphp
+													<td>{{ $totalObtMarks }}</td>
+													@if( $mode_count > 1 )
+														<td>{{ round($totalObtMarks/2, 0) }}</td>													
+													@endif
+												</tr>												
+											@endforeach
+										</tbody>
+									</table>										
+								</td>
+								
+								@php 
+									$extype_total_marks += round($totalObtMarks, 0); 
+									$extype_total[$extype->id] = $extype_total_marks;
+								
+								@endphp		
+							@endif   {{--  end of isExits --}}
+						@endforeach  {{--  end of extype  --}}
+						
 					</tr>
 					<tr>
 						@php
@@ -155,15 +230,15 @@
 						@endphp
 						@foreach($extypes as $extype)							
 							@php							
-							$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
-						@endphp     
+								$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
+							@endphp
 
-						@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
-									<td>										
-										<b>Total Obtained Marks: </b>									
-									</td>
-									
-						@endif
+							@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
+								<td>										
+									<b>Total Obtained Marks: {{ $extype_total_marks }}</b>	{{ $extype_total[$extype->id] }}								
+								</td>
+										
+							@endif
 						@endforeach
 					
 					</tr>
