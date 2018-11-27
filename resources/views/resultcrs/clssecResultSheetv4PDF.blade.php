@@ -71,8 +71,8 @@
 				</tr>		
 			</thead>
 			<tbody>
-				@foreach($clssecMarks->groupBy('studentcr_id') as $studentcr)
-					@php $extype_total_marks = 0; @endphp
+				@foreach($clssecMarks->groupBy('studentcr_id') as $studentcr) {{-- for each Student --}}
+					@php $extype_total_marks = 0; $extype_total_marks_arr = [];@endphp
 					<tr>
 						@foreach($extypes as $extype)
 							@php
@@ -204,6 +204,9 @@
 														$totalObtMarks = $marks->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id') )
 																		->where('marks', '>', 0)->sum('marks');
 														$totalFulMarks = $extpmdclsb->where('fm', '>', 0)->sum('fm');	
+
+
+														$extype_total_marks += round($totalObtMarks, 0); 
 													@endphp
 													<td>{{ $totalObtMarks }}</td>
 													@if( $mode_count > 1 )
@@ -216,9 +219,9 @@
 								</td>
 								
 								@php 
-									$extype_total_marks += round($totalObtMarks, 0); 
+									
 									$extype_total[$extype->id] = $extype_total_marks;
-								
+									$extype_total_marks_arr[$extype->id] = $extype_total_marks;
 								@endphp		
 							@endif   {{--  end of isExits --}}
 						@endforeach  {{--  end of extype  --}}
@@ -235,7 +238,7 @@
 
 							@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
 								<td>										
-									<b>Total Obtained Marks: {{ $extype_total_marks }}</b>	{{ $extype_total[$extype->id] }}								
+									<b>Total Obtained Marks: {{ $extype_total_marks }}</b>	{{ $extype_total_marks_arr[$extype->id] }}								
 								</td>
 										
 							@endif
