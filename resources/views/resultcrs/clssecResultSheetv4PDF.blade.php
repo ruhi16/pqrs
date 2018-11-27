@@ -142,14 +142,18 @@
 											</tr>
 										</thead>
 										<tbody>
+											@php 
+												$extype_total_obt_marks = 0; 
+												$extype_total_marks = 0;											
+											@endphp
 											@foreach($clssubs->where('extype_id', $extype->id)->sortBy('is_additional')->sortBy('subject_order') as  $clssub)
 												<tr>
 													<td>{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
 													@php
 														$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
 																			->where('subject_id', $clssub->subject_id);
-														$extype_total_subj_marks = 0;
-														$extype_total_avg_marks = 0;
+														//$extype_total_subj_marks = 0;
+														//$extype_total_avg_marks = 0;
 													@endphp
 													@foreach($exams as $exam)															
 														@if( $mode_count > 1 )	{{-- for class IX --}}
@@ -174,12 +178,11 @@
 																@endphp
 															@endforeach
 															<td align="center" style="vertical-align: middle;">
-																<b>{{ $subj_total }}xx</b>
+																<b>{{ $subj_total }}</b>
 															</td>
 															@php
-																$extype_total_marks += $subj_total;
-
-																$extype_total_subj_marks += $subj_total; 
+																//$extype_total_marks += $subj_total;
+																//$extype_total_subj_marks += $subj_total; 
 															@endphp															
 														@else					{{-- for class V to VIII --}}
 															@php
@@ -208,20 +211,31 @@
 
 														$extype_total_marks += round($totalObtMarks, 0); 
 													@endphp
-													<td>{{ $totalObtMarks }}</td>
+													<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarks }}</b></td>
 													@if( $mode_count > 1 )
-														<td>{{ round($totalObtMarks/2, 0) }}</td>													
+														<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ round($totalObtMarks/2, 0) }}</b></td>
+														@php 
+															if($clssub->is_additional == 0){
+																$extype_total_obt_marks += round($totalObtMarks/2, 0); 
+															}
+														@endphp
 													@endif
 												</tr>												
 											@endforeach
 										</tbody>
-									</table>										
+									</table>	
+									{{--  {{ $extype_total_obt_marks }}  --}}
 								</td>
 								
 								@php 
 									
 									$extype_total[$extype->id] = $extype_total_marks;
-									$extype_total_marks_arr[$extype->id] = $extype_total_marks;
+
+									if( $mode_count > 1 ){	// for class IX-X										
+										$extype_total_marks_arr[$extype->id] = $extype_total_obt_marks; //$extype_total_marks;										
+									}else{ // for class V-VIII
+										$extype_total_marks_arr[$extype->id] = $extype_total_marks;										
+									}
 								@endphp		
 							@endif   {{--  end of isExits --}}
 						@endforeach  {{--  end of extype  --}}
