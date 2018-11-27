@@ -247,8 +247,9 @@
 					
 					</tr>
 					<tr>
-						<td colspan="2" style="vertical-align: middle; font-size:20px;">
-							<b>Result: </b>{{ $studentcrs->first()->result or 'Not Assigned or Finalized'}}
+						<td colspan="2">
+							<b>Result: </b>{{ $studentcrs->first()->result or "Not Finalized "}}
+						
 						</td>
 					</tr>
 				@endforeach
