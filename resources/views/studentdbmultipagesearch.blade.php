@@ -15,6 +15,7 @@
         <th>Firstname</th>
         <th>Class</th>
         <th>Section</th>
+        <th>Gender</th>
       </tr>
     </thead>
     <tbody>      
@@ -24,6 +25,8 @@
           <th>{{$sdb->name}}</th>
           <th>{{$sdb->clss->name or 'Class Not Assignemd'}}</th>
           <th>{{$sdb->section->name}}</th>
+          
+          <th>{{$sdb->ssex }}</th>
         </tr>
       @endforeach      
     </tbody>
@@ -33,6 +36,7 @@
       <th>Firstname</th>
         <th>Class</th>
         <th>Section</th>
+        <th>Gender</th> 
       </tr>
     </tfoot>    
   </table>

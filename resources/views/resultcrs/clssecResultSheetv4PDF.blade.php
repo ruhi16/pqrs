@@ -246,7 +246,10 @@
 					
 					</tr>
 					<tr>
-						<td colspan="2"><b>Result: </b></td>
+						<td colspan="2">
+							<b>Result: </b>{{ $studentcrs->first()->result or "Not Finalized "}}
+						
+						</td>
 					</tr>
 				@endforeach
 			</tbody>
