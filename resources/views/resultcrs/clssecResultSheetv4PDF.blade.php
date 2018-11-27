@@ -237,8 +237,9 @@
 							@endphp
 
 							@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
-								<td>										
-									<b>Total Obtained Marks: {{ $extype_total_marks }}</b>	{{ $extype_total_marks_arr[$extype->id] }}								
+								<td style="vertical-align: middle; font-size:16px;">										
+									<b>Total Obtained Marks:</b>	{{ $extype_total_marks_arr[$extype->id] }}<br>
+									({{ convert($extype_total_marks_arr[$extype->id]) }})
 								</td>
 										
 							@endif
@@ -246,7 +247,9 @@
 					
 					</tr>
 					<tr>
-						<td colspan="2"><b>Result: </b></td>
+						<td colspan="2" style="vertical-align: middle; font-size:20px;">
+							<b>Result: </b>{{ $studentcrs->first()->result or 'Not Assigned or Finalized'}}
+						</td>
 					</tr>
 				@endforeach
 			</tbody>
