@@ -8,13 +8,14 @@
 @section('content')
 <h1>Student DB Details with Search ...</h1>
 
-{{--  {{$stddb->dump()}}  --}}
+ {{-- {{$stddb->dump()}} --}}
 <table class="table table-bordered" id="myTable">
     <thead>
       <tr>
         <th>Firstname</th>
         <th>Class</th>
         <th>Section</th>
+        <th>Roll No</th>
         <th>Gender</th>
       </tr>
     </thead>
@@ -25,7 +26,7 @@
           <th>{{$sdb->name}}</th>
           <th>{{$sdb->clss->name or 'Class Not Assignemd'}}</th>
           <th>{{$sdb->section->name}}</th>
-          
+          <th></th>
           <th>{{$sdb->ssex }}</th>
         </tr>
       @endforeach      
@@ -36,6 +37,7 @@
       <th>Firstname</th>
         <th>Class</th>
         <th>Section</th>
+        <th>Roll No</th>
         <th>Gender</th> 
       </tr>
     </tfoot>    

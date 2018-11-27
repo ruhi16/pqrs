@@ -275,9 +275,14 @@ class StudentController extends Controller
     }
 
     public function studentdbmultipageSearch(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
         $stddb = Studentdb::all();
+        $stdcr = Studentcr::where('session_id', $ses->id)->get();
         
-        return view('studentdbmultipagesearch')->withStddb($stddb);
+        return view('studentdbmultipagesearch')
+                    ->withStddb($stddb)
+                    ->withStdcr($stdcr)
+                    ->with('session', $ses);
     }
 
     public function studentdbmultipageView(Request $request){
