@@ -144,7 +144,8 @@
 										<tbody>
 											@php 
 												$extype_total_obt_marks = 0; 
-												$extype_total_marks = 0;											
+												$extype_total_marks = 0;
+												$extype_comb_alter_subj_flag = false;											
 											@endphp
 											@foreach($clssubs->where('extype_id', $extype->id)->sortBy('is_additional')->sortBy('subject_order') as  $clssub)
 												<tr>
@@ -231,17 +232,42 @@
 															<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ getGrade($extype->id, $totalObtMarks, $totalFulMarks)}}</b></td>
 														@else 
 															{{-- calculate Grade for Combined Subject --}}
-														@endif
-													@endif
+															@php
+																$comb_altr_clssubs = $clssubs->where('extype_id', $extype->id)->where('combination_no', '!=', 0)
+																	->sortBy(function($query){
+																	return $query->combination_no < 0 ? -$query->combination_no : $query->combination_no;
+																});
+																// only combined subjects full marks
+																$comb_alter_subj_ids = $comb_altr_clssubs->where('combination_no', '>', 0)->pluck('id');
+																$clmb_alter_subj_fms = $extpmdclsbs->whereIn('subject_id', $comb_alter_subj_ids)->where('fm', '>', 0)->sum('fm');
+																
+																$comb_alter_subj_etmcs_ids = $extpmdclsbs->whereIn('subject_id', $comb_altr_clssubs->pluck('subject_id'))->pluck('id');
+																$comb_alter_subj_obt_marks = $marks->whereIn('exmtypmodclssub_id', $comb_alter_subj_etmcs_ids )
+																							->where('marks', '>', 0)->sum('marks');
+
+															@endphp
+
+															@if( $extype_comb_alter_subj_flag == false )
+																<td align="center" style="vertical-align: middle; font-size:16px;" rowspan="{{$comb_altr_clssubs->count()}}">
+																	{{--  {{$clssub->subject_id}}:<b>{{ $comb_altr_clssubs->count() }}</b>{{ $comb_altr_clssubs->pluck('subject_id') }}  --}}
+																	<small>[{{ $comb_alter_subj_obt_marks }}/{{ $clmb_alter_subj_fms}}]</small>
+																	<br><b>{{ getGrade($extype->id, $comb_alter_subj_obt_marks, $clmb_alter_subj_fms)}}</b>
+																</td>
+															@endif
+
+															@php $extype_comb_alter_subj_flag = true; @endphp
+
+														@endif {{-- end of combined subject --}}
+
+													@endif {{-- end of V-VIII and IX-X division --}}
 												</tr>												
-											@endforeach
+											@endforeach {{-- end of clssubs --}}
 										</tbody>
 									</table>	
 									{{--  {{ $extype_total_obt_marks }}  --}}
 								</td>
 								
-								@php 
-									
+								@php 									
 									// $extype_total[$extype->id] = $extype_total_marks;
 
 									if( $mode_count > 1 ){	// for class IX-X										
@@ -272,7 +298,7 @@
 									$full_marks = $extpmdclsbs->whereIn('subject_id', $clssubs_reg)->sum('fm');
 								@endphp
 								<td style="vertical-align: middle; font-size:16px;">										
-									<b>Total Obtained Marks:</b> {{ $extype_total_marks_arr[$extype->id] }} 
+									<b>Total Obt. Marks:</b> {{ $extype_total_marks_arr[$extype->id] }} 
 									@if( $mode_count > 1 )	{{-- for class IX-X --}}
 										 [ FM: {{ $full_marks/2 }} ], [ {{ ($extype_total_marks_arr[$extype->id]/($full_marks/2)) * 100}}%]
 									@else {{-- for class V to VIII --}}
@@ -325,6 +351,9 @@
 				</tbody>
 			</table>
 			{{--  {{dd($grades)}}  --}}
+			
+
+			@if( $clssubs->first()->clss_id > 4 ) {{-- for class IX & X --}}
 			<br>
 			<table width="100%">
 			<tr>
@@ -356,8 +385,9 @@
 			</td>
 			</tr>
 			</table>
-
-		{{--  <img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" width="100%">  --}}
+			@else
+				<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" width="100%">
+			@endif
 
 
 

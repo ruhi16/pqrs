@@ -26,7 +26,12 @@
           <th>{{$sdb->name}}</th>
           <th>{{$sdb->clss->name or 'Class Not Assignemd'}}</th>
           <th>{{$sdb->section->name}}</th>
-          <th></th>
+          <th>
+            {{ $sdb->studentcrs->where('session_id', $session->id)->first()->roll_no }}
+            {{--  @foreach($sdb->studentcrs as $scr)
+              {{$scr->roll_no}}, 
+            @endforeach  --}}
+          </th>
           <th>{{$sdb->ssex }}</th>
         </tr>
       @endforeach      
