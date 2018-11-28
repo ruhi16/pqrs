@@ -205,20 +205,33 @@
 														$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
 																			->where('subject_id', $clssub->subject_id);
 														$totalObtMarks = $marks->whereIn('exmtypmodclssub_id', $extpmdclsb->pluck('id') )
-																		->where('marks', '>', 0)->sum('marks');
-														$totalFulMarks = $extpmdclsb->where('fm', '>', 0)->sum('fm');	
+																			->where('marks', '>', 0)->sum('marks');
 
+														$totalFulMarks = $extpmdclsb->where('fm', '>', 0)->sum('fm');
+														$totalObtMarksPercentage = round( (($totalObtMarks / $totalFulMarks) * 100),0);
 
-														$extype_total_marks += round($totalObtMarks, 0); 
+														$extype_total_marks += $totalObtMarks;
 													@endphp
 													<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarks }}</b></td>
-													@if( $mode_count > 1 )
-														<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ round($totalObtMarks/2, 0) }}</b></td>
-														@php 
-															if($clssub->is_additional == 0){
-																$extype_total_obt_marks += round($totalObtMarks/2, 0); 
-															}
-														@endphp
+
+													@if( $mode_count > 1 ){{-- only for IX-X, the Average & Grade Column --}}
+														{{--  <td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarksPercentage }}</b></td>  --}}
+														
+														@if($clssub->is_additional == 0)
+															@php $extype_total_obt_marks += $totalObtMarksPercentage; @endphp //round($totalObtMarks/2, 0); 
+															<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarksPercentage }}</b></td>
+															<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ getGrade($extype->id, $totalObtMarksPercentage, 100) }}</b></td>
+														@else
+															<td align="center" style="vertical-align: middle; font-size:16px;"><b></b></td>
+															<td></td>
+														@endif
+													@else
+														{{-- for class V to VIII, calculate Grade for Combined/Alternative Subjects --}}
+														@if( $clssub->combination_no == 0 )
+															<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ getGrade($extype->id, $totalObtMarks, $totalFulMarks)}}</b></td>
+														@else 
+															{{-- calculate Grade for Combined Subject --}}
+														@endif
 													@endif
 												</tr>												
 											@endforeach
@@ -229,7 +242,7 @@
 								
 								@php 
 									
-									$extype_total[$extype->id] = $extype_total_marks;
+									// $extype_total[$extype->id] = $extype_total_marks;
 
 									if( $mode_count > 1 ){	// for class IX-X										
 										$extype_total_marks_arr[$extype->id] = $extype_total_obt_marks; //$extype_total_marks;										
@@ -251,9 +264,21 @@
 							@endphp
 
 							@if( $isExist > 0 ) {{-- if any record exists for the specifix extype !!! --}}
+								@php
+									$subj_et_ids = $subjects->where('extype_id', $extype->id)->pluck('id');
+									$clssubs_reg = $clssubs->where('combination_no', '>=', 0)->where('is_additional', '=', 0)
+														->whereIn('subject_id', $subj_et_ids)->pluck('subject_id');
+
+									$full_marks = $extpmdclsbs->whereIn('subject_id', $clssubs_reg)->sum('fm');
+								@endphp
 								<td style="vertical-align: middle; font-size:16px;">										
-									<b>Total Obtained Marks:</b>	{{ $extype_total_marks_arr[$extype->id] }}<br>
-									({{ convert($extype_total_marks_arr[$extype->id]) }})
+									<b>Total Obtained Marks:</b> {{ $extype_total_marks_arr[$extype->id] }} 
+									@if( $mode_count > 1 )	{{-- for class IX-X --}}
+										 [ FM: {{ $full_marks/2 }} ], [ {{ ($extype_total_marks_arr[$extype->id]/($full_marks/2)) * 100}}%]
+									@else {{-- for class V to VIII --}}
+										[ FM: {{ $full_marks }} ], [ {{ round( ($extype_total_marks_arr[$extype->id]/($full_marks)) * 100, 0) }}%]
+									@endif
+									<br>({{ convert($extype_total_marks_arr[$extype->id]) }})
 								</td>
 										
 							@endif
