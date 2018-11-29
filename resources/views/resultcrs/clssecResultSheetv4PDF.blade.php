@@ -10,7 +10,7 @@
         border: 1px solid black;
         border-spacing: 0px;
         {{--  width: 100%;  --}}
-        font-size: 13px;
+        font-size: 15px;
         {{--  border-collapse: collapse;  --}}
 		vertical-align: top;
         
@@ -149,7 +149,7 @@
 											@endphp
 											@foreach($clssubs->where('extype_id', $extype->id)->sortBy('is_additional')->sortBy('subject_order') as  $clssub)
 												<tr>
-													<td >{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
+													<td  height="40" style="vertical-align: middle;">{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
 													@php
 														$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
 																			->where('subject_id', $clssub->subject_id);
@@ -312,7 +312,7 @@
 					
 					</tr>
 					<tr>
-						<td colspan="2">
+						<td colspan="2" height="50" style="vertical-align: middle; font-size:20px;">
 							<b>Result: </b>{{ $studentcrs->first()->result or "Not Finalized "}}
 						
 						</td>
@@ -337,7 +337,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td height="35"></td>
+						<td height="50"></td>
 						<td></td>
 						<td></td>
 						<td></td>						
@@ -352,7 +352,7 @@
 			</table>
 			{{--  {{dd($grades)}}  --}}
 			
-
+			<br>
 			@if( $clssubs->first()->clss_id > 4 ) {{-- for class IX & X --}}
 			<br>
 			<table width="100%">

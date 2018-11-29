@@ -217,7 +217,7 @@ class ResultcrController extends Controller
                 'gradeparticular' => $gradeparticular,
                 'modes' => $modes,
                 'subjects'=> $subjects,
-            ], [], [ ]);
+            ], [], ['format' => 'Legal-P']);
 
         $pdffilename = 'MarkSheet'.'-';
         $pdffilename .= $ses->name.'-';
