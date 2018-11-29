@@ -65,7 +65,7 @@
 							$isExist = $extpmdclsbs->where('extype_id', $extype->id)->groupBy('extype_id')->count();
 						@endphp
 						@if( $isExist > 0 )
-							<th class="text-center">{{ $extype->name }}</th>
+							<th class="text-center" width="40%">{{ $extype->name }}</th>
 						@endif
 					@endforeach
 				</tr>		
@@ -149,7 +149,7 @@
 											@endphp
 											@foreach($clssubs->where('extype_id', $extype->id)->sortBy('is_additional')->sortBy('subject_order') as  $clssub)
 												<tr>
-													<td>{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
+													<td >{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
 													@php
 														$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
 																			->where('subject_id', $clssub->subject_id);
@@ -386,7 +386,7 @@
 			</tr>
 			</table>
 			@else
-				<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" width="100%">
+				<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" width="100" style="object-fit: cover;">
 			@endif
 
 
