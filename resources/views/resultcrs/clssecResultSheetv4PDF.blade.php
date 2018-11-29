@@ -386,7 +386,7 @@
 			</tr>
 			</table>
 			@else
-				<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" width="100" style="object-fit: cover;">
+				<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" >
 			@endif
 
 
