@@ -599,7 +599,7 @@
                     <a href="{{url('/mpdfBengaliTestpage') }}">Test Page using mPDF </a>
                     <a class="btn btn-primary" href="{{url('/clssec-gradeStatus') }}">Class Sec Subject Grade </a>
 
-
+                    <a class="btn btn-primary" href="{{url('/clssec-gradeDstatus/1/1') }}">Class Sec Grade D Status </a>
 
                     {{--  <button type="button" class="btn btn-primary btnModal" data-toggle="modal" data-target="#exampleModalLong">
                             Launch demo modal

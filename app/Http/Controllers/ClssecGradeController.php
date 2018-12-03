@@ -127,4 +127,108 @@ class ClssecGradeController extends Controller
                 ;
 
     }
+
+    public function clssecGradeDStatus(Request $request, $clss_id, $section_id){
+        $school  = School::find(1);
+        $session = Session::whereStatus('CURRENT')->first();        
+        $clss    = Clss::find($clss_id);
+        $section = Section::find($section_id);
+        $clssec = Clssec::where('clss_id', $clss->id)->where('section_id', $section->id)->first();
+        $clssubs = Clssub::where('clss_id', $clss->id)->get();
+        
+        $stdcrs = Studentcr::where('session_id', $session->id)
+                                ->where('clss_id', $clss_id)
+                                ->where('section_id', $section_id)->get();
+        $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
+                            ->where('clss_id', $clss_id)
+                            ->get();
+
+        $marks = Marksentry::where('session_id', $session->id)
+                                ->where('clssec_id', $clssec->id)
+                                ->get();
+
+        
+        // calculate total obtained marks
+        foreach($stdcrs as  $stdcr){
+            echo $stdcr->studentdb->name ."<br>";
+
+
+            $clssubs_extype_regular = $clssubs->where('extype_id', 2)->where('combination_no','=', 0);
+            foreach($clssubs_extype_regular as $clssub){                
+                echo $clssub->subject->code;
+                $etmcs_ids = $extpmdclsbs->where('subject_id', $clssub->subject_id)->pluck('id');
+                // echo $etmcs_ids;               
+
+                $marks_obt = $marks->where('studentcr_id', $stdcr->id)
+                                    ->whereIn('exmtypmodclssub_id', $etmcs_ids)
+                                    ->where('marks', '>', 0)
+                                    ->sum('marks');
+                                    //->pluck('marks');
+                echo '('.$marks_obt;
+
+                $clssub_fm = $extpmdclsbs->where('subject_id', $clssub->subject_id)->sum('fm');
+
+                echo ' / '. $clssub_fm .')- ';
+                echo getGrade($clssub->subject->extype_id, $marks_obt, $clssub_fm);                        
+                echo "<br>";                        
+            }
+
+            echo '<br>-----------------';
+            $test_clssubs = $clssubs->where('extype_id', 2)->where('combination_no','!=', 0)->groupBy(function($query){
+                return $query->combination_no < 0 ? -$query->combination_no : $query->combination_no;
+            });
+            foreach($test_clssubs as $clssub){  
+                $clssub->each(function ($item) {    
+                    echo $item->subject->code .'+'; 
+                });
+
+                $comb_subj_ids = $clssub->where('extype_id', 2)->where('combination_no','>', 0)->pluck('subject_id');
+                $comb_subj_fms = $extpmdclsbs->whereIn('subject_id', $comb_subj_ids)->sum('fm');
+
+                $comb_subj_oms = $marks->where('studentcr_id', $stdcr->id)
+                                        ->whereIn('exmtypmodclssub_id', $extpmdclsbs->whereIn('subject_id', $comb_subj_ids)->pluck('id') )
+                                        ->where('marks', '>', 0)->sum('marks');
+
+                
+                echo '<br>'.$comb_subj_ids .'-'. $comb_subj_oms.'-' . $comb_subj_fms .'-'. getGrade(2,$comb_subj_oms, $comb_subj_fms ).'<br>';
+            }
+            echo '-----------------<br>';
+            // $clssubs_extype_cmad = $clssubs->where('extype_id', 2)->where('combination_no','!=', 0);
+            // $clssubs_extype_cmad_subj_ids = $clssubs->where('extype_id', 2);//->where('combination_no','!=', 0)->pluck('subject_id');
+
+            // $etmcs_cmad_ids = $extpmdclsbs->whereIn('subject_id', $clssubs_extype_cmad_subj_ids->where('combination_no','!=', 0)->pluck('subject_id') )
+            //                             ->pluck('id');
+
+            
+            // $clssub_cmad_fm = $extpmdclsbs->where('session_id', $session->id)
+            //                             ->where('clss_id', $clss_id)
+            //                             ->whereIn('subject_id', $clssubs_extype_cmad_subj_ids->where('combination_no','>', 0)->pluck('subject_id') )
+            //                             ->sum('fm');
+
+            // foreach($clssubs_extype_cmad as $clssub){
+                // echo $clssub->subject->code;
+                // if( ! $loop->last ){
+                    // echo '+';
+                // }
+            // }
+            // $marks_cmad_obt = $marks->where('studentcr_id', $stdcr->id)
+            //                                 ->whereIn('exmtypmodclssub_id', $etmcs_cmad_ids)
+            //                                 ->where('marks', '>', 0)
+            //                                 ->sum('marks');
+            //echo $clssubs_extype_cmad_subj_ids;
+            // echo $marks_cmad_obt . ' / ' . $clssub_cmad_fm;
+            // echo getGrade(2, $marks_cmad_obt, $clssub_cmad_fm);  
+
+            echo "<br>";
+        }
+
+        return view('clssecGrade.clssecGradeDstatus')
+
+        ;
+
+    }
+
+
+
+
 }
