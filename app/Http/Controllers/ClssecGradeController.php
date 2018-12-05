@@ -139,6 +139,7 @@ class ClssecGradeController extends Controller
         $stdcrs = Studentcr::where('session_id', $session->id)
                                 ->where('clss_id', $clss_id)
                                 ->where('section_id', $section_id)->get();
+
         $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
                             ->where('clss_id', $clss_id)
                             ->get();
@@ -147,19 +148,23 @@ class ClssecGradeController extends Controller
                                 ->where('clssec_id', $clssec->id)
                                 ->get();
 
+
+
+
+        $class_subject_count = Clssub::where('clss_id', $clss_id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no',0)->count()
+                                + count( Clssub::where('clss_id', $clss_id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no', '>', 0)->groupBy('combination_no')->get() );
         
         // calculate total obtained marks
         $class_data = [];
+        $class_D = [];
         foreach($stdcrs as  $stdcr){
-            echo $stdcr->studentdb->name ."<br>";
-
+            //echo $stdcr->studentdb->name ."<br>";
             $extype_GrD_count = 0;
             $clssubs_extype_regular = $clssubs->where('extype_id', 2)->where('combination_no','=', 0);
             foreach($clssubs_extype_regular as $clssub){                
                 // echo $clssub->subject->code;
                 $etmcs_ids = $extpmdclsbs->where('subject_id', $clssub->subject_id)->pluck('id');
-                // echo $etmcs_ids;               
-
+                // echo $etmcs_ids;
                 $marks_obt = $marks->where('studentcr_id', $stdcr->id)
                                     ->whereIn('exmtypmodclssub_id', $etmcs_ids)
                                     ->where('marks', '>', 0)
@@ -210,23 +215,28 @@ class ClssecGradeController extends Controller
             $data['clss']       = $clss->name;
             $data['section']    = $section->name;
             $data['stdcr_id']   = $stdcr->id;
-            $data['stdcr_name'] = $stdcr->name;
+            $data['stdcr_name'] = $stdcr->studentdb->name;
             $data['total_D']    = $extype_GrD_count;
 
-            $class_data[$stdcr->id] = $data;
+            $class_data[$stdcr->id] = new \Illuminate\Support\Collection($data);
+            
+            array_push($class_D, $extype_GrD_count);
             // echo "<br><br>";
         }
 
-
-        //$test = Illuminate\Support\Collection::make($class_data);
-
-        // dd($class_data);
+        // Convert array to collection
+        $coll_class_data = new \Illuminate\Support\Collection($class_data);
+        // dd($coll_class_data);
         // foreach($class_data as $test){
         //     echo $test['clss'] .'-'.$test['total_D'].'<br>';
         // }
-        echo $class_data[5]['total_D'];
+        //echo $class_data[5]['total_D'];
+        // print_r( array_count_values($class_D) );
         return view('clssecGrade.clssecGradeDstatus')
-
+            ->with('clss', $clss)
+            ->with('class_subject_count', $class_subject_count)
+            ->with('class_D',  array_count_values($class_D))
+            ->with('coll_class_data', $coll_class_data)
         ;
 
     }

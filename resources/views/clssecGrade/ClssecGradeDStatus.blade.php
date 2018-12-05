@@ -8,118 +8,43 @@
 @section('content')
 
 <center>
-    <h1>Class-Section-Subject Wise Grade-D Status Count on Total Students </h1>
+    <h1>Class-Section-Subject Wise <u>Grade-D Status Count</u> on Total Students </h1>
 </center>
 
+{{--  {{ dd($coll_class_data) }}  --}}
+{{--  @foreach ($coll_class_data as $test)
 
-
-{{--  @foreach($clsses as $clss)
-    <h2>Class: {{ $clss->name}} </h2>
-    <table class="table table-bordered" border="1">
-        <thead>
-            <tr>
-                <th rowspan='2'>Subjects</th>  
-                <th rowspan='2'>Exam</th>     
-                <th rowspan='2'>FM</th>                
-                @foreach($clss->clssecs as $clssec)
-                    @php
-                        $clscStd = $stdcrs->where('clss_id',$clss->id)
-                            ->where('section_id', $clssec->section->id)
-                            ->count();
-                    @endphp
-                    <th colspan="{{ $grades->count()+1}}">{{ $clssec->section->name }}, Total:{{ $clscStd }}</th>
-                @endforeach
-            </tr>
-            <tr>                
-                @foreach($clss->clssecs as $clssec)
-                    @foreach($grades as $grade)
-                        <th><small>{{ (int)$grade->stpercentage }}-{{ (int)$grade->enpercentage }}</small></th>
-                    @endforeach
-                        <th>Ab</th>
-                @endforeach
-            </tr>
-            @foreach($clss->subjects as $clssub) 
-                @php
-                    $clsb = $clssubs->where('clss_id', $clss->id)
-                                            ->where('subject_id', $clssub->id)                                            
-                                            ;
-                    $mark_clssub = $marks->where('clssub_id', $clsb->first()->id);
-                    
-                @endphp               
-                @foreach($exams as  $exam)
-                <tr>
-                    @if( $loop->first )
-                        <td rowspan="{{$exams->count()}}">{{$clssub->name}}</td>                        
-                    @endif
-                    @php
-                        $subj_fm = $extpmdclsbs->where('exam_id', $exam->id)
-                                        ->where('extype_id', $clssub->extype_id )
-                                        ->where('subject_id', $clssub->id)
-                                        ->first()->fm
-                                        ;
-                    @endphp
-                    <td>{{ substr($exam->name,0,3) }}</td>
-                    <td>{{ $subj_fm }}</td>
-                    @foreach($clss->clssecs as $clssec)
-                        @php
-                            $etmcs_id = $extpmdclsbs->where('exam_id', $exam->id)
-                                            ->where('extype_id', $clssub->extype_id )
-                                            ->where('subject_id', $clssub->id)
-                                            ->first()->id
-                                            ;
-                            $st_mark_flag = 0;
-                        @endphp
-                        @foreach($grades as $grade)
-                            @php   
-                                $st_mark = round( (($grade->stpercentage / 100) * $subj_fm), 0 );
-                                $en_mark = round( (($grade->enpercentage / 100) * $subj_fm), 0 );
-
-                                if( !$loop->first && $st_mark_flag == $en_mark ){
-                                        $en_mark--;                                    
-                                }
-                                $st_mark_flag = $st_mark;
-
-                                $std_count = $mark_clssub->where('exmtypmodclssub_id', $etmcs_id)                                                
-                                                ->where('clssec_id', $clssec->id)
-                                                //->where(DB::raw('marks+1'),   10)
-                                                ->where('marks', '>=',  $st_mark)
-                                                ->where('marks', '<=',  $en_mark)
-                                                //->where('marks','=', function(){return 10;})
-                                                ->pluck('marks')
-                                                ->count()
-                                                ;
-
-                            @endphp                            
-                            <td>
-                            </td>
-                        @endforeach
-                        @php
-                            $std_count_ab = $mark_clssub->where('exmtypmodclssub_id', $etmcs_id)                                                
-                                                ->where('clssec_id', $clssec->id)
-                                                ->where('marks', '<', 0)
-                                                ->count();
-                        @endphp
-                        <td>{{ $std_count_ab }}</td>
-                    @endforeach
-                </tr>
-                @endforeach
-            @endforeach
-
-
-        </thead>
-        <tbody>
-        
-        </tbody>
-    </table>    
-
-
-
+    {{ $test['clss'] }}
 
 @endforeach  --}}
+<table class='table table-bordered'>
+    <thead>
+        <tr>
+            <th>Class</th>
+            <th>Section</th>
+            @for($i=0; $i<=$class_subject_count; $i++)
+                <th>{{ $i }}D</th>
 
 
-
-
+            @endfor
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>V</td>
+            <td>A</td>
+            @for($i=0; $i<=$class_subject_count; $i++)
+                @if( array_key_exists($i, $class_D) )
+                    <th>{{ $class_D[$i]}}</th>
+                @else 
+                    <th>Not Exists</th>
+                @endif
+            @endfor
+            <th>{{ array_sum($class_D) }}</th>
+        </tr>
+    </tbody>
+</table>
 <script type="text/javascript">
 	$(document).ready(function(e){
 		
