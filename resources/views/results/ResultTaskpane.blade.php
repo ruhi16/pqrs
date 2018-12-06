@@ -6,6 +6,13 @@
 @endsection
 
 @section('content')
+
+
+
+
+
+
+
 <h1>Individual Result...</h1>
 
 <table class="table table-bordered">

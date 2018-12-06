@@ -181,8 +181,8 @@ class compactMarkRegisterController extends Controller
             $pdffilename .= $clssec->clss->name.'-';
             $pdffilename .= $clssec->section->name.'.pdf';
             
-            //return $pdf->stream($pdffilename);
-            return $pdf->download($pdffilename);
+            return $pdf->stream($pdffilename);
+            //return $pdf->download($pdffilename);
     
         }else{
             return view('clssecCompactMarkRegister.compactMarkRegisterPDF')

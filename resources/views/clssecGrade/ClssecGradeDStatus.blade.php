@@ -32,8 +32,8 @@
     </thead>
     <tbody>
         <tr>
-            <td>V</td>
-            <td>A</td>
+            <td>{{ $clssec->clss->name}}</td>
+            <td>{{ $clssec->section->name }}</td>
             @for($i=0; $i<=$class_subject_count; $i++)
                 @if( array_key_exists($i, $class_D) )
                     <th>{{ $class_D[$i]}}</th>

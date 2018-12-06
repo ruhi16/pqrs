@@ -128,72 +128,71 @@ class ClssecGradeController extends Controller
 
     }
 
-    public function clssecGradeDStatus(Request $request, $clss_id, $section_id){
+    public function clssecGradeDStatus(Request $request, $clssec_id){
         $school  = School::find(1);
-        $session = Session::whereStatus('CURRENT')->first();        
-        $clss    = Clss::find($clss_id);
-        $section = Section::find($section_id);
-        $clssec = Clssec::where('clss_id', $clss->id)->where('section_id', $section->id)->first();
+        $session = Session::whereStatus('CURRENT')->first();
+
+        $clssec  = Clssec::find($clssec_id);
+        $clss    = Clss::find($clssec->clss_id);
+        $section = Section::find($clssec->section_id);
+        
         $clssubs = Clssub::where('clss_id', $clss->id)->get();
         
         $stdcrs = Studentcr::where('session_id', $session->id)
-                                ->where('clss_id', $clss_id)
-                                ->where('section_id', $section_id)->get();
+                                ->where('clss_id', $clss->id)
+                                ->where('section_id', $section->id)->get();
 
         $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
-                            ->where('clss_id', $clss_id)
+                            ->where('clss_id', $clss->id)
                             ->get();
 
         $marks = Marksentry::where('session_id', $session->id)
                                 ->where('clssec_id', $clssec->id)
                                 ->get();
 
+        $class_subject_count = Clssub::where('clss_id', $clss->id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no',0)->count()
+                                + count( Clssub::where('clss_id', $clss->id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no', '>', 0)->groupBy('combination_no')->get() );        
 
-
-
-        $class_subject_count = Clssub::where('clss_id', $clss_id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no',0)->count()
-                                + count( Clssub::where('clss_id', $clss_id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no', '>', 0)->groupBy('combination_no')->get() );
-        
-        // calculate total obtained marks
         $class_data = [];
         $class_D = [];
         foreach($stdcrs as  $stdcr){
-            //echo $stdcr->studentdb->name ."<br>";
+            $stdcr_marks = $marks->where('studentcr_id', $stdcr->id);
+
             $extype_GrD_count = 0;
             $clssubs_extype_regular = $clssubs->where('extype_id', 2)->where('combination_no','=', 0);
-            foreach($clssubs_extype_regular as $clssub){                
-                // echo $clssub->subject->code;
+            foreach($clssubs_extype_regular as $clssub){
+
                 $etmcs_ids = $extpmdclsbs->where('subject_id', $clssub->subject_id)->pluck('id');
-                // echo $etmcs_ids;
-                $marks_obt = $marks->where('studentcr_id', $stdcr->id)
-                                    ->whereIn('exmtypmodclssub_id', $etmcs_ids)
+
+                $marks_obt = $stdcr_marks->whereIn('exmtypmodclssub_id', $etmcs_ids)
                                     ->where('marks', '>', 0)
-                                    ->sum('marks');
-                                    //->pluck('marks');
-                // echo '('.$marks_obt;
+                                    ->sum('marks');                                    
 
                 $clssub_fm = $extpmdclsbs->where('subject_id', $clssub->subject_id)->sum('fm');
+                
+                // echo $clssub_fm .'<br>';
 
-                // echo ' / '. $clssub_fm .')- ';
-                // echo getGrade($clssub->subject->extype_id, $marks_obt, $clssub_fm);
-
-
-                $Grade_status = getGrade($clssub->subject->extype_id, $marks_obt, $clssub_fm);                       
+                $Grade_status = getGrade($clssub->subject->extype_id, $marks_obt, $clssub_fm);
                 if( $Grade_status == 'D' ){
                     $extype_GrD_count++;
                 }
-                // echo "<br>";                        
-            }
 
-            // echo '<br>-----------------';
-            $test_clssubs = $clssubs->where('extype_id', 2)->where('combination_no','!=', 0)->groupBy(function($query){
+            }
+            
+
+
+
+            $clssubs_extype_comb_addl = $clssubs->where('extype_id', 2)
+                                            ->where('is_additional', 0)
+                                            ->where('combination_no','!=', 0)
+                                            ->groupBy(function($query){
                 return $query->combination_no < 0 ? -$query->combination_no : $query->combination_no;
             });
-            foreach($test_clssubs as $clssub){  
-                $clssub->each(function ($item) {    
-                    // echo $item->subject->code .'+'; 
-                });
-
+            // dd($clssubs_extype_comb_addl);
+            foreach($clssubs_extype_comb_addl as $clssub){
+                // $clssub->each(function ($item) {                 
+                //     echo $item;
+                // });
                 $comb_subj_ids = $clssub->where('extype_id', 2);    //->where('combination_no','>', 0)->pluck('subject_id');
                 $comb_subj_fms = $extpmdclsbs->whereIn('subject_id', $comb_subj_ids->where('combination_no','>', 0)->pluck('subject_id'))->sum('fm');
 
@@ -203,42 +202,40 @@ class ClssecGradeController extends Controller
 
                 
                 // echo $comb_subj_ids->pluck('subject_id') .'-'. $comb_subj_oms.'-' . $comb_subj_fms .'-'. getGrade(2,$comb_subj_oms, $comb_subj_fms ).'<br>';
-                $Grade_status = getGrade(2,$comb_subj_oms, $comb_subj_fms );
+                $Grade_status = getGrade(2, $comb_subj_oms, $comb_subj_fms );
                 if( $Grade_status == 'D' ){
                     $extype_GrD_count++;
                 }
-            }
-            // echo '-----------------<br>';
-            
+            }           
 
-            $data['session']    = $session->id;
-            $data['clss']       = $clss->name;
-            $data['section']    = $section->name;
-            $data['stdcr_id']   = $stdcr->id;
-            $data['stdcr_name'] = $stdcr->studentdb->name;
-            $data['total_D']    = $extype_GrD_count;
+            // $data['session']    = $session->id;
+            // $data['clss']       = $clss->name;
+            // $data['section']    = $section->name;
+            // $data['stdcr_id']   = $stdcr->id;
+            // $data['stdcr_name'] = $stdcr->studentdb->name;
+            // $data['total_D']    = $extype_GrD_count;
 
-            $class_data[$stdcr->id] = new \Illuminate\Support\Collection($data);
+            // $class_data[$stdcr->id] = new \Illuminate\Support\Collection($data);
             
             array_push($class_D, $extype_GrD_count);
-            // echo "<br><br>";
         }
 
         // Convert array to collection
-        $coll_class_data = new \Illuminate\Support\Collection($class_data);
+        // $coll_class_data = new \Illuminate\Support\Collection($class_data);
+
         // dd($coll_class_data);
         // foreach($class_data as $test){
         //     echo $test['clss'] .'-'.$test['total_D'].'<br>';
         // }
         //echo $class_data[5]['total_D'];
         // print_r( array_count_values($class_D) );
+
         return view('clssecGrade.clssecGradeDstatus')
-            ->with('clss', $clss)
+            ->with('clssec', $clssec)
             ->with('class_subject_count', $class_subject_count)
             ->with('class_D',  array_count_values($class_D))
-            ->with('coll_class_data', $coll_class_data)
-        ;
-
+            // ->with('coll_class_data', $coll_class_data)
+            ;
     }
 
 

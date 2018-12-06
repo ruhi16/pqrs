@@ -147,6 +147,7 @@
                     @foreach($clssubs as $clsb)
                         <th colspan="{{ $extp_count }}">{{ $std_grade[$clsb->subject_id]  }}</th>
                     @endforeach
+
                 </tr>
                 @endforeach            
             </tbody>
