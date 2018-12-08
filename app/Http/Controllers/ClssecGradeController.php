@@ -7,6 +7,10 @@ use App\Http;
 use DB;
 use PDF;
 use mPDF;
+// use Charts;
+// use App\Charts\SampleChart;
+// use ConsoleTVs\Charts\Classes\Chartjs\Chart;
+use App\Charts\SampleChart;
 
 use App\Session;
 use App\Exam;
@@ -229,8 +233,19 @@ class ClssecGradeController extends Controller
         // }
         //echo $class_data[5]['total_D'];
         // print_r( array_count_values($class_D) );
+        // $chart = Charts::new('line', 'highcharts');
+
+        $chart = new SampleChart;
+        $chart->labels(['One', 'Two', 'Three', 'Four']);
+        $chart->dataset('My dataset', 'line', [1, 2, 3, 4]);
+        $chart->dataset('My dataset 2', 'line', [4, 3, 2, 1]);
+        // ->options([
+        //     'color' => '#ff0000',
+        // ]);
 
         return view('clssecGrade.clssecGradeDstatus')
+            ->with('chart', $chart)
+
             ->with('clssec', $clssec)
             ->with('class_subject_count', $class_subject_count)
             ->with('class_D',  array_count_values($class_D))

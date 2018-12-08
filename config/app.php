@@ -185,7 +185,8 @@ return [
         Codedge\Fpdf\FpdfServiceProvider::class, //[1]
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,   //for mPdf
         Milon\Barcode\BarcodeServiceProvider::class,            //for barcode generator
-        
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
     ],
 
     /*
@@ -246,7 +247,8 @@ return [
         
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,        //barcode creater
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,        //barcode creater
-        
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        // 'Charts' => ConsoleTVs\Charts\Charts::class,
     ],
 
 ];
