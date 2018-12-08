@@ -249,6 +249,7 @@ return [
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,        //barcode creater
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         // 'Charts' => ConsoleTVs\Charts\Charts::class,
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
     ],
 
 ];
