@@ -10,13 +10,13 @@
         border: 1px solid black;
         border-spacing: 0px;
         {{--  width: 100%;  --}}
-        font-size: 13px;
+        font-size: 14px;
         {{--  border-collapse: collapse;  --}}
 		vertical-align: top;
         
     }
     th, td {
-    padding: 2px;
+    	padding: 2px;
     }
     </style>
     <style>
@@ -26,6 +26,11 @@
 	</style>
 
     <style> 
+	h1, p, h2, h3, h4, h5, h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+	/*line-height: *//* adjust to tweak wierd fonts */;
+	}
 	
     @font-face {
         font-family: "arial";
@@ -39,18 +44,43 @@
 
 	</style>
 	<body>
-
+		<p align='center'>Mobile No: 9175 632185		
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;									
+		Index No: {{ $school->index }}</p>
 		<h1 class='text-center' align="center">{{ $school->name }}</h1>
+		<p align='center'>DISE CODE: {{ $school->disecode }}</p>
 		<h3 class='text-center' align="center">{{ $school->po }} * {{ $school->ps }} * {{ $school->dist }}</h3>
 		<h2 class='text-center' align="center">Progress Report for Session {{ $session->name }}</h2>
+		<br>
 
+		@php
+			$QRstring  = $school->name.'-'.$school->disecode.'-'.$session->name.'-';
+			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no;
+		@endphp
 		<table border="1" class="table table-bordered" width="100%">
 			<thead>
 				<tr>
-					<td style="vertical-align: bottom;" height="30">Name: <strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
+					<td style="vertical-align: bottom;" height="40">Name: <strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
+					<td rowspan='5' width="40%" align='right'><small>{!! QrCode::size(100)->margin(0)->generate($QRstring) !!}</small></td>
+				</tr>
+				<tr>
 					<td style="vertical-align: bottom;">Student Id: _____________________</td>
+				</tr>
+				<tr>
 					<td style="vertical-align: bottom;">Class: <strong>{{ $studentcrs->first()->clss->name }}</strong></td>
+				</tr>
+				<tr>
 					<td style="vertical-align: bottom;">Section: <strong>{{ $studentcrs->first()->section->name }}</strong></td>
+				</tr>
+				<tr>
 					<td style="vertical-align: bottom;">Roll No:<strong>{{ $studentcrs->first()->roll_no }}</strong></td>
 				</tr>
 			</thead>
@@ -113,7 +143,13 @@
 														<th class="text-center"><small>Form</small></th>
 														<th class="text-center"><small>Total</small></th>
 													@else
-														<th class="text-center">MO</th>
+														@php
+															$extype_fm = $extpmdclsbs->where('extype_id', $extype->id)->where('exam_id', $exam->id)
+																			->where('clss_id', $studentcrs->first()->clss->id)->first()->fm;
+															//echo $extype_fm;
+
+														@endphp
+														<th class="text-center"><small>[FM:{{ $extype_fm }}]</small><br>MO</th>
 													@endif
 												@endforeach
 												
@@ -312,7 +348,7 @@
 					
 					</tr>
 					<tr>
-						<td colspan="2">
+						<td colspan="2" style="vertical-align: middle; font-size:18px;">
 							<b>Result: </b>{{ $studentcrs->first()->result or "Not Finalized "}}
 						
 						</td>

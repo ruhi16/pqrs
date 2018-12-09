@@ -7,7 +7,7 @@ use App\Http;
 use DB;
 use PDF;
 use mPDF;
-// use Charts;
+use Charts;
 // use App\Charts\SampleChart;
 // use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 use App\Charts\SampleChart;
@@ -227,29 +227,41 @@ class ClssecGradeController extends Controller
         // Convert array to collection
         // $coll_class_data = new \Illuminate\Support\Collection($class_data);
 
-        // dd($coll_class_data);
-        // foreach($class_data as $test){
-        //     echo $test['clss'] .'-'.$test['total_D'].'<br>';
-        // }
-        //echo $class_data[5]['total_D'];
-        // print_r( array_count_values($class_D) );
-        // $chart = Charts::new('line', 'highcharts');
 
-        $chart = new SampleChart;
-        $chart->labels(['One', 'Two', 'Three', 'Four']);
-        $chart->dataset('My dataset', 'line', [1, 2, 3, 4]);
-        $chart->dataset('My dataset 2', 'line', [4, 3, 2, 1]);
-        // ->options([
-        //     'color' => '#ff0000',
-        // ]);
+        $colors = array_keys( array_count_values($class_D) ); //array_keys(array('a'=>'red','b'=>'green','c'=>'blue'));;//array_keys($class_D);
+            
+        array_walk($colors, function (&$value, $key) {
+            $value="$value-D";
+        });
+        // print_r($colors);
+    
+        $chart = Charts::create('donut', 'chartjs')
+            ->title('My nice chart')            
+            ->labels( $colors )            
+            ->values(array_values(array_count_values($class_D) ) )
+            ->dimensions(1000,500)
+            ->responsive(false);
 
-        // $chart = Charts::create('pie', 'highcharts')
-        //     ->title('My nice chart')
-        //     ->labels(['First', 'Second', 'Third'])
-        //     ->values([5,10,20])
-        //     ->dimensions(1000,500)
-        //     ->responsive(false);
+        // $chart = Charts::create('pie', 'morris')
+            // ->title('My nice chart')
+            // ->dimensions(0, 400) // Width x Height
+            // This defines a preset of colors already done:)
+            // ->template("material")
+            // You could always set them manually
+            // ->colors(['#2196F3', '#F44336', '#FFC107'])
+            // Setup the diferent datasets (this is a multi chart)
+            //->dataset('Element 1', [5,20,100])
+            //->dataset('Element 2', [15,30,80])
+            //->dataset('Element 3', [25,10,40])
+            // Setup what the values mean
+            // ->labels(['One', 'Two', 'Three'])
+            // ->labels(['First', 'Second', 'Third'])
+            // ->values([5,10,20])
+            // ->dimensions(1000,500)
+            // ->responsive(false)
+        ;
 
+        
 
         return view('clssecGrade.clssecGradeDstatus')
             ->with('chart', $chart)

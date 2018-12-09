@@ -11,17 +11,8 @@
     <h1>Class-Section-Subject Wise <u>Grade-D Status Count</u> on Total Students </h1>
 </center>
 
-{{--  {{ dd($coll_class_data) }}  --}}
-{{--  @foreach ($coll_class_data as $test)
-
-    {{ $test['clss'] }}
-
-@endforeach  --}}
-
-{{--  {!! Chirts::assets() !!}  --}}
-{!! $chart->container() !!}
-
-{{--  {!! $chart->script() !!}  --}}
+{{--  {!! QrCode::size(200)->color(150,90,10)->generate('Make me a QrCode!'); !!}  --}}
+{!! $chart->html() !!}
 
 <table class='table table-bordered'>
     <thead>
@@ -57,17 +48,10 @@
 	});  
 </script>
 
-{!! $chart->script() !!}
+    {!! Charts::scripts() !!}
+    {!! $chart->script() !!}
 
 
-{{--  <script src="https://unpkg.com/vue"></script>
-        <script>
-            var app = new Vue({
-                el: '#app',
-            });
-        </script>
-        <script src=https://cdnjs.cloudflare.com/ajax/libs/echarts/4.0.2/echarts-en.min.js charset=utf-8></script>
-         --}}
 @endsection
 
 @section('footer')
