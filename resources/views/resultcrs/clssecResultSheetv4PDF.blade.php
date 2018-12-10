@@ -185,7 +185,7 @@
 											@endphp
 											@foreach($clssubs->where('extype_id', $extype->id)->sortBy('is_additional')->sortBy('subject_order') as  $clssub)
 												<tr>
-													<td >{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
+													<td style="vertical-align: middle; font-size:11px;">{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
 													@php
 														$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
 																			->where('subject_id', $clssub->subject_id);
@@ -373,7 +373,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td height="35"></td>
+						<td height="45"></td>
 						<td></td>
 						<td></td>
 						<td></td>						
