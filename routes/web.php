@@ -269,6 +269,8 @@ Route::group(['middleware' => ['auth']], function () {
         
         Route::post('/studentdbEdit-submit', 'StudentController@studentdbEditSubmit'); // modal data submit
 
+        Route::post('/studentdbmultipage-stdIdSubmit', 'StudentController@stdIdSubmit'); // modal data submit
+        
         //Ajax Update
         Route::post('/updateSection', 'StudentController@updateSection');
 

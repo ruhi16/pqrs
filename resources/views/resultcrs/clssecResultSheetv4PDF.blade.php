@@ -10,7 +10,7 @@
         border: 1px solid black;
         border-spacing: 0px;
         {{--  width: 100%;  --}}
-        font-size: 14px;
+        {{--  font-size: 14px;  --}}
         {{--  border-collapse: collapse;  --}}
 		vertical-align: top;
         
@@ -64,24 +64,30 @@
 		@php
 			$QRstring  = $school->name.'-'.$school->disecode.'-'.$session->name.'-';
 			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no;
+			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate;
 		@endphp
 		<table border="1" class="table table-bordered" width="100%">
 			<thead>
-				<tr>
-					<td style="vertical-align: bottom;" height="40">Name: <strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
-					<td rowspan='5' width="40%" align='right'><small>{!! QrCode::size(100)->margin(0)->generate($QRstring) !!}</small></td>
+				<tr width="20%">
+					<td style="vertical-align: middle;" height="40" align="right" width="15%">Name: </td>
+					<td style="vertical-align: middle;" height="40"><strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
+					<td rowspan='5' width="40%" align='right'><small>{!! QrCode::size(120)->margin(0)->generate($QRstring) !!}</small></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom;">Student Id: _____________________</td>
+					<td style="vertical-align: bottom;" align="right">Student Id: </td>
+					<td><b>{{ $studentcrs->first()->studentdb->admSlNo }}/{{ $studentcrs->first()->studentdb->admDate }}</b></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom;">Class: <strong>{{ $studentcrs->first()->clss->name }}</strong></td>
+					<td style="vertical-align: bottom;"  align="right">Class: </td>
+					<td><strong>{{ $studentcrs->first()->clss->name }}</strong></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom;">Section: <strong>{{ $studentcrs->first()->section->name }}</strong></td>
+					<td style="vertical-align: bottom;" align="right">Section: </td>
+					<td><strong>{{ $studentcrs->first()->section->name }}</strong></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom;">Roll No:<strong>{{ $studentcrs->first()->roll_no }}</strong></td>
+					<td style="vertical-align: bottom;" align="right">Roll No:</td>
+					<td><strong>{{ $studentcrs->first()->roll_no }}</strong></td>
 				</tr>
 			</thead>
 		</table>
@@ -129,9 +135,12 @@
 														<th class="text-center">{{ $exam->name }}</th>
 													@endif
 												@endforeach
-												<th class="text-center" rowspan='3'>Grand Total<br></th>
+												
 												@if($mode_count > 1)			{{-- if it is IX class only --}}
-													<th class="text-center" rowspan='3'>Average<br>100</th>
+													<th class="text-center" rowspan='3'>Grand Total<br>[200]</th>
+													<th class="text-center" rowspan='3'>Average<br>[100]</th>
+												@else 
+													<th class="text-center" rowspan='3'>Grand Total<br></th>
 												@endif
 												<th class="text-center" rowspan='3'>Grade</th>
 											</tr>
@@ -185,7 +194,9 @@
 											@endphp
 											@foreach($clssubs->where('extype_id', $extype->id)->sortBy('is_additional')->sortBy('subject_order') as  $clssub)
 												<tr>
-													<td style="vertical-align: middle; font-size:11px;">{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}</td>
+													<td style="vertical-align: middle; font-size:14px;" width="25%">
+														{{ $clssub->name }} {{ $clssub->is_additional == 1 ? '(Addl)' : '' }}
+													</td>
 													@php
 														$extpmdclsb = $extpmdclsbs->where('extype_id', $extype->id)
 																			->where('subject_id', $clssub->subject_id);
@@ -393,7 +404,7 @@
 			<br>
 			<table width="100%">
 			<tr>
-			<td>
+			<td width="40%">
 				<table width="100%">
 					<tr>
 						<th>Scale</th>
@@ -402,9 +413,9 @@
 					</tr>
 					@foreach($grades->where('extype_id', 2) as $grade)
 					<tr>
-						<td>{{$grade->gradeparticular->name}}</td>
-						<td>{{$grade->stpercentage}}-{{$grade->enpercentage}}</td>
-						<td>{{$grade->descrp}}</td>
+						<td align="center">{{$grade->gradeparticular->name}}</td>
+						<td align="center">{{(int)$grade->stpercentage}}% - {{(int)$grade->enpercentage}}%</td>
+						<td align="center">{{$grade->descrp}}</td>
 					</tr>
 					@endforeach
 				</table>
