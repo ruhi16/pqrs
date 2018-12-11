@@ -190,8 +190,9 @@ class ClssecGradeController extends Controller
                                             ->where('is_additional', 0)
                                             ->where('combination_no','!=', 0)
                                             ->groupBy(function($query){
-                return $query->combination_no < 0 ? -$query->combination_no : $query->combination_no;
-            });
+                                                        return $query->combination_no < 0 ? -$query->combination_no : $query->combination_no;
+                                            });
+                                            
             // dd($clssubs_extype_comb_addl);
             foreach($clssubs_extype_comb_addl as $clssub){
                 // $clssub->each(function ($item) {                 
@@ -272,8 +273,38 @@ class ClssecGradeController extends Controller
             // ->with('coll_class_data', $coll_class_data)
             ;
     }
+    
+    public function resultCrStatusRefresh(Request $request, $clssec_id){
+        $session = Session::whereStatus('CURRENT')->first();
+
+        $clssec  = Clssec::find($clssec_id);
+        $clss    = Clss::find($clssec->clss_id);
+        $section = Section::find($clssec->section_id);
+        
+        $clssubs = Clssub::where('clss_id', $clss->id)->get();
+        
+        $stdcrs = Studentcr::where('session_id', $session->id)
+                                ->where('clss_id', $clss->id)
+                                ->where('section_id', $section->id)->get();
+
+        $extpmdclsbs = Exmtypmodclssub::where('session_id', $session->id)
+                            ->where('clss_id', $clss->id)
+                            ->get();
+
+        $marks = Marksentry::where('session_id', $session->id)
+                                ->where('clssec_id', $clssec->id)
+                                ->get();
+
+        // only for Summative, extype_id = 2
+        $class_regr_subject_count = count( Clssub::where('clss_id', $clss->id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no', '=', 0)->get() );
+        $class_addl_subject_count = count( Clssub::where('clss_id', $clss->id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no', '>', 0)->groupBy('combination_no')->get() );        ;
+        
+        $class_total_subject_count = $class_regr_subject_count + $class_addl_subject_count;
+        
 
 
+        echo 'Hello'. $class_total_subject_count;
+    }
 
-
+    
 }
