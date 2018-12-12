@@ -106,25 +106,25 @@
 
         	<label class="control-label col-sm-2" for="std_name">Name:</label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" id="std_name" name="std_name">
+						<input type="text" class="form-control" id="std_name" name="std_name" readonly>
             
 					</div>  
 
           <label class="control-label col-sm-1" for="std_clss">Class:</label>
 					<div class="col-sm-1">
-            <input type="text" class="form-control" id="std_clss" name="std_clss">
+            <input type="text" class="form-control" id="std_clss" name="std_clss" readonly>
 						{{--  <input type="text" class="form-control" id="currses" name="currses" placeholder="Enter Curr. Session">  --}}
 
 					</div>          
           <label class="control-label col-sm-1" for="std_secn">Section:</label>
 					<div class="col-sm-1">
-            <input type="text" class="form-control" id="std_secn" name="std_secn">
+            <input type="text" class="form-control" id="std_secn" name="std_secn" readonly>
 						{{--  <input type="text" class="form-control" id="currses" name="currses" placeholder="Enter Curr. Session">  --}}
 
 					</div>          
           <label class="control-label col-sm-1" for="std_roll">Roll:</label>
-					<div class="col-sm-1">
-            <input type="text" class="form-control" id="std_roll" name="std_roll">
+					<div class="col-sm-2">
+            <input type="text" class="form-control" id="std_roll" name="std_roll" readonly>
 						{{--  <input type="text" class="form-control" id="currses" name="currses" placeholder="Enter Curr. Session">  --}}
 
 					</div>          
@@ -133,7 +133,7 @@
 				<div class="form-group">
         	<label class="control-label col-sm-2" for="admBookNo">Adm Book No:</label>
 					<div class="col-sm-2">						
-						<input type="text" class="date form-control" id="admBookNo" name="admBookNo" placeholder="">
+						<input type="text" class="date form-control" id="admBookNo" name="admBookNo" placeholder="" value="1">
 					</div>
 
           <label class="control-label col-sm-1" for="admSlNo">Sl No:</label>
