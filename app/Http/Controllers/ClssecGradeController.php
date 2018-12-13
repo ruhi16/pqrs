@@ -307,8 +307,8 @@ class ClssecGradeController extends Controller
             $class_total_subject_count = count($class_regr_subjects) + count($class_addl_subjects_groupBy);            
             
         
-            $clss_extp_subjs = $clssubs->where('extype_id', $extype->id)->where('combination_no', '>=', 0)->pluck('subject_id');            
-            $clss_all_subj_fm = $extpmdclsbs->whereIn('subject_id', $clss_extp_subjs)->sum('fm');
+            $clss_extp_subjs    = $clssubs->where('extype_id', $extype->id)->where('combination_no', '>=', 0)->pluck('subject_id');            
+            $clss_extp_subjs_fm = $extpmdclsbs->whereIn('subject_id', $clss_extp_subjs)->sum('fm');
             // echo $clss_all_subj_fm;            
 
             $class_student_obt_D =[];   //**************************************** */
@@ -319,7 +319,8 @@ class ClssecGradeController extends Controller
 
                 //for regular subjects
                 foreach($class_regr_subjects as $regr_subject){
-                    echo ' == '.$regr_subject->subject->name . ': ';
+                    // echo ' == '.$regr_subject->subject->name . ': ';
+                    echo ' == '.$regr_subject->subject->id . ': ';
                     $stdcr_subj_total_om = $marks_stdcr->where('clssub_id', $regr_subject->id)->where('marks', '>', 0)->sum('marks');
                     $stdcr_subj_total_fm = $extpmdclsbs->where('subject_id', $regr_subject->subject_id)->sum('fm');
                     $stdcr_subj_total_gr = getGrade(2, $stdcr_subj_total_om, $stdcr_subj_total_fm);
@@ -331,6 +332,7 @@ class ClssecGradeController extends Controller
                     echo '/'. $stdcr_subj_total_fm;
                     echo '>'. $stdcr_subj_total_gr;                
                 }
+                
                 //for additional & combined subjects
                 foreach($class_addl_subjects_groupBy as $addl_subject){
                     $addl_subject->each(function($q){ echo $q->subject->name.' '; });
