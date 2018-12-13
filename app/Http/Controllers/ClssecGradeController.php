@@ -33,6 +33,7 @@ use App\Clssec;
 use App\Exmtypclssub;
 use App\Exmtypmodclssub;
 use App\Marksentry;
+use App\Resultcr;
 use App\Gradedescription;
 use App\Answerscriptdistribution;
 
@@ -294,16 +295,82 @@ class ClssecGradeController extends Controller
         $marks = Marksentry::where('session_id', $session->id)
                                 ->where('clssec_id', $clssec->id)
                                 ->get();
-
-        // only for Summative, extype_id = 2
-        $class_regr_subject_count = count( Clssub::where('clss_id', $clss->id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no', '=', 0)->get() );
-        $class_addl_subject_count = count( Clssub::where('clss_id', $clss->id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no', '>', 0)->groupBy('combination_no')->get() );        ;
         
-        $class_total_subject_count = $class_regr_subject_count + $class_addl_subject_count;
         
+        $extypes = Extype::where('session_id', $session->id)->get();
+        foreach($extypes as  $extype){
+            $class_regr_subjects = Clssub::where('clss_id', $clss->id)->where('extype_id', $extype->id)->where('is_additional', 0)->where('combination_no', '=' , 0)->get();
+
+            $class_addl_subjects = Clssub::where('clss_id', $clss->id)->where('extype_id', $extype->id)->where('is_additional', 0)->where('combination_no', '!=', 0)->get();        
+            $class_addl_subjects_groupBy = $class_addl_subjects->groupBy(function($q){ return $q->combination_no < 0 ? -$q->combination_no : $q->combination_no; });
+            
+            $class_total_subject_count = count($class_regr_subjects) + count($class_addl_subjects_groupBy);            
+            
+        
+            $clss_extp_subjs = $clssubs->where('extype_id', $extype->id)->where('combination_no', '>=', 0)->pluck('subject_id');            
+            $clss_all_subj_fm = $extpmdclsbs->whereIn('subject_id', $clss_extp_subjs)->sum('fm');
+            // echo $clss_all_subj_fm;            
+
+            $class_student_obt_D =[];   //**************************************** */
+            foreach($stdcrs as $stdcr){
+                echo $stdcr->id.': ';
+                $marks_stdcr = $marks->where('studentcr_id', $stdcr->id);
+                $stdcr_subj_total_gr_count = 0;
+
+                //for regular subjects
+                foreach($class_regr_subjects as $regr_subject){
+                    echo ' == '.$regr_subject->subject->name . ': ';
+                    $stdcr_subj_total_om = $marks_stdcr->where('clssub_id', $regr_subject->id)->where('marks', '>', 0)->sum('marks');
+                    $stdcr_subj_total_fm = $extpmdclsbs->where('subject_id', $regr_subject->subject_id)->sum('fm');
+                    $stdcr_subj_total_gr = getGrade(2, $stdcr_subj_total_om, $stdcr_subj_total_fm);
+                    
+                    if($stdcr_subj_total_gr == 'D'){
+                        $stdcr_subj_total_gr_count++;
+                    }
+                    echo $stdcr_subj_total_om;                
+                    echo '/'. $stdcr_subj_total_fm;
+                    echo '>'. $stdcr_subj_total_gr;                
+                }
+                //for additional & combined subjects
+                foreach($class_addl_subjects_groupBy as $addl_subject){
+                    $addl_subject->each(function($q){ echo $q->subject->name.' '; });
+                    
+                    $stdcr_subj_total_om = $marks_stdcr->whereIn('clssub_id' , $addl_subject->pluck('id'))->where('marks', '>', 0)->sum('marks');
+                    $stdcr_subj_total_fm = $extpmdclsbs->whereIn('subject_id', $addl_subject->where('combination_no', '>', 0)->pluck('subject_id'))->sum('fm');
+                    $stdcr_subj_total_gr = getGrade(2, $stdcr_subj_total_om, $stdcr_subj_total_fm);
+                    
+                    if($stdcr_subj_total_gr == 'D'){
+                        $stdcr_subj_total_gr_count++;
+                    }
+                    echo $stdcr_subj_total_om;                
+                    echo '/'. $stdcr_subj_total_fm;
+                    echo '>'. $stdcr_subj_total_gr;                
+                }
+
+            
+
+                echo ': '. $stdcr_subj_total_gr_count;
+            
+                
+                array_push($class_student_obt_D, $stdcr_subj_total_gr_count);
+                echo "<br>";
 
 
-        echo 'Hello'. $class_total_subject_count;
+
+
+                // $stdcr_resultcr = Resultcr::findOrFail($stdcr->id);
+                // if($stdcr_resultcr){
+                //     echo 'Found';
+                // }
+
+            }   // end of studentcr
+
+            print_r(array_count_values($class_student_obt_D));
+        }   // end of extypes
+
+
+
+        
     }
 
     
