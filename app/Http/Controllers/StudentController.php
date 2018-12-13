@@ -429,4 +429,22 @@ class StudentController extends Controller
 
         return response()->json(['m' => $stdcr->id]);
     }
+
+
+
+    public function stdIdSubmit(Request $request){
+        echo "ID:". $request->std_id;
+        $ses = Session::whereStatus('CURRENT')->first();
+        $stdDB = Studentdb::findOrFail($request->std_id);
+
+        if( $stdDB ){
+            $stdDB->admBookNo = $request->admBookNo;
+            $stdDB->admSlNo   = $request->admSlNo; 
+            $stdDB->admDate   = $request->admDate;
+            $stdDB->save();
+        }
+
+
+        return back();
+    }
 }

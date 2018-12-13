@@ -13,7 +13,8 @@
 
 
 
-<h1>Individual Result...</h1>
+<a href="{{ url('/clssec-resultCrStatusRefresh', [$clssec_id])}}" class='btn btn-success btn-lg pull-right'>Refresh :)</a>
+<h1>Individual Result...</h1> 
 
 <table class="table table-bordered">
 <thead>
@@ -23,11 +24,11 @@
     <th>Class</th>
     <th>Section</th>
     <th>Roll</th>
-    @foreach($extp as $ex)
-      {{--  <th>Total Marks Obt<br><small>{{ $ex->name }}</small></th>
+    {{--  @foreach($extp as $ex)
+      <th>Total Marks Obt<br><small>{{ $ex->name }}</small></th>
       <th>Full Marks<br><small>{{ $ex->name }}</small></th>
-      <th>Nos of Ds<br><small>{{ $ex->name }}</small></th>  --}}
-    @endforeach
+      <th>Nos of Ds<br><small>{{ $ex->name }}</small></th>
+    @endforeach  --}}
     <th>Result Status</th>
     <th>Action</th>
     <th>Action</th>

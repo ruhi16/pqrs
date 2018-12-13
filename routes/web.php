@@ -269,6 +269,8 @@ Route::group(['middleware' => ['auth']], function () {
         
         Route::post('/studentdbEdit-submit', 'StudentController@studentdbEditSubmit'); // modal data submit
 
+        Route::post('/studentdbmultipage-stdIdSubmit', 'StudentController@stdIdSubmit'); // modal data submit
+        
         //Ajax Update
         Route::post('/updateSection', 'StudentController@updateSection');
 
@@ -342,6 +344,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-gradeStatus/{clss_id}', 'ClssecGradeController@clssecGradeStatus');
         Route::get('/clssec-gradeStatusPDF/{clss_id}', 'ClssecGradeController@clssecGradeStatusPDF');
         Route::get('/clssec-gradeDstatus/{clssec_id}', 'ClssecGradeController@clssecGradeDStatus');
+
+        Route::get('/clssec-resultCrStatusRefresh/{clssec_id}','ClssecGradeController@resultCrStatusRefresh');
 });
   
 Route::get('/get-logout', function(){
