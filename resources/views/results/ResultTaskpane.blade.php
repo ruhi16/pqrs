@@ -30,7 +30,7 @@
       <th>Nos of Ds<br><small>{{ $ex->name }}</small></th>
     @endforeach  --}}
     <th>Result Status</th>
-    {{--  <th>Action</th>  --}}
+    <th>Action</th>
     <th>Action</th>
   </tr>
 </thead>
@@ -56,10 +56,10 @@
                       <br>
     @endforeach
     </td>
-    {{--  <td>
+    <td>
       <a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a><br>
       <a href="{{url('/clssec-ResultSheetv3',[$clssec_id, $stdcr->id])}}">Result Sheet V-3</a>
-    </td>  --}}
+    </td>
     <td>
     {{--  <a href="{{url('/clssec-ResultSheetPDF',[$clssec_id, $stdcr->id])}}">Result Sheet PDF</a><br>
     <a href="{{url('/clssec-ResultSheetv3PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-3 PDF</a><br>  --}}
