@@ -19,9 +19,10 @@
             <th>Marks Entry</th>
             {{--  <th>Subject Wise Full Marks</th>  --}}
             <th>Marks Register</th>
-            <th>Comp Mark Reg</th>
+            <th>Prom Assesment</th>
             <th>Result Sheet</th>
             <th>Reports</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -41,30 +42,35 @@
             {{ $teachers->where('id', $teacher_id)->first()['name']}}
 
         </td>
-        <td><a href="{{url('/clssec-AdminPage',[$clssec->clss_id,$clssec->section_id])}}">Admission</a></td>
-        <td><a href="{{url('/clssec-MrkenPage',[$clssec->id])}}">Mark Entry Status</a></td>
+        <td><a class="btn btn-primary btn-sm" href="{{url('/clssec-AdminPage',[$clssec->clss_id,$clssec->section_id])}}">Addm</a></td>
+        <td><a class="btn btn-primary btn-sm" href="{{url('/clssec-MrkenPage',[$clssec->id])}}">Mark Entry Status</a></td>
         {{--  <td><a href="{{url('/exmtypclssubfmEntry',[$clssec->clss_id])}}">Full Mark Entry</a></td>  --}}
-        <td>
-            <small>
-            <a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Mark Register-V1</a><br>
-            <a href="{{url('/clssec-MarksRegisterv2',[$clssec->id])}}">Mark Register-V2</a><br>
-            <a href="{{url('/clssec-MarksRegisterv3',[$clssec->id])}}">Mark Register-V3</a>
-            </small>
+        
+        <td>            
+            {{--  <a href="{{url('/clssec-MarksRegister',[$clssec->id])}}">Mark Register-V1</a><br>  --}}
+            {{--  <a href="{{url('/clssec-MarksRegisterv2',[$clssec->id])}}">Mark Register-V2</a><br>  --}}
+            <a class="btn btn-primary btn-sm" href="{{url('/clssec-MarksRegisterv3',[$clssec->id])}}">Mark Register-V3</a><br>
+            <a class="btn btn-success btn-sm" href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id, 0])}}">Comp Marks Register</a><br>
+            <a class="btn btn-danger btn-sm" href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id, 1])}}">Comp Marks Register PDF</a>           
         </td>
         <td>
-            <small><a href="{{url('/clssec-CompactMarkRegister',[$clssec->id])}}">Promotional Assesment</a></small><br>
-            <small><a href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id, 0])}}">Comp Marks Register</a></small><br>
-            <small><a href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id, 1])}}">Comp Marks Register PDF</a></small>
+            <a class="btn btn-primary btn-sm" href="{{url('/clssec-CompactMarkRegister',[$clssec->id])}}">Prom Assesment</a><br>
+            
         </td>
         <td>
-            <a href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Individual Result</a><br>
-            <a href="{{url('/clssec-gradeDstatus',[$clssec->id])}}"><small>Grade-D Status</small></a>
+            <a class="btn btn-primary btn-sm" href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Individual Result</a><br>
+            <a class="btn btn-success btn-sm" href="{{url('/clssec-gradeDstatus',[$clssec->id])}}"><small>Grade-D Status</small></a>
         </td>
         <td>
-            <small><a href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List HTML</a></small><br>
-            <small><a href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a></small><br>
-            <small><a href="{{ url('/clssecsreport-stdListSummativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Summ. PDF</a></small><br>
-            <small><a href="{{ url('/clssecsreport-stdListFromativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Form. PDF</a></small>
+            <small><a class="btn btn-primary btn-sm" href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List HTML</a></small><br>
+            <small><a class="btn btn-warning btn-sm"  href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a></small><br>
+            <small><a class="btn btn-success btn-sm"  href="{{ url('/clssecsreport-stdListSummativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Sum. PDF</a></small><br>
+            <small><a  class="btn btn-danger btn-sm" href="{{ url('/clssecsreport-stdListFromativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Form. PDF</a></small><br>
+            <a  class="btn btn-primary btn-sm" href="">Class-Section Merit List</a><br>
+            <a  class="btn btn-success btn-sm" href="">Class Merit List</a>
+        </td>
+        <td>
+            <a href="{{ url('/clssec-resultCrStatusRefresh', [$clssec->id])}}" class='btn btn-primary'>Refresh</a>
         </td>
     </tr>
 @endforeach

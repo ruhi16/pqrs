@@ -47,14 +47,22 @@
       <td></td>
       <td></td>  --}}
     @endforeach
-    <td></td>
+    <td>
+    @foreach($extp as $et)
+      {{$et->name}}:  {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->obtnmarks or 'NA' }}/
+                      {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->fullmarks or 'NA'}}:Ds
+                      {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->noofds    or 'NA'}}>>                       
+                      <b class="text-success">{{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->results    or 'NA'}}</b>
+                      <br>
+    @endforeach
+    </td>
     <td>
       <a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a><br>
       <a href="{{url('/clssec-ResultSheetv3',[$clssec_id, $stdcr->id])}}">Result Sheet V-3</a>
     </td>
     <td>
-    <a href="{{url('/clssec-ResultSheetPDF',[$clssec_id, $stdcr->id])}}">Result Sheet PDF</a><br>
-    <a href="{{url('/clssec-ResultSheetv3PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-3 PDF</a><br>
+    {{--  <a href="{{url('/clssec-ResultSheetPDF',[$clssec_id, $stdcr->id])}}">Result Sheet PDF</a><br>
+    <a href="{{url('/clssec-ResultSheetv3PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-3 PDF</a><br>  --}}
     <a href="{{url('/clssec-ResultSheetv4PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-4 PDF</a>
     </td>
   </tr>

@@ -24,6 +24,7 @@ use App\Grade;
 use App\Description;
 use App\Teacher;
 use App\ClssTeacher;
+use App\Promotionalrule;
 
 use App\Studentdb;
 use App\Studentcr;
@@ -307,19 +308,31 @@ class ClssecGradeController extends Controller
             $class_total_subject_count = count($class_regr_subjects) + count($class_addl_subjects_groupBy);            
             
         
-            $clss_extp_subjs = $clssubs->where('extype_id', $extype->id)->where('combination_no', '>=', 0)->pluck('subject_id');            
-            $clss_all_subj_fm = $extpmdclsbs->whereIn('subject_id', $clss_extp_subjs)->sum('fm');
-            // echo $clss_all_subj_fm;            
+            $clss_extp_subjs    = $clssubs->where('extype_id', $extype->id)->where('combination_no', '>=', 0)->pluck('subject_id'); 
+            $clss_extp_clsbs    = Clssub::whereIn('subject_id', $clss_extp_subjs)->pluck('id');
+            
+            $extp_promote_rule_ds = Promotionalrule::where('session_id', $session->id)->where('clss_id', $clss->id)->where('extype_id', $extype->id)->first()->allowableds;
+            // echo $extp_promote_rule_ds;
 
-            $class_student_obt_D =[];   //**************************************** */
+
+
+            $clss_extp_subjs_fm = $extpmdclsbs->whereIn('subject_id', $clss_extp_subjs)->sum('fm');
+            // $clss_extp_subjs_om = 0;
+            // echo 'FM: '.$clss_extp_subjs_fm.'<br>';            
+
+            // $class_student_obt_D =[];   //**************************************** */
             foreach($stdcrs as $stdcr){
                 echo $stdcr->id.': ';
                 $marks_stdcr = $marks->where('studentcr_id', $stdcr->id);
                 $stdcr_subj_total_gr_count = 0;
 
+                $clss_extp_subjs_om = $marks_stdcr->where('marks', '>', 0)->whereIn('clssub_id', $clss_extp_clsbs)->sum('marks');
+                // echo 'OM: '. $clss_extp_subjs_om;
+
                 //for regular subjects
                 foreach($class_regr_subjects as $regr_subject){
-                    echo ' == '.$regr_subject->subject->name . ': ';
+                    // echo ' == '.$regr_subject->subject->name . ': ';
+                    // echo ' == '.$regr_subject->subject->id . ': ';
                     $stdcr_subj_total_om = $marks_stdcr->where('clssub_id', $regr_subject->id)->where('marks', '>', 0)->sum('marks');
                     $stdcr_subj_total_fm = $extpmdclsbs->where('subject_id', $regr_subject->subject_id)->sum('fm');
                     $stdcr_subj_total_gr = getGrade(2, $stdcr_subj_total_om, $stdcr_subj_total_fm);
@@ -327,13 +340,16 @@ class ClssecGradeController extends Controller
                     if($stdcr_subj_total_gr == 'D'){
                         $stdcr_subj_total_gr_count++;
                     }
-                    echo $stdcr_subj_total_om;                
-                    echo '/'. $stdcr_subj_total_fm;
-                    echo '>'. $stdcr_subj_total_gr;                
+                    // echo $stdcr_subj_total_om;                
+                    // echo '/'. $stdcr_subj_total_fm;
+                    // echo '>'. $stdcr_subj_total_gr;                
                 }
+                
                 //for additional & combined subjects
                 foreach($class_addl_subjects_groupBy as $addl_subject){
-                    $addl_subject->each(function($q){ echo $q->subject->name.' '; });
+                    $addl_subject->each(function($q){ 
+                        //echo $q->subject->name.' '; 
+                    });
                     
                     $stdcr_subj_total_om = $marks_stdcr->whereIn('clssub_id' , $addl_subject->pluck('id'))->where('marks', '>', 0)->sum('marks');
                     $stdcr_subj_total_fm = $extpmdclsbs->whereIn('subject_id', $addl_subject->where('combination_no', '>', 0)->pluck('subject_id'))->sum('fm');
@@ -342,35 +358,61 @@ class ClssecGradeController extends Controller
                     if($stdcr_subj_total_gr == 'D'){
                         $stdcr_subj_total_gr_count++;
                     }
-                    echo $stdcr_subj_total_om;                
-                    echo '/'. $stdcr_subj_total_fm;
-                    echo '>'. $stdcr_subj_total_gr;                
+                    // echo $stdcr_subj_total_om;                
+                    // echo '/'. $stdcr_subj_total_fm;
+                    // echo '>'. $stdcr_subj_total_gr;                
                 }
 
             
 
-                echo ': '. $stdcr_subj_total_gr_count;
+                // echo ': '. $stdcr_subj_total_gr_count;
             
                 
-                array_push($class_student_obt_D, $stdcr_subj_total_gr_count);
-                echo "<br>";
+                // array_push($class_student_obt_D, $stdcr_subj_total_gr_count);
+                // echo "<br>";
 
 
+                $stdcr_resultcr_update = Resultcr::firstOrNew(['studentcr_id'=>$stdcr->id, 'extype_id'=>$extype->id]);
+                
+                $stdcr_resultcr_update->session_id      = $session->id;
+                $stdcr_resultcr_update->clss_id         = $clss->id;
+                $stdcr_resultcr_update->section_id      = $section->id;
+                $stdcr_resultcr_update->studentcr_id    = $stdcr->id;
+                $stdcr_resultcr_update->extype_id       = $extype->id;
+                $stdcr_resultcr_update->fullmarks       = $clss_extp_subjs_fm;
+                $stdcr_resultcr_update->obtnmarks       = $clss_extp_subjs_om;
+                $stdcr_resultcr_update->noofds          = $stdcr_subj_total_gr_count;
+                
+                // echo $stdcr_subj_total_gr_count ." <= ". $extp_promote_rule_ds; 
 
+                if( $stdcr_subj_total_gr_count <= $extp_promote_rule_ds ){
+                    $stdcr_resultcr_update->results = "Qualified";
+                }else{
+                    $stdcr_resultcr_update->results = "Not Qualified";
+                }
+                
+                $stdcr_resultcr_update->save();
 
-                // $stdcr_resultcr = Resultcr::findOrFail($stdcr->id);
-                // if($stdcr_resultcr){
-                //     echo 'Found';
-                // }
-
+                // echo "====>";
+                // echo $session->id;                  echo ', ';
+                // echo $clss->id;                     echo ', ';
+                // echo $section->id;                  echo ', ';
+                // echo $stdcr->id;                    echo ', ';
+                // echo $extype->id;                   echo ', ';
+                // echo $clss_extp_subjs_fm;           echo ', ';
+                // echo $clss_extp_subjs_om;           echo ', ';
+                // echo $stdcr_subj_total_gr_count;    echo ', ';
+                // echo "<=====<br>";
+                
+                
             }   // end of studentcr
 
-            print_r(array_count_values($class_student_obt_D));
+            // print_r(array_count_values($class_student_obt_D));
         }   // end of extypes
 
 
 
-        
+        return redirect()->back();    
     }
 
     

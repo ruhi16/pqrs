@@ -44,14 +44,12 @@
 
 	</style>
 	<body>
-		<p align='center'>Mobile No: 9175 632185		
+		<p align='center'>Mobile No: 9933 176671		
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			Institution Code: {{ $school->hscode }}
+						
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;									
 		Index No: {{ $school->index }}</p>
@@ -69,25 +67,25 @@
 		<table border="1" class="table table-bordered" width="100%">
 			<thead>
 				<tr width="20%">
-					<td style="vertical-align: middle;" height="40" align="right" width="15%">Name: </td>
-					<td style="vertical-align: middle;" height="40"><strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
+					<td style="vertical-align: middle;" height="40" align="right" width="15%">Name </td>
+					<td style="vertical-align: middle; padding-left: 25px;" height="40"><strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
 					<td rowspan='5' width="40%" align='right'><small>{!! QrCode::size(120)->margin(0)->generate($QRstring) !!}</small></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom;" align="right">Student Id: </td>
-					<td><b>{{ $studentcrs->first()->studentdb->admSlNo }}/{{ $studentcrs->first()->studentdb->admDate }}</b></td>
+					<td style="vertical-align: bottom;" align="right">Student Id </td>
+					<td style="vertical-align: middle; padding-left: 25px;" ><b>{{ $studentcrs->first()->studentdb->admSlNo }}/{{ $studentcrs->first()->studentdb->admDate }}</b></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom;"  align="right">Class: </td>
-					<td><strong>{{ $studentcrs->first()->clss->name }}</strong></td>
+					<td style="vertical-align: bottom;"  align="right">Class </td>
+					<td style="vertical-align: middle; padding-left: 25px;" ><strong>{{ $studentcrs->first()->clss->name }}</strong></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom;" align="right">Section: </td>
-					<td><strong>{{ $studentcrs->first()->section->name }}</strong></td>
+					<td style="vertical-align: bottom;" align="right">Section </td>
+					<td style="vertical-align: middle; padding-left: 25px;" ><strong>{{ $studentcrs->first()->section->name }}</strong></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom;" align="right">Roll No:</td>
-					<td><strong>{{ $studentcrs->first()->roll_no }}</strong></td>
+					<td style="vertical-align: bottom;" align="right">Roll No</td>
+					<td style="vertical-align: middle; padding-left: 25px;" ><strong>{{ $studentcrs->first()->roll_no }}</strong></td>
 				</tr>
 			</thead>
 		</table>
@@ -345,11 +343,11 @@
 									$full_marks = $extpmdclsbs->whereIn('subject_id', $clssubs_reg)->sum('fm');
 								@endphp
 								<td style="vertical-align: middle; font-size:16px;">										
-									<b>Total Obt. Marks:</b> {{ $extype_total_marks_arr[$extype->id] }} 
+									<b>Total Marks Obt.:</b> {{ $extype_total_marks_arr[$extype->id] }} 
 									@if( $mode_count > 1 )	{{-- for class IX-X --}}
-										 [ FM: {{ $full_marks/2 }} ], [ {{ ($extype_total_marks_arr[$extype->id]/($full_marks/2)) * 100}}%]
+										 [ FM: {{ $full_marks/2 }} ], Percentage of Marks: {{ ($extype_total_marks_arr[$extype->id]/($full_marks/2)) * 100}}%
 									@else {{-- for class V to VIII --}}
-										[ FM: {{ $full_marks }} ], [ {{ round( ($extype_total_marks_arr[$extype->id]/($full_marks)) * 100, 0) }}%]
+										[ FM: {{ $full_marks }} ], Percentage of Marks: {{ round( ($extype_total_marks_arr[$extype->id]/($full_marks)) * 100, 0) }}%
 									@endif
 									<br>({{ convert($extype_total_marks_arr[$extype->id]) }})
 								</td>
@@ -374,8 +372,8 @@
 					<tr>
 						
 						<th width="25%">Attendance of Students</th>
-						<th>Signature of Gurdian</th>
-						<th>Signature of Class Teacer</th>
+						<th>Signature of Guardian</th>
+						<th>Signature of Class Teacher</th>
 						<th>Signature of HM/TIC</th>
 						{{--  @foreach($exams as $exm)
 							<th>{{$exm->name}}</th>
@@ -424,14 +422,17 @@
 				<b>Condition for promotion:</b>
 				<P><b>For Class IX:</b> On the basis of comprehensive continuous evalution, to be promoted when minimum scoring of 
 				Letter/Grade "C" obtained in Five/Seven compulsory subject out of Seven/Nine Compulsory Subjects.</p>
-				<p><b>N.B.:</b>It is obligation for all student to attend classes and all evaluations(Arrangement to be made for further 
-				evalution for the students failing to attend the evalution on resonable grounds.)</p>
+				<p><b>N.B.:</b>It is obligation for all students to attend classes and all evaluations(Arrangement to be made for further 
+				evalution for the students failing to attend the evalution on reasonable grounds.)</p>
 				<p><b>Modalities for formative Examinations:</b><br>1. Survey Report, 2. Nature Study, 3. Case Study, 
 				4. Creative Writing, 5. Model Making, 6.Open Book Evalution</p>
 				
 			</td>
 			</tr>
 			</table>
+			<br>
+			<p><small>N.B.: 'Health & Physical Education' and 'Art & Work Education' Combinedly OR 'Computer Application' of 50 marks each or 100 marks examination 
+			respectively, held once in an Academic year. Above mentioned subjects along with Arabic also will be treated as Additional Subject</small></p>
 			@else
 				<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" >
 			@endif

@@ -20,6 +20,8 @@ use App\Mode;
 use App\Studentdb;
 use App\Studentcr;
 
+use App\Resultcr;
+
 use App\Clssub;
 use App\Clssec;
 use App\Grade;
@@ -56,7 +58,7 @@ class ResultController extends Controller
         ->get();
         
         $grades = Grade::whereSession_id($ses->id)->get();
-        
+        $resultcr = Resultcr::whereSession_id($ses->id)->get();
 
         
         return view('results.ResultTaskpane')
@@ -68,6 +70,7 @@ class ResultController extends Controller
         ->withExtpclsbs($extpclsbs)
         ->withCls($clsc->clss->name)
         ->withSec($clsc->section->name)
+        ->with('resultcr', $resultcr)
         ;
     }
 
