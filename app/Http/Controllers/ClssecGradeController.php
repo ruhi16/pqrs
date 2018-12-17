@@ -310,7 +310,7 @@ class ClssecGradeController extends Controller
         
 
             if( $class_total_subject_count > 0 ){
-                    $clss_extp_subjs    = $clssubs->where('extype_id', $extype->id)->where('is_additional', 0)->pluck('subject_id'); // reg & comb subjects
+                    $clss_extp_subjs    = $clssubs->where('extype_id', $extype->id)->where('is_additional', 0)->where('combination_no','>=', 0)->pluck('subject_id'); // reg & comb subjects
                     $clss_extp_clsbs    = Clssub::whereIn('subject_id', $clss_extp_subjs)->pluck('id'); // clssub->id of reg & comb subjects
                     
                     $extp_promote_rule_ds = Promotionalrule::where('session_id', $session->id)->where('clss_id', $clss->id)->where('extype_id', $extype->id)->first()->allowableds;
