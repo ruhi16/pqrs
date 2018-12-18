@@ -48,7 +48,9 @@
         <h3 align="center">Marks Entry Verificaton Sheet for Session: {{ $session->name }}</h3>
         <h5 align="center">For Class: {{ $clssec->clss->name }}, Section: {{ $clssec->section->name }}</h5>
         
-        
+        @php
+            $clssubs = $clssubs->sortBy('subject_order');
+        @endphp
         <table border='1' style="page-break-inside:auto; autosize:5.4;">
             <thead>
                 <tr>
@@ -60,9 +62,10 @@
                         $extp_count = ( $extp_count % 2 ) * 2;
                         
                     @endphp                    
-                    @foreach($clssubs as $clsb)
+                    @foreach($clssubs->sortBy('subject_order') as $clsb)
                         <th colspan="{{ $extp_count }}">{{ $clsb->subject->code }}</th>
                     @endforeach
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>            
@@ -139,7 +142,12 @@
 
                         @endphp                    
                     
-                        <th colspan="{{ $extp_count }}">{{$subj_total}}</th>
+                        <th colspan="{{ $extp_count }}">{{$subj_total}}
+                            @if( $extp_count > 1 )
+                                (<small>{{ round(( ($subj_total/$subj_fm) * 100), 0) }}%</small>)
+                            @endif
+                            
+                        </th>
                     @endforeach
                 </tr>
                 <tr>
