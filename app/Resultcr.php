@@ -26,7 +26,7 @@ class Resultcr extends Model
 
 
     public function studentcr(){
-        return $this->hasOne('App\Studentcr');
+        return $this->belongsTo('App\Studentcr');
     }
 
 }

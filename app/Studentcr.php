@@ -32,7 +32,7 @@ class Studentcr extends Model
 
 
 
-    public function resultcr(){
-        return $this->belongsTo('App\Resultcr');
+    public function resultcrs(){
+        return $this->hasMany('App\Resultcr');
     }
 }

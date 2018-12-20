@@ -66,8 +66,8 @@
             <small><a class="btn btn-warning btn-sm"  href="{{ url('/clssecsreport-stdListPdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List PDF</a></small><br>
             <small><a class="btn btn-success btn-sm"  href="{{ url('/clssecsreport-stdListSummativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Sum. PDF</a></small><br>
             <small><a  class="btn btn-danger btn-sm" href="{{ url('/clssecsreport-stdListFromativePdf',[$clssec->clss_id,$clssec->section_id])}}"> Student List Form. PDF</a></small><br>
-            <a  class="btn btn-primary btn-sm" href="">Class-Section Merit List</a><br>
-            <a  class="btn btn-success btn-sm" href="">Class Merit List</a>
+            <a  class="btn btn-primary btn-sm" href="{{ url('/clssec-StdcrMeritList', [$clssec->id, 0]) }}">Class-Section Merit List</a><br>
+            <a  class="btn btn-success btn-sm" href="{{ url('/cls-StdcrMeritList', [$clssec->clss_id, 0]) }}">Class Merit List</a>
         </td>
         <td>
             <a href="{{ url('/clssec-resultCrStatusRefresh', [$clssec->id])}}" class='btn btn-primary'>Refresh</a>

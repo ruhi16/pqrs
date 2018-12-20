@@ -129,6 +129,7 @@ class ClsSecController extends Controller
             ->with('session', $ses)
             ->with('school', $school)            ;
     }
+
     public function reportsStdListPdf($clss_id, $section_id){
         $school = School::all()->first();
         $ses = Session::whereStatus('CURRENT')->first();

@@ -219,6 +219,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-ResultSheetv3PDF/{clssec_id}/{studentcr_id}',  'ResultcrController@clssecResultSheetv3PDF');
         Route::get('/clssec-ResultSheetv4PDF/{clssec_id}/{studentcr_id}',  'ResultcrController@clssecResultSheetv4PDF');
 
+
+
+        Route::get('/clssec-StdcrMeritList/{clssec_id}/{is_pdf}', 'MeritlistcrController@clssecStdcrMeritList');
+        Route::get('/cls-StdcrMeritList/{clss_id}/{is_pdf}', 'MeritlistcrController@clsStdcrMeritList');
         
         //Route::get ('/clssecStdcr-MarkRefresh/{studentcr_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshget');
         Route::post('/clssecStdcr-MarkRefresh/{studentcr_id}/{clss_id}/{section_id}', 'StdcrmarkregisterController@clssecStdcrMarkRefreshpost');
