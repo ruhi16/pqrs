@@ -54,12 +54,13 @@
             <a class="btn btn-danger btn-sm" href="{{url('/clssec-CompactMarkRegisterPDF',[$clssec->id, 1])}}">Comp Marks Register PDF</a>           
         </td>
         <td>
-            <a class="btn btn-primary btn-sm" href="{{url('/clssec-CompactMarkRegister',[$clssec->id])}}">Prom Assesment</a><br>
-            
+            {{--  <a class="btn btn-primary btn-sm" href="{{url('/clssec-PromAssessment',  [$clssec->id])}}">Prom Assesment</a><br>  --}}
+            <a class="btn btn-warning btn-sm" href="{{url('/clssec-PromAssessmentV2',[$clssec->id])}}">Prom AssesmentV2</a><br>
         </td>
         <td>
             <a class="btn btn-primary btn-sm" href="{{url('/clssec-ResultTaskpane',[$clssec->id])}}">Individual Result</a><br>
             <a class="btn btn-success btn-sm" href="{{url('/clssec-gradeDstatus',[$clssec->id])}}"><small>Grade-D Status</small></a>
+            <a class="btn btn-primary btn-sm" href="{{url('/cls-gradeDstatus',[$clssec->clss->id])}}"><small>Class Grade-D Status</small></a>
         </td>
         <td>
             <small><a class="btn btn-primary btn-sm" href="{{ url('/clssecsreport-stdList',[$clssec->clss_id,$clssec->section_id])}}"> Student List HTML</a></small><br>
@@ -70,7 +71,8 @@
             <a  class="btn btn-success btn-sm" href="{{ url('/cls-StdcrMeritList', [$clssec->clss_id, 0]) }}">Class Merit List</a>
         </td>
         <td>
-            <a href="{{ url('/clssec-resultCrStatusRefresh', [$clssec->id])}}" class='btn btn-primary'>Refresh</a>
+            <a href="{{ url('/clssec-resultCrStatusRefresh', [$clssec->id])}}" class='btn btn-primary'>Refresh 1st</a>
+            <a href="{{ url('/clssec-PromotionalStdCrStatusRefresh', [$clssec->id])}}" class='btn btn-success'>Refresh 2nd</a>
         </td>
     </tr>
 @endforeach

@@ -202,7 +202,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
 
 
-        Route::get('/clssec-CompactMarkRegister/{clssec_id}', 'compactMarkRegisterController@clssecCompactMarkRegister');
+        Route::get('/clssec-PromAssessment/{clssec_id}',   'PromAssessmentController@clssecPromAssessment');
+        Route::get('/clssec-PromAssessmentV2/{clssec_id}', 'PromAssessmentController@clssecPromAssessmentV2');
+        Route::get('/clssec-PromotionalStdCrStatusRefresh/{clssec_id}', 'PromAssessmentController@clssecPromotionalStdCrStatusRefresh');
         Route::get('/clssec-CompactMarkRegisterPDF/{clssec_id}/{is_pdf}', 'compactMarkRegisterController@clssecCompactMarkRegisterPDF');
 
 
@@ -348,6 +350,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-gradeStatus/{clss_id}', 'ClssecGradeController@clssecGradeStatus');
         Route::get('/clssec-gradeStatusPDF/{clss_id}', 'ClssecGradeController@clssecGradeStatusPDF');
         Route::get('/clssec-gradeDstatus/{clssec_id}', 'ClssecGradeController@clssecGradeDStatus');
+        Route::get('/cls-gradeDstatus/{clss_id}', 'ClssecGradeController@clsGradeDStatus');
 
         Route::get('/clssec-resultCrStatusRefresh/{clssec_id}','ClssecGradeController@resultCrStatusRefresh');
 });

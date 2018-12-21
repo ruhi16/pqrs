@@ -426,14 +426,28 @@ class ClssecGradeController extends Controller
                         
                         
                     }   // end of studentcr
-            }
+
+            }   // end of if, class_total_subject_count: existingness of summ or form
 
             // print_r(array_count_values($class_student_obt_D));
+
         }   // end of extypes
 
 
 
         return redirect()->back();    
+    }
+
+
+
+    public function clsGradeDStatus(Request $request, $clss_id){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clss = Clss::find($clss_id);
+
+        
+
+        echo 'testtest';
+
     }
 
     
