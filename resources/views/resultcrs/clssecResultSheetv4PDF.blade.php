@@ -63,14 +63,20 @@
 			$QRstring  = $school->name.'-'.$school->disecode.'-'.$session->name.'-';
 			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no.';';
 			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate. ';';
-			$QRstring .= $studentcrs->first()->result;
+			foreach($extypes as $et){
+				$QRstring .= $et->name.':';
+				$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks;
+				$QRstring .= '/'.$resultcrs->where('extype_id', $et->id)->first()->fullmarks;
+				$QRstring .= '- Ds: '.$resultcrs->where('extype_id', $et->id)->first()->noofds.'--';
+			}
+			$QRstring .= 'Result: '.$studentcrs->first()->result;
 		@endphp
 		<table border="1" class="table table-bordered" width="100%">
 			<thead>
 				<tr width="20%">
 					<td style="vertical-align: middle;" height="40" align="right" width="15%">Name </td>
 					<td style="vertical-align: middle; padding-left: 25px;" height="40"><strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
-					<td rowspan='5' width="40%" align='right'><small>{!! QrCode::size(120)->margin(0)->generate($QRstring) !!}</small></td>
+					<td rowspan='5' width="40%" align='right'><small>{!! QrCode::size(130)->margin(0)->generate($QRstring) !!}</small></td>
 				</tr>
 				<tr>
 					<td style="vertical-align: bottom;" align="right">Student Id </td>
