@@ -49,7 +49,7 @@
         <h5 align="center">For Class: {{ $clssec->clss->name }}, Section: {{ $clssec->section->name }}</h5>
         
         @php
-            $clssubs = $clssubs->sortBy('subject_order');
+            $clssubs = $clssubs->sortBy(['extype_id', 'subject_order']);
         @endphp
         <table border='1' style="page-break-inside:auto; autosize:5.4;">
             <thead>
@@ -62,7 +62,7 @@
                         $extp_count = ( $extp_count % 2 ) * 2;
                         
                     @endphp                    
-                    @foreach($clssubs->sortBy('subject_order') as $clsb)
+                    @foreach($clssubs as $clsb)
                         <th colspan="{{ $extp_count }}">{{ $clsb->subject->code }}</th>
                     @endforeach
                     <th>Total</th>
