@@ -13,6 +13,8 @@
 
 
 
+/cls-gradeDstatus/{clss_id}
+{{--  <a href="{{ url('/cls-resultCrStatusRefresh', [$clssec_id])}}" class='btn btn-success btn-lg pull-right'>Refresh :)</a>  --}}
 <a href="{{ url('/clssec-resultCrStatusRefresh', [$clssec_id])}}" class='btn btn-success btn-lg pull-right'>Refresh :)</a>
 <h1>Individual Result...</h1> 
 
@@ -58,13 +60,14 @@
     
     </td>
     <td>
-      <a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a><br>
-      <a href="{{url('/clssec-ResultSheetv3',[$clssec_id, $stdcr->id])}}">Result Sheet V-3</a>
+      {{--  <a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a><br>
+      <a href="{{url('/clssec-ResultSheetv3',[$clssec_id, $stdcr->id])}}">Result Sheet V-3</a>  --}}
     </td>
     <td>
     {{--  <a href="{{url('/clssec-ResultSheetPDF',[$clssec_id, $stdcr->id])}}">Result Sheet PDF</a><br>
     <a href="{{url('/clssec-ResultSheetv3PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-3 PDF</a><br>  --}}
-    <a href="{{url('/clssec-ResultSheetv4PDF',[$clssec_id, $stdcr->id])}}">Result Sheet V-4 PDF</a>
+    <a href="{{url('/clssec-ResultSheetv4PDF',[$clssec_id, $stdcr->id])}}" >Result Sheet V-4 PDF</a><br>
+    <a href="{{url('/clssec-ResultSheetv4PDF',[$clssec_id, $stdcr->id])}}" download>Result Sheet V-4 PDF Download</a>
     </td>
   </tr>
 @endforeach
