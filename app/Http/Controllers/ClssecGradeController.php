@@ -406,7 +406,12 @@ class ClssecGradeController extends Controller
 
                         $stdcr_resultcr_update->results = $stdcr_subj_total_gr_count <= $extp_promote_rule_ds ? "Qualified" : "Not Qualified" ;
                         $stdcr_resultcr_update->save();
-
+                        
+                        
+                        
+                        $stdcr_indi = Studentcr::findOrFail($stdcr->id);                        
+                        $stdcr_indi->result = "Promoted";
+                        $stdcr_indi->save();
 
                         // echo "====>";
                         // echo $session->id;                  echo ', ';

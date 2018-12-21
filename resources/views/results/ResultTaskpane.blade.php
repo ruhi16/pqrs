@@ -52,9 +52,9 @@
       {{$et->name}}:  {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->obtnmarks or 'NA' }}/
                       {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->fullmarks or 'NA'}}:Ds
                       {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->noofds    or 'NA'}}>>                       
-                      <b class="text-success">{{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->results    or 'NA'}}</b>
-                      <br>
+                      <b class="text-success">{{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $et->id)->first()->results    or 'NA'}}</b><br>                      
     @endforeach
+    <b class="text-default">Overall Result: </b><b class="text-danger">{{ $stdcr->result }}</b>
     </td>
     <td>
       <a href="{{url('/clssec-ResultSheet',[$clssec_id, $stdcr->id])}}">Result Sheet</a><br>
