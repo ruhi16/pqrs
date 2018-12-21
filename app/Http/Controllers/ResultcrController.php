@@ -21,6 +21,8 @@ use App\Mode;
 use App\Studentdb;
 use App\Studentcr;
 
+use App\Resultcr;
+
 use App\Clssub;
 use App\Clssec;
 use App\Grade;
@@ -201,7 +203,7 @@ class ResultcrController extends Controller
         $gradeparticular = Gradeparticular::whereSession_id($ses->id)->get();
         $modes = Mode::whereSession_id($ses->id)->get();
         $subjects = Subject::whereSession_id($ses->id)->get();
-
+        $resultcrs = Resultcr::where('studentcr_id', $studentcr_id)->get();
 
         $pdf = PDF::loadView('resultcrs.clssecResultSheetv4PDF', 
             [ 
@@ -217,6 +219,7 @@ class ResultcrController extends Controller
                 'gradeparticular' => $gradeparticular,
                 'modes' => $modes,
                 'subjects'=> $subjects,
+                'resultcrs'=>$resultcrs,
             ], [], ['format' => 'Legal-P']);
 
         $pdffilename = 'MarkSheet'.'-';

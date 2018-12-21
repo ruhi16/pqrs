@@ -61,8 +61,9 @@
 
 		@php
 			$QRstring  = $school->name.'-'.$school->disecode.'-'.$session->name.'-';
-			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no;
-			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate;
+			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no.';';
+			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate. ';';
+			$QRstring .= $studentcrs->first()->result;
 		@endphp
 		<table border="1" class="table table-bordered" width="100%">
 			<thead>
