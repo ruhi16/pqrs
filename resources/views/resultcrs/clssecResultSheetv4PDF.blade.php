@@ -64,10 +64,12 @@
 			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no.';';
 			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate. ';';
 			foreach($extypes as $et){
-				$QRstring .= $et->name.':';
-				$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks;
-				$QRstring .= '/'.$resultcrs->where('extype_id', $et->id)->first()->fullmarks;
-				$QRstring .= '- Ds: '.$resultcrs->where('extype_id', $et->id)->first()->noofds.'--';
+				if( $resultcrs->where('extype_id', $et->id)->first() ){
+					$QRstring .= $et->name.':';
+					$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks;
+					$QRstring .= '/'.$resultcrs->where('extype_id', $et->id)->first()->fullmarks;
+					$QRstring .= '- Ds: '.$resultcrs->where('extype_id', $et->id)->first()->noofds.'--';
+				}
 			}
 			$QRstring .= 'Result: '.$studentcrs->first()->result;
 		@endphp
@@ -437,7 +439,7 @@
 			</td>
 			</tr>
 			</table>
-			<br>
+			
 			<p><small>N.B.: 'Health & Physical Education' and 'Art & Work Education' Combinedly OR 'Computer Application' of 50 marks each or 100 marks examination 
 			respectively, held once in an Academic year. Above mentioned subjects along with Arabic also will be treated as Additional Subject</small></p>
 			@else

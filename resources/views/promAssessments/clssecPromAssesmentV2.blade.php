@@ -35,10 +35,12 @@
                 </td>                
                 @foreach($extps as $extp)
                 <td>
-                    {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first()->obtnmarks }}/
-                    {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first()->fullmarks }}
-                    ({{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first()->noofds }}Ds)
-                    {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first()->results }}
+                    @if( $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first() )
+                        {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first()->obtnmarks }}/
+                        {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first()->fullmarks }}
+                        ({{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first()->noofds }}Ds)
+                        {{ $resultcr->where('studentcr_id', $stdcr->id)->where('extype_id', $extp->id)->first()->results }}
+                    @endif
                 </td>                
                 @endforeach                    
                 <td>
