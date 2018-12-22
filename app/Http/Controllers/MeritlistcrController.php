@@ -44,7 +44,7 @@ class MeritlistcrController extends Controller
 
         
         if($is_pdf == 1){               
-            $pdf = mPDF::loadView('meritlistcrs.clssecStdcrMeritlist', 
+            $pdf = mPDF::loadView('meritlistcrs.clssecStdcrMeritlistPDF', 
                 [   
                     'school'    => $school,
                     'resultcrs' => $resultcrs,
@@ -71,6 +71,7 @@ class MeritlistcrController extends Controller
 
     public function clsStdcrMeritList(Request $request, $clss_id, $is_pdf){
         $ses        = Session::whereStatus('CURRENT')->first();
+        $school     = School::find(1);
         //$clssec     = Clssec::find($clss_id);
         $clss       = Clss::find($clss_id);
         //$section    = Section::find($clssec->section_id);
@@ -80,12 +81,25 @@ class MeritlistcrController extends Controller
                                 //->where('section_id', $section->id)
                                 ->get();
 
-        
+        if($is_pdf == 1){               
+            $pdf = mPDF::loadView('meritlistcrs.clsStdcrMeritlistPDF', 
+                [   
+                    'school'    => $school,
+                    'resultcrs' => $resultcrs,
+                    'clss'      => $clss,
+                    'is_pdf'    => $is_pdf,
+                ]);
+            
+            return $pdf->stream();
+            // return $pdf->download();
+        }
         
 
         // return redirect()->back();
         return view('meritlistcrs.clsStdcrMeritlist')
+            ->with('school', $school)
             ->with('resultcrs', $resultcrs)
+            ->with('clss', $clss)
             ->with('is_pdf', $is_pdf)
         ;
     }

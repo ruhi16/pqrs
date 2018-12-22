@@ -6,7 +6,15 @@
 @endsection
 
 @section('content')
-<h1><u>Class</u> wise Students Merit List</h1>
+<h1 align="center">{{ $school->name }}</h1>
+<h3 align="center">{{ $school->po }} * {{ $school->ps }} * {{ $school->dist }}</h3>
+<h4 align="center"><u>Class</u> wise Students Merit List</h4>
+<h4 align="center">For Class: {{ $clss->name }}</h4>
+@if( $is_pdf == 0 )
+    <a class="btn btn-success pull-right" href="{{ url('/cls-StdcrMeritList', [$clss->id, 1]) }}">Download</a><br>
+@else 
+    
+@endif
 
 <table class="table table-bordered"> 
     <tr>

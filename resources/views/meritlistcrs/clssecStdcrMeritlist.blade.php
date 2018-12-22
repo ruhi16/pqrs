@@ -1,34 +1,4 @@
 
-@if( $is_pdf == 1 )
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Html Result Format</title>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-            {{--  <meta http-equiv="Content-Type" content="charset=utf-8" />  --}}
-        </head>
-        <style>
-            table,th,td {
-                border: 1px solid black;
-                border-spacing: 0px;
-                {{--  width: 100%;  --}}
-                {{--  font-size: 14px;  --}}
-                {{--  border-collapse: collapse;  --}}
-                vertical-align: top;
-                
-            }
-            th, td {
-                padding: 2px;
-            }
-            h1, p, h2, h3, h4, h5, h6 {
-                margin-top: 0;
-                margin-bottom: 0;
-                /*line-height: *//* adjust to tweak wierd fonts */;
-            }
-            </style>
-@endif
-
-@if( $is_pdf == 0 )
     @extends('layouts.baselayout')
     @section('title','Home')
 
@@ -37,19 +7,16 @@
     @endsection
 
     @section('content')
-@endif
+
 
 <h1 align="center">{{ $school->name }}</h1>
 <h3 align="center">{{ $school->po }} * {{ $school->ps }} * {{ $school->dist }}</h3>
 <h4 align="center"><u>Class Section</u> wise Students Merit List</h4>
 <h4 align="center">For Class: {{ $clssec->clss->name }}, Section: {{ $clssec->section->name }} </h4>
-@if( $is_pdf == 0 )
-    <a class="btn btn-success pull-right" href="{{ url('/clssec-StdcrMeritList', [$clssec->id, 1]) }}">Download</a><br>
-@else 
-    
-@endif
 
-<table class="table table-bordered" border="1" width="100%"> 
+<a class="btn btn-success pull-right" href="{{ url('/clssec-StdcrMeritList', [$clssec->id, 1]) }}">Download</a><br>
+
+<table class="table table-bordered"> 
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -77,11 +44,6 @@
 </table>
 
 
-
-@if( $is_pdf == 1 )    
-        </body>
-    </html>
-@else
     <script>
         $(document).ready(function(e){  
 
@@ -92,6 +54,3 @@
     @section('footer')
         @include('layouts.footer')
     @endsection       
-@endif
-
-
