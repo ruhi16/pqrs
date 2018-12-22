@@ -96,7 +96,7 @@
 				</tr>
 			</thead>
 		</table>
-		<br>
+		
 		
 		<table border="1" class="table table-bordered" width="100%">
 			<thead>
