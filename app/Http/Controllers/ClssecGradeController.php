@@ -443,9 +443,18 @@ class ClssecGradeController extends Controller
     public function clsGradeDStatus(Request $request, $clss_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $clss = Clss::find($clss_id);
-
+        $resultcrs = Resultcr::where('clss_id', $clss->id)->get();
+        // dd($resultcrs);
+        foreach($resultcrs->groupBy('section_id') as $resultcrSections){
+            foreach($resultcrSections as $resultcrSection){
+                // echo $resultcrSection->noofds .'<br>';
+            }
+            $data = $resultcrSections->pluck('noofds');
+            print_r(array_count_values($data));
+            
+            // echo $resultcr.'<br>';
+        }
         
-
         echo 'testtest';
 
     }
