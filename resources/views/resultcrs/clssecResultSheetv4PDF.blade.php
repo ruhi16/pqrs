@@ -65,9 +65,7 @@
 			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate. ';';
 			foreach($extypes as $et){
 				$QRstring .= $et->name.':';
-				$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks;
-				$QRstring .= '/'.$resultcrs->where('extype_id', $et->id)->first()->fullmarks;
-				$QRstring .= '- Ds: '.$resultcrs->where('extype_id', $et->id)->first()->noofds.'--';
+				
 			}
 			$QRstring .= 'Result: '.$studentcrs->first()->result;
 		@endphp
@@ -373,7 +371,7 @@
 			</tbody>
 		</table>
 		
-		<br>
+		
 		<table border="1" class="table table-bordered" width="100%">
 				<thead>
 					<tr>
