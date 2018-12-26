@@ -443,20 +443,33 @@ class ClssecGradeController extends Controller
     public function clsGradeDStatus(Request $request, $clss_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $clss = Clss::find($clss_id);
-        $resultcrs = Resultcr::where('clss_id', $clss->id)->get();
+
+        $extype_id = 2;
+        $resultcrs = Resultcr::where('clss_id', $clss->id)->where('extype_id', $extype_id)->get();
         // dd($resultcrs);
+        $cls_GrD_Status = [];
         foreach($resultcrs->groupBy('section_id') as $resultcrSections){
             foreach($resultcrSections as $resultcrSection){
-                // echo $resultcrSection->noofds .'<br>';
+                // echo $resultcrSection .'<br>';
             }
+            // echo $resultcrSection->section->name ;
             $data = $resultcrSections->pluck('noofds');
-            print_r(array_count_values($data));
-            
+            // print_r(array_count_values($data->toArray()));
+            // echo '<br><br>';
+            $cls_GrD_Status[$resultcrSection->section->name] = array_count_values($data->toArray());
             // echo $resultcr.'<br>';
         }
-        
-        echo 'testtest';
 
+        $cls_no_of_subjs = Clssub::where('clss_id', $clss_id)
+                                ->where('extype_id', $extype_id)
+                                ->where('is_additional', 0)
+                                ->where('combination_no',0)
+                                ->count();
+        echo $cls_no_of_subjs;
+        // print_r($cls_GrD_Status);
+        return view('clssecGrade.clsGradeDStatus')
+            ->with('cls_GrD_Status', $cls_GrD_Status)
+            ;
     }
 
     

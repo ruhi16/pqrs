@@ -64,8 +64,17 @@
 			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no.';';
 			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate. ';';
 			foreach($extypes as $et){
+<<<<<<< HEAD
 				$QRstring .= $et->name.':';
 				
+=======
+				if( $resultcrs->where('extype_id', $et->id)->first() ){
+					$QRstring .= $et->name.':';
+					$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks;
+					$QRstring .= '/'.$resultcrs->where('extype_id', $et->id)->first()->fullmarks;
+					$QRstring .= '- Ds: '.$resultcrs->where('extype_id', $et->id)->first()->noofds.'--';
+				}
+>>>>>>> 4d62159877aafee887ed1a61924cdf3bd7949aaf
 			}
 			$QRstring .= 'Result: '.$studentcrs->first()->result;
 		@endphp
@@ -435,7 +444,7 @@
 			</td>
 			</tr>
 			</table>
-			<br>
+			
 			<p><small>N.B.: 'Health & Physical Education' and 'Art & Work Education' Combinedly OR 'Computer Application' of 50 marks each or 100 marks examination 
 			respectively, held once in an Academic year. Above mentioned subjects along with Arabic also will be treated as Additional Subject</small></p>
 			@else
