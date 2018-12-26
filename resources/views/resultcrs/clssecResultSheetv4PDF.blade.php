@@ -64,17 +64,10 @@
 			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no.';';
 			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate. ';';
 			foreach($extypes as $et){
-<<<<<<< HEAD
 				$QRstring .= $et->name.':';
-				
-=======
-				if( $resultcrs->where('extype_id', $et->id)->first() ){
-					$QRstring .= $et->name.':';
-					$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks;
-					$QRstring .= '/'.$resultcrs->where('extype_id', $et->id)->first()->fullmarks;
-					$QRstring .= '- Ds: '.$resultcrs->where('extype_id', $et->id)->first()->noofds.'--';
-				}
->>>>>>> 4d62159877aafee887ed1a61924cdf3bd7949aaf
+				$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks.'/';
+				$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->fullmarks.'- ';
+				$QRstring .= '('. $resultcrs->where('extype_id', $et->id)->first()->noofds.'Ds); ';
 			}
 			$QRstring .= 'Result: '.$studentcrs->first()->result;
 		@endphp
