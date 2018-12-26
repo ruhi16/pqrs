@@ -464,11 +464,22 @@ class ClssecGradeController extends Controller
                                 ->where('extype_id', $extype_id)
                                 ->where('is_additional', 0)
                                 ->where('combination_no',0)
-                                ->count();
-        echo $cls_no_of_subjs;
+                                ->count() + 
+                         count(Clssub::where('clss_id', $clss_id)
+                                ->where('extype_id', $extype_id)
+                                ->where('is_additional', 0)
+                                ->where('combination_no', '>' , 0)
+                                ->groupBy('combination_no')->get())
+                                ;
+
+
+
+        // echo $cls_no_of_subjs;
         // print_r($cls_GrD_Status);
         return view('clssecGrade.clsGradeDStatus')
+            ->with('clss', $clss)
             ->with('cls_GrD_Status', $cls_GrD_Status)
+            ->with('cls_no_of_subjects', $cls_no_of_subjs)
             ;
     }
 

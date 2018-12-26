@@ -8,8 +8,10 @@
 @section('content')
 
 <center>
-    <h1>Class Wise <u>Grade-D Status Count</u> on Total Students </h1>
+    <h1>Class <b>{{ $clss->name }},</b> <u>Grade-D Status Count</u> on Total Students </h1>
 </center>
+
+No of Subjects: {{ $cls_no_of_subjects }}<br>
 
 
 
