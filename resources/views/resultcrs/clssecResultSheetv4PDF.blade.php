@@ -64,13 +64,15 @@
 			$QRstring .= $studentcrs->first()->studentdb->name .'-'. $studentcrs->first()->clss->name .'-'.$studentcrs->first()->section->name.'-'.$studentcrs->first()->roll_no.';';
 			$QRstring .= $studentcrs->first()->studentdb->admSlNo .'/'. $studentcrs->first()->studentdb->admDate. ';';
 			foreach($extypes as $et){
-				$QRstring .= $et->name.':';
-				$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks.'/';
-				$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->fullmarks.'- ';
-				$QRstring .= '('. $resultcrs->where('extype_id', $et->id)->first()->noofds.'Ds); ';
+				if( $resultcrs->where('extype_id', $et->id)->first() ){
+					$QRstring .= $et->name.':';
+					$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->obtnmarks.'/';
+					$QRstring .= $resultcrs->where('extype_id', $et->id)->first()->fullmarks.'- ';
+					$QRstring .= '('. $resultcrs->where('extype_id', $et->id)->first()->noofds.'Ds); ';
+				}
 			}
 			$QRstring .= 'Result: '.$studentcrs->first()->result;
-		@endphp
+		@endphp		
 		<table border="1" class="table table-bordered" width="100%">
 			<thead>
 				<tr width="20%">
