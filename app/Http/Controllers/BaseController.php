@@ -2,35 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use DB;
-use App\Session;
+
 use App\Exam;
-use App\Extype;
-use App\Clss; 
-use App\Subject;
-use App\Section;
 use App\Mode;
+use App\Clss; 
+use App\Clssec;
+use App\Clssub;
+use App\Extype;
+use App\Section;
+use App\Session;
+
+use App\Subject;
+use App\Teacher;
+use App\Resultcr;
+use App\Studentcr;
 
 use App\Studentdb;
-use App\Studentcr;
-use App\Resultcr;
-use App\Promotionalrule;
+use App\Marksentry;
 
-use App\Teacher;
+use App\Miscoption;
 use App\Clssteacher;
 
-use App\Clssub;
-use App\Clssec;
-
 use App\Exmtypclssub;
-use App\Marksentry;
-use App\Miscoption;
 use App\Exmtypmodcls;
 use App\Exmtypmodclssub;
+use App\Promotionalrule;
+use Illuminate\Http\Request;
 
 use App\Answerscriptdistribution;
+use Illuminate\Database\Eloquent\Collection;
 
 class BaseController extends Controller
 {
@@ -128,17 +129,41 @@ class BaseController extends Controller
 
     public function test(){
         //for class:V(1) & section:A(1)     =>  clssub_id:1
-        $stdcrs = Studentcr::where('clss_id', 1)->where('section_id', 1)->get();        
-        $mrks  = Marksentry::whereIn('studentcr_id', $stdcrs->pluck('studentcr_id'))->get();
+        // $stdcrs = Studentcr::where('clss_id', 1)->where('section_id', 1)->get();        
+        // $mrks  = Marksentry::whereIn('studentcr_id', $stdcrs->pluck('studentcr_id'))->get();
         
-        $subjs = Clssub::where('clss_id', 1)->get();
+        // $subjs = Clssub::where('clss_id', 1)->get();
 
+
+        // return view('test')
+        // ->with('stdcrs', $stdcrs)
+        // ->with('mrks', $mrks)
+        // ->with('subjs', $subjs)
+        // ;
+        $abc = 'Clss' ;
+        $clsss = Clss::where('session_id', Session::where('status', 'CURRENT')->first()->id)->get();        
+        
+        $demo = new Collection;
+        foreach($clsss as $clss){
+            $clss['session_id'] = Session::where('status', 'CURRENT')->first()->next_session_id;        
+            $demo->push($clss);
+        }
+        // foreach($demo as $d){
+        //     echo $d->name .' & '. $d->session_id . '<br>'; 
+        // }
+
+        foreach($demo as $d){            
+            $clss = Clss::firstOrNew(['name' => $d->name, 'session_id' => $d->session_id,]);
+            $clss->fill($d->toArray());
+            $clss->save();
+            // echo $clss .'<br>';
+        }
 
         return view('test')
-        ->with('stdcrs', $stdcrs)
-        ->with('mrks', $mrks)
-        ->with('subjs', $subjs)
-        ;
+            ->with('clsss', $clsss);
+
+
+
     }    
 
     public function testRoute($etmcs_id, $csec_id, $teacher_id){

@@ -47,8 +47,8 @@
                     {{ $stdcr->result }}
                 </td>
                 <td>
-                    {{ $stdcr->description }}
-                </td>
+                    {{ $stdcr->clss->next_clss_id }}
+                    {{--  {{ $clssec }}  --}}
                 <td>
                     
                 </td>

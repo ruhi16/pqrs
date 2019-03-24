@@ -19,15 +19,12 @@ class CreateStudentcrsTable extends Migration
             $table->integer('session_id');
             $table->integer('clss_id');
             $table->integer('section_id');
-            $table->integer('roll_no');
-            $table->string('exam_status');  //x
-            $table->integer('fullmarks');   //x
-            $table->integer('obtmarks');    //x
-            $table->double('obtperc');      //x
-            $table->integer('noDs');        //x
+            $table->integer('roll_no');            
             $table->string('result')->nullable();
             $table->string('description')->nullable();
-            $table->string('crstatus');
+            $table->string('crstatus')->nullable();
+            $table->integer('next_clss_id')->nullable();
+            $table->integer('next_section_id')->nullable();
             $table->timestamps();
         });
     }

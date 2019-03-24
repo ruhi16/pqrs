@@ -1,5 +1,5 @@
 @extends('layouts.baselayout')
-@section('title','Home')
+@section('title','LogIn Page')
 
 @section('header')
 	@include('layouts.navbar')

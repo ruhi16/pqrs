@@ -87,7 +87,7 @@ class ClsSecController extends Controller
         $m = DB::table('clssecs')
             ->where('clss_id','=', $clss_id)
             ->max('section_id');
-        echo $m;
+        // echo $m;
         
         // echo $ses->id;
         if($m > 0){

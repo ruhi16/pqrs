@@ -125,6 +125,8 @@ class PromAssessmentController extends Controller
         $clssec = Clssec::find($clssec_id);
         $extps = Extype::whereSession_id($ses->id)->get();
 
+        // $next_clssec = Clssec::
+
 
         $stdcrs = Studentcr::whereSession_id($ses->id)
                     ->where('clss_id', $clssec->clss_id)
