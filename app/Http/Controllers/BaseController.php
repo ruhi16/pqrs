@@ -140,23 +140,19 @@ class BaseController extends Controller
         // ->with('mrks', $mrks)
         // ->with('subjs', $subjs)
         // ;
-        $abc = 'Clss' ;
+        
         $clsss = Clss::where('session_id', Session::where('status', 'CURRENT')->first()->id)->get();        
         
         $demo = new Collection;
         foreach($clsss as $clss){
             $clss['session_id'] = Session::where('status', 'CURRENT')->first()->next_session_id;        
             $demo->push($clss);
-        }
-        // foreach($demo as $d){
-        //     echo $d->name .' & '. $d->session_id . '<br>'; 
-        // }
+        }        
 
         foreach($demo as $d){            
             $clss = Clss::firstOrNew(['name' => $d->name, 'session_id' => $d->session_id,]);
             $clss->fill($d->toArray());
-            $clss->save();
-            // echo $clss .'<br>';
+            $clss->save();        
         }
 
         return view('test')

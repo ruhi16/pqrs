@@ -14,6 +14,7 @@
         <th>Particular / Table</th>
         <th>Session</th>
         <th>Remarks(if any)</th>
+        <th>Next Session Data Updation</th>
     </tr>
 </thead>
 <tbody>
@@ -23,6 +24,7 @@
     <td>{{ $fsesn->finalizeparticular->particular }}</td>    
     <td>{{ $fsesn->session->name }}</td>
     <td>{{ $fsesn->remarks }}</td>
+    <td></td>
 </tr>
 @endforeach
 </tbody>
