@@ -133,11 +133,13 @@ class BaseController extends Controller
         
         // $subjs = Clssub::where('clss_id', 1)->get();
 
-        $data1 = Clssec::all();
-        $data2 = Clssec::exclude(['id','created_at','updated_at'])->get();
+        // $data1 = Clssec::all();
+        $data2 = Clssec::where('session_id', Session::where('status', 'CURRENT')->first()->id)
+                            ->exclude(['id','created_at','updated_at'])
+                            ->get();
 
         $data2->each(function ($item, $key) {
-            $item['session_id'] = 2;
+            $item['session_id'] = Session::where('status', 'CURRENT')->first()->nxsession_id;
             // echo $item['session_id'] .' : '. $key; 
             // echo "<br><br>";
         });
