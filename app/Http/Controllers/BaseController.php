@@ -128,16 +128,18 @@ class BaseController extends Controller
 
     public function test(){
         //for class:V(1) & section:A(1)     =>  clssub_id:1
-        $stdcrs = Studentcr::where('clss_id', 1)->where('section_id', 1)->get();        
-        $mrks  = Marksentry::whereIn('studentcr_id', $stdcrs->pluck('studentcr_id'))->get();
+        // $stdcrs = Studentcr::where('clss_id', 1)->where('section_id', 1)->get();        
+        // $mrks  = Marksentry::whereIn('studentcr_id', $stdcrs->pluck('studentcr_id'))->get();
         
-        $subjs = Clssub::where('clss_id', 1)->get();
+        // $subjs = Clssub::where('clss_id', 1)->get();
 
+        $data = Clssec::exclude(['id', 'clss_id'])->get();
 
         return view('test')
-        ->with('stdcrs', $stdcrs)
-        ->with('mrks', $mrks)
-        ->with('subjs', $subjs)
+            ->with('data', $data)
+        // ->with('stdcrs', $stdcrs)
+        // ->with('mrks', $mrks)
+        // ->with('subjs', $subjs)
         ;
     }    
 

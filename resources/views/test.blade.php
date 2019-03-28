@@ -24,7 +24,7 @@
 	{{--  @endif  --}}
 {{--  @endforeach  --}}
 
-<table class="table table-bordered">
+{{-- <table class="table table-bordered">
 <thead>
 <tr>
 <th>Roll</th>
@@ -91,12 +91,16 @@
 	</tr>
 @endforeach
 </tbody>
-</table>
+</table> --}}
 
 
 
 
+@foreach($data as $d)
 
+	{{ $d }} <br>
+
+@endforeach
 
 
 
