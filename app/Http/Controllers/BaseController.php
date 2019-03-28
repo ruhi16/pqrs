@@ -134,32 +134,40 @@ class BaseController extends Controller
         
         // $subjs = Clssub::where('clss_id', 1)->get();
 
+        // $data1 = Clssec::all();
+        $data2 = Clssec::where('session_id', Session::where('status', 'CURRENT')->first()->id)
+                            ->exclude(['id','created_at','updated_at'])
+                            ->get();
 
-        // return view('test')
+        $data2->each(function ($item, $key) {
+            $item['session_id'] = Session::where('status', 'CURRENT')->first()->nxsession_id;
+            // echo $item['session_id'] .' : '. $key; 
+            // echo "<br><br>";
+        });
+        
+        foreach($data2 as $d){
+            $clssec = Clssec::firstOrNew($d->toArray());
+            if($clssec){
+                echo "null ";
+                $clssec->fill($d->toArray())->save();
+            }else{
+                echo "exist ";
+            }
+        }
+
+        // $data1->each(function ($item, $key) {
+            
+        //     echo $item['session_id'] ; 
+        //     echo "<br><br>";
+        // });
+        // dd($data1);
+
+        return view('test')
+            ->with('data', $data2)
         // ->with('stdcrs', $stdcrs)
         // ->with('mrks', $mrks)
         // ->with('subjs', $subjs)
-        // ;
-        
-        $clsss = Clss::where('session_id', Session::where('status', 'CURRENT')->first()->id)->get();        
-        
-        $demo = new Collection;
-        foreach($clsss as $clss){
-            $clss['session_id'] = Session::where('status', 'CURRENT')->first()->next_session_id;        
-            $demo->push($clss);
-        }        
-
-        foreach($demo as $d){            
-            $clss = Clss::firstOrNew(['name' => $d->name, 'session_id' => $d->session_id,]);
-            $clss->fill($d->toArray());
-            $clss->save();        
-        }
-
-        return view('test')
-            ->with('clsss', $clsss);
-
-
-
+        ;
     }    
 
     public function testRoute($etmcs_id, $csec_id, $teacher_id){
