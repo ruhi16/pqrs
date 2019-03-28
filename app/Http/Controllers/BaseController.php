@@ -133,10 +133,34 @@ class BaseController extends Controller
         
         // $subjs = Clssub::where('clss_id', 1)->get();
 
-        $data = Clssec::exclude(['id', 'clss_id'])->get();
+        $data1 = Clssec::all();
+        $data2 = Clssec::exclude(['id','created_at','updated_at'])->get();
+
+        $data2->each(function ($item, $key) {
+            $item['session_id'] = 2;
+            // echo $item['session_id'] .' : '. $key; 
+            // echo "<br><br>";
+        });
+        
+        foreach($data2 as $d){
+            $clssec = Clssec::firstOrNew($d->toArray());
+            if($clssec){
+                echo "null ";
+                $clssec->fill($d->toArray())->save();
+            }else{
+                echo "exist ";
+            }
+        }
+
+        // $data1->each(function ($item, $key) {
+            
+        //     echo $item['session_id'] ; 
+        //     echo "<br><br>";
+        // });
+        // dd($data1);
 
         return view('test')
-            ->with('data', $data)
+            ->with('data', $data2)
         // ->with('stdcrs', $stdcrs)
         // ->with('mrks', $mrks)
         // ->with('subjs', $subjs)
