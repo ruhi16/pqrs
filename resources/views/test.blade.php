@@ -91,20 +91,12 @@
 	</tr>
 @endforeach
 </tbody>
-<<<<<<< HEAD
-</table>  --}}
-
-
-
-{{--  {{ dd($clsss) }}  --}}
-=======
 </table> --}}
 
 
 
 
 @foreach($data as $d)
->>>>>>> f262d5eef451b05cfedc872c111994881d9b34ce
 
 	{{ $d }} <br>
 

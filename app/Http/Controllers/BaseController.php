@@ -135,35 +135,44 @@ class BaseController extends Controller
         // $subjs = Clssub::where('clss_id', 1)->get();
 
         // $data1 = Clssec::all();
-        $data2 = Clssec::where('session_id', Session::where('status', 'CURRENT')->first()->id)
+        $data2 = Subject::where('session_id', Session::where('status', 'CURRENT')->first()->id)
                             ->exclude(['id','created_at','updated_at'])
                             ->get();
 
+        // foreach($data2 as $d){         
+        //     echo $d . '===>';
+        // }
+
         $data2->each(function ($item, $key) {
-            $item['session_id'] = Session::where('status', 'CURRENT')->first()->nxsession_id;
+            $item['session_id'] = Session::where('status', 'CURRENT')->first()->next_session_id;
             // echo $item['session_id'] .' : '. $key; 
             // echo "<br><br>";
         });
         
         foreach($data2 as $d){
-            $clssec = Clssec::firstOrNew($d->toArray());
+            $clssec = Subject::firstOrNew($d->toArray());
+            // echo $d . '===>';
+            echo '<br>->'.$clssec .'<-';
+
+
             if($clssec){
+                echo "exists ";
+                // echo '->'.$clssec .'<-';
+            }else{
                 echo "null ";
                 $clssec->fill($d->toArray())->save();
-            }else{
-                echo "exist ";
             }
         }
 
-        // $data1->each(function ($item, $key) {
-            
-        //     echo $item['session_id'] ; 
-        //     echo "<br><br>";
-        // });
-        // dd($data1);
-
+        $data3 = Clssub::where('session_id', Session::where('status', 'CURRENT')->first()->next_session_id)->get();
+        
+        echo "===========================";
+        
+        // foreach($data3 as $d){         
+        //     echo $d . '============>';
+        // }
         return view('test')
-            ->with('data', $data2)
+            ->with('data', $data3)
         // ->with('stdcrs', $stdcrs)
         // ->with('mrks', $mrks)
         // ->with('subjs', $subjs)

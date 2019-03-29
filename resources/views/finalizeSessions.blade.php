@@ -24,7 +24,9 @@
     <td>{{ $fsesn->finalizeparticular->particular }}</td>    
     <td>{{ $fsesn->session->name }}</td>
     <td>{{ $fsesn->remarks }}</td>
-    <td></td>
+    <td>
+        
+    </td>
 </tr>
 @endforeach
 </tbody>
