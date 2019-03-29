@@ -15,6 +15,7 @@ use App\Session;
 
 use App\Subject;
 use App\Teacher;
+use App\Subjteacher;
 use App\Resultcr;
 use App\Studentcr;
 
@@ -23,6 +24,11 @@ use App\Marksentry;
 
 use App\Miscoption;
 use App\Clssteacher;
+
+use App\Grade;
+use App\Gradeparticular;
+use App\Gradedescription;
+
 
 use App\Exmtypclssub;
 use App\Exmtypmodcls;
@@ -127,52 +133,25 @@ class BaseController extends Controller
         ;
     }
 
-    public function test(){
-        //for class:V(1) & section:A(1)     =>  clssub_id:1
-        // $stdcrs = Studentcr::where('clss_id', 1)->where('section_id', 1)->get();        
-        // $mrks  = Marksentry::whereIn('studentcr_id', $stdcrs->pluck('studentcr_id'))->get();
-        
-        // $subjs = Clssub::where('clss_id', 1)->get();
-
-        // $data1 = Clssec::all();
-        $data2 = Subject::where('session_id', Session::where('status', 'CURRENT')->first()->id)
+    public function test(){        
+        $data2 = Teacher::where('session_id', Session::where('status', 'CURRENT')->first()->id)
                             ->exclude(['id','created_at','updated_at'])
                             ->get();
 
-        // foreach($data2 as $d){         
-        //     echo $d . '===>';
-        // }
-
         $data2->each(function ($item, $key) {
-            $item['session_id'] = Session::where('status', 'CURRENT')->first()->next_session_id;
-            // echo $item['session_id'] .' : '. $key; 
-            // echo "<br><br>";
+            $item['session_id'] = Session::where('status', 'CURRENT')->first()->next_session_id;           
         });
         
         foreach($data2 as $d){
-            $clssec = Subject::firstOrNew($d->toArray());
-            // echo $d . '===>';
-            echo '<br>->'.$clssec .'<-';
-
-
-            if($clssec){
-                echo "exists ";
-                // echo '->'.$clssec .'<-';
-            }else{
-                echo "null ";
-                $clssec->fill($d->toArray())->save();
-            }
+            $subject = Teacher::firstOrNew($d->toArray());
+            $subject->save();
+            
         }
 
-        $data3 = Clssub::where('session_id', Session::where('status', 'CURRENT')->first()->next_session_id)->get();
+        $data = Teacher::where('session_id', Session::where('status', 'CURRENT')->first()->next_session_id)->get();
         
-        echo "===========================";
-        
-        // foreach($data3 as $d){         
-        //     echo $d . '============>';
-        // }
         return view('test')
-            ->with('data', $data3)
+            ->with('data', $data)
         // ->with('stdcrs', $stdcrs)
         // ->with('mrks', $mrks)
         // ->with('subjs', $subjs)
