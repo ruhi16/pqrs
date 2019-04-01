@@ -12,6 +12,7 @@ use App\Clssub;
 use App\Extype;
 use App\Section;
 use App\Session;
+use App\School;
 
 use App\Subject;
 use App\Teacher;
@@ -134,27 +135,24 @@ class BaseController extends Controller
     }
 
     public function test(){        
-        $data2 = Teacher::where('session_id', Session::where('status', 'CURRENT')->first()->id)
-                            ->exclude(['id','created_at','updated_at'])
-                            ->get();
+        // $data2 = School::where('session_id', Session::where('status', 'CURRENT')->first()->id)
+        //                     ->exclude(['id','created_at','updated_at'])
+        //                     ->get();
 
-        $data2->each(function ($item, $key) {
-            $item['session_id'] = Session::where('status', 'CURRENT')->first()->next_session_id;           
-        });
+        // $data2->each(function ($item, $key) {
+        //     $item['session_id'] = Session::where('status', 'CURRENT')->first()->next_session_id;           
+        // });
         
-        foreach($data2 as $d){
-            $subject = Teacher::firstOrNew($d->toArray());
-            $subject->save();
+        // foreach($data2 as $d){
+        //     $subject = School::firstOrNew($d->toArray());
+        //     $subject->save();
             
-        }
+        // }
 
-        $data = Teacher::where('session_id', Session::where('status', 'CURRENT')->first()->next_session_id)->get();
+        $data = Clss::all();//School::where('session_id', Session::where('status', 'CURRENT')->first()->next_session_id)->get();
         
         return view('test')
-            ->with('data', $data)
-        // ->with('stdcrs', $stdcrs)
-        // ->with('mrks', $mrks)
-        // ->with('subjs', $subjs)
+            ->with('data', $data)        
         ;
     }    
 

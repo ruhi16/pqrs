@@ -47,8 +47,13 @@
                     {{ $stdcr->result }}
                 </td>
                 <td>
-                    {{ $stdcr->clss->next_clss_id }}
+                    @if( $stdcr->result == 'Promoted' )
+                        {{ $stdcr->clss->parent->name }}
+                    @else 
+                        {{ $stdcr->clss->name }}
+                    @endif
                     {{--  {{ $clssec }}  --}}
+                </td>
                 <td>
                     
                 </td>

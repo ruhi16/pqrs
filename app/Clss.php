@@ -8,6 +8,33 @@ class Clss extends Model
 {
     protected $guarded = ['id'];
 
+    public function scopeExclude($query, $value = array()){
+        $columns = $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());        
+        return $query->select( array_diff( (array) $columns, (array) $value) );
+    }
+
+    // public function child(){
+    //     return $this->belongsTo('App\Clss', 'next_clss_id', 'id');
+    // }
+
+    // public function parent(){
+    //     return $this->belongsTo('App\Clss', 'next_clss_id', 'id');
+    // }
+
+    public function children(){
+        return $this->hasMany(Clss::class, 'next_clss_id', 'id');
+    }
+
+    public function parent(){
+        return $this->belongsTo(Clss::class, 'next_clss_id', 'id');
+    }
+
+
+
+
+
+
+
     public function session(){
         return $this->belongsTo('App\Session');
     }
