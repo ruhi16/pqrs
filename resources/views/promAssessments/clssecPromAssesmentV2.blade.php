@@ -22,6 +22,7 @@
             <th>Overall Results</th>
             <th>Description</th>
             <th>Remarks</th>
+            <th>Action</th>
         </tr>
     
         @foreach($stdcrs as  $stdcr)
@@ -55,7 +56,26 @@
                     {{--  {{ $clssec }}  --}}
                 </td>
                 <td>
-                    
+                    @if( $stdcr->result == 'Promoted' )
+                        <select class="form-control" name="stCaste" id="stCaste">
+                            <option value=""></option>
+                            @foreach($nextclssec as $nextclsc)
+                                <option value="">{{ $nextclsc->section->name }}</option>
+                            @endforeach
+                        </select>
+                    @else 
+                        <select class="form-control" name="stCaste" id="stCaste">
+                            <option value=""></option>
+                            @foreach($currclssec as $currclsc)
+                                <option value="">{{ $currclsc->section->name }}</option>
+                            @endforeach
+                        </select>
+                    @endif
+                </td>
+
+                <td>
+                    <button class="btn btn-success">Promote</button>
+
                 </td>
             </tr>
         @endforeach        

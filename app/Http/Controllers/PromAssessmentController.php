@@ -123,6 +123,16 @@ class PromAssessmentController extends Controller
     public function clssecPromAssessmentV2(Request $request, $clssec_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $clssec = Clssec::find($clssec_id);
+        
+        $currclssec = Clssec::where('session_id', $ses->id)
+                            ->where('clss_id', Clss::find($clssec->clss_id)->id)
+                            ->get();
+
+        $nextclssec = Clssec::where('session_id', $ses->id)
+                            ->where('clss_id', Clss::find($clssec->clss_id)->next_clss_id)
+                            ->get();
+        // $nextclssec->where('session_id', $ses->id)->get();
+        // dd($currclssec);
         $extps = Extype::whereSession_id($ses->id)->get();
 
         // $next_clssec = Clssec::
@@ -154,6 +164,8 @@ class PromAssessmentController extends Controller
         return view('promAssessments.clssecPromAssesmentV2')
             ->with('session', $ses)
             ->with('clssec', $clssec)
+            ->with('currclssec', $currclssec)
+            ->with( 'nextclssec', $nextclssec)
             ->with('extps', $extps)
             ->with('stdcrs', $stdcrs)
             ->with('stdmarks', $stdmarks)            
