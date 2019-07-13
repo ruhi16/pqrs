@@ -60,21 +60,31 @@
                         <select class="form-control" name="stCaste" id="stCaste">
                             <option value=""></option>
                             @foreach($nextclssec as $nextclsc)
-                                <option value="">{{ $nextclsc->section->name }}</option>
+                                <option value="{{ $nextclsc->section->name }}-{{$stdcr->id}}">
+                                    {{ $nextclsc->section->name }}</option>
                             @endforeach
                         </select>
                     @else 
-                        <select class="form-control" name="stCaste" id="stCaste">
+                        <select class="form-control nextSection" name="nextSection" id="nextSection">
                             <option value=""></option>
                             @foreach($currclssec as $currclsc)
-                                <option value="">{{ $currclsc->section->name }}</option>
+                                <option value="{{ $currclsc->section->name }}-{{$stdcr->id}}">
+                                    {{ $currclsc->section->name }}</option>
                             @endforeach
                         </select>
                     @endif
                 </td>
 
                 <td>
-                    <button class="btn btn-success">Promote</button>
+                    <button class="btn btn-success btnPromote" id="btnPromote{{$stdcr->id}}"
+                        data-crid  ="{{$stdcr->id}}"
+                        data-dbid ="{{$stdcr->studentdb->id}}"
+                        data-nextclss ="{{$nextclssec->first()->clss->id}}"
+                        {{-- data-nextsect ="{{$clsc->id}}"  --}}
+                        >
+                        
+                        Promote{{$stdcr->studentdb->id}}
+                    </button>
 
                 </td>
             </tr>
@@ -91,6 +101,37 @@
 
 <script type="text/javascript">
   $(document).ready(function(e){
+      $('.btnPromote').prop("disabled", true);
+
+
+      $('.btnPromote').click(function(){
+            var stdCrId = $(this).data('crid');
+            var stdDbId = $(this).data('dbid');
+            var stdNxCl = $(this).data('nextclss');
+            alert("Hello:" +stdCrId+'/'+stdDbId+'/'+stdNxCl);
+      });
+
+
+
+
+      $('select').on('change', function(){            
+          var value = $("option:selected", this).val();     //to select value use val(),  to select text use text()
+          if(value == '')  
+            alert("No Value Selected");
+          else{
+            
+            var result = value.split('-');
+            alert("Changed:" + value + result[0]+'--'+result[1]);
+            $('#btnPromote'+result[1]).prop("disabled", false);        //$('.btnPromote').attr("disabled", true);
+
+          }
+
+      });
+
+      //$('select').on('change', function(){            
+      //      alert("Changed");
+      //});
+
     
   });  
 </script>
