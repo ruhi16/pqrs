@@ -36,9 +36,9 @@ class AnswerScriptController extends Controller
 {
     public function answerScriptTaskpane(){
         $ses = Session::whereStatus('CURRENT')->first();
-        $exms = Exam::all();
-        $clss = Clss::all();
-        $clssec = Clssec::all();
+        $exms = Exam::where('session_id', $ses->id)->get();
+        $clss = Clss::where('session_id', $ses->id)->get();
+        $clssec = Clssec::where('session_id', $ses->id)->get();
 
         return view('answerscripts.answerscripts')
         ->withExms($exms)

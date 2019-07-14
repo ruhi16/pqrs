@@ -57,18 +57,18 @@
                 </td>
                 <td>
                     @if( $stdcr->result == 'Promoted' )
-                        <select class="form-control" name="stCaste" id="stCaste">
-                            <option value=""></option>
+                        <select class="form-control nextSection" name="nextSection" id="nextSection{{$stdcr->id}}">
+                            <option value="-{{$stdcr->id}}"></option>
                             @foreach($nextclssec as $nextclsc)
-                                <option value="{{ $nextclsc->section->name }}-{{$stdcr->id}}">
+                                <option value="{{ $nextclsc->section->id }}-{{$stdcr->id}}">
                                     {{ $nextclsc->section->name }}</option>
                             @endforeach
                         </select>
                     @else 
-                        <select class="form-control nextSection" name="nextSection" id="nextSection">
-                            <option value=""></option>
+                        <select class="form-control nextSection" name="nextSection" id="nextSection{{$stdcr->id}}">
+                            <option value="-{{$stdcr->id}}"></option>
                             @foreach($currclssec as $currclsc)
-                                <option value="{{ $currclsc->section->name }}-{{$stdcr->id}}">
+                                <option value="{{ $currclsc->section->id }}-{{$stdcr->id}}">
                                     {{ $currclsc->section->name }}</option>
                             @endforeach
                         </select>
@@ -79,11 +79,10 @@
                     <button class="btn btn-success btnPromote" id="btnPromote{{$stdcr->id}}"
                         data-crid  ="{{$stdcr->id}}"
                         data-dbid ="{{$stdcr->studentdb->id}}"
-                        data-nextclss ="{{$nextclssec->first()->clss->id}}"
-                        {{-- data-nextsect ="{{$clsc->id}}"  --}}
+                        data-nextclss ="{{$nextclssec->first()->clss->id}}"                        
                         >
                         
-                        Promote{{$stdcr->studentdb->id}}
+                        Promote
                     </button>
 
                 </td>
@@ -98,39 +97,70 @@
 
 
 
-
+<script type="text/javascript" src="{{url('bs337/js/jquery.bootstrap-grow.min.js')}}" integrity=""></script>
 <script type="text/javascript">
   $(document).ready(function(e){
-      $('.btnPromote').prop("disabled", true);
+      $('.btnPromote').attr("disabled", true);
 
 
-      $('.btnPromote').click(function(){
+      $('.btnPromote').click(function(){          
+
             var stdCrId = $(this).data('crid');
             var stdDbId = $(this).data('dbid');
             var stdNxCl = $(this).data('nextclss');
-            alert("Hello:" +stdCrId+'/'+stdDbId+'/'+stdNxCl);
+            
+            var data1   = $('#nextSection'+ stdCrId +' option:selected').val().trim();
+            var data2   = data1.split('-');
+            var stdNxSc = data2[0]; //selected section_id
+            
+            var u = '{{url("/updateClssSectionPromotionalInfo")}}';
+            var t = '{{ csrf_token() }}';
+            
+            $.ajax({
+                method: 'post',
+                url: u,
+                data:{stcrid:stdCrId, stdbid:stdDbId, nxclid:stdNxCl, nxscid:stdNxSc,  _token:t},
+                success: function(msg){
+                    //console.log("StdCR_ID("+msg['sid']+'): '+msg['data']);
+                    //console.log("Successfully");
+                    console.log(msg['info']);//+msg['scrid']+msg['sdbid']+msg['nclid']+msg['nscid']);
+                    $.bootstrapGrowl(msg['sname']+"'s Record Promoted for Next Class Successfully!",{
+                        type: 'info', // success, error, info, warning
+                        delay: 3000,
+                    });
+                    //$('#dataTable #dataRow #'+id).text("Updated!!");
+                },
+                error: function(data){
+                    //$('#dataTable #dataRow #'+id).text("Not Updated!!");
+                    console.log(data);
+                    $.bootstrapGrowl(data, {
+                        type: 'error', // success, error, info, warning
+                        delay: 1000,
+                    });
+                } 
+            });
+
       });
 
 
 
 
       $('select').on('change', function(){            
-          var value = $("option:selected", this).val();     //to select value use val(),  to select text use text()
-          if(value == '')  
-            alert("No Value Selected");
-          else{
-            
+            var value = $("option:selected", this).val();     //to select value use val(),  to select text use text()
             var result = value.split('-');
-            alert("Changed:" + value + result[0]+'--'+result[1]);
-            $('#btnPromote'+result[1]).prop("disabled", false);        //$('.btnPromote').attr("disabled", true);
 
-          }
+            if(result[0] == ''){ 
+                //alert("No Value Selected:"+result[1]);
+                $('#btnPromote'+result[1]).prop("disabled", true);  
+            }else{                        
+                //alert("Changed:" + value + result[0]+'--'+result[1]);
+                $('#btnPromote'+result[1]).prop("disabled", false);        //$('.btnPromote').attr("disabled", true);
+
+            }
 
       });
 
-      //$('select').on('change', function(){            
-      //      alert("Changed");
-      //});
+
 
     
   });  

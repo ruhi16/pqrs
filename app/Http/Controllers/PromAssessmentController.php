@@ -220,5 +220,23 @@ class PromAssessmentController extends Controller
     }
 
 
+    //Ajax frunction called from clssecPromAssesmentV2.blade.php
+    public function updateClssSectionPromotionalInfo(Request $request){
+
+        $stdcrrec = Studentcr::findOrFail($request['stcrid']);
+
+        $stdcrrec->next_clss_id = $request['nxclid'];
+        $stdcrrec->next_section_id = $request['nxscid'];
+        $stdcrrec->save();
+
+        return response()->json([
+            'info'  => 'Success',
+            'sname' => $stdcrrec->studentdb->name,
+            'scrid' => $stdcrrec->id,
+            'sdbid' => $request['stdbid'],
+            'nclid' => $request['nxclid'],
+            'nscid' => $request['nxscid']
+        ]);
+    }
 
 }

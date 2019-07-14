@@ -1,6 +1,7 @@
 <?php
 //use Fpdf;
 //use App\Extclssubfmpm;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -353,6 +354,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/cls-gradeDstatus/{clss_id}', 'ClssecGradeController@clsGradeDStatus');
 
         Route::get('/clssec-resultCrStatusRefresh/{clssec_id}','ClssecGradeController@resultCrStatusRefresh');
+
+
+
+
+
+        Route::post( '/updateClssSectionPromotionalInfo', 'PromAssessmentController@updateClssSectionPromotionalInfo');
 });
   
 Route::get('/get-logout', function(){
