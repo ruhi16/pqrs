@@ -18,7 +18,7 @@ class Section extends Model
     //     parent::boot();
 
     //     static::addGlobalScope('session_id', function (Builder $builder) {
-    //         $builder->where('session_id', Session::where('status', 'Active')->first()->id );
+    //         $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id );
     //     });
     // }
     

@@ -200,7 +200,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');
-        Route::get('/issueRoll/{id}', 'ClsSecController@issueRoll');
+        Route::get('/issueRoll/{id}/{clss_id}/{section_id}', 'ClsSecController@issueRoll');
 
 
         Route::get('/clssec-PromAssessment/{clssec_id}',   'PromAssessmentController@clssecPromAssessment');
