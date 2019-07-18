@@ -17,10 +17,23 @@ class Clss extends Model
     {
         parent::boot();
 
+<<<<<<< HEAD
         static::addGlobalScope('session_id', function (Builder $builder) {
             $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id );
         });
     }
+=======
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::addGlobalScope('session_id', function (Builder $builder) {
+    //         $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id );
+    //     });
+    // }
+
+    
+>>>>>>> e0e54dd7732df08e5d10a80c2588bfc0aea37a5c
     // public function child(){
     //     return $this->belongsTo('App\Clss', 'next_clss_id', 'id');
     // }

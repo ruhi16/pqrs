@@ -112,9 +112,9 @@ class ClsSecController extends Controller
         $clss = Clss::find($clss_id);
         $secs = Section::find($section_id);
         
-        $stds = Studentdb::where('stsession_id',$ses->id)
-                ->where('stclss_id', $clss_id)
-                ->where('stsec_id', $section_id)
+        $stds = Studentcr::where('session_id',$ses->id)
+                ->where('clss_id', $clss_id)
+                ->where('section_id', $section_id)
                 ->get();
 
         $exms = Exam::where('session_id', $ses->id)->get();
@@ -137,9 +137,9 @@ class ClsSecController extends Controller
         $secs = Section::find($section_id);
         $subjs = Subject::where('extype_id', 1)->get();
 
-        $stds = Studentdb::where('stsession_id',$ses->id)
-                ->where('stclss_id', $clss_id)
-                ->where('stsec_id', $section_id)
+        $stds = Studentcr::where('session_id',$ses->id)
+                ->where('clss_id', $clss_id)
+                ->where('section_id', $section_id)
                 ->get();
 
         $exms = Exam::where('session_id', $ses->id)->get();
@@ -165,9 +165,9 @@ class ClsSecController extends Controller
         $secs = Section::find($section_id);
         $subjs = Subject::where('extype_id', 1)->get();
 
-        $stds = Studentdb::where('stsession_id',$ses->id)
-                ->where('stclss_id', $clss_id)
-                ->where('stsec_id', $section_id)
+        $stds = Studentcr::where('session_id',$ses->id)
+                ->where('clss_id', $clss_id)
+                ->where('section_id', $section_id)
                 ->get();
 
         $exms = Exam::where('session_id', $ses->id)->get();
@@ -192,9 +192,9 @@ class ClsSecController extends Controller
         $secs = Section::find($section_id);
         $subjs = Subject::where('extype_id', 1)->get();
 
-        $stds = Studentdb::where('stsession_id',$ses->id)
-                ->where('stclss_id', $clss_id)
-                ->where('stsec_id', $section_id)
+        $stds = Studentcr::where('session_id',$ses->id)
+                ->where('clss_id', $clss_id)
+                ->where('section_id', $section_id)
                 ->get();
 
         $exms = Exam::where('session_id', $ses->id)->get();
@@ -252,57 +252,66 @@ class ClsSecController extends Controller
         $cls = Clss::find($clss_id);        
         $sec = Section::find($section_id);
         
-
+        //new Admission
         $stdb = Studentdb::whereStsession_id($ses->id)
         ->where('stclss_id', $clss_id)
-        ->where('stsec_id', $section_id)->get();                
-               
+        ->where('stsec_id', $section_id)->get();
 
+        //promotional students
+        $stpr = Studentcr::whereSession_id($ses->prev_session_id)
+            ->where('next_clss_id', $clss_id)
+            ->where('next_section_id', $section_id)
+            ->get(); 
+        
+        // students whose roll no issued
         $stcr = Studentcr::whereSession_id($ses->id)            
             ->where('clss_id', $clss_id)
             ->where('section_id', $section_id)            
             ->get();            
         
-
-        $remRec = $stdb->whereNotIn('id', $stcr->pluck('studentdb_id'));        
-        
+        // students whose roll no  not issued
+        $remRec = $stdb->whereNotIn('id', $stcr->pluck('studentdb_id'));
+        //$remRec = $remRec->whereNotIn('id', $stpr->pluck('studentdb_id'));  
+        $stpr = $stpr->whereNotIn('studentdb_id', $stcr->pluck('studentdb_id'));
 
 
         return view('clssecAdminPage')
         ->with('ses', $ses)        
         ->with('stcr', $stcr)
+        ->with('stpr', $stpr)
         ->with('remRec', $remRec)
         ->with('cls', $cls)
         ->with('sec', $sec)
         ;
     }
 
-    public function issueRoll(Request $request, $id){
+    public function issueRoll(Request $request, $id, $clss_id, $section_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $stddb = Studentdb::find($id);
 
         $stcr = Studentcr::whereSession_id($ses->id)
-        ->where('clss_id', $stddb->stclss_id)
-        ->where('section_id', $stddb->stsec_id)
+        ->where('clss_id', $clss_id)
+        ->where('section_id', $section_id)
         ->orderBy('roll_no', 'desc')->get();//max('roll_no');
         // print_r($stcr);
         // dd($stcr);
-        if($stcr->count() > 0){
-            // echo $stcr->count();
-            // print_r($stcr);
-        }else{
-            // echo $stcr->count();
-        }
+        // if($stcr->count() > 0){
+        //     // echo $stcr->count();
+        //     // print_r($stcr);
+        // }else{
+        //     // echo $stcr->count();
+        // }
 
         $stdcr = new Studentcr;
         $stdcr->studentdb_id = $stddb->id;
         $stdcr->session_id = $ses->id;
-        $stdcr->clss_id = $stddb->stclss_id;
-        $stdcr->section_id = $stddb->stsec_id;
+        $stdcr->clss_id = $clss_id;
+        $stdcr->section_id = $section_id;
         $stdcr->roll_no = ($stcr->count() > 0 ? ($stcr->first()->roll_no+1): 1);//((empty($stcr) ? 0 : $stcr->first()->roll_no ) + 1);
-        // echo "roll".$stdcr->roll_no;
+        // echo "Roll:".$stdcr->roll_no. "\nStatus: ". $status;
+        // echo "Student_Id: ". $id .", Class_id: ". $clss_id .", Section_id: ".$section_id.", Roll No: ".$stdcr->roll_no;
         $stdcr->save();
-        return redirect()->to(url('/clssec-AdminPage',[$stddb->stclss_id, $stddb->stsec_id]));
+        return redirect()->to(url('/clssec-AdminPage',[$clss_id, $section_id]));
     }
 
 
