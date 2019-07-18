@@ -6,15 +6,16 @@
 @endsection
 
 @section('content')
-<h1>Class Section Admin Page</h1>
+<h1>Class:<b>{{$cls->name}}</b>, Section:<b>{{$sec->name}}</b>, Admission Page</h1>
 
 {{--  New Admission Students  --}}
 <table class="table table-bordered">
     <caption>New Admition</caption>
     <thead>
         <tr>
-            <th>#</th>
+            <th>#SDbId</th>
             <th>Name</th>
+            <th>Status</th>
             <th>Class</th>
             <th>Sections</th>
             <th>Roll No</th>
@@ -29,6 +30,7 @@
         <td>
           {{ $std->name }}          
         </td>
+        <td>New Admission</td>
         <td class="text-center">
           {{--  {{$std->stclss_id}}          --}}
           {{ $cls->name }}
@@ -52,8 +54,9 @@
     <caption>Promoted Students</caption>
     <thead>
         <tr>
-            <th>#</th>
+            <th>#SDbId</th>
             <th>Name</th>
+            <th>Status</th>
             <th>Class</th>
             <th>Sections</th>
             <th>Roll No</th>
@@ -67,6 +70,9 @@
         <td>{{$std->id}}</td>
         <td>
           {{ $std->studentdb->name }}          
+        </td>
+        <td>
+          {{ $std->result }}            
         </td>
         <td class="text-center">
           {{--  {{$std->stclss_id}}          --}}
@@ -87,43 +93,7 @@
 </table>
 
 {{--  Regular Detained or Failed Students  --}}
-<table class="table table-bordered">
-    <caption>Detained or Failed Students</caption>
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Class</th>
-            <th>Sections</th>
-            <th>Roll No</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-      
-      @foreach($remRec as $std)
-      <tr>
-        <td>{{$std->id}}</td>
-        <td>
-          {{ $std->name }}          
-        </td>
-        <td class="text-center">
-          {{--  {{$std->stclss_id}}          --}}
-          {{ $cls->name }}
-        </td>
-        <td class="text-center">
-          {{--  {{$std->stsec_id}}  --}}
-          {{ $sec->name }}
-        </td>
-        <td></td>
-        <td>          
-            {{-- <a href="{{url('/issueRoll',[$std->studentdb->id, $std->stclss_id, $std->stsec_id])}}" class="btn btn-info issue-roll" id="btnSubmit">Issue Roll</a>           --}}
-        </td>
-      </tr>
-      @endforeach
 
-    </tbody>
-</table>
 
 
 

@@ -252,16 +252,24 @@ class ClsSecController extends Controller
         $cls = Clss::find($clss_id);        
         $sec = Section::find($section_id);
         
-        //new Admission
+        
+        //Current Session: New Admission
         $stdb = Studentdb::whereStsession_id($ses->id)
         ->where('stclss_id', $clss_id)
         ->where('stsec_id', $section_id)->get();
 
-        //promotional students
+        //Previouos Session: Promoted & Failed Students
         $stpr = Studentcr::whereSession_id($ses->prev_session_id)
             ->where('next_clss_id', $clss_id)
             ->where('next_section_id', $section_id)
             ->get(); 
+
+
+        //Detained or Failed Students
+        // $stntpr = Studentcr::whereSession_id($ses->prev_session_id)
+        //     ->where('next_clss_id', $clss_id)
+        //     ->where('next_section_id', $section_id)
+        //     ->get(); 
         
         // students whose roll no issued
         $stcr = Studentcr::whereSession_id($ses->id)            
@@ -269,9 +277,8 @@ class ClsSecController extends Controller
             ->where('section_id', $section_id)            
             ->get();            
         
-        // students whose roll no  not issued
-        $remRec = $stdb->whereNotIn('id', $stcr->pluck('studentdb_id'));
-        //$remRec = $remRec->whereNotIn('id', $stpr->pluck('studentdb_id'));  
+        // students whose roll no  Issued
+        $remRec = $stdb->whereNotIn('id', $stcr->pluck('studentdb_id'));        
         $stpr = $stpr->whereNotIn('studentdb_id', $stcr->pluck('studentdb_id'));
 
 
@@ -279,6 +286,7 @@ class ClsSecController extends Controller
         ->with('ses', $ses)        
         ->with('stcr', $stcr)
         ->with('stpr', $stpr)
+        // ->with('stntpr', $stntpr)
         ->with('remRec', $remRec)
         ->with('cls', $cls)
         ->with('sec', $sec)
