@@ -112,9 +112,9 @@ class ClsSecController extends Controller
         $clss = Clss::find($clss_id);
         $secs = Section::find($section_id);
         
-        $stds = Studentdb::where('stsession_id',$ses->id)
-                ->where('stclss_id', $clss_id)
-                ->where('stsec_id', $section_id)
+        $stds = Studentcr::where('session_id',$ses->id)
+                ->where('clss_id', $clss_id)
+                ->where('section_id', $section_id)
                 ->get();
 
         $exms = Exam::where('session_id', $ses->id)->get();
@@ -137,9 +137,9 @@ class ClsSecController extends Controller
         $secs = Section::find($section_id);
         $subjs = Subject::where('extype_id', 1)->get();
 
-        $stds = Studentdb::where('stsession_id',$ses->id)
-                ->where('stclss_id', $clss_id)
-                ->where('stsec_id', $section_id)
+        $stds = Studentcr::where('session_id',$ses->id)
+                ->where('clss_id', $clss_id)
+                ->where('section_id', $section_id)
                 ->get();
 
         $exms = Exam::where('session_id', $ses->id)->get();
@@ -165,9 +165,9 @@ class ClsSecController extends Controller
         $secs = Section::find($section_id);
         $subjs = Subject::where('extype_id', 1)->get();
 
-        $stds = Studentdb::where('stsession_id',$ses->id)
-                ->where('stclss_id', $clss_id)
-                ->where('stsec_id', $section_id)
+        $stds = Studentcr::where('session_id',$ses->id)
+                ->where('clss_id', $clss_id)
+                ->where('section_id', $section_id)
                 ->get();
 
         $exms = Exam::where('session_id', $ses->id)->get();
@@ -192,9 +192,9 @@ class ClsSecController extends Controller
         $secs = Section::find($section_id);
         $subjs = Subject::where('extype_id', 1)->get();
 
-        $stds = Studentdb::where('stsession_id',$ses->id)
-                ->where('stclss_id', $clss_id)
-                ->where('stsec_id', $section_id)
+        $stds = Studentcr::where('session_id',$ses->id)
+                ->where('clss_id', $clss_id)
+                ->where('section_id', $section_id)
                 ->get();
 
         $exms = Exam::where('session_id', $ses->id)->get();
@@ -295,12 +295,12 @@ class ClsSecController extends Controller
         ->orderBy('roll_no', 'desc')->get();//max('roll_no');
         // print_r($stcr);
         // dd($stcr);
-        if($stcr->count() > 0){
-            // echo $stcr->count();
-            // print_r($stcr);
-        }else{
-            // echo $stcr->count();
-        }
+        // if($stcr->count() > 0){
+        //     // echo $stcr->count();
+        //     // print_r($stcr);
+        // }else{
+        //     // echo $stcr->count();
+        // }
 
         $stdcr = new Studentcr;
         $stdcr->studentdb_id = $stddb->id;

@@ -21,6 +21,26 @@ class Section extends Model
     //         $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id );
     //     });
     // }
+
+    public function children()
+    {
+        return $this->hasMany(Section::class, 'next_section_id', 'id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Section::class, 'next_section_id', 'id');
+    }
+
+
+
+
+
+
+
+
+
+
     
     public function clssecs(){
         return $this->hasMany('App\Clssec');

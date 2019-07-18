@@ -49,9 +49,9 @@
                 </td>
                 <td>
                     @if( $stdcr->result == 'Promoted' )
-                        {{ $stdcr->clss->parent->name }}
+                        {{ $stdcr->clss->parent->name }}-{{$stdcr->next_section_id}}:{{ $stdcr->section->parent->name or Null }}
                     @else 
-                        {{ $stdcr->clss->name }}
+                        {{ $stdcr->clss->name }}-{{$stdcr->next_section_id}}:{{ $stdcr->section->name }}
                     @endif
                     {{--  {{ $clssec }}  --}}
                 </td>
@@ -79,10 +79,10 @@
                     <button class="btn btn-success btnPromote" id="btnPromote{{$stdcr->id}}"
                         data-crid  ="{{$stdcr->id}}"
                         data-dbid ="{{$stdcr->studentdb->id}}"
-                        data-nextclss ="{{$nextclssec->first()->clss->id}}"                        
+                        data-nextclss = "{{ $stdcr->result == 'Promoted' ? $nextclssec->first()->clss->id :  $currclssec->first()->clss->id}}"                     
                         >
                         
-                        Promote
+                        Submit
                     </button>
 
                 </td>

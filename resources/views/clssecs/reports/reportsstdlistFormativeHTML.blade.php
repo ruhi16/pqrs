@@ -51,7 +51,7 @@
                 @foreach($stdList as $std)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ $std->name }}</td>
+                    <td>{{ $std->studentdb->name }}</td>
                     <td>{{ $i++ }}</td>
                     {{--  @foreach($exms as $ex)
                         <td></td>
