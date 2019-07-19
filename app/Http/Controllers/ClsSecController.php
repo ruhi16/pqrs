@@ -216,6 +216,7 @@ class ClsSecController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $clssecs = Clssec::whereSession_id($ses->id)
                 ->orderBy('clss_id')->orderBy('section_id')->get();
+        // dd($clssecs);
         $teachers = Teacher::all();
         $clssteachers = Clssteacher::all();
         // foreach($clssecs as $cs){

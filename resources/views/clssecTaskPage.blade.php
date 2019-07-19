@@ -28,11 +28,18 @@
     <tbody>
 @foreach($clssecs as $clssec)
     <tr>
-        <td>{{$clssec->id}}</td>
-        <td>{{$clssec->clss()->first()->name}}</td>
-        <td>{{$clssec->section()->first()->name}}</td>
+        <td>{{$clssec->id or ''}}</td>
+        <td>{{$clssec->clss()->first()->name or ''}}</td>
+        <td>{{$clssec->section()->first()->name or ''}}</td>
         <td>
-            <button class="btn btn-success btn-sm btnClsTeacherEdit" data-toggle="modal"  data-cls="{{$clssec->clss->id}}" data-sec="{{$clssec->section->id}}" data-target="#myModal">Edit</button> 
+            {{dd($clssec->clss)}}
+            {{--  <button class="btn btn-success btn-sm btnClsTeacherEdit" 
+                            data-toggle="modal"  
+                            data-cls="{{$clssec->clss->id}}" 
+                            data-sec="{{$clssec->section->id}}" 
+                            data-target="#myModal"
+
+                            >Edit</button>   --}}
             <br><br>
             @php 
                 $teacher_id = $clssteachers->where('clss_id', $clssec->clss->id)
