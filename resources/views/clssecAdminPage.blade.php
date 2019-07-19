@@ -84,7 +84,7 @@
         </td>
         <td></td>
         <td>          
-            <a href="{{url('/issueRoll',[$std->studentdb->id, $std->next_clss_id, $std->next_section_id])}}" class="btn btn-info issue-roll" id="btnSubmit">Issue Roll</a>          
+            <a href="{{url('/issueRoll',[$std->studentdb->id, $std->id, $std->next_clss_id, $std->next_section_id])}}" class="btn btn-info issue-roll" id="btnSubmit">Issue Roll</a>          
         </td>
       </tr>
       @endforeach

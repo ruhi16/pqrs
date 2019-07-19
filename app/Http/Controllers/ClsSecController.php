@@ -264,12 +264,6 @@ class ClsSecController extends Controller
             ->where('next_section_id', $section_id)
             ->get(); 
 
-
-        //Detained or Failed Students
-        // $stntpr = Studentcr::whereSession_id($ses->prev_session_id)
-        //     ->where('next_clss_id', $clss_id)
-        //     ->where('next_section_id', $section_id)
-        //     ->get(); 
         
         // students whose roll no issued
         $stcr = Studentcr::whereSession_id($ses->id)            
@@ -285,30 +279,22 @@ class ClsSecController extends Controller
         return view('clssecAdminPage')
         ->with('ses', $ses)        
         ->with('stcr', $stcr)
-        ->with('stpr', $stpr)
-        // ->with('stntpr', $stntpr)
+        ->with('stpr', $stpr)        
         ->with('remRec', $remRec)
         ->with('cls', $cls)
         ->with('sec', $sec)
         ;
     }
 
-    public function issueRoll(Request $request, $id, $clss_id, $section_id){
+    public function issueRoll($stdbid, $stcrid, $clss_id, $section_id){
         $ses = Session::whereStatus('CURRENT')->first();
-        $stddb = Studentdb::find($id);
+        $stddb = Studentdb::find($stdbid);
 
         $stcr = Studentcr::whereSession_id($ses->id)
         ->where('clss_id', $clss_id)
         ->where('section_id', $section_id)
         ->orderBy('roll_no', 'desc')->get();//max('roll_no');
-        // print_r($stcr);
-        // dd($stcr);
-        // if($stcr->count() > 0){
-        //     // echo $stcr->count();
-        //     // print_r($stcr);
-        // }else{
-        //     // echo $stcr->count();
-        // }
+        
 
         $stdcr = new Studentcr;
         $stdcr->studentdb_id = $stddb->id;
@@ -316,9 +302,12 @@ class ClsSecController extends Controller
         $stdcr->clss_id = $clss_id;
         $stdcr->section_id = $section_id;
         $stdcr->roll_no = ($stcr->count() > 0 ? ($stcr->first()->roll_no+1): 1);//((empty($stcr) ? 0 : $stcr->first()->roll_no ) + 1);
-        // echo "Roll:".$stdcr->roll_no. "\nStatus: ". $status;
-        // echo "Student_Id: ". $id .", Class_id: ". $clss_id .", Section_id: ".$section_id.", Roll No: ".$stdcr->roll_no;
         $stdcr->save();
+
+        $studentcr = Studentcr::find($stcrid);
+        $studentcr->crstatus = "Running";
+        $studentcr->save();
+
         return redirect()->to(url('/clssec-AdminPage',[$clss_id, $section_id]));
     }
 

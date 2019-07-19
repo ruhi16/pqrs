@@ -239,4 +239,12 @@ class PromAssessmentController extends Controller
         ]);
     }
 
+    public function reupdateClssSectionPromotionalInfo(Request $request, $stdcr_id){       
+        $studentcr = Studentcr::find($stdcr_id);
+        $studentcr->next_section_id = Null;
+        $studentcr->save();
+
+        return redirect()->back();
+    }
+
 }

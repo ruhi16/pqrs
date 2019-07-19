@@ -3,10 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Studentcr extends Model
 {
     protected $guarded = ['id'];
+
+    protected static function boot()
+    {
+        
+        parent::boot();
+
+        static::addGlobalScope('session_id', function (Builder $builder) {
+            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+        });
+    } 
     
     public function clss(){
         return $this->belongsTo('App\Clss');
@@ -16,7 +28,9 @@ class Studentcr extends Model
     }
 
 
-
+    public function next_section(){
+        return $this->belongsTo('App\Section');
+    }
  
 
 

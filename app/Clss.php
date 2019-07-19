@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Clss extends Model
 {
@@ -13,18 +14,16 @@ class Clss extends Model
         return $query->select( array_diff( (array) $columns, (array) $value) );
     }
     
+ 
     protected static function boot()
     {
+        //use Illuminate\Database\Eloquent\Builder;
         parent::boot();
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
-
-    //     static::addGlobalScope('session_id', function (Builder $builder) {
-    //         $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id );
-    //     });
-    }
+        static::addGlobalScope('session_id', function (Builder $builder) {
+            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id );
+        });
+    } 
 
     
     // public function child(){

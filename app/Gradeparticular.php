@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Gradeparticular extends Model
 {
@@ -12,7 +14,16 @@ class Gradeparticular extends Model
         $columns = $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());        
         return $query->select( array_diff( (array) $columns, (array) $value) );
     }
-    
+
+    protected static function boot()
+    {
+        
+        parent::boot();
+
+        static::addGlobalScope('session_id', function (Builder $builder) {
+            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+        });
+    } 
 
     public function grades(){
         return $this->hasMany('App\Grade');

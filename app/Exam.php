@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Exam extends Model
 {
@@ -13,7 +14,15 @@ class Exam extends Model
         return $query->select( array_diff( (array) $columns, (array) $value) );
     }
 
+    protected static function boot()
+    {
+        
+        parent::boot();
 
+        static::addGlobalScope('session_id', function (Builder $builder) {
+            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+        });
+    } 
 
     public function exmtypclssub(){
         return $this->hasMany('App\Exmtypclssub');

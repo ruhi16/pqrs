@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Section extends Model
 {
@@ -13,14 +15,15 @@ class Section extends Model
         return $query->select( array_diff( (array) $columns, (array) $value) );
     }
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
+    protected static function boot()
+    {
+        
+        parent::boot();
 
-    //     static::addGlobalScope('session_id', function (Builder $builder) {
-    //         $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id );
-    //     });
-    // }
+        static::addGlobalScope('session_id', function (Builder $builder) {
+            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+        });
+    } 
 
     public function children()
     {
@@ -35,7 +38,10 @@ class Section extends Model
 
 
 
-
+    public function next_sections()
+    {
+        return $this->hasMany('App\Studentcr', 'next_section_id', 'id');
+    }
 
 
 

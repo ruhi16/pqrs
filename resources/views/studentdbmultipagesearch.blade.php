@@ -23,16 +23,16 @@
     {{--  {{ dd($stddb) }}  --}}
       @foreach($stddb as $sdb)
         <tr>
-          <th>{{$sdb->name}}</th>
+          <th>{{$sdb->name or 'NA'}}</th>
           <th>{{$sdb->clss->name or 'Class Not Assignemd'}}</th>
-          <th>{{$sdb->section->name}}</th>
+          <th>{{$sdb->section->name or 'NA'}}</th>
           <th>
-            {{ $sdb->studentcrs->where('session_id', $session->id)->first()->roll_no }}
+            {{ $sdb->studentcrs->where('session_id', $session->id)->first()->roll_no or 'NA'}}
             {{--  @foreach($sdb->studentcrs as $scr)
               {{$scr->roll_no}}, 
             @endforeach  --}}
           </th>
-          <th>{{$sdb->ssex }}</th>
+          <th>{{$sdb->ssex or 'NA'}}</th>
         </tr>
       @endforeach      
     </tbody>

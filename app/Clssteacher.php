@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Clssteacher extends Model
 {
@@ -12,6 +13,16 @@ class Clssteacher extends Model
         $columns = $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());        
         return $query->select( array_diff( (array) $columns, (array) $value) );
     }
+
+    protected static function boot()
+    {
+        
+        parent::boot();
+
+        static::addGlobalScope('session_id', function (Builder $builder) {
+            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+        });
+    } 
 
     public function teacher(){
         return $this->belongsTo('App\Teacher');
