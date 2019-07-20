@@ -32,14 +32,14 @@
         <td>{{$clssec->clss()->first()->name or ''}}</td>
         <td>{{$clssec->section()->first()->name or ''}}</td>
         <td>
-            {{dd($clssec->clss)}}
-            {{--  <button class="btn btn-success btn-sm btnClsTeacherEdit" 
+            {{--  {{dd($clssec->clss)}}  --}}
+            <button class="btn btn-success btn-sm btnClsTeacherEdit" 
                             data-toggle="modal"  
                             data-cls="{{$clssec->clss->id}}" 
                             data-sec="{{$clssec->section->id}}" 
                             data-target="#myModal"
 
-                            >Edit</button>   --}}
+                            >Edit</button> 
             <br><br>
             @php 
                 $teacher_id = $clssteachers->where('clss_id', $clssec->clss->id)

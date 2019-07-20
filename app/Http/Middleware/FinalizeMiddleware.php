@@ -20,25 +20,30 @@ class FinalizeMiddleware
         // echo "Oke... from FinalizeMiddleware: ". $data;
         $ar = explode('-', $data);
         $flag = FALSE;        
+        // dd(count($ar));
         for($i = 0; $i < count($ar); $i++){
-            $finpart = FinalizeParticular::whereParticular($ar[$i])->first();
+            $finpart = FinalizeParticular::whereParticular($ar[$i])->first();            
             $finsesn = FinalizeSession::whereFinalizeparticular_id($finpart->id)->first();
-            if($i == 0){            
-                if($finsesn){                    
+            // dd($finsesn);
+            if($i == 0){    
+                // dd($finsesn);
+                if($finsesn == null){                    
+                    // dd($finsesn);
                     $str = $ar[$i]."-view";
-                    return redirect()->to($str);                    
+                    // return redirect()->to($str);      
+                    return $next($request);              
                     // echo "<br>$ar[$i] : exists in finalizeSession";
-                    $flag = TRUE;
+                    // $flag = TRUE;
                 }else{
                     // echo "<br>$ar[$i] : not exists in finalizeSession";
                     $flag = FALSE;
                 }
             }else{
-                if($finsesn){
-                    // echo "<br>$ar[$i] : exists in finalizeSession";
+                if($finsesn == null){
+                    // echo "<br>$ar[$i] : exists in finalizeSession, finalized for this session";
                     $flag = FALSE;
                 }else{
-                    // echo "<br>$ar[$i] : not exists in finalizeSession";
+                    // echo "<br>$ar[$i] : not exists in finalizeSession, not finalized for this session";
                     $flag = TRUE;
                     break;
                 }

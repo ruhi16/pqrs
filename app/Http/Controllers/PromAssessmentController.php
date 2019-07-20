@@ -131,13 +131,9 @@ class PromAssessmentController extends Controller
         $nextclssec = Clssec::where('session_id', $ses->id)
                             ->where('clss_id', Clss::find($clssec->clss_id)->next_clss_id)
                             ->get();
-        // $nextclssec->where('session_id', $ses->id)->get();
-        // dd($currclssec);
+        
         $extps = Extype::whereSession_id($ses->id)->get();
-
-        // $next_clssec = Clssec::
-
-
+        
         $stdcrs = Studentcr::whereSession_id($ses->id)
                     ->where('clss_id', $clssec->clss_id)
                     ->where('section_id', $clssec->section_id)
@@ -148,12 +144,12 @@ class PromAssessmentController extends Controller
                         ->where('section_id', $clssec->section_id)
                         ->get();
 
-        $stdmarks = Marksentry::where('marksentries.session_id', $ses->id)
-                    ->where('clssec_id', $clssec_id)
-                    ->join('clssubs', 'marksentries.clssub_id', '=', 'clssubs.id')
-                    ->select('marksentries.*', 'clssubs.combination_no', 'clssubs.subject_id')
-                    ->orderBy('studentcr_id')
-                    ->get();
+        // $stdmarks = Marksentry::where('marksentries.session_id', $ses->id)
+        //             ->where('clssec_id', $clssec_id)
+        //             ->join('clssubs', 'marksentries.clssub_id', '=', 'clssubs.id')
+        //             ->select('marksentries.*', 'clssubs.combination_no', 'clssubs.subject_id')
+        //             ->orderBy('studentcr_id')
+        //             ->get();
 
         $clsTeacher = Clssteacher::whereSession_id($ses->id)
                     ->where('clss_id', $clssec->clss_id)
@@ -168,7 +164,7 @@ class PromAssessmentController extends Controller
             ->with( 'nextclssec', $nextclssec)
             ->with('extps', $extps)
             ->with('stdcrs', $stdcrs)
-            ->with('stdmarks', $stdmarks)            
+            // ->with('stdmarks', $stdmarks)            
             ->with('resultcr',$resultcr) 
             ->with('clsTeacher', $clsTeacher)
             ;
