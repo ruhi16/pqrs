@@ -41,7 +41,7 @@
           <th id="id">{{$subject->id}}</th>
           <th id="name">{{ $subject->name }}</th>
           <th id="code">{{ $subject->code }}</th>
-          <td id="type">{{ $subject->extype->name }}</td>
+          <td id="type">{{ $subject->extype->name or null}}</td>
           <td>{{ $subject->session_id }}</td>
           <td>
               <button class="btn btn-success btn-sm btnEdit" data-id="{{$subject->id}}" data-toggle="modal" data-target="#editModal">Edit</button>
