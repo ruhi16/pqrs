@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Builder;
 class Subject extends Model
 {
     protected $guarded = ['id'];
+
+    private static $table_type = "Basic";
+    public static function getTableType()
+    {
+        return self::$table_type;
+    } 
     
 
     public function scopeExclude($query, $value = array()){

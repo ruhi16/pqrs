@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Studentdb extends Model
 {
     protected $guarded = ['id'];
+    private static $table_type = "Transactional";
+    public static function getTableType()
+    {
+        return self::$table_type;
+    } 
     
     public function studentcrs(){
         return $this->hasMany('App\Studentcr');

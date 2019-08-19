@@ -20,7 +20,9 @@ class CreateSubjfullmarksTable extends Migration
             $table->integer('fm')->nullable();
             $table->string('status')->nullable();
             $table->string('notes')->nullable();
+            $table->integer('session_id');
             $table->timestamps();
+            $table->integer('prev_session_pk');
         });
     }
 

@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class Extclssubfmpm extends Model
 {
     protected $table = 'extclssubfmpms';
+
+    private static $table_type = "Relational";
+    public static function getTableType()
+    {
+        return self::$table_type;
+    } 
+    
     protected static function boot()
     {
         

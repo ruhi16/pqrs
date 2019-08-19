@@ -54,11 +54,11 @@
                             <thead>
                                 <tr>
                                     <th>Particulars</th>
-                                    @foreach($clssecs->unique('clss_id')  as $clssec )
+                                    {{--  @foreach($clssecs->unique('clss_id')  as $clssec )
                                         <th class="text-center" colspan="{{ $clssecs->where('clss_id', $clssec->clss->id)->count() }}">
                                             {{ $clssec->clss->name }} 
                                         </th>
-                                    @endforeach
+                                    @endforeach  --}}
                                     <th>Total</th>
                                 </tr>
                             </thead>

@@ -311,6 +311,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/finalizeSessions', 'FinalizeController@finalizeSessions');
         Route::get('/finalizeSchool', 'FinalizeController@finalizeSchool')->name('finalizeSchool');
 
+        Route::get('/basicTable-refator/{n}', 'FinalizeController@basicTableRefator');
+        Route::get('/relationalTable-refator/{n}', 'FinalizeController@relationalTableRefator');
 
 
         Route::get('/clssec-ResultTaskpane/{clssec_id}', 'ResultController@ResultTaskpane');

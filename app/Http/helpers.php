@@ -18,9 +18,32 @@ use App\Studentcr;
 use App\Clssub;
 use App\Clssec;
 
+use App\Answerscriptdistribution;
 use App\Exmtypclssub;
 use App\Marksentry;
 use App\Extclssubfmpm;
+
+
+
+
+function getTableType(String $modelName){
+    $flag = '';
+    if( $modelName == 'Exmtypmodcl' || $modelName == 'Migration'  || $modelName == 'Password_reset'  || $modelName == 'Sqlite_sequence'){
+        $flag = 'xx';
+    }else{
+        $abcd = "App\\" . $modelName;
+        $flag = $abcd::getTableType();
+        // echo "Model: ". $modelName . ", Type: " .$abcd::getTableType();
+        // echo "<br>";
+    }
+    
+    return $flag;
+}
+
+
+
+
+
 
 function getGrade($extypeid, $data, $fullMarks){
     $ses = Session::whereStatus('CURRENT')->first();

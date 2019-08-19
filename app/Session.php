@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Session extends Model
 {
     protected $guarded = ['id'];
+    private static $table_type = "Absolute Basic";
+    public static function getTableType()
+    {
+        return self::$table_type;
+    } 
 
     
     

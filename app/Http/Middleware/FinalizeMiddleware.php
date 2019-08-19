@@ -19,41 +19,44 @@ class FinalizeMiddleware
     public function handle($request, Closure $next, $data){
         // echo "Oke... from FinalizeMiddleware: ". $data;
         $ar = explode('-', $data);
-        $flag = FALSE;        
+        $flag_main = FALSE;
+        $flag_supp = FALSE;
         // dd(count($ar));
         for($i = 0; $i < count($ar); $i++){
             $finpart = FinalizeParticular::whereParticular($ar[$i])->first();            
             $finsesn = FinalizeSession::whereFinalizeparticular_id($finpart->id)->first();
-            // dd($finsesn);
-            if($i == 0){    
-                // dd($finsesn);
-                if($finsesn == null){                    
-                    // dd($finsesn);
-                    $str = $ar[$i]."-view";
-                    // return redirect()->to($str);      
-                    return $next($request);              
-                    // echo "<br>$ar[$i] : exists in finalizeSession";
-                    // $flag = TRUE;
-                }else{
-                    // echo "<br>$ar[$i] : not exists in finalizeSession";
-                    $flag = FALSE;
-                }
-            }else{
-                if($finsesn == null){
-                    // echo "<br>$ar[$i] : exists in finalizeSession, finalized for this session";
-                    $flag = FALSE;
-                }else{
-                    // echo "<br>$ar[$i] : not exists in finalizeSession, not finalized for this session";
-                    $flag = TRUE;
+            
+            // for first case, i.e composite table. In that is if finalized, go to view page of that table
+            if( $i == 0 ){
+
+                if( $finsesn ){ 
+                    $flag_main = TRUE;
                     break;
                 }
-            }
+
+            }else{
+            
+                if ( $finsesn == null ){
+                    echo "<br>$ar[$i] : not exists in finalizeSession, $i not finalized for this session";
+                    $flag_supp = TRUE;
+                    break;
+                }
+            
+            }          
         }
 
-        if($flag == TRUE){
-            $str = $data."-view";
-            return redirect()->to('/finalizeParticulars');            
-        }else{            
+
+
+
+        if($flag_main == TRUE){
+            $str = '/'.$ar[0]."-view";
+            return redirect()->to($str);     
+
+        }else{      
+            if($flag_supp == TRUE)      {
+                return redirect()->to('/finalizeParticulars');            
+            }
+
             return $next($request);
         }
         

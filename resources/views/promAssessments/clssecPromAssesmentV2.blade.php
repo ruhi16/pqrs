@@ -8,7 +8,7 @@
 @section('content')
 <h2>Class:      <b>{{ $clssec->clss->name }}</b> , 
     Section:    <b>{{ $clssec->section->name }}</b>, 
-    CT:         <b>{{$clsTeacher->first()->teacher->name }}</b>, 
+    CT:         <b>{{$clsTeacher->first()->teacher->name or ''}}</b>, 
     Session:    {{ $session->name }},    Promotional Assessment</h2>
 
     <a href="{{ url('/clssec-PromotionalStdCrStatusRefresh', [$clssec->id])}}" class='btn btn-primary btn-lg pull-right'>Refresh</a>

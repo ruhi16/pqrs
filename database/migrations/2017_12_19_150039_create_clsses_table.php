@@ -16,6 +16,8 @@ class CreateClssesTable extends Migration
         Schema::create('clsses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('next_clss_id');
+            $table->integer('prev_session_pk');
             $table->integer('session_id');
             $table->timestamps();
         });

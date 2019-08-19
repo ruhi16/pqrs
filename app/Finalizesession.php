@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Builder;
 class Finalizesession extends Model
 {
     protected $guarded = ['id'];
+    private static $table_type = "System";
+    public static function getTableType()
+    {
+        return self::$table_type;
+    } 
 
 
     protected static function boot()

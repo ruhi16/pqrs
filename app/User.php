@@ -26,7 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+    
+    private static $table_type = "System";
+    public static function getTableType()
+    {
+        return self::$table_type;
+    } 
 
     //to get columns name corresponding to the model
     // public function getTableColumns() {
