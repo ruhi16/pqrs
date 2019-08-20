@@ -18,6 +18,7 @@ class CreateClssecsTable extends Migration
             $table->integer('clss_id');
             $table->integer('section_id');
             $table->integer('session_id');
+            $table->integer('prev_session_pk');
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ class CreateGradesTable extends Migration
             $table->float('enpercentage');
             $table->string('descrp')->nullable();
             $table->integer('session_id');
+            $table->integer('prev_session_pk');
             $table->timestamps();
         });
     }

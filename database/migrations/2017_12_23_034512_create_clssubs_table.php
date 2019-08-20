@@ -22,6 +22,7 @@ class CreateClssubsTable extends Migration
             $table->integer('subject_order');
             $table->integer('combination_no')->default('0');
             $table->integer('session_id')->nullable();
+            $table->integer('prev_session_pk');
             $table->timestamps();
         });
     }

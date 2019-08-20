@@ -19,6 +19,7 @@ class CreateGradedescriptionsTable extends Migration
             $table->integer('grade_id')->nullable();
             $table->string('desc')->nullable();
             $table->integer('session_id')->nullable();
+            $table->integer('prev_session_pk');
             $table->timestamps();
         });
     }

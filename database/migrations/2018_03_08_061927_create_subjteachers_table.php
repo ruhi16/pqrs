@@ -18,7 +18,8 @@ class CreateSubjteachersTable extends Migration
             $table->integer('session_id');
             $table->integer('subject_id');
             $table->integer('teacher_id');            
-            $table->string('status');            
+            $table->string('status');
+            $table->integer('prev_session_pk');           
             $table->timestamps();
         });
     }

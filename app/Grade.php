@@ -16,11 +16,9 @@ class Grade extends Model
     }
     public static function getSupportTables()
     {
-        $support_tables = [];
-        array_push($support_tables, Exam::getTableName());
+        $support_tables = [];        
         array_push($support_tables, Extype::getTableName());
-        array_push($support_tables, Clss::getTableName());
-        array_push($support_tables, Subject::getTableName());
+        array_push($support_tables, Gradeparticular::getTableName());        
 
         return $support_tables;
     }

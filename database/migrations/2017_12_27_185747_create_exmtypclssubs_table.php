@@ -22,6 +22,7 @@ class CreateExmtypclssubsTable extends Migration
             $table->integer('fm');
             $table->integer('pm');
             $table->integer('session_id');
+            $table->integer('prev_session_pk');
             $table->timestamps();
         });
     }
