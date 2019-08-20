@@ -182,11 +182,10 @@ class FinalizeController extends Controller
             foreach ($prev_session_datas as $prev_session_data) {
                 // echo $prev_session_data->$id_str;
                 $prev_session_data->$id_str = $supported_collection->where('prev_session_pk', $prev_session_data->$id_str)->first()->id;
-                $prev_session_data->session_id = $session->id;
-                $prev_session_data->prev_session_pk = $prev_session_data->id;
+               
 
-                $prev_session_data->id = NULL;                
-                $prev_session_data->created_at = now();
+
+                
                 // echo "=>".$prev_session_data->$id_str ." == ";
                 
                 
@@ -196,31 +195,33 @@ class FinalizeController extends Controller
             
         }
 
-        $row_data_array = [];
-        foreach ($prev_session_datas as $prev_session_data) {
-            array_push($row_data_array, (array) $prev_session_data);
+        $array_data = [];
+        foreach ($prev_session_datas as $prev_session_data) {            
+            $prev_session_data->session_id = $session->id;
+            $prev_session_data->prev_session_pk = $prev_session_data->id;
+
+            $prev_session_data->id = NULL;
+            $prev_session_data->created_at = now();
+
+            array_push($array_data, (array) $prev_session_data);
         }
 
+        foreach ($array_data as $array_dt) {
+            $model_name = "App\\" . $fparts->model_name;
+            $data = $model_name::where(['session_id' => $array_dt['session_id'], 'prev_session_pk' => $array_dt['prev_session_pk']])->get();
 
-        foreach($row_data_array as $row_data_ar){
-            // print_r($row_data_ar);
-            // echo "<br>";
+            if ($data->isEmpty()) {
+                $data = $model_name::create($array_dt);
+
+                $fparts->refactor_status = "Done";
+                $fparts->save();
+            }
         }
-        // foreach($prev_session_datas as $prev_session_data){
-        //     echo $prev_session_data->clss_id ." : " . $prev_session_data->section_id;
-            
-            
-            
-            
-        //     print_r($row_data_array);
-        //     echo "<br>";
-        // }
+        
 
 
+        // dd($array_data);
 
-
-        dd($row_data_array);
-
-        // return back();
+        return back();
     }
 }
