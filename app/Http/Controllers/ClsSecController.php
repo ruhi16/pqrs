@@ -223,6 +223,7 @@ class ClsSecController extends Controller
         //    print_r($cs->clss()->first()->name);echo "<br>";
         // }
         return view('clssecTaskPage')
+        ->with('session',$ses)
         ->with('clssecs', $clssecs)
         ->with('teachers', $teachers)
         ->with('clssteachers', $clssteachers)

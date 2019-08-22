@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+<h1>Session:<b>{{$ses->name or ''}}</b></h1>
 <h1>Class:<b>{{$cls->name or ''}}</b>, Section:<b>{{$sec->name or ''}}</b>, Admission Page</h1>
 
 {{--  New Admission Students  --}}

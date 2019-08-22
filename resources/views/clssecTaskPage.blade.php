@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+<h1 class="pull-right text-danger">Session:<b>{{$session->name or ''}}</b></h1>
 <h1>Class Section Wise Task Page</h1>
 
 <table class="table table-bordered">
