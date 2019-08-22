@@ -69,7 +69,8 @@
       <tr>
         <td>{{$std->id}}</td>
         <td>
-          {{ $std->studentdb->name }}         
+          {{ $std->studentdb->name }}  
+          ({{ $std->clss_id }}-{{ $std->section_id }}-{{ $std->roll_no}})  
         </td>
         <td>
           {{ $std->result }}            
