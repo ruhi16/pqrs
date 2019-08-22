@@ -257,25 +257,31 @@ class ClsSecController extends Controller
         //Current Session: New Admission
         $stdb = Studentdb::whereStsession_id($ses->id)
         ->where('stclss_id', $clss_id)
-        ->where('stsec_id', $section_id)->get();
+        ->where('stsec_id', $section_id)
+        ->get();
 
         //Previouos Session: Promoted & Failed Students
-        $stpr = Studentcr::whereSession_id($ses->prev_session_id)
-            ->where('next_clss_id', $clss_id)
-            ->where('next_section_id', $section_id)
+        // $stpr = DB::table('studentcrs')->where('session_id', $ses->prev_session_id)        
+        $stpr = Studentcr::whereSession_id($ses->prev_session_id)   
+            ->where('next_clss_id', $cls->prev_session_pk)
+            ->where('next_section_id', $sec->prev_session_pk)
             ->get(); 
 
-        
+        // dd($stpr);
+        // foreach($stpr as $s){
+        //     print_r($s); echo "<br><br>";
+        // }
         // students whose roll no issued
         $stcr = Studentcr::whereSession_id($ses->id)            
-            ->where('clss_id', $clss_id)
-            ->where('section_id', $section_id)            
+            ->where('clss_id', $cls->id)
+            ->where('section_id', $sec->id)            
             ->get();            
         
         // students whose roll no  Issued
         $remRec = $stdb->whereNotIn('id', $stcr->pluck('studentdb_id'));        
         $stpr = $stpr->whereNotIn('studentdb_id', $stcr->pluck('studentdb_id'));
 
+        // dd($stcr);
 
         return view('clssecAdminPage')
         ->with('ses', $ses)        
@@ -288,28 +294,43 @@ class ClsSecController extends Controller
     }
 
     public function issueRoll($stdbid, $stcrid, $clss_id, $section_id){
-        $ses = Session::whereStatus('CURRENT')->first();
+        $ses = Session::whereStatus('CURRENT')->first();        
         $stddb = Studentdb::find($stdbid);
 
+        if($stcrid == 0){
+            //New Students
+            $cls = Clss::where('id', $clss_id)->first();
+            $sec = Section::where('id', $section_id)->first();
+        }else{
+            //Promoted or Failed Students
+            $cls = Clss::where('prev_session_pk', $clss_id)->first();
+            $sec = Section::where('prev_session_pk', $section_id)->first();
+        }
+
+
+
         $stcr = Studentcr::whereSession_id($ses->id)
-        ->where('clss_id', $clss_id)
-        ->where('section_id', $section_id)
-        ->orderBy('roll_no', 'desc')->get();//max('roll_no');
+            ->where('clss_id', $cls->id)
+            ->where('section_id', $sec->id)
+            ->orderBy('roll_no', 'desc')->get();//max('roll_no');
         
 
         $stdcr = new Studentcr;
         $stdcr->studentdb_id = $stddb->id;
         $stdcr->session_id = $ses->id;
-        $stdcr->clss_id = $clss_id;
-        $stdcr->section_id = $section_id;
-        $stdcr->roll_no = ($stcr->count() > 0 ? ($stcr->first()->roll_no+1): 1);//((empty($stcr) ? 0 : $stcr->first()->roll_no ) + 1);
+        $stdcr->clss_id = $cls->id;
+        $stdcr->section_id = $sec->id;
+        $stdcr->roll_no = ($stcr->count() > 0 ? ($stcr->first()->roll_no+1): 1); //((empty($stcr) ? 0 : $stcr->first()->roll_no ) + 1);
+        $stdcr->crstatus = "Running";
         $stdcr->save();
 
-        $studentcr = Studentcr::find($stcrid);
-        $studentcr->crstatus = "Running";
-        $studentcr->save();
+        if($stcrid != 0){
+            $studentcr = Studentcr::find($stcrid);
+            $studentcr->crstatus = "Running";
+            $studentcr->save();
+        }
 
-        return redirect()->to(url('/clssec-AdminPage',[$clss_id, $section_id]));
+        return redirect()->to(url('/clssec-AdminPage',[$cls->id, $sec->id]));
     }
 
 

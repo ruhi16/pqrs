@@ -15,15 +15,15 @@ class Studentcr extends Model
         return self::$table_type;
     } 
 
-    protected static function boot()
-    {
+    // protected static function boot()
+    // {
         
-        parent::boot();
+    //     parent::boot();
 
-        static::addGlobalScope('session_id', function (Builder $builder) {
-            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
-        });
-    } 
+    //     static::addGlobalScope('session_id', function (Builder $builder) {
+    //         $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+    //     });
+    // } 
     
     public function clss(){
         return $this->belongsTo('App\Clss');

@@ -41,7 +41,7 @@
         </td>
         <td></td>
         <td>          
-            <a href="{{url('/issueRoll',[$std->id, $std->stclss_id, $std->stsec_id])}}" class="btn btn-info issue-roll" id="btnSubmit">Issue Roll</a>          
+            <a href="{{url('/issueRoll',[$std->id, 0, $std->stclss_id, $std->stsec_id])}}" class="btn btn-info issue-roll" id="btnSubmit">Issue Roll</a>          
         </td>
       </tr>
       @endforeach
@@ -69,7 +69,7 @@
       <tr>
         <td>{{$std->id}}</td>
         <td>
-          {{ $std->studentdb->name }}          
+          {{ $std->studentdb->name }}         
         </td>
         <td>
           {{ $std->result }}            
@@ -83,8 +83,8 @@
           {{ $sec->name }}
         </td>
         <td></td>
-        <td>          
-            <a href="{{url('/issueRoll',[$std->studentdb->id, $std->id, $std->next_clss_id, $std->next_section_id])}}" class="btn btn-info issue-roll" id="btnSubmit">Issue Roll</a>          
+        <td>         
+            <a href="{{url('/issueRoll',[$std->studentdb->id, $std->id, $std->next_clss_id, $std->next_section_id])}}" class="btn btn-info issue-roll" id="btnSubmit">Issue Roll</a>         
         </td>
       </tr>
       @endforeach
