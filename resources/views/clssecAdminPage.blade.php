@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<h1>Class:<b>{{$cls->name}}</b>, Section:<b>{{$sec->name}}</b>, Admission Page</h1>
+<h1>Class:<b>{{$cls->name or ''}}</b>, Section:<b>{{$sec->name or ''}}</b>, Admission Page</h1>
 
 {{--  New Admission Students  --}}
 <table class="table table-bordered">
