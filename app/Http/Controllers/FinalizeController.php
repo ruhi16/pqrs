@@ -39,26 +39,26 @@ class FinalizeController extends Controller
         // echo "Class Table Type: ". Clss::getTableType(). ", Model Name: ". ucfirst(Str::singular(Clss::getTableName())); //str_singular();
         // echo "Clss-Section Support Tables: " . Clssec::getSupportTables();
 
-        print_r(Exmtypmodclssub::getSupportTables());
-        echo "<br>";
+        // print_r(Exmtypmodclssub::getSupportTables());
+        // echo "<br>";
 
-        print_r(Subjteacher::getSupportTables());
-        echo "<br>";
+        // print_r(Subjteacher::getSupportTables());
+        // echo "<br>";
 
-        print_r(Clssec::getSupportTables());
-        echo "<br>";
+        // print_r(Clssec::getSupportTables());
+        // echo "<br>";
 
-        print_r(Clssub::getSupportTables());
-        echo "<br>";
+        // print_r(Clssub::getSupportTables());
+        // echo "<br>";
 
-        print_r(Exmtypclssub::getSupportTables());
-        echo "<br>";
+        // print_r(Exmtypclssub::getSupportTables());
+        // echo "<br>";
 
-        print_r(Grade::getSupportTables());
-        echo "<br>";
+        // print_r(Grade::getSupportTables());
+        // echo "<br>";
 
-        print_r(Gradedescription::getSupportTables());
-        echo "<br>";
+        // print_r(Gradedescription::getSupportTables());
+        // echo "<br>";
 
         return view ('finalizeParticulars')
         ->with('fparts', $fparts)
@@ -178,11 +178,13 @@ class FinalizeController extends Controller
             $supported_collection = $supported_model_name::get(['id', 'prev_session_pk']);
             
             // echo "Table: " . $supported_table . ", id: " . $id_str . ", Model:" . $supported_model_name;
-
+            // dd($supported_collection);
             foreach ($prev_session_datas as $prev_session_data) {
                 // echo $prev_session_data->$id_str;
-                $prev_session_data->$id_str = $supported_collection->where('prev_session_pk', $prev_session_data->$id_str)->first()->id;
-               
+                if($supported_collection->where('prev_session_pk', $prev_session_data->$id_str)->first()){
+                    $prev_session_data->$id_str = $supported_collection->where('prev_session_pk', $prev_session_data->$id_str)->first()->id;
+                }
+            //    dd($prev_session_data->$id_str);
 
 
                 

@@ -115,7 +115,7 @@
   </thead>
   <tbody>
     @php $i = 0; @endphp
-    @foreach($stcr as $stc)
+    @foreach($stcr->sortBy('roll_no') as $stc)
     @php $i++; @endphp
     <tr id="{{ $stc->studentdb->id }}">
       <td id="id">{{ $stc->studentdb->id }}</td>

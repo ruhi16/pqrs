@@ -30,8 +30,8 @@
         <td>
         <div class="form-check form-check-inline">        
           @foreach($mods as $mod)    
-
-            
+xx
+            {{$ext->id}}-{{$exm->id}}-{{$mod->id}}
             <input  class="form-check-input" 
                     type="checkbox" 
                     name="fm"  

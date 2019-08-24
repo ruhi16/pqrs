@@ -56,7 +56,7 @@
           <td>{{ $teacher->status }}</td>
           <td>{{ $teacher->notes }}</td>
           <td>
-              <a class="btn btn-primary" href="{{url('/teachers-edit', [$teacher->id,2])}}">Edit</a> {{-- 2 is represented for Extype_id:summative --}}
+              <a class="btn btn-primary" href="{{url('/teachers-edit', [$teacher->id, $extype->id])}}">Edit</a> {{-- is represented for Extype_id:summative --}}
               {{--  <button class="btn btn-success btn-sm btnEdit" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#editModal">Edit</button>  --}}
               {{--  <button  class="btn btn-danger btn-sm btnDelt" data-id="{{$teacher->id}}" data-toggle="modal" data-target="#deleteModal">Delete</button>  --}}
               {{--  <a href="{{url('/clssesDelt',[$clss->id])}}" class="btn btn-danger  btn-sm btnDelt">Delete</a>  --}}

@@ -14,7 +14,17 @@ class Exmtypmodcls extends Model
     public static function getTableType()
     {
         return self::$table_type;
-    } 
+    }
+    public static function getSupportTables()
+    {
+        $support_tables = [];
+        array_push($support_tables, Exam::getTableName());
+        array_push($support_tables, Extype::getTableName());
+        array_push($support_tables, Mode::getTableName());
+        array_push($support_tables, Clss::getTableName());        
+
+        return $support_tables;
+    }
 
     public function scopeExclude($query, $value = array()){
         $columns = $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());        
@@ -27,7 +37,7 @@ class Exmtypmodcls extends Model
         parent::boot();
 
         static::addGlobalScope('session_id', function (Builder $builder) {
-            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+            $builder->where(self::getTableName() . '.session_id', Session::where('status', 'CURRENT')->first()->id);
         });
     } 
 

@@ -34,7 +34,7 @@ class Clssec extends Model
         parent::boot();
 
         static::addGlobalScope('session_id', function (Builder $builder) {
-            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+            $builder->where(self::getTableName() . '.session_id', Session::where('status', 'CURRENT')->first()->id);
         });
     } 
     
