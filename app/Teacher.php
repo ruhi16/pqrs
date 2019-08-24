@@ -26,10 +26,30 @@ class Teacher extends Model
         parent::boot();
 
         static::addGlobalScope('session_id', function (Builder $builder) {
-            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+            $builder->where(self::getTableName() . '.session_id', Session::where('status', 'CURRENT')->first()->id);
         });
     } 
     
+    //call only once at the time of session start, to update main subject
+    public static function updateMainSubject(){
+        $subjs = Subject::select('id','session_id','prev_session_pk')->get();        
+        $tMnainSubject = self::select('id','mnsub_id')->get();
+
+        foreach($tMnainSubject as $mainSubj){            
+            if( $subjs->where('prev_session_pk', $mainSubj->mnsub_id)->first() ){
+                $mainSubj->update(['mnsub_id' => $subjs->where('prev_session_pk', $mainSubj->mnsub_id)->first()->id ]);
+            }            
+        }        
+    }
+
+
+
+
+
+
+
+
+
     public function subjects(){
         return $this->belongsToMany('App\Subject', 'subjteachers');
     }

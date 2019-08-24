@@ -16,10 +16,11 @@ class MatchUserMiddleware
      */
     public function handle($request, Closure $next)
     {
+        // dd($request->route('teacher_id'));
         if( Auth::user()->role->name == "Admin" ){
             return $next($request);    
         }else{
-            if( Auth::user()->id == $request->route('teacher_id') ){
+            if( Auth::user()->teacher_id == $request->route('teacher_id') ){
                 
                 // echo "User: ". Auth::user()->name;
                 return $next($request);

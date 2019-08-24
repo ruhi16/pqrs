@@ -25,9 +25,9 @@
       <td width="15%">
       <div class="thumbnail">
       @php
-        $imgUrl = "teachersImage/".$teacher->id.".jpg";
+        $imgUrl = "teachersImage/".$teacher->img_name.".jpg";
       @endphp
-        <img src="{{url($imgUrl)}}" class="img-circle thumbnail" alt="Image Not Found!!" width="300px" >
+        <img src="{{url($imgUrl)}}" class="img-circle thumbnail" alt="Image Not Found!!".{{$imgUrl}} width="300px" >
 
         <form action="{{ route('teachers.image', [$teacher->id]) }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}

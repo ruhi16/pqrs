@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -27,11 +30,28 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-    private static $table_type = "System";
+    private static $table_type = "Relational";
     public static function getTableType()
     {
         return self::$table_type;
-    } 
+    }
+
+    // protected static function boot()
+    // {        
+    //     parent::boot();
+
+    //     static::addGlobalScope('session_id', function (Builder $builder) {
+    //         $builder->where(self::getTableName() . '.session_id', Session::where('status', 'CURRENT')->first()->id);
+    //     });
+    // }
+    public static function getSupportTables()
+    {
+        $support_tables = [];
+        array_push($support_tables, Teacher::getTableName());
+        // array_push($support_tables, Role::getTableName());        
+
+        return $support_tables;
+    }
 
     //to get columns name corresponding to the model
     // public function getTableColumns() {

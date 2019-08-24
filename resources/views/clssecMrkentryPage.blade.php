@@ -8,9 +8,9 @@
 @section('content')
 <ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
   <li role="presentation"><a href="{{ url('/teachers-takspan', [$loginteacher->id])}}">Home</a></li>
-  @if($clteacher != NULL)
+  {{-- @if($clteacher != NULL)
     <li role="presentation" class="active"><a href="{{ url('/teachers-CStakspan', [$loginteacher->id])}}">T-CS Task Pane</a></li>
-  @endif
+  @endif --}}
   <li role="presentation"><a href="#">Profile</a></li>
   <li role="presentation"><a href="#">Messages</a></li>  
 

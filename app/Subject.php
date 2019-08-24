@@ -10,11 +10,18 @@ class Subject extends Model
 {
     protected $guarded = ['id'];
 
-    private static $table_type = "Basic";
+    private static $table_type = "Relational";
     public static function getTableType()
     {
         return self::$table_type;
-    } 
+    }
+    public static function getSupportTables()
+    {
+        $support_tables = [];        
+        array_push($support_tables, Extype::getTableName());
+
+        return $support_tables;
+    }
     
 
     public function scopeExclude($query, $value = array()){
@@ -28,7 +35,7 @@ class Subject extends Model
         parent::boot();
 
         static::addGlobalScope('session_id', function (Builder $builder) {
-            $builder->where('session_id', Session::where('status', 'CURRENT')->first()->id);
+            $builder->where(self::getTableName().'.session_id', Session::where('status', 'CURRENT')->first()->id);
         });
     } 
 

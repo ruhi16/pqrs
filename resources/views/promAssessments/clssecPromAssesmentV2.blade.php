@@ -49,57 +49,64 @@
                 <td>
                     {{ $stdcr->result }}
                 </td>
-                <td class="text-center">
-                    @if( $stdcr->result == 'Promoted' )
-                        <b> {{ $stdcr->clss->parent->name }} -- {{$stdcr->next_section->name or ''}} </b>
-                    @else 
-                        {{ $stdcr->clss->name }}-{{$stdcr->next_section_id}}:{{ $stdcr->section->name }}
-                    @endif
-                    {{--  {{ $clssec }}  --}}
-                </td>
-                <td>
-                    @if( !$stdcr->next_section_id )
+                @if( $stdcr->result )
+                    <td class="text-center">
                         @if( $stdcr->result == 'Promoted' )
-                            <select class="form-control nextSection" name="nextSection" id="nextSection{{$stdcr->id}}">
-                                <option value="-{{$stdcr->id}}"></option>
-                                @foreach($nextclssec as $nextclsc)
-                                    <option value="{{ $nextclsc->section->id }}-{{$stdcr->id}}"
-                                        {{-- "{{ $stdcr->section->id == $currclsc->section->id ? 'selected' : '' }}" --}}
-                                        >
-                                        {{ $nextclsc->section->name }}</option>
-                                @endforeach
-                            </select>
+                            <b> {{ $stdcr->clss->parent->name }} -- {{$stdcr->next_section->name or ''}} </b>
                         @else 
-                            <select class="form-control nextSection" name="nextSection" id="nextSection{{$stdcr->id}}">
-                                <option value="-{{$stdcr->id}}"></option>
-                                @foreach($currclssec as $currclsc)
-                                    <option value="{{ $currclsc->section->id }}-{{$stdcr->id}}">
-                                        {{ $currclsc->section->name }}</option>
-                                @endforeach
-                            </select>
+                            {{ $stdcr->clss->name }}-{{$stdcr->next_section_id}}:{{ $stdcr->section->name }}
                         @endif
+                        {{--  {{ $clssec }}  --}}
+                    </td>
+                    <td>
+                        @if( !$stdcr->next_section_id )
+                            @if( $stdcr->result == 'Promoted' )
+                                <select class="form-control nextSection" name="nextSection" id="nextSection{{$stdcr->id}}">
+                                    <option value="-{{$stdcr->id}}"></option>
+                                    @foreach($nextclssec as $nextclsc)
+                                        <option value="{{ $nextclsc->section->id }}-{{$stdcr->id}}"
+                                            {{-- "{{ $stdcr->section->id == $currclsc->section->id ? 'selected' : '' }}" --}}
+                                            >
+                                            {{ $nextclsc->section->name }}</option>
+                                    @endforeach
+                                </select>
+                            @else 
+                                <select class="form-control nextSection" name="nextSection" id="nextSection{{$stdcr->id}}">
+                                    <option value="-{{$stdcr->id}}"></option>
+                                    @foreach($currclssec as $currclsc)
+                                        <option value="{{ $currclsc->section->id }}-{{$stdcr->id}}">
+                                            {{ $currclsc->section->name }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
 
-                    @else
-                        @if( $stdcr->crstatus == NULL )
-                            <a class="btn btn-default btn-sm" href="{{url('/reupdateClssSectionPromotionalInfo', [$stdcr->id])}}">Update</a>
                         @else
-                            <small>Roll No Issued</small>
+                            @if( $stdcr->crstatus == NULL )
+                                <a class="btn btn-default btn-sm" href="{{url('/reupdateClssSectionPromotionalInfo', [$stdcr->id])}}">Update</a>
+                            @else
+                                <small>Roll No Issued</small>
+                            @endif
                         @endif
-                    @endif
-                </td>
+                    </td>
 
-                <td>
-                    @if( !$stdcr->next_section_id )
-                        <button class="btn btn-success btnPromote" id="btnPromote{{$stdcr->id}}"
-                            data-crid  ="{{$stdcr->id}}"
-                            data-dbid ="{{$stdcr->studentdb->id}}"
-                            data-nextclss = "{{ $stdcr->result == 'Promoted' ? $nextclssec->first()->clss->id :  $currclssec->first()->clss->id}}"                     
-                            >
-                            
-                            Submit
-                        </button>
-                    @endif
-                </td>
+                    <td>
+                        @if( !$stdcr->next_section_id )
+                            <button class="btn btn-success btnPromote" id="btnPromote{{$stdcr->id}}"
+                                data-crid  ="{{$stdcr->id}}"
+                                data-dbid ="{{$stdcr->studentdb->id}}"
+                                data-nextclss = "{{ $stdcr->result == 'Promoted' ? $nextclssec->first()->clss->id :  $currclssec->first()->clss->id}}"                     
+                                >
+                                
+                                Submit
+                            </button>
+                        @endif
+                    </td>
+                @else 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                @endif
+
             </tr>
         @endforeach        
         

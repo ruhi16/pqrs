@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
         
         Route::group(['middleware' => ['user']], function(){
+        // dd(Auth::user());
             Route::get('/user', 'HomeController@user');
 
         });

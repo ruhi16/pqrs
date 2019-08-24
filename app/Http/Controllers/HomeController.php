@@ -29,9 +29,11 @@ class HomeController extends Controller
         // echo "from Controller"."<br>";
         // echo Auth::user()->name."<br>";
         // echo Auth::user()->role->name."<br>";
-        if(Auth::user()->role->name == "Admin"){
+        if(Auth::user()->role->name == "Admin"){            
+            
             return redirect()->to('/admin');//view('/admin');
         }else{
+            // dd(Auth::user());
             return redirect()->to('/user'); //view('/user');
         }
     }
@@ -42,7 +44,10 @@ class HomeController extends Controller
     }
 
     public function user(){
-        $id = Auth::user()->id;        
+        // echo "homecontroller:user";
+        // dd(Auth::user());
+        $id = Auth::user()->teacher_id;        
+        // echo $id;
         return redirect()->to('/teachers-takspan/'.$id); //user.blad.php
     }
 

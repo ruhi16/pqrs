@@ -39,7 +39,7 @@
 			@endforeach
 			{{--  {{ $ansscdists->where('teacher_id', $teacher->id) }}  --}}
 		</td>
-		<td class="text-center">{{ $users->where('id', $teacher->id)->first()->email }} </td>
+		<td class="text-center">{{ $users->where('teacher_id', $teacher->id)->first()->email or ''}} </td>
 		<td class="text-center">asdfgh </td>
 		<td></td>
 	</tr>

@@ -34,6 +34,7 @@ class TeacherController extends Controller
     public function teachersTakspan($teacher_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $teacher = Teacher::find($teacher_id);
+        // dd($teacher);
         $clteacher = Clssteacher::where('session_id', $ses->id)
             ->where('teacher_id', $teacher->id)->first();
 
@@ -100,8 +101,8 @@ class TeacherController extends Controller
 
 
     public function teachersImage(Request $request, $teacher_id){
-        echo 'welcome:'. $teacher_id;
-        $photo = '';
+        // echo 'welcome:'. $teacher_id;
+        
         if($request->hasFile('photo')){            
             $dpath = "teachersImage";
             $file = $request->photo;
@@ -110,9 +111,15 @@ class TeacherController extends Controller
             // $fname = rand(111,999).".".$extn;
             $fname = $teacher_id.".jpg";
             $file->move($dpath, $fname);
-            echo 'file selected'.$fname;
+            
+            //save the image name, without extention
+            $teacher = Teacher::find($teacher_id);
+            $teacher->img_name = $teacher_id;
+            $teacher->save();
+
+            // echo 'file selected'.$fname;
         }else{
-            echo 'no file selected';
+            // echo 'no file selected';
         }
             
         return back();
@@ -129,13 +136,19 @@ class TeacherController extends Controller
         $teachHQuals = Miscoption::where('TabName', 'teachers')->where('FieldName','hqual')->get();
         
         $sumtvSubjs = Extype::whereName('Summative')->whereSession_id($ses->id)->first();
-        $teachSubjs  = Subject::whereExtype_id($sumtvSubjs->id)->get();
+        $teachSubjs = Subject::whereExtype_id($sumtvSubjs->id)->get();
+
+        $extype = Extype::where('name', 'Summative')->first();
+
+        // Execute only once per session to update Main Subject of Teacher
+        // (Teacher::updateMainSubject());
 
         return view('teachers.teachers')
         ->withTeachers($teachers)
         ->withTeachDesigs($teachDesigs)
         ->withTeachHQuals($teachHQuals)
         ->withTeachSubjs($teachSubjs)
+        ->withExtype($extype)
         ;
 
     }
@@ -143,36 +156,32 @@ class TeacherController extends Controller
     public function teachersSubmit(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
 
-        // echo "Name: ".$request->teacherMob . "<br>";
-        // echo "Name: ".$request->teacherName . "<br>";
-        // echo "Name: ".$request->teacherDesig . "<br>";
-        // echo "Name: ".$request->teacherHQual . "<br>";
-        // echo "Name: ".$request->teacherMSubj . "<br>";
-        // print_r($request->teacherSubj);
-        
+                
         //for New Teacher's Data Entry
         $teacher = new Teacher;        
-        $teacher->name  = $request->teacherName; 
+        $teacher->name   = $request->teacherName; 
         $teacher->ncname = $request->teacherNickName;
         $teacher->mobno   = $request->teacherMob;        
         $teacher->desig = $request->teacherDesig;
         $teacher->hqual = $request->teacherHQual;
-        $teacher->mnsub_id = $request->teacherMSubj;
+        $teacher->mnsub_id   = $request->teacherMSubj;
         $teacher->session_id = $ses->id;
         $teacher->status = 'OKey';
         $teacher->notes  = 'NA';
         $teacher->save();
 
         //for above Teacher's preferred Subjects Entry
-        $temp = [];
-        foreach($request->teacherSubj as $tSb){
-            $prop = [];
-            $prop['session_id'] = $ses->id;
-            $prop['status'] = 'OKey';
-            $temp[$tSb] = $prop;
+        if ($request->teacherSubj) {
+            $temp = [];
+            foreach($request->teacherSubj as $tSb){
+                $prop = [];
+                $prop['session_id'] = $ses->id;
+                $prop['status'] = 'OKey';
+                $temp[$tSb] = $prop;
+            }
+            $teacher->subjects()->sync($temp);
         }
-        $teacher->subjects()->sync($temp);
-
+        
         return back();
     }
 
@@ -191,7 +200,8 @@ class TeacherController extends Controller
         $teachDesigs = Miscoption::where('TabName', 'teachers')->where('FieldName','desig')->get();
         $teachHQuals = Miscoption::where('TabName', 'teachers')->where('FieldName','hqual')->get();
         $teachSubjs  = Subject::whereExtype_id($extype_id)->get();
-
+//         echo $extype_id;
+// dd($teachSubjs);
         
         return view('teachers.teachersEdit')
         ->withTeacher($teacher)
@@ -218,15 +228,17 @@ class TeacherController extends Controller
 
 
         //for above Teacher's preferred Subjects Entry
-        $temp = [];
-        foreach($request->teacherSubj as $tSb){
-            $prop = [];
-            $prop['session_id'] = $ses->id;
-            $prop['status'] = 'OKey';
-            $temp[$tSb] = $prop;
+        if($request->teacherSubj){
+            $temp = [];
+            foreach($request->teacherSubj as $tSb){
+                $prop = [];
+                $prop['session_id'] = $ses->id;
+                $prop['status'] = 'OKey';
+                $temp[$tSb] = $prop;
+            }
+            // print_r($temp);
+            $teacher->subjects()->sync($temp);
         }
-        // print_r($temp);
-        $teacher->subjects()->sync($temp);
 
         return redirect()->to('/teachers-view');
     }

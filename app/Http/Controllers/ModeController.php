@@ -108,7 +108,7 @@ class ModeController extends Controller
         $mods = Mode::where('session_id', $ses->id)->get();
 
         $etmcs = Exmtypmodcls::all();
-        
+        // dd($etmcs);
         return view ('exmtypmodcls.exmtypmodclsAssign')
             ->with('exms', $exms)
             ->with('clss', $clss)
