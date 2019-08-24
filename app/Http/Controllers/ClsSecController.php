@@ -284,6 +284,11 @@ class ClsSecController extends Controller
 
         // dd($stcr);
 
+        $prev_clss = DB::table('clsses')->whereSession_id($ses->prev_session_id)->get();
+        $prev_secs = DB::table('sections')->whereSession_id($ses->prev_session_id)->get();
+
+        
+
         return view('clssecAdminPage')
         ->with('ses', $ses)        
         ->with('stcr', $stcr)
@@ -291,6 +296,8 @@ class ClsSecController extends Controller
         ->with('remRec', $remRec)
         ->with('cls', $cls)
         ->with('sec', $sec)
+        ->with('prev_clss', $prev_clss)
+        ->with('prev_secs', $prev_secs)
         ;
     }
 

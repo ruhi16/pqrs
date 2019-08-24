@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<h1>Session:<b>{{$ses->name or ''}}</b></h1>
+<h1 class="pull-right">Session:<b>{{$ses->name or ''}}</b></h1>
 <h1>Class:<b>{{$cls->name or ''}}</b>, Section:<b>{{$sec->name or ''}}</b>, Admission Page</h1>
 
 {{--  New Admission Students  --}}
@@ -71,7 +71,8 @@
         <td>{{$std->id}}</td>
         <td>
           {{ $std->studentdb->name }}  
-          ({{ $std->clss_id }}-{{ $std->section_id }}-{{ $std->roll_no}})  
+          ({{$prev_clss->where('id', $std->clss_id)->first()->name}} -
+           {{$prev_secs->where('id', $std->section_id)->first()->name}} - {{ $std->roll_no}})  
         </td>
         <td>
           {{ $std->result }}            
