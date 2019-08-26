@@ -92,8 +92,8 @@ class MarksEntryController extends Controller
             ->first();
         
         $loginteacher = Teacher::find(Auth::user()->teacher_id);
-        dd(Auth::user());
-
+        // dd(Auth::user());
+        // dd($loginteacher);
         // $clteacher = Clssteacher::where('session_id', $ses->id)
         //     ->where('teacher_id', $loginteacher->id)
         //     ->first();
