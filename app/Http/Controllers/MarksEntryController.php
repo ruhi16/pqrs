@@ -45,6 +45,7 @@ class MarksEntryController extends Controller
                    ->whereClss_id($clssec->clss_id)->get();
         
         $exm = Exam::whereSession_id($ses->id)->get();
+        $exmtyp = Extype::whereSession_id($ses->id)->get();
         $modes = Mode::whereSession_id($ses->id)->get();
         $clsb = Clssub::whereClss_id($clssec->clss_id)->get();
 
@@ -57,7 +58,8 @@ class MarksEntryController extends Controller
         ->withExtpmdcls($extpmdcls)
         ->withClsb($clsb)
         ->withClsc($clssec)        
-        ->withExm($exm) 
+        ->withExm($exm)
+        ->withExmtyp($exmtyp) 
         ->withModes($modes) 
         ->withStdmrk($stdmrk) 
         ->withCls($clssec->clss->name)
@@ -377,8 +379,9 @@ class MarksEntryController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
         $extpmdcl = Exmtypmodcls::find($extpmdcl_id);
         $clsc = Clssec::find($clsc_id);
+        $exmtyp = Extype::whereSession_id($ses->id)->get();
         
-        $subj = Subject::where('extype_id', 1)->get();//Formative Only
+        $subj = Subject::where('extype_id', $exmtyp->where('name', 'Formative')->first()->id)->get();//Formative Only
 
         
         $clsb = Clssub::where('clss_id', $clsc->clss_id)
@@ -386,8 +389,8 @@ class MarksEntryController extends Controller
                     ->get();
         
         $stdcrs = Studentcr::whereSession_id($ses->id)
-            ->whereClss_id(Clssec::find($clsc_id)->clss->id)
-            ->whereSection_id(Clssec::find($clsc_id)->section->id)->get();
+            ->whereClss_id(Clssec::find($clsc->id)->clss->id)
+            ->whereSection_id(Clssec::find($clsc->id)->section->id)->get();
         
         $extpmdclsbs = Exmtypmodclssub::whereSession_id($ses->id)
                         ->where('exam_id', $extpmdcl->exam_id)
@@ -406,7 +409,7 @@ class MarksEntryController extends Controller
                 ->whereIn('studentcr_id', $stdcrs->pluck('id'))
                 ->whereIn('clssub_id', $clsbids->pluck('id'))
                 ->whereIn('exmtypmodclssub_id', $extpmdclsbs->pluck('id'))
-                ->where('clssec_id', $clsc_id)                
+                ->where('clssec_id', $clsc->id)                
                 ->get();       
 
         return view('clssecMarksEntry.clssecMrkentryForAllSubj')

@@ -58,7 +58,7 @@
     </tr>
 </thead>
 <tbody>
-    @foreach($stdcrs as $stdcr)
+    @foreach($stdcrs->sortBY('roll_no') as $stdcr)
     <tr id="dataRow">
         <td>{{ $stdcr->id }}</td>
         <td>{{ $stdcr->studentdb->name }}</td>

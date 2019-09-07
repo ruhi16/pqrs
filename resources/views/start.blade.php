@@ -54,11 +54,11 @@
                             <thead>
                                 <tr>
                                     <th>Particulars</th>
-                                    {{--  @foreach($clssecs->unique('clss_id')  as $clssec )
+                                     @foreach($clssecs->unique('clss_id')  as $clssec )
                                         <th class="text-center" colspan="{{ $clssecs->where('clss_id', $clssec->clss->id)->count() }}">
                                             {{ $clssec->clss->name }} 
                                         </th>
-                                    @endforeach  --}}
+                                    @endforeach 
                                     <th>Total</th>
                                 </tr>
                             </thead>
@@ -70,7 +70,7 @@
                                             @if($clsc->clss_id == $clssec->clss->id)
                                             <th class="text-center">
                                                 {{ $clsc->section->name }}
-                                                {{--  :{{ $stdcrs->where('clss_id',$clsc->clss->id)
+                                                 {{-- :{{ $stdcrs->where('clss_id',$clsc->clss->id)
                                                         ->where('section_id', $clsc->section->id)
                                                         ->count()
                                                 }}  --}}
@@ -408,7 +408,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    //for Summative Exam......
+                    {{-- //for Summative Exam...... --}}
                     <tr>                        
                         <td>All Classes</td>
                         @foreach($exams as $exam)
@@ -420,7 +420,7 @@
                         @endforeach
                     </tr>  
 
-                    //for Formative Exam......
+                    {{-- //for Formative Exam...... --}}
                     <tr>                        
                         <td>All Classes</td>
                         @foreach($exams as $exam)

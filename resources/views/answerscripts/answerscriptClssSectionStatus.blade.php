@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<h1>Answer Script Finalize Status For  <U>{{ $exam->name }}</U></h1>
+<h1><b>Summative</b> Answer Script Finalize Status For  <U>{{ $exam->name }}</U></h1>
 
 <div class="btn-group pull-right" role="group" aria-label="...">
   <button type="button" class="btn btn-default" id="all"    >All</button>
@@ -41,7 +41,7 @@
         </thead>
         <tbody>            
             @foreach($cls->subjects as $csub)
-                @if($csub->extype_id == 2)
+                @if($csub->extype_id == $extype->first()->id)
                     <tr>
                     <td>{{ $csub->name }}</td>
                     @foreach($cls->clssecs as $csec)
