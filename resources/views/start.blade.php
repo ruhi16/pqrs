@@ -408,7 +408,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    //for Summative Exam......
+                    {{-- //for Summative Exam...... --}}
                     <tr>                        
                         <td>All Classes</td>
                         @foreach($exams as $exam)
@@ -420,7 +420,7 @@
                         @endforeach
                     </tr>  
 
-                    //for Formative Exam......
+                    {{-- //for Formative Exam...... --}}
                     <tr>                        
                         <td>All Classes</td>
                         @foreach($exams as $exam)
