@@ -413,7 +413,7 @@
                         <td>All Classes</td>
                         @foreach($exams as $exam)
                             <td class="text-center">
-                                <a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2, 0]) }}">Summative Exam Status</a> /
+                                <a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 4, 0]) }}">Summative Exam Status</a> /
                                 <a href="{{ url('/answerScript-clss-sectionStatus', [$exam->id, 2, 1]) }}">in PDF</a>
                                 
                             </td>

@@ -68,7 +68,7 @@
                                 }
                             @endphp
                             <td><small>
-                                {{ $teacher_name }}
+                                {{ $teacher_name }} 
                                 @if($teacher_name != "")
                                     {!! $finalize_status !!}
                                 @endif

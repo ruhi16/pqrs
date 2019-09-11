@@ -78,6 +78,7 @@ class StartController extends Controller
             
 
             $exams = Exam::whereSession_id($ses->id)->get();
+            $extype = Extype::where('session_id', $ses->id)->where('name', 'Summative')->get();
 
             return view('start')
                 ->with('clssecs', $clssecs)
@@ -86,6 +87,7 @@ class StartController extends Controller
                 ->with('controllers',$controllers)
                 ->with('stdcrsClsSecMF', $stdcrsClsSecMF)
                 ->with('exams', $exams)
+                ->with('extype', $extype)
                 ; //homepage
     
     }
