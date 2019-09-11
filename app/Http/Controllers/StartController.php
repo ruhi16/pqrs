@@ -93,10 +93,34 @@ class StartController extends Controller
     }
 
     public function start2(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $clssecs = Clssec::whereSession_id($ses->id)->get();
+        $clss = Clss::where('session_id', $ses->id)->get();
+
+        $stdcrs = Studentcr::where('session_id', $ses->id)->get();
+        $stddbs = Studentdb::all();
 
 
+        $stdcrsClsSecMF = [];
 
-        return view('starts.start2');
+        foreach ($stdcrs as $std) {
+            $str = $std->clss_id . '-' . $std->section_id . '-' . $std->studentdb->ssex;
+            $stdcrsClsSecMF[$std->studentdb->id] = strtoupper($str);
+        }
+
+        
+        $stdcrsClsSecMF = array_count_values($stdcrsClsSecMF);
+
+        $exams = Exam::whereSession_id($ses->id)->get();
+        $extype = Extype::where('session_id', $ses->id)->where('name', 'Summative')->get();
+
+        return view('starts.start2')
+            ->with('clssecs', $clssecs)
+            ->with('stdcrs', $stdcrs)
+            ->with('clss', $clss)            
+            ->with('stdcrsClsSecMF', $stdcrsClsSecMF)
+            ->with('exams', $exams)
+            ->with('extype', $extype); //homepage
     }
 
 
