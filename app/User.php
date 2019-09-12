@@ -30,7 +30,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-    private static $table_type = "Relational";
+    private static $table_type = "System";
     public static function getTableType()
     {
         return self::$table_type;

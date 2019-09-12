@@ -175,6 +175,8 @@ class AnswerScriptController extends Controller
         $clss = Clss::all();
         $exam = Exam::find($exam_id);
         $exams = Exam::where('session_id', $ses->id)->get();
+        $extype = Extype::where('session_id', $ses->id)->where('name', 'Summative')->get();
+        // dd($extype);
         
         $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
                         //->where('exam_id', $exam_id)
@@ -189,15 +191,13 @@ class AnswerScriptController extends Controller
 
         if( $is_pdf == 1 ){
             $pdf = mPDF::loadView('answerscripts.answerscriptClssSectionStatusPDF', 
-                ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'exams'=>$exams, 'clss'=>$clss,
+                ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'exams'=>$exams, 'extype'=> $extype, 'clss'=>$clss,
                 'ansscdists'=>$ansscdists, 'teacher'=>$teacher, 'stdcrs'=>$stdcrs
                 ]);
             // $strBNFont = TCPDF_FONTS::addTTFfont('./fonts/SolaimanLipi.ttf', 'TrueTypeUnicode', '', 32);
             // $pdf->SetFont($strBNFont, '', 8, '', 'false');
             //$pdf->setPaper("a4");        
             return $pdf->stream();
-
-
         }
 
 
@@ -206,6 +206,7 @@ class AnswerScriptController extends Controller
         ->with('clss', $clss)
         ->with('exam', $exam)
         ->with('exams', $exams)
+        ->with('extype', $extype)
         ->with('ansscdists', $ansscdists)
         ->with('teacher', $teacher)
         ->with('stdcrs', $stdcrs)
@@ -219,6 +220,7 @@ class AnswerScriptController extends Controller
         $clss = Clss::all();
         $exam = Exam::find($exam_id);
         $exams = Exam::where('session_id', $ses->id)->get();
+        $extype = Extype::where('session_id', $ses->id)->where('name', 'Formative')->get();
         
         $ansscdists = Answerscriptdistribution::where('session_id', $ses->id)
                         //->where('exam_id', $exam_id)
@@ -233,19 +235,19 @@ class AnswerScriptController extends Controller
 
         // NEW ENTRY
         $extpmdclsbs = Exmtypmodclssub::where('session_id', $ses->id)
-                        ->where('extype_id', 1) //formative : 1
+                        ->where('extype_id', $extype->first()->id) //formative : 1
                         ->pluck('id');
         $formarksdetails = MarksEntry::where('session_id', $ses->id)
                 ->whereIn('exmtypmodclssub_id', $extpmdclsbs)
                 ->get();
         $formsubjs = Subject::where('session_id', $ses->id)
-                ->where('extype_id', 1)->pluck('id');           //formative subjects only
+                ->where('extype_id', $extype->first()->id)->pluck('id');           //formative subjects only
         
         $clssecs = Clssec::where('session_id', $ses->id)->get();
         $clssubjs = Clssub::where('session_id', $ses->id)
                     ->whereIn('subject_id', $formsubjs)
                     ->get();
-        // dd($clssubs);
+        // dd($clssubjs);
         $formsubjs = Subject::where('session_id', $ses->id)
                 ->where('extype_id', 1)->pluck('id');           //formative subjects only
         
@@ -301,7 +303,7 @@ class AnswerScriptController extends Controller
 
         if( $is_pdf == 1 ){
             $pdf = PDF::loadView('answerscripts.answerscriptClssSectionStatusFormPDF', 
-                ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'exams'=>$exams, 'clss'=>$clss,
+                ['school' =>$school, 'session'=>$ses, 'exam'=>$exam, 'exams'=>$exams, 'extype'=> $extype,'clss'=>$clss,
                 'ansscdists'=>$ansscdists, 'teacher'=>$teacher, 'stdcrs'=>$stdcrs
                 ]);
 
@@ -316,6 +318,7 @@ class AnswerScriptController extends Controller
         ->with('clss', $clss)
         ->with('exam', $exam)
         ->with('exams', $exams)
+        ->with('extype', $extype)
         ->with('ansscdists', $ansscdists)
         ->with('teacher', $teacher)
         ->with('classteachers', $classteachers)

@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<h1>Formative Marks Entry Finalize Status for Session <U>{{ $session->name }}</U></h1>
+<h1><b>Formative</b> Marks Entry Finalize Status for Session <U>{{ $session->name }}</U></h1>
 
 <div class="btn-group pull-right" role="group" aria-label="...">
   <button type="button" class="btn btn-default" id="all"    >All</button>
@@ -29,7 +29,7 @@
                     @endphp
                     <th colspan='{{ $exams->count() }}' class='text-center'>
                         {{ $csec->section->name }}: {{ $clscStd }}<br>
-                        <small>CT: {{ $classteachers->where('clss_id', $cls->id)->where('section_id', $csec->section_id)->first()->teacher->name }}</small>
+                        {{-- <small>CT: {{ $classteachers->where('clss_id', $cls->id)->where('section_id', $csec->section_id)->first()->teacher->name }}</small> --}}
                     </th>    
                 @endforeach
             </tr>        
@@ -44,7 +44,7 @@
         </thead>
         <tbody>            
             @foreach($cls->subjects as $csub)
-                @if($csub->extype_id == 1)              {{-- for Formative Exam!!! --}}
+                @if($csub->extype_id == $extype->first()->id)              {{-- for Formative Exam!!! --}}
                     <tr>
                     <td>{{ $csub->name }}</td>
                     @foreach($cls->clssecs as $csec)

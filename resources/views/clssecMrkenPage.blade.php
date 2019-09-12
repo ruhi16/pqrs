@@ -30,7 +30,7 @@
           {{--  @foreach($extpcls->groupBy('subject_id')->first() as $extpcl)  --}}
           @foreach($extpmdcls as $extpcl)
             @if(  $extpcl->exam_id == $ex->id && 
-                  $extpcl->extype_id == 1 &&                  
+                  $extpcl->extype_id == $exmtyp->where('name', 'Formative')->first()->id &&                  
                   $extpcl->mode_id == $mode->id )
                   {{--  {{ $extpcl->id }}  --}}
                   <a href="{{ url('/clssecstd-MarksEntryForAllSubj', [$extpcl->id, $clsc->id]) }}"><span class="glyphicon glyphicon-floppy-saved"></span></a> Enter Marks

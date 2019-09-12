@@ -2,7 +2,9 @@
       <div class="container">
         @if (Auth::check()) 
         <div class="navbar-header">
+          @if( Auth::user()->role->name == 'Admin')
           <a class="navbar-brand" href="{!! url('/start') !!}">Dashboard</a>
+          @endif
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -13,8 +15,9 @@
         <div class="collapse navbar-collapse" id="myNavbar">          
           
               <ul class="nav navbar-nav">
+                @if( Auth::user()->role->name == 'Admin')
                 <li><a href="{{url('/studentdbmultipage-search')}}">Home Page</a></li>
-
+                @endif
                 {{--  <li class="dropdown">
                   <a href="{!! url('/start') !!}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Students <span class="caret"></span>
@@ -28,7 +31,7 @@
                   </ul>
                 </li>  --}}
 
-
+                @if( Auth::user()->role->name == 'Admin')
                 <li class="dropdown">
                   <a href="{!! url('/start') !!}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Admission <span class="caret"></span>
@@ -37,12 +40,13 @@
                     <li><a href="{{url('/studentdb')}}">New Admission</a></li>
                     <li><a href="{{url('/studentdbmultipage-view')}}">Newly Admited Student</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="{{url('/studentdbmultipage-listToUpdateSection')}}">Section Allotment</a></li>                    
+                    <li><a href="{{url('/start2')}}">Other Details</a></li>
+                    {{--  <li><a href="{{url('/studentdbmultipage-listToUpdateSection')}}">Section Allotment</a></li>  --}}
                   </ul>
                 </li>
+                @endif
 
-
-                <li class="dropdown">
+                {{--  <li class="dropdown">
                   <a href="{!! url('/start') !!}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Exam <span class="caret"></span>
                   </a>
@@ -55,9 +59,9 @@
                     <li role="separator" class="divider"></li>
                     <li><a href="#">Class Wise Promotional Rules</a></li>
                   </ul>
-                </li>
+                </li>  --}}
 
-                <li class="dropdown">
+                {{--  <li class="dropdown">
                   <a href="{!! url('/start') !!}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Class-Section <span class="caret"></span>
                   </a>
@@ -80,9 +84,9 @@
                     <li><a href="#">Transfer to New Session & Finalize</a></li>
                     <li><a href="#">Transfered Students List</a></li>
                   </ul>                
-                </li>
+                </li>  --}}
                 
-                <li class="dropdown"></a>
+                {{--  <li class="dropdown"></a>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Teachers <span class="caret"></span>
                   </a>
@@ -95,8 +99,8 @@
                     <li role="separator" class="divider"></li>
                     <li><a href="#">Teachers Message Center</a></li>                    
                   </ul>
-                </li>
-                <li>
+                </li>  --}}
+                {{--  <li>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Miscellenious <span class="caret"></span>
                   </a>
@@ -108,8 +112,8 @@
                     <li role="separator" class="divider"></li>
                     <li><a href="#">User Password Change</a></li>                                        
                   </ul>
-                </li>
-                <li>
+                </li>  --}}
+                {{--  <li>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Reports <span class="caret"></span>
                   </a>
@@ -121,11 +125,11 @@
                     <li role="separator" class="divider"></li>
                     <li><a href="#"></a></li>                                        
                   </ul>
-                </li>
+                </li>  --}}
                 
                 
                 
-                <li class="dropdown">
+                {{--  <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Settings <span class="caret"></span>
                   </a>
@@ -142,12 +146,12 @@
                     <li role="separator" class="divider"></li>
                     <li><a href="#">One more separated link</a></li>
                   </ul>
-              </li>
+              </li>  --}}
 
               </ul>
 
               <ul class="nav navbar-nav navbar-right">
-                <li><p class="navbar-brand"><small>{{ Auth::user()->name }}</small></p></li>
+                <li><p class="navbar-brand"><small><b>{{ Auth::user()->name }}</b>({{ Auth::user()->role->name }})</small></p></li>
                 <li><a href="{{ url('/get-logout') }}">Log Out</a></li>
               </ul>
           @else
