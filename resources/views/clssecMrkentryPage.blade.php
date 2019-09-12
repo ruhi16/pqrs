@@ -78,7 +78,8 @@
                     <input type="checkbox" aria-label="Checkbox for following text input" class="chkbox" name="{{$stdcr->id}}">                
                 </div>
                 <input  type="text" class="form-control marks{{$stdcr->id}}"  aria-label="Text input with checkbox"               
-                    value="{{ $marks < 0 ? 'AB' : $marks  }}">        
+                    value="{{ $marks < 0 ? 'AB' : $marks  }}"
+                    onkeyup="if (/\D/g.test(this.value))  this.value = this.value.replace(/\D/g,'')">        
             </div>  
 
 
