@@ -93,14 +93,16 @@ class MarksEntryController extends Controller
             ->where('subject_id',$extpcls->subject_id)
             ->first();
         
-        $loginteacher = Teacher::find(Auth::user()->teacher_id);
+        // $loginteacher = Teacher::find(Auth::user()->teacher_id);
+        $loginteacher = Teacher::where('user_id', Auth::user()->id)->first();
+        // dd(Teacher::find(Auth::user()->teacher_id));
         // dd(Auth::user());
         // dd($loginteacher);
-        // $clteacher = Clssteacher::where('session_id', $ses->id)
-        //     ->where('teacher_id', $loginteacher->id)
-        //     ->first();
+        $clteacher = Clssteacher::where('session_id', $ses->id)
+            ->where('teacher_id', $loginteacher->id)
+            ->first();
         
-
+        // dd($clteacher);
         return view ('clssecMrkentryPage')
         ->withExtpcls($extpcls)
         ->withClsc($clsc)
@@ -109,7 +111,7 @@ class MarksEntryController extends Controller
         ->withStdmrks($stdmrks)
         ->withAnsdistteacher($ansdistteacher)
         ->withLoginteacher($loginteacher)
-        // ->withClteacher($clteacher)
+        ->withClteacher($clteacher)
         ;
     }
 

@@ -27,6 +27,7 @@ class CreateTeachersTable extends Migration
             $table->timestamps();
             $table->integer('prev_session_pk')->nullable();
             $table->string('img_name')->nullable();
+            $table->integer('user_id');
         });
     }
 

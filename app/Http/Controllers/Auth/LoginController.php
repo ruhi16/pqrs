@@ -82,13 +82,14 @@ class LoginController extends Controller
     //     }
     // }
     public function loginCredencial(){
-
-        $teachers = Teacher::all();
+        $ses = Session::whereStatus('CURRENT')->first();
+        $teachers = Teacher::all();        
         $users = User::all();
         $ansscdists = Answerscriptdistribution::all();
 
 
         return view('login.loginCredencial')
+            ->with('session', $ses)
             ->with('teachers', $teachers)
             ->with('users', $users)
             ->with('ansscdists', $ansscdists)

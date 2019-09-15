@@ -34,7 +34,7 @@ class TeacherController extends Controller
     public function teachersTakspan($teacher_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $teacher = Teacher::find($teacher_id);
-        // dd($teacher);
+        // dd($ses->id, $teacher_id);
         $clteacher = Clssteacher::where('session_id', $ses->id)
             ->where('teacher_id', $teacher->id)->first();
 
