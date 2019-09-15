@@ -7,7 +7,7 @@
 
 @section('content')
 {{--  {{ dd($teacher) }}  --}}
-
+<h2 class="pull-left text-danger">Session: {{ $session->name }}</h2>
 <ul class="nav nav-pills pull-right">{{-- tabs or pills --}}
   <li role="presentation"><a href="{{ url('/teachers-takspan', [$teacher->id]) }}">Home</a></li>
   @if($clteacher != NULL)
@@ -37,6 +37,8 @@
 
 
 <h2>Class: {{ $clteacher->clss->name }},  Section:{{ $clteacher->section->name }}, Class Teacher:{{ $clteacher->teacher->name }}</h2>
+{{-- <h2 class="pull-right text-danger"><small>Session: {{ $session->name }}</small></h2> --}}
+
 
 <table class="table table-bordered">
   <thead>
@@ -60,10 +62,10 @@
           {{--  @foreach($extpcls->groupBy('subject_id')->first() as $extpcl)  --}}
           @foreach($extpmdcls as $extpcl)
             @if(  $extpcl->exam_id == $ex->id && 
-                  $extpcl->extype_id == 1 &&                  
+                  $extpcl->extype_id == $exmtyp->where('name', 'Formative')->first()->id &&                  
                   $extpcl->mode_id == $mode->id )
                   {{--  {{ $extpcl->id }}  --}}
-                  <a href="{{ url('/clssecstd-MarksEntryForAllSubj', [$extpcl->id, $clsc->id]) }}"><span class="glyphicon glyphicon-floppy-saved"></span></a> Enter Marks
+                  <a href="{{ url('/clssecstd-MarksEntryForAllSubj', [$extpcl->id, $clsc->id]) }}"><span class="glyphicon glyphicon-check"></span></a> Enter Marks
             @endif
           @endforeach
           </td>
@@ -91,7 +93,7 @@
   </thead>
   <tbody>
     @foreach($clsb as $cl)
-      @if($cl->subject->extype_id == 2) {{-- for formative subject only --}}
+      @if($cl->subject->extype_id == $exmtyp->where('name', 'Summative')->first()->id) {{-- for formative subject only --}}
         <td>{{ $cl->subject->extype->name }}</td> 
         <td>{{ $cl->subject->name }}</td>
         @foreach($exm as $ex)
@@ -103,15 +105,15 @@
                     $extpcl->subject_id == $cl->subject_id  &&
                     $extpcl->mode_id == $mode->id )
                   
-                  <a href="{{url('/clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}"><span class="glyphicon glyphicon-floppy-saved"></span></a>
+                  {{-- <a href="{{url('/clssecstd-MarksEntry',[$extpcl->id,$cl->id,$clsc->id])}}"><span class="glyphicon glyphicon-floppy-saved"></span></a> --}}
                   
                   @if($stdmrk
                       ->where('exmtypmodclssub_id', $extpcl->id)
                       ->where('clssec_id', $clsc->id)
                       ->where('clssub_id',$cl->id)->sum('marks')  != 0)
-                      <b>Done</b>
+                      <b>Done  </b><span class="glyphicon glyphicon-ok text-success"></span>
                   @else
-                    <b>Pending</b>
+                    <b>Pending  </b><span class="glyphicon glyphicon-remove text-danger"></span>
                   @endif
               
               @endif

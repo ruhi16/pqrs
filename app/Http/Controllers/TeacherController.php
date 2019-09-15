@@ -75,6 +75,7 @@ class TeacherController extends Controller
                    ->whereClss_id($clssec->clss_id)->get();
         
         $exm = Exam::all();
+        $exmtyp = Extype::all();
         $modes = Mode::all();
         $clsb = Clssub::whereClss_id($clssec->clss_id)->get();
 
@@ -85,6 +86,7 @@ class TeacherController extends Controller
         // dd($clteacher);
 
         return view('teachers.teacherCSTaskpane')
+            ->withSession($ses)
             ->withTeacher($teacher)
             ->withClteacher($clteacher)
             ->withExtpcls($extpcls) 
@@ -92,6 +94,7 @@ class TeacherController extends Controller
             ->withClsb($clsb)
             ->withClsc($clssec)        
             ->withExm($exm) 
+            ->withExmtyp($exmtyp)
             ->withModes($modes) 
             ->withStdmrk($stdmrk) 
             ->withCls($clssec->clss->name)
