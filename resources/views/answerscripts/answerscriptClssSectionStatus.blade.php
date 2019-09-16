@@ -53,7 +53,7 @@
                                     ->where('subject_id', $csub->id)
                                     ->pluck('teacher_id')->first();
 
-                                $teacher_name = $teacher->where('id',$allot_teacher)->pluck('nickName')->first();
+                                $teacher_name = $teacher->where('id', $allot_teacher)->pluck('nickName')->first();
                                 
                                 $status = $ansscdists->where('clss_id', $cls->id)
                                     ->where('exam_id', $exam->id)
@@ -61,8 +61,8 @@
                                     ->where('subject_id', $csub->id)
                                     ->pluck('finlz_dt')->first();
                                 if( $status ){
-                                    $finalize_status = "<span class='glyphicon glyphicon-ok'></span>";
-                                    $teacher_name ='';
+                                    $finalize_status = "<span class='glyphicon glyphicon-ok' style='color:green'></span>";
+                                    // $teacher_name ='';
                                 }else{
                                     $finalize_status = "<span class='glyphicon glyphicon-remove' style='color:red'></span>";                                
                                 }
