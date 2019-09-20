@@ -62,7 +62,7 @@
                                     ->pluck('finlz_dt')->first();
                                 if( $status ){
                                     $finalize_status = "<span class='glyphicon glyphicon-ok' style='color:green'></span>";
-                                    // $teacher_name ='';
+                                    
                                 }else{
                                     $finalize_status = "<span class='glyphicon glyphicon-remove' style='color:red'></span>";                                
                                 }
