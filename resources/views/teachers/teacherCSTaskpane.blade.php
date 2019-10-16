@@ -20,7 +20,11 @@
 <div class="clearfix"></div>
 <hr>
 
-
+<ul class="nav nav-pills pull-left">
+  <li role="presentation" Class= "active"><a href="#">Students Dashboard</a></li>
+  <li role="presentation"><a href="{{ url('clssec-AdminPage',[$clteacher->clss->id, $clteacher->section->id]) }}">Student Details</a></li>
+  
+</ul>
 
 
 {{--  <div class="navbar navbar-inverse">
@@ -34,7 +38,7 @@
   </div>
 </div>  --}}
 
-
+<br/><br/>
 
 <h2>Class: {{ $clteacher->clss->name }},  Section:{{ $clteacher->section->name }}, Class Teacher:{{ $clteacher->teacher->name }}</h2>
 {{-- <h2 class="pull-right text-danger"><small>Session: {{ $session->name }}</small></h2> --}}

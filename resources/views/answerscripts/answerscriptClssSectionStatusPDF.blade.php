@@ -84,7 +84,7 @@
                                     ->pluck('teacher_id')->first();
 
                                 $teacher_name = $teacher->where('id',$allot_teacher)->pluck('nickName')->first();
-                                
+                                //dd($teacher_name)
                                 $status = $ansscdists->where('clss_id', $cls->id)
                                     ->where('exam_id', $exam->id)
                                     ->where('section_id', $csec->section->id)
@@ -98,7 +98,7 @@
                                 }
                             @endphp
                             <td><small>
-                                {{ $teacher_name }}
+                                {{ $teacher_name }}x
                                 @if($teacher_name != "")
                                     {!! $finalize_status !!}
                                 @endif
