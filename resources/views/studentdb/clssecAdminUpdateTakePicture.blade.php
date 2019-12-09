@@ -14,10 +14,11 @@
   
 <div class="container">
     <h1 class="text-center">Capture webcam image with php and jquery - ItSolutionStuff.com</h1>
-    <h1>StudentDB Id: {{ $studentdb_id }}</h1>
+    <h2>Student Name: {{ $studentdb->name }}    </h2>
+    <h3>StudentDB Id: {{ $studentdb->id }}</h3>
 
     
-    <form method="POST" action="{{ url('clssecAdminUpdate-takePicture-done', [$studentdb_id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ url('clssecAdminUpdate-takePicture-done', [$studentdb->id, $clteacher_id, $clss_id, $section_id]) }}" enctype="multipart/form-data">
         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
         
         <div class="row">
@@ -30,9 +31,9 @@
             <div class="col-md-6">
                 <div id="results">Your captured image will appear here...</div>
             </div>
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 text-right">
                 <br/>
-                <button class="btn btn-success">Submit</button>
+                <button class="btn btn-success btn-submit" id="mySubmit" disabled >Submit</button>
             </div>
         </div>
     </form>
@@ -54,6 +55,8 @@
             $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
         } );
+
+        document.getElementById("mySubmit").disabled = false;
     }
 </script>
  

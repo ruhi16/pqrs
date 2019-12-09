@@ -392,11 +392,13 @@ class ClsSecController extends Controller
             ->with('remRec', $remRec)
             ->with('cls', $cls)
             ->with('sec', $sec)
+            ->with('clteacher_id', $clteacher_id)
             ->with('prev_clss', $prev_clss)
             ->with('prev_secs', $prev_secs);
         
     }
 
+    //Ajax Function
     public function clssecAdminUpdateAdm(Request $request){
         $ses = Session::whereStatus('CURRENT')->first();
         
@@ -414,14 +416,18 @@ class ClsSecController extends Controller
         return response()->json(['sdbid'=> $sdbid, 'sdbnm'=> $stddb->name]);
     }
 
-    public function clssecAdminUpdateTakePicture(Request $request, $studentdb_id){
-        
+    public function clssecAdminUpdateTakePicture($studentdb_id, $clteacher_id, $clss_id, $section_id){
+        $studentdb = Studentdb::find($studentdb_id);
         
         return view('studentdb.clssecAdminUpdateTakePicture')
-            ->with('studentdb_id', $studentdb_id);
+            ->with('studentdb', $studentdb)
+            ->with('clteacher_id', $clteacher_id)
+            ->with('clss_id', $clss_id)
+            ->with('section_id', $section_id)
+            ;
     }
 
-    public function clssecAdminUpdateTakePictureDone(Request $request, $studentdb_id){
+    public function clssecAdminUpdateTakePictureDone(Request $request, $studentdb_id, $clteacher_id, $clss_id, $section_id){
 
         $img = $request->image;
 
@@ -440,7 +446,10 @@ class ClsSecController extends Controller
         file_put_contents($file, $image_base64);
 
         // print_r($fileName);
-        return back(); 
+
+        // return back(); 
+        return redirect()->to( url('/updateDetails', [$clteacher_id, $clss_id, $section_id]) );
+
         
     }
 
