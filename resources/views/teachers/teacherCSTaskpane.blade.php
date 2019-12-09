@@ -22,7 +22,7 @@
 
 <ul class="nav nav-pills pull-left">
   <li role="presentation" Class= "active"><a href="#">Students Dashboard</a></li>
-  <li role="presentation"><a href="{{ url('clssec-AdminPage',[$clteacher->clss->id, $clteacher->section->id]) }}">Student Details</a></li>
+  <li role="presentation"><a href="{{ url('updateDetails',[$clteacher->id, $clteacher->clss->id, $clteacher->section->id]) }}">Student Details</a></li>
   
 </ul>
 

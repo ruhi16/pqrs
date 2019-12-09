@@ -202,6 +202,17 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');
         Route::get('/issueRoll/{stdbid}/{stcrid}/{clss_id}/{section_id}', 'ClsSecController@issueRoll');
+        
+        
+        // Route::get('/updateDetails/{stdbid}/{stcrid}/{clss_id}/{section_id}', 'ClsSecController@updateDetails');
+        // Route::get('/updateDetails/{stdbid}/{stcrid}/{clss_id}/{section_id}', 'ClsSecController@updateDetails');
+        Route::get('/updateDetails/{clteacher_id}/{clss_id}/{section_id}', 'ClsSecController@updateDetails');
+        Route::post('/clssecAdminUpdateAdm', 'ClsSecController@clssecAdminUpdateAdm');
+        Route::get('/clssecAdminUpdate-takePicture/{studentdb_id}','ClsSecController@clssecAdminUpdateTakePicture');
+        Route::post('/clssecAdminUpdate-takePicture-done/{studentdb_id}', 'ClsSecController@clssecAdminUpdateTakePictureDone');
+
+
+
 
 
         Route::get('/clssec-PromAssessment/{clssec_id}',   'PromAssessmentController@clssecPromAssessment');

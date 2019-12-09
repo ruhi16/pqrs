@@ -343,5 +343,106 @@ class ClsSecController extends Controller
 
 
 
+
+    public function updateDetails($clteacher_id, $clss_id, $section_id)
+    {
+        $ses = Session::whereStatus('CURRENT')->first();
+        $cls = Clss::find($clss_id);
+        $sec = Section::find($section_id);
+
+
+        //Current Session: New Admission
+        $stdb = Studentdb::whereStsession_id($ses->id)
+            ->where('stclss_id', $clss_id)
+            ->where('stsec_id', $section_id)
+            ->get();
+
+        //Previouos Session: Promoted & Failed Students
+        // $stpr = DB::table('studentcrs')->where('session_id', $ses->prev_session_id)        
+        $stpr = Studentcr::whereSession_id($ses->prev_session_id)
+            ->where('next_clss_id', $cls->prev_session_pk)
+            ->where('next_section_id', $sec->prev_session_pk)
+            ->get();
+
+        // dd($stpr);
+        // foreach($stpr as $s){
+        //     print_r($s); echo "<br><br>";
+        // }
+        // students whose roll no issued
+        $stcr = Studentcr::whereSession_id($ses->id)
+            ->where('clss_id', $cls->id)
+            ->where('section_id', $sec->id)
+            ->get();
+
+        // students whose roll no  Issued
+        $remRec = $stdb->whereNotIn('id', $stcr->pluck('studentdb_id'));
+        $stpr = $stpr->whereNotIn('studentdb_id', $stcr->pluck('studentdb_id'));
+
+        // dd($stcr);
+
+        $prev_clss = DB::table('clsses')->whereSession_id($ses->prev_session_id)->get();
+        $prev_secs = DB::table('sections')->whereSession_id($ses->prev_session_id)->get();
+
+
+
+        return view('clssecAdminUpdateDetailsPage')
+            ->with('ses', $ses)
+            ->with('stcr', $stcr)
+            ->with('stpr', $stpr)
+            ->with('remRec', $remRec)
+            ->with('cls', $cls)
+            ->with('sec', $sec)
+            ->with('prev_clss', $prev_clss)
+            ->with('prev_secs', $prev_secs);
+        
+    }
+
+    public function clssecAdminUpdateAdm(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+        
+        $sdbid = $request['sdbid']; //StudentDB Id
+        $admsl = $request['admsl']; //StudentDB adm sl
+        $admdt = $request['admdt']; //StudentDB adm dt
+
+
+        $stddb = Studentdb::find($sdbid);
+        $stddb->admBookNo = 1;
+        $stddb->admSlNo = $admsl;
+        $stddb->admDate = $admdt;
+        $stddb->save();
+
+        return response()->json(['sdbid'=> $sdbid, 'sdbnm'=> $stddb->name]);
+    }
+
+    public function clssecAdminUpdateTakePicture(Request $request, $studentdb_id){
+        
+        
+        return view('studentdb.clssecAdminUpdateTakePicture')
+            ->with('studentdb_id', $studentdb_id);
+    }
+
+    public function clssecAdminUpdateTakePictureDone(Request $request, $studentdb_id){
+
+        $img = $request->image;
+
+        $folderPath = "images/";
+
+        $image_parts = explode(";base64,", $img);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+
+        $image_base64 = base64_decode($image_parts[1]);
+        $fileName = $studentdb_id . '.png' ;//uniqid() . '.png';
+
+        $file = $folderPath . $fileName;
+
+        // dd($file);
+        file_put_contents($file, $image_base64);
+
+        // print_r($fileName);
+        return back(); 
+        
+    }
+
     
 }

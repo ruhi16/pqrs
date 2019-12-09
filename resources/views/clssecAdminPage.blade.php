@@ -127,13 +127,13 @@
       <td>
         {{--  <a href="{{url('/studentdbmultipage-edit',     [$stc->studentdb_id])}}" class="btn btn-primary btn-sm">Edit Details</a>          --}}
         
-        <button type="button" class="btn btn-success btn-stdId" data-toggle="modal" data-target="#myModal" 
+        {{--  <button type="button" class="btn btn-success btn-stdId" data-toggle="modal" data-target="#myModal" 
                 value="{{ $stc->studentdb->id }}"
                 data-std_nm="{{ $stc->studentdb->name }}"
                 data-std_cl="{{ $stc->clss->name }}"
                 data-std_sc="{{ $stc->section->name }}"
                 data-std_rl="{{ $stc->roll_no }}"
-                                      >Edit Student Id</button>
+                                      >Edit Student Id</button>  --}}
       </td>
     </tr>
     @endforeach
