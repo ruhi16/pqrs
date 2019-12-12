@@ -207,7 +207,11 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/updateDetails/{stdbid}/{stcrid}/{clss_id}/{section_id}', 'ClsSecController@updateDetails');
         // Route::get('/updateDetails/{stdbid}/{stcrid}/{clss_id}/{section_id}', 'ClsSecController@updateDetails');
         Route::get('/updateDetails/{clteacher_id}/{clss_id}/{section_id}', 'ClsSecController@updateDetails');
+        
         Route::post('/clssecAdminUpdateAdm', 'ClsSecController@clssecAdminUpdateAdm');
+        Route::post('/clssecAdminUpdatePersonal', 'ClsSecController@clssecAdminUpdatePersonal');
+        
+        
         Route::get('/clssecAdminUpdate-takePicture/{studentdb_id}/{clteacher_id}/{clss_id}/{section_id}','ClsSecController@clssecAdminUpdateTakePicture');
         Route::post('/clssecAdminUpdate-takePicture-done/{studentdb_id}/{clteacher_id}/{clss_id}/{section_id}', 'ClsSecController@clssecAdminUpdateTakePictureDone');
 

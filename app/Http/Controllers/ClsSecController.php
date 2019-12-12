@@ -416,6 +416,31 @@ class ClsSecController extends Controller
         return response()->json(['sdbid'=> $sdbid, 'sdbnm'=> $stddb->name]);
     }
 
+    public function clssecAdminUpdatePersonal(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+
+        $stddb = Studentdb::find($request['stdid']);
+        $stddb->ssex = $request['stdgnd'];        
+        $stddb->save();
+
+
+
+        return response()->json(['msg'=> $request['stdid']]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function clssecAdminUpdateTakePicture($studentdb_id, $clteacher_id, $clss_id, $section_id){
         $studentdb = Studentdb::find($studentdb_id);
         
