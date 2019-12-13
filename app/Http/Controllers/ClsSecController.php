@@ -420,7 +420,14 @@ class ClsSecController extends Controller
         $ses = Session::whereStatus('CURRENT')->first();
 
         $stddb = Studentdb::find($request['stdid']);
-        $stddb->ssex = $request['stdgnd'];        
+        $stddb->name = $request['stdnam'];
+        $stddb->ssex = $request['stdgnd'];
+        $stddb->dob  = $request['stddob'];
+        $stddb->adhaar = $request['stdadh'];
+        $stddb->relg = $request['stdrel'];
+        $stddb->cste = $request['stdcst'];
+        $stddb->phch = $request['stdphc'];
+        
         $stddb->save();
 
 
@@ -429,9 +436,41 @@ class ClsSecController extends Controller
     }
 
 
+    public function clssecAdminUpdateFamily(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+
+        $stddb = Studentdb::find($request['stdid']);
+        $stddb->fname = $request['stdfnm'];
+        $stddb->mname = $request['stdmnm'];
+        $stddb->vill = $request['stdvil'];
+        $stddb->post = $request['stdpof'];
+        $stddb->pstn = $request['stdpst'];
+        $stddb->dist = $request['stddts'];
+        $stddb->pin  = $request['stdpin'];
+        $stddb->mobl = $request['stdmbl'];
+
+        $stddb->save();
 
 
 
+        return response()->json(['msg' => $request['stdid']]);
+    }
+
+    public function clssecAdminUpdateBankinfo(Request $request){
+        $ses = Session::whereStatus('CURRENT')->first();
+
+        $stddb = Studentdb::find($request['stdid']);
+        $stddb->bnnm = $request['stdbnnm'];
+        $stddb->brnm = $request['stdbrnm'];
+        $stddb->accNo = $request['stdaccn'];
+        $stddb->ifsc = $request['stdifsc'];
+
+        $stddb->save();
+
+
+
+        return response()->json(['msg' => $request['stdid']]);
+    }
 
 
 

@@ -208,8 +208,14 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/updateDetails/{stdbid}/{stcrid}/{clss_id}/{section_id}', 'ClsSecController@updateDetails');
         Route::get('/updateDetails/{clteacher_id}/{clss_id}/{section_id}', 'ClsSecController@updateDetails');
         
+        //Ajax Routes
         Route::post('/clssecAdminUpdateAdm', 'ClsSecController@clssecAdminUpdateAdm');
         Route::post('/clssecAdminUpdatePersonal', 'ClsSecController@clssecAdminUpdatePersonal');
+        Route::post('/clssecAdminUpdateFamily', 'ClsSecController@clssecAdminUpdateFamily');
+        Route::post('/clssecAdminUpdateBankinfo', 'ClsSecController@clssecAdminUpdateBankinfo');
+        
+        
+        
         
         
         Route::get('/clssecAdminUpdate-takePicture/{studentdb_id}/{clteacher_id}/{clss_id}/{section_id}','ClsSecController@clssecAdminUpdateTakePicture');
