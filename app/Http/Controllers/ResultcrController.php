@@ -173,7 +173,7 @@ class ResultcrController extends Controller
 
     public function clssecResultSheetv4PDF($clssec_id, $studentcr_id){
         $ses = Session::whereStatus('CURRENT')->first();
-        $school = School::find(1);
+        $school = School::where('session_id', $ses->id)->first();
         $clsc = Clssec::find($clssec_id);
         $clssubs = DB::table('clssubs')->where('clssubs.session_id', $ses->id)
             ->where('clss_id', $clsc->clss_id)
@@ -220,7 +220,7 @@ class ResultcrController extends Controller
                 'modes' => $modes,
                 'subjects'=> $subjects,
                 'resultcrs'=>$resultcrs,
-            ], [], ['format' => 'Legal-P']);
+            ], [], ['format' => 'A4-P']);
 
         $pdffilename = 'MarkSheet'.'-';
         $pdffilename .= $ses->name.'-';

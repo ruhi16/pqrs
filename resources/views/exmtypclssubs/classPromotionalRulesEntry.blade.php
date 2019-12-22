@@ -34,25 +34,38 @@
                 <td>{{ $clss->name }}</td>
                            
                 <td>
-                    {{ $extp->name }}- Total Subjects: 
+                    <b>{{ $extp->name }}- <br/>Total Subjects: </b>
                     @php
                     $regSubj = $clssubexts->where('extype_id', $extp->id)
-                                  ->where('combination_no','=', 0)                                  
+                                  ->where('combination_no','=', 0) 
+                                  ->where('is_additional', '=', 0)                                 
                                   ->count();
 
                     $comSubj = $clssubexts->where('extype_id', $extp->id)
                                   ->where('combination_no','>', 0)
                                   ->groupBy('combination_no')
                                   ->count();
+                    $comSubj_addl = $clssubexts->where('extype_id', $extp->id)
+                                  ->where('combination_no','>', 0)
+                                  ->where('is_additional', '=', 1)
+                                  ->groupBy('combination_no')
+                                  ->count()
+                                  ;
 
                     $adlSubj = $clssubexts->where('extype_id', $extp->id)
                                   ->where('combination_no','<', 0)
                                   ->groupBy('combination_no')
                                   ->count();
-                    $subjTotalNos = $regSubj + $comSubj;
+                    $subjTotalNos = $regSubj + $comSubj - $comSubj_addl;
                     @endphp
 
-                    {{ $subjTotalNos }}                    
+                    <b>{{ $subjTotalNos }}  </b><br/>
+                    <small>
+                    Regular Subject Count: {{ $regSubj }}, <br/>
+                    Combined Subject Count: {{ $comSubj }}, <br/>
+                    Additional Subject Count: {{ $adlSubj }}<br/>
+                    Combined Addl Count: {{ $comSubj_addl }}
+                    </small>
                 </td>
 
                 <td>

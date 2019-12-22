@@ -9,7 +9,7 @@
 <h1 align="center">{{ $school->name }}</h1>
 <h3 align="center">{{ $school->po }} * {{ $school->ps }} * {{ $school->dist }}</h3>
 <h4 align="center"><u>Class</u> wise Students Merit List</h4>
-<h4 align="center">For Class: {{ $clss->name }}</h4>
+<h4 align="center">For Class: {{ $clss->name }}, Session: {{ $session->name }}</h4>
 @if( $is_pdf == 0 )
     <a class="btn btn-success pull-right" href="{{ url('/cls-StdcrMeritList', [$clss->id, 1]) }}">Download</a><br>
 @else 
@@ -28,7 +28,7 @@
         <th>Rank</th>
     </tr>
     @php $i = 0; @endphp
-    @foreach($resultcrs->where('extype_id', 2)->sortByDesc('obtnmarks') as $resultcr)
+    @foreach($resultcrs->where('extype_id', $extypes->where('name', 'Summative')->first()->id)->sortByDesc('obtnmarks') as $resultcr)
         <tr>
             <td>{{ $resultcr->id }}</td>
             <td>{{ $resultcr->studentcr->studentdb->name }}</td>

@@ -69,7 +69,7 @@
                 </tr>
             </thead>
             <tbody>            
-                @foreach($stdcrs as $stdcr)
+                @foreach($stdcrs->sortBy('roll_no') as $stdcr)
                     @php
                         $std_grade = [];
                     @endphp
@@ -87,7 +87,7 @@
                         @endif
 
                         <td>{{ substr($exam->name,0,3) }}</td>
-                        
+                        @php $clssec_term_total = 0; @endphp
                         @foreach($clssubs as $clsb)
                             @php
                                 $mode_count = $extpmdclsbs->where('exam_id', $exam->id)
@@ -96,7 +96,7 @@
                                 $blade_modes = $modes->whereIn('id', $mode_count);
                                 
                             @endphp
-                            @foreach($blade_modes as $mode)
+                            @foreach($blade_modes->sortByDesc('id') as $mode)
                                 <td class='text-center' style="text-align:center;">
                                 @php
                                     $etmcs_id = $extpmdclsbs->where('exam_id', $exam->id)
@@ -104,22 +104,27 @@
                                                     ->where('mode_id', $mode->id)
                                                     ->first()->id;
                                     //echo $etmcs_id;
-                                
+                                    
                                     if( isset($stdMarksArray[$stdcr->id][$etmcs_id]) ){
                                         $obMark = $stdMarksArray[$stdcr->id][$etmcs_id] < 0 ? 'AB' : $stdMarksArray[$stdcr->id][$etmcs_id];
+                                        $clssec_term_total += $stdMarksArray[$stdcr->id][$etmcs_id] < 0 ? 0 :$stdMarksArray[$stdcr->id][$etmcs_id];
                                     }else{
                                         $obMark = '';
                                     }                            
                                 @endphp
                                 
                                 {{ $obMark }}
+                                
                                 {{--  {{ $stdMarksArray[$stdcr->id][$etmcs_id] or ''}}  --}}
                                 </td>
                             @endforeach
                         @endforeach
+                        <td>
+                            {{-- {{ $clssec_term_total }}  --}}
+                        </td>
                         </tr>                        
                     @endforeach  
-                
+                    
                 </tr>
                 <tr>                            
                     <th>Total</th>
@@ -149,13 +154,14 @@
                             
                         </th>
                     @endforeach
+                    <td></td>
                 </tr>
                 <tr>
                     <th>Grade</th>
                     @foreach($clssubs as $clsb)
                         <th colspan="{{ $extp_count }}">{{ $std_grade[$clsb->subject_id]  }}</th>
                     @endforeach
-
+                    <td></td>
                 </tr>
                 @endforeach            
             </tbody>

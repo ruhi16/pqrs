@@ -32,10 +32,11 @@ class MeritlistcrController extends Controller
 {
     public function clssecStdcrMeritList(Request $request, $clssec_id, $is_pdf){
         $ses        = Session::whereStatus('CURRENT')->first();
-        $school     = School::find(1);
+        $school     = School::where('session_id', $ses->id)->first();
         $clssec     = Clssec::find($clssec_id);
         $clss       = Clss::find($clssec->clss_id);
         $section    = Section::find($clssec->section_id);
+        $extypes    = Extype::where('session_id', $ses->id)->get();
         
         $resultcrs = Resultcr::where('session_id', $ses->id)
                                 ->where('clss_id', $clss->id)
@@ -49,6 +50,8 @@ class MeritlistcrController extends Controller
                     'school'    => $school,
                     'resultcrs' => $resultcrs,
                     'clssec'    => $clssec,
+                    'extypes'   => $extypes,
+                    'session'   => $ses,
                     'is_pdf'    => $is_pdf,
                 ]);
             
@@ -64,6 +67,8 @@ class MeritlistcrController extends Controller
             ->with('school', $school)
             ->with('resultcrs', $resultcrs)
             ->with('clssec', $clssec)
+            ->with('extypes', $extypes)
+            ->with('session', $ses)
             ->with('is_pdf', $is_pdf)
         ;
     }
@@ -71,10 +76,11 @@ class MeritlistcrController extends Controller
 
     public function clsStdcrMeritList(Request $request, $clss_id, $is_pdf){
         $ses        = Session::whereStatus('CURRENT')->first();
-        $school     = School::find(1);
+        $school     = School::where('session_id', $ses->id)->first();
         //$clssec     = Clssec::find($clss_id);
         $clss       = Clss::find($clss_id);
         //$section    = Section::find($clssec->section_id);
+        $extypes    = Extype::where('session_id', $ses->id)->get();
         
         $resultcrs = Resultcr::where('session_id', $ses->id)
                                 ->where('clss_id', $clss->id)
@@ -87,6 +93,8 @@ class MeritlistcrController extends Controller
                     'school'    => $school,
                     'resultcrs' => $resultcrs,
                     'clss'      => $clss,
+                    'extypes'   => $extypes,
+                    'session'   => $ses,
                     'is_pdf'    => $is_pdf,
                 ]);
             
@@ -100,6 +108,8 @@ class MeritlistcrController extends Controller
             ->with('school', $school)
             ->with('resultcrs', $resultcrs)
             ->with('clss', $clss)
+            ->with('extypes', $extypes)
+            ->with('session', $ses)
             ->with('is_pdf', $is_pdf)
         ;
     }

@@ -203,10 +203,10 @@ class BaseController extends Controller
                         ->where('clss_id', $clss_id)
                         ->join('subjects', 'clssubs.subject_id','=','subjects.id')
                         ->select('clssubs.id','clssubs.clss_id',
-                        'clssubs.subject_id','clssubs.combination_no',
+                        'clssubs.subject_id','clssubs.combination_no','clssubs.is_additional',
                         'subjects.extype_id')                       
                         ->get();
-        
+       
         $extpmdclsbs = Exmtypmodclssub::where('exmtypmodclssubs.session_id', $ses->id)
                             ->where('exmtypmodclssubs.clss_id', $clss_id)
                             ->join('clssubs', 'exmtypmodclssubs.subject_id', '=', 'clssubs.subject_id')

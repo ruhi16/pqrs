@@ -16,7 +16,7 @@
         
     }
     th, td {
-    	padding: 2px;
+    	padding: 1px;
     }
     </style>
     <style>
@@ -44,20 +44,20 @@
 
 	</style>
 	<body>
-		<p align='center'>Mobile No: 9933 176671		
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<p align='center'>Mobile No: 973577 1008		
+			&nbsp;&nbsp;&nbsp;&nbsp;
 						
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;
 			Institution Code: {{ $school->hscode }}
 						
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;									
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;									
 		Index No: {{ $school->index }}</p>
 		<h1 class='text-center' align="center">{{ $school->name }}</h1>
 		<p align='center'>DISE CODE: {{ $school->disecode }}</p>
 		<h3 class='text-center' align="center">{{ $school->po }} * {{ $school->ps }} * {{ $school->dist }}</h3>
 		<h2 class='text-center' align="center">Progress Report for Session {{ $session->name }}</h2>
-		<br>
+		
 
 		@php
 			$QRstring  = $school->name.'-'.$school->disecode.'-'.$session->name.'-';
@@ -78,7 +78,7 @@
 				<tr width="20%">
 					<td style="vertical-align: middle;" height="40" align="right" width="15%">Name </td>
 					<td style="vertical-align: middle; padding-left: 25px;" height="40"><strong>{{ $studentcrs->first()->studentdb->name }}</strong></td>
-					<td rowspan='5' width="40%" align='right'><small>{!! QrCode::size(130)->margin(0)->generate($QRstring) !!}</small></td>
+					<td rowspan='5' width="40%" align='right'><small>{!! QrCode::size(125)->margin(0)->generate($QRstring) !!}</small></td>
 				</tr>
 				<tr>
 					<td style="vertical-align: bottom;" align="right">Student Id </td>
@@ -267,8 +267,11 @@
 
 														$extype_total_marks += $totalObtMarks;
 													@endphp
-													<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarks }}</b></td>
-
+													@if($clssub->combination_no > 0)
+														<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarks }}/{{ $totalFulMarks }}</b></td>
+													@else 
+														<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarks }}</b></td>
+													@endif
 													@if( $mode_count > 1 ){{-- only for IX-X, the Average & Grade Column --}}
 														{{--  <td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarksPercentage }}</b></td>  --}}
 														
@@ -277,8 +280,22 @@
 															<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarksPercentage }}</b></td>
 															<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ getGrade($extype->id, $totalObtMarksPercentage, 100) }}</b></td>
 														@else
+															@if($clssub->combination_no > 0)
+															@php
+																// $clssub_combination_no = $clssub->combination_no;
+																// $clssub_combination_no_subject_count = $clssubs->where('combination_no', $clssub_combination_no)->count();
+																// $clssub_combination_no_subject_total = $clssubs->where('combination_no', $clssub_combination_no)->count();
+															@endphp
+
+															
+															<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarksPercentage }}</b>
+																{{-- {{ $clssub_combination_no}}-{{ $clssub_combination_no_subject_count }} --}}
+															</td>
+															@else
+															<td align="center" style="vertical-align: middle; font-size:16px;"><b>{{ $totalObtMarksPercentage }}</b></td>
+															@endif
 															<td align="center" style="vertical-align: middle; font-size:16px;"><b></b></td>
-															<td></td>
+															
 														@endif
 													@else
 														{{-- for class V to VIII, calculate Grade for Combined/Alternative Subjects --}}
@@ -354,11 +371,11 @@
 								<td style="vertical-align: middle; font-size:16px;">										
 									<b>Total Marks Obt.:</b> {{ $extype_total_marks_arr[$extype->id] }} 
 									@if( $mode_count > 1 )	{{-- for class IX-X --}}
-										 [ FM: {{ $full_marks/2 }} ], Percentage of Marks: {{ ($extype_total_marks_arr[$extype->id]/($full_marks/2)) * 100}}%
+										 [ FM: {{ $full_marks/2 }} ], ({{ ($extype_total_marks_arr[$extype->id]/($full_marks/2)) * 100}}%)
 									@else {{-- for class V to VIII --}}
 										[ FM: {{ $full_marks }} ], Percentage of Marks: {{ round( ($extype_total_marks_arr[$extype->id]/($full_marks)) * 100, 0) }}%
 									@endif
-									<br>({{ convert($extype_total_marks_arr[$extype->id]) }})
+									({{ convert($extype_total_marks_arr[$extype->id]) }})
 								</td>
 										
 							@endif
@@ -380,10 +397,10 @@
 				<thead>
 					<tr>
 						
-						<th width="25%">Attendance of Students</th>
-						<th>Signature of Guardian</th>
-						<th>Signature of Class Teacher</th>
-						<th>Signature of HM/TIC</th>
+						<th width="25%">Attendance</th>
+						<th>Guardian Sign.</th>
+						<th>Class Teacher Sign.</th>
+						<th>HM/TIC Sign.</th>
 						{{--  @foreach($exams as $exm)
 							<th>{{$exm->name}}</th>
 						@endforeach  --}}
@@ -391,7 +408,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td height="45"></td>
+						<td height="30"></td>
 						<td></td>
 						<td></td>
 						<td></td>						
@@ -407,27 +424,27 @@
 			{{--  {{dd($grades)}}  --}}
 			
 
-			@if( $clssubs->first()->clss_id > 4 ) {{-- for class IX & X --}}
-			<br>
+			@if( $clssubs->first()->clss_id >= 59 ) {{-- for class IX & X --}}
+			
 			<table width="100%">
 			<tr>
 			<td width="40%">
 				<table width="100%">
 					<tr>
-						<th>Scale</th>
-						<th>Range</th>
-						<th>Description</th>					
+						<th><small>Scale</small></th>
+						<th><small>Range</small></th>
+						<th><small>Description</small></th>					
 					</tr>
-					@foreach($grades->where('extype_id', 2) as $grade)
+					@foreach($grades->where('extype_id', 4) as $grade)
 					<tr>
-						<td align="center">{{$grade->gradeparticular->name}}</td>
-						<td align="center">{{(int)$grade->stpercentage}}% - {{(int)$grade->enpercentage}}%</td>
-						<td align="center">{{$grade->descrp}}</td>
+						<td align="center"><small>{{$grade->gradeparticular->name}}</small></td>
+						<td align="center"><small>{{(int)$grade->stpercentage}}% - {{(int)$grade->enpercentage}}%</small></td>
+						<td align="center"><small>{{$grade->descrp}}</small></td>
 					</tr>
 					@endforeach
 				</table>
 			</td>
-			<td>
+			<td><small>
 				<b>Condition for promotion:</b>
 				<P><b>For Class IX:</b> On the basis of comprehensive continuous evalution, to be promoted when minimum scoring of 
 				Letter/Grade "C" obtained in Five/Seven compulsory subject out of Seven/Nine Compulsory Subjects.</p>
@@ -435,15 +452,20 @@
 				evalution for the students failing to attend the evalution on reasonable grounds.)</p>
 				<p><b>Modalities for formative Examinations:</b><br>1. Survey Report, 2. Nature Study, 3. Case Study, 
 				4. Creative Writing, 5. Model Making, 6.Open Book Evalution</p>
-				
+				</small>
 			</td>
+			</tr>
+			<tr>
+				<td colspan='2'>
+					<small>N.B.: 'Health & Physical Education' and 'Art & Work Education' Combinedly OR 'Computer Application' of 50 marks each or 100 marks examination 
+			respectively, held once in an Academic year. Above mentioned subjects along with Arabic also will be treated as Additional Subject</small>
+				</td>
 			</tr>
 			</table>
 			
-			<p><small>N.B.: 'Health & Physical Education' and 'Art & Work Education' Combinedly OR 'Computer Application' of 50 marks each or 100 marks examination 
-			respectively, held once in an Academic year. Above mentioned subjects along with Arabic also will be treated as Additional Subject</small></p>
+			<p></p>
 			@else
-				<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" >
+				<img src="{{ url('rubindicator/rubricindicator2.png') }}" class="img-rounded" width="100%" height="200px">
 			@endif
 
 

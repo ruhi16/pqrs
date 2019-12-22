@@ -45,7 +45,7 @@ class compactMarkRegisterController extends Controller
         $session = Session::whereStatus('CURRENT')->first();
 
         $clssec  = Clssec::find($clssec_id);
-        $clssubs = Clssub::where('clss_id', $clssec->clss_id)->get();
+        $clssubs = Clssub::where('clss_id', $clssec->clss_id)->orderBy('subject_order')->get();
 
         $stdcrs = Studentcr::where('session_id', $session->id)
                     ->where('clss_id', $clssec->clss_id)

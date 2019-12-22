@@ -135,12 +135,13 @@ class ClssecGradeController extends Controller
     }
 
     public function clssecGradeDStatus(Request $request, $clssec_id){
-        $school  = School::find(1);
         $session = Session::whereStatus('CURRENT')->first();
 
+        $school  = School::where('session_id', $session->id)->first();
         $clssec  = Clssec::find($clssec_id);
         $clss    = Clss::find($clssec->clss_id);
         $section = Section::find($clssec->section_id);
+        $extypes = Extype::where('session_id', $session->id)->get();
         
         $clssubs = Clssub::where('clss_id', $clss->id)->get();
         
@@ -156,8 +157,8 @@ class ClssecGradeController extends Controller
                                 ->where('clssec_id', $clssec->id)
                                 ->get();
 
-        $class_subject_count = Clssub::where('clss_id', $clss->id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no',0)->count()
-                                + count( Clssub::where('clss_id', $clss->id)->where('extype_id', 2)->where('is_additional', 0)->where('combination_no', '>', 0)->groupBy('combination_no')->get() );        
+        $class_subject_count = Clssub::where('clss_id', $clss->id)->where('extype_id', $extypes->where('name', 'Summative')->first()->id)->where('is_additional', 0)->where('combination_no',0)->count()
+                                + count( Clssub::where('clss_id', $clss->id)->where('extype_id', $extypes->where('name', 'Summative')->first()->id)->where('is_additional', 0)->where('combination_no', '>', 0)->groupBy('combination_no')->get() );        
 
         $class_data = [];
         $class_D = [];
@@ -165,7 +166,7 @@ class ClssecGradeController extends Controller
             $stdcr_marks = $marks->where('studentcr_id', $stdcr->id);
 
             $extype_GrD_count = 0;
-            $clssubs_extype_regular = $clssubs->where('extype_id', 2)->where('combination_no','=', 0);
+            $clssubs_extype_regular = $clssubs->where('extype_id',  $extypes->where('name', 'Summative')->first()->id)->where('combination_no','=', 0);
             foreach($clssubs_extype_regular as $clssub){
 
                 $etmcs_ids = $extpmdclsbs->where('subject_id', $clssub->subject_id)->pluck('id');
@@ -188,7 +189,7 @@ class ClssecGradeController extends Controller
 
 
 
-            $clssubs_extype_comb_addl = $clssubs->where('extype_id', 2)
+            $clssubs_extype_comb_addl = $clssubs->where('extype_id',  $extypes->where('name', 'Summative')->first()->id)
                                             ->where('is_additional', 0)
                                             ->where('combination_no','!=', 0)
                                             ->groupBy(function($query){
@@ -200,7 +201,7 @@ class ClssecGradeController extends Controller
                 // $clssub->each(function ($item) {                 
                 //     echo $item;
                 // });
-                $comb_subj_ids = $clssub->where('extype_id', 2);    //->where('combination_no','>', 0)->pluck('subject_id');
+                $comb_subj_ids = $clssub->where('extype_id',  $extypes->where('name', 'Summative')->first()->id);    //->where('combination_no','>', 0)->pluck('subject_id');
                 $comb_subj_fms = $extpmdclsbs->whereIn('subject_id', $comb_subj_ids->where('combination_no','>', 0)->pluck('subject_id'))->sum('fm');
 
                 $comb_subj_oms = $marks->where('studentcr_id', $stdcr->id)
@@ -209,7 +210,7 @@ class ClssecGradeController extends Controller
 
                 
                 // echo $comb_subj_ids->pluck('subject_id') .'-'. $comb_subj_oms.'-' . $comb_subj_fms .'-'. getGrade(2,$comb_subj_oms, $comb_subj_fms ).'<br>';
-                $Grade_status = getGrade(2, $comb_subj_oms, $comb_subj_fms );
+                $Grade_status = getGrade( $extypes->where('name', 'Summative')->first()->id, $comb_subj_oms, $comb_subj_fms );
                 if( $Grade_status == 'D' ){
                     $extype_GrD_count++;
                 }
@@ -239,7 +240,7 @@ class ClssecGradeController extends Controller
         // print_r($colors);
     
         $chart = Charts::create('donut', 'chartjs')
-            ->title('My nice chart')            
+            ->title('Class Section Wise Obtained Grade-D Status')            
             ->labels( $colors )            
             ->values(array_values(array_count_values($class_D) ) )
             ->dimensions(1000,500)
@@ -310,8 +311,8 @@ class ClssecGradeController extends Controller
         
 
             if( $class_total_subject_count > 0 ){
-                    $clss_extp_subjs    = $clssubs->where('extype_id', $extype->id)->where('is_additional', 0)->where('combination_no','>=', 0)->pluck('subject_id'); // reg & comb subjects
-                    $clss_extp_clsbs    = Clssub::whereIn('subject_id', $clss_extp_subjs)->pluck('id'); // clssub->id of reg & comb subjects
+                    $clss_extp_subjs    = $clssubs->where('extype_id', $extype->id)->where('is_additional', 0)->where('combination_no','>=', 0)->pluck('subject_id'); // regular & comb subjects
+                    $clss_extp_clsbs    = $clssubs->whereIn('subject_id', $clss_extp_subjs)->pluck('id'); // clssub->id of regular & combined subjects
                     
                     $extp_promote_rule_ds = Promotionalrule::where('session_id', $session->id)->where('clss_id', $clss->id)->where('extype_id', $extype->id)->first()->allowableds;
                     // echo $extp_promote_rule_ds;
@@ -319,8 +320,12 @@ class ClssecGradeController extends Controller
 
 
                     $clss_extp_subjs_fm = $extpmdclsbs->whereIn('subject_id', $clss_extp_subjs)->sum('fm');
+                    // dd($clss_extp_subjs_fm);
 
-                    $clss_extp_subjs_fm = $clss->id >= 5 ? $clss_extp_subjs_fm/2 : $clss_extp_subjs_fm; //for class IX
+
+                    $clss_IX_id = $clss::where('session_id', $session->id)->where('name', 'IX')->first()->id;
+                    // dd($clss_IX_id);
+                    $clss_extp_subjs_fm = ($clss->id >= $clss_IX_id ? $clss_extp_subjs_fm/2 : $clss_extp_subjs_fm); //for class IX & X
                     // $clss_extp_subjs_om = 0;
                     // echo 'FM: '.$clss_extp_subjs_fm.'<br>'; 
 
@@ -329,11 +334,12 @@ class ClssecGradeController extends Controller
                         // echo $stdcr->id.': ';
                         $marks_stdcr = $marks->where('studentcr_id', $stdcr->id);
                         $stdcr_subj_total_gr_count = 0;
+                        // dd($marks_stdcr);
 
                         $clss_extp_subjs_om = $marks_stdcr->where('marks', '>', 0)->whereIn('clssub_id', $clss_extp_clsbs)->sum('marks');
-                        // echo $clss_extp_clsbs;
+                        // echo 'Clssub Id: '.$clss_extp_clsbs ;
                         // echo 'Total OM: '. $clss_extp_subjs_om. '= ';
-                        
+                        // echo '<br/>';
                         
                         $clss_extp_subjs_om_manual = 0;
                         //for regular subjects
@@ -342,16 +348,17 @@ class ClssecGradeController extends Controller
                             // echo ' == '.$regr_subject->subject->id . ': ';
                             $stdcr_subj_total_om = $marks_stdcr->where('clssub_id', $regr_subject->id)->where('marks', '>', 0)->sum('marks');
                             $stdcr_subj_total_fm = $extpmdclsbs->where('subject_id', $regr_subject->subject_id)->sum('fm');
-                            $stdcr_subj_total_gr = getGrade(2, $stdcr_subj_total_om, $stdcr_subj_total_fm);
+                            $stdcr_subj_total_gr = getGrade($extype->id, $stdcr_subj_total_om, $stdcr_subj_total_fm);
                             
                             // echo $stdcr_subj_total_om. '+ ';
 
                             //for class IX & Greater & other
-                            $clss_extp_subjs_om_manual += $clss->id >= 5 ? round( (($stdcr_subj_total_om / $stdcr_subj_total_fm) * 100), 0) : $stdcr_subj_total_om;
+                            $clss_extp_subjs_om_manual += $clss->id >= $clss_IX_id ? round( (($stdcr_subj_total_om / $stdcr_subj_total_fm) * 100), 0) : $stdcr_subj_total_om;
                             
                             if($stdcr_subj_total_gr == 'D'){
                                 $stdcr_subj_total_gr_count++;
                             }
+                            // echo $extype->id.':';
                             // echo $stdcr_subj_total_om;                
                             // echo '/'. $stdcr_subj_total_fm;
                             // echo '>'. $stdcr_subj_total_gr;                
@@ -365,16 +372,17 @@ class ClssecGradeController extends Controller
                             
                             $stdcr_subj_total_om = $marks_stdcr->whereIn('clssub_id' , $addl_subject->pluck('id'))->where('marks', '>', 0)->sum('marks');
                             $stdcr_subj_total_fm = $extpmdclsbs->whereIn('subject_id', $addl_subject->where('combination_no', '>', 0)->pluck('subject_id'))->sum('fm');
-                            $stdcr_subj_total_gr = getGrade(2, $stdcr_subj_total_om, $stdcr_subj_total_fm);
+                            $stdcr_subj_total_gr = getGrade($extype->id, $stdcr_subj_total_om, $stdcr_subj_total_fm);
                             
                             // echo $stdcr_subj_total_om. '(+) ';
                             
                             //for class IX & Greater & other
-                            $clss_extp_subjs_om_manual += $clss->id >= 5 ? round( (($stdcr_subj_total_om / $stdcr_subj_total_fm) * 100), 0) : $stdcr_subj_total_om;
+                            $clss_extp_subjs_om_manual += $clss->id >= $clss_IX_id ? round( (($stdcr_subj_total_om / $stdcr_subj_total_fm) * 100), 0) : $stdcr_subj_total_om;
 
                             if($stdcr_subj_total_gr == 'D'){
                                 $stdcr_subj_total_gr_count++;
                             }
+                            // echo $extype->id.':';
                             // echo $stdcr_subj_total_om;                
                             // echo '/'. $stdcr_subj_total_fm;
                             // echo '>'. $stdcr_subj_total_gr;                
@@ -443,8 +451,9 @@ class ClssecGradeController extends Controller
     public function clsGradeDStatus(Request $request, $clss_id){
         $ses = Session::whereStatus('CURRENT')->first();
         $clss = Clss::find($clss_id);
+        $extypes = Extype::where('session_id', $ses->id)->get();
 
-        $extype_id = 2;
+        $extype_id = $extypes->where('name', 'Summative')->first()->id;
         $resultcrs = Resultcr::where('clss_id', $clss->id)->where('extype_id', $extype_id)->get();
         // dd($resultcrs);
         $cls_GrD_Status = [];
