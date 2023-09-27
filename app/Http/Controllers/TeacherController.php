@@ -185,7 +185,7 @@ class TeacherController extends Controller
             $teacher->subjects()->sync($temp);
         }
         
-        return back();
+        return back(); 
     }
 
     public function teachersView(){

@@ -392,7 +392,8 @@ class MarksEntryController extends Controller
         
         $stdcrs = Studentcr::whereSession_id($ses->id)
             ->whereClss_id(Clssec::find($clsc->id)->clss->id)
-            ->whereSection_id(Clssec::find($clsc->id)->section->id)->get();
+            ->whereSection_id(Clssec::find($clsc->id)->section->id)
+            ->orderBy('roll_no')->get();
         
         $extpmdclsbs = Exmtypmodclssub::whereSession_id($ses->id)
                         ->where('exam_id', $extpmdcl->exam_id)

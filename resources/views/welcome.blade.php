@@ -84,7 +84,9 @@
                 <div class="title m-b-md">
                     Welcome, <b><small>School Result Automation System.</small></b>
                 </div>
-                
+                <h1 class="text-5xl">
+                    Again, <b><small class="text-gray-200">by Inspiration of a friend.</small></b>
+                </h1>
             </div>
         </div>
     </body>

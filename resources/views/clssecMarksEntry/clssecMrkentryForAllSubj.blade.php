@@ -54,7 +54,11 @@
                     <input type="checkbox" aria-label="Checkbox for following text input" class="chkbox" name="{{$stdcr->id}}-{{$cs->id}}">                
                 </div> 
                 {{--  {{ $cs->id }}   - {{ $cs->subject_id }}  --}}
-                <input  type="text" class="form-control marks{{$stdcr->id}}-{{$cs->id}} text-center"  aria-label="Text input with checkbox" id="{{$cs->id}}" name="m{{$stdcr->id}}[]"
+                <input  type="text" class="form-control 
+                                            fmarks fmarks-{{$stdcr->id}} fmarks-{{$stdcr->id}}-{{$cs->id}}
+                                            marks{{$stdcr->id}}-{{$cs->id}} text-center"  aria-label="Text input with checkbox" id="{{$cs->id}}" name="m{{$stdcr->id}}[]"
+                    data-id = "{{$stdcr->id}}"
+                    data-csid = "{{$cs->id}}"
                     value="{{ $stdmrks->where('studentcr_id', $stdcr->id)->where('clssub_id', $cs->id)->pluck('marks')->first() < 0 ? 'AB' : 
                                 $stdmrks->where('studentcr_id', $stdcr->id)->where('clssub_id', $cs->id)->pluck('marks')->first()}}" >        
             </div> 
@@ -116,7 +120,19 @@
         });  
 
 
-
+    $('.fmarks').keyup(function(){
+        
+        var id =  $(this).attr('data-id');
+        var csid =  $(this).attr('data-csid');
+        
+        var mrk = $(this).val();
+        
+        var flag = false;
+        
+        if(csid == 1){
+            $('.fmarks-'+id).val(mrk);        
+        }
+    });
 
 
 

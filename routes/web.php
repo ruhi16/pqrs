@@ -203,6 +203,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clssec-AdminPage/{clss_id}/{section_id}', 'ClsSecController@clssecAdminPage');
         Route::get('/issueRoll/{stdbid}/{stcrid}/{clss_id}/{section_id}', 'ClsSecController@issueRoll');
 
+        Route::get('/issueRollByValue/{stdbid}/{stcrid}/{clss_id}/{section_id}/{roll_no}', 'ClsSecController@issueRollByValue');
+
 
         Route::get('/clssec-PromAssessment/{clssec_id}',   'PromAssessmentController@clssecPromAssessment');
         Route::get('/clssec-PromAssessmentV2/{clssec_id}', 'PromAssessmentController@clssecPromAssessmentV2');

@@ -21,20 +21,27 @@
     </thead>
     <tbody>      
     {{--  {{ dd($stddb) }}  --}}
-      @foreach($stddb as $sdb)
+      {{-- @foreach($stddb as $sdb)
         <tr>
           <th>{{$sdb->name or 'NA'}}</th>
-          <th>{{$sdb->clss->name or 'Class Not Assignemd'}}</th>
+          <th>{{$sdb->clss or 'Class Not Assignemd'}}</th>
           <th>{{$sdb->section->name or 'NA'}}</th>
           <th>
             {{ $sdb->studentcrs->where('session_id', $session->id)->first()->roll_no or 'NA'}}
-            {{--  @foreach($sdb->studentcrs as $scr)
-              {{$scr->roll_no}}, 
-            @endforeach  --}}
+            
           </th>
           <th>{{$sdb->ssex or 'NA'}}</th>
         </tr>
-      @endforeach      
+      @endforeach       --}}
+      @foreach($stdcr as $stcr)
+        <tr>
+          <th>{{ $stcr->studentdb->name }}</th>
+          <th>{{ $stcr->clss->name }}</th>
+          <th>{{ $stcr->section->name }}</th>
+          <th>{{ $stcr->roll_no }}</th>
+          <th>{{ $stcr->studentdb->ssex }}</th>
+        </tr>
+      @endforeach
     </tbody>
     
     <tfoot>

@@ -301,6 +301,46 @@ class ClsSecController extends Controller
         ;
     }
 
+    public function issueRollByValue($stdbid, $stcrid, $clss_id, $section_id, $roll_no){
+        $ses = Session::whereStatus('CURRENT')->first();
+        $stddb = Studentdb::find($stdbid);
+
+        if($stcrid == 0){
+            //New Students
+            $cls = Clss::where('id', $clss_id)->first();
+            $sec = Section::where('id', $section_id)->first();
+        }else{
+            //Promoted or Failed Students
+            $cls = Clss::where('prev_session_pk', $clss_id)->first();
+            $sec = Section::where('prev_session_pk', $section_id)->first();
+        }
+
+
+
+        $stcr = Studentcr::whereSession_id($ses->id)
+            ->where('clss_id', $cls->id)
+            ->where('section_id', $sec->id)
+            ->orderBy('roll_no', 'desc')->get();//max('roll_no');
+
+        echo $roll_no;
+        $stdcr = new Studentcr;
+        $stdcr->studentdb_id = $stddb->id;
+        $stdcr->session_id = $ses->id;
+        $stdcr->clss_id = $cls->id;
+        $stdcr->section_id = $sec->id;
+        $stdcr->roll_no = $roll_no;   //($stcr->count() > 0 ? ($stcr->first()->roll_no+1): 1); //((empty($stcr) ? 0 : $stcr->first()->roll_no ) + 1);
+        $stdcr->crstatus = "Running";
+        $stdcr->save();
+        //
+        // if($stcrid != 0){
+        //     $studentcr = Studentcr::find($stcrid);
+        //     $studentcr->crstatus = "Running";
+        //     $studentcr->save();
+        // }
+
+        return redirect()->to(url('/clssec-AdminPage',[$cls->id, $sec->id]));
+    }
+
     public function issueRoll($stdbid, $stcrid, $clss_id, $section_id){
         $ses = Session::whereStatus('CURRENT')->first();        
         $stddb = Studentdb::find($stdbid);
