@@ -126,10 +126,11 @@
         var csid =  $(this).attr('data-csid');
         
         var mrk = $(this).val();
-        
+        console.log('mrk:'+mrk)
+        console.log('csid:'+csid)
         var flag = false;
         
-        if(csid == 1){
+        if(csid == 14){
             $('.fmarks-'+id).val(mrk);        
         }
     });
