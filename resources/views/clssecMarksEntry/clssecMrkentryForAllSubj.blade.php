@@ -58,7 +58,7 @@
                                             fmarks fmarks-{{$stdcr->id}} fmarks-{{$stdcr->id}}-{{$cs->id}}
                                             marks{{$stdcr->id}}-{{$cs->id}} text-center"  aria-label="Text input with checkbox" id="{{$cs->id}}" name="m{{$stdcr->id}}[]"
                     data-id = "{{$stdcr->id}}"
-                    data-csid = "{{$cs->id}}"
+                    data-csid = "{{$cs->subject->id}}"
                     value="{{ $stdmrks->where('studentcr_id', $stdcr->id)->where('clssub_id', $cs->id)->pluck('marks')->first() < 0 ? 'AB' : 
                                 $stdmrks->where('studentcr_id', $stdcr->id)->where('clssub_id', $cs->id)->pluck('marks')->first()}}" >        
             </div> 
@@ -130,7 +130,7 @@
         console.log('csid:'+csid)
         var flag = false;
         
-        if(csid == 14){
+        if(csid == 11){
             $('.fmarks-'+id).val(mrk);        
         }
     });
