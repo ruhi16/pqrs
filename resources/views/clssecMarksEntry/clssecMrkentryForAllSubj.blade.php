@@ -129,6 +129,8 @@
         console.log('mrk:'+mrk)
         console.log('csid:'+csid)
         var flag = false;
+
+        // $('.fmarks').val(mrk); 
         
         if(csid == 11){
             $('.fmarks-'+id).val(mrk);        
